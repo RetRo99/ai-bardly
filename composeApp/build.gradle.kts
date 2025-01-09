@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.crashlytics)
 }
 
 kotlin {
@@ -54,6 +56,8 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.navigation.compose)
+
+            api(libs.gitlive.firebase.kotlin.crashlytics)
         }
     }
 }

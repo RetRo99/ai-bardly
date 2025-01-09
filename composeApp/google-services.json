@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "202431209061",
+    "project_id": "bardly-bac73",
+    "storage_bucket": "bardly-bac73.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202431209061:android:316b34f8631dea6cf3708c",
+        "android_client_info": {
+          "package_name": "com.ai.bardly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6Y6ZtfYfnlAntBZnTCYM4sGojuSIS2MM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
