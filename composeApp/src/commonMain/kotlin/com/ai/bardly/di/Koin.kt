@@ -1,12 +1,12 @@
-package com.jetbrains.kmpapp.di
+package com.ai.bardly.di
 
-import com.jetbrains.kmpapp.data.InMemoryMuseumStorage
-import com.jetbrains.kmpapp.data.KtorMuseumApi
-import com.jetbrains.kmpapp.data.MuseumApi
-import com.jetbrains.kmpapp.data.MuseumRepository
-import com.jetbrains.kmpapp.data.MuseumStorage
-import com.jetbrains.kmpapp.screens.detail.DetailViewModel
-import com.jetbrains.kmpapp.screens.list.ListViewModel
+import com.ai.bardly.data.InMemoryMuseumStorage
+import com.ai.bardly.data.KtorMuseumApi
+import com.ai.bardly.data.MuseumApi
+import com.ai.bardly.data.MuseumRepository
+import com.ai.bardly.data.MuseumStorage
+import com.ai.bardly.screens.detail.DetailViewModel
+import com.ai.bardly.screens.list.ListViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType

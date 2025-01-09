@@ -1,4 +1,4 @@
-package com.jetbrains.kmpapp.data
+package com.ai.bardly.data
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

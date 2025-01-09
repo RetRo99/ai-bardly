@@ -59,11 +59,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.jetbrains.kmpapp"
+    namespace = "com.ai.bardly"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.jetbrains.kmpapp"
+        applicationId = "com.ai.bardly"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

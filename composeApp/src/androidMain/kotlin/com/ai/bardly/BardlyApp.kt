@@ -1,9 +1,9 @@
-package com.jetbrains.kmpapp
+package com.ai.bardly
 
 import android.app.Application
-import com.jetbrains.kmpapp.di.initKoin
+import com.ai.bardly.di.initKoin
 
-class MuseumApp : Application() {
+class BardlyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         initKoin()

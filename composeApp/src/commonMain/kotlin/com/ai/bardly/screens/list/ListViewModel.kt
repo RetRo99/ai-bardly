@@ -1,9 +1,9 @@
-package com.jetbrains.kmpapp.screens.list
+package com.ai.bardly.screens.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jetbrains.kmpapp.data.MuseumObject
-import com.jetbrains.kmpapp.data.MuseumRepository
+import com.ai.bardly.data.MuseumObject
+import com.ai.bardly.data.MuseumRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn

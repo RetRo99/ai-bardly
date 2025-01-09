@@ -1,4 +1,4 @@
-package com.jetbrains.kmpapp
+package com.ai.bardly
 
 import androidx.compose.ui.window.ComposeUIViewController
 

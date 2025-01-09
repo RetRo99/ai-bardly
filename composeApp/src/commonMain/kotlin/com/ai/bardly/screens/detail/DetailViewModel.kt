@@ -1,8 +1,8 @@
-package com.jetbrains.kmpapp.screens.detail
+package com.ai.bardly.screens.detail
 
 import androidx.lifecycle.ViewModel
-import com.jetbrains.kmpapp.data.MuseumObject
-import com.jetbrains.kmpapp.data.MuseumRepository
+import com.ai.bardly.data.MuseumObject
+import com.ai.bardly.data.MuseumRepository
 import kotlinx.coroutines.flow.Flow
 
 class DetailViewModel(private val museumRepository: MuseumRepository) : ViewModel() {
