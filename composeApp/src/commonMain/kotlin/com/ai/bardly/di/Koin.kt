@@ -1,5 +1,10 @@
 package com.ai.bardly.di
 
+import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.analytics.AnalyticsManager
+import com.ai.bardly.analytics.DebugAnalyticsManager
+import com.ai.bardly.buildconfig.BuildConfig
+import com.ai.bardly.buildconfig.getBuildConfig
 import com.ai.bardly.data.InMemoryMuseumStorage
 import com.ai.bardly.data.KtorMuseumApi
 import com.ai.bardly.data.MuseumApi
@@ -8,6 +13,8 @@ import com.ai.bardly.data.MuseumStorage
 import com.ai.bardly.screens.chats.ChatsViewModel
 import com.ai.bardly.screens.games.GamesViewModel
 import com.ai.bardly.screens.home.HomeViewModel
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.analytics.analytics
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
@@ -43,11 +50,25 @@ val viewModelModule = module {
     factoryOf(::ChatsViewModel)
 }
 
+val buildConfigModule = module {
+    single<BuildConfig> { getBuildConfig() }
+}
+val analyticsModule = module {
+    single { Firebase.analytics }
+    single<Analytics> {
+        if (get<BuildConfig>().isDebug) DebugAnalyticsManager() else AnalyticsManager(
+            get()
+        )
+    }
+}
+
 fun initKoin() {
     startKoin {
         modules(
             dataModule,
             viewModelModule,
+            analyticsModule,
+            buildConfigModule,
         )
     }
 }

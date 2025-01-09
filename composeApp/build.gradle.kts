@@ -27,6 +27,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            freeCompilerArgs += if (project.hasProperty("isDebug")) "-DIS_DEBUG=true" else "-DIS_DEBUG=false"
         }
     }
 
@@ -58,6 +59,7 @@ kotlin {
             implementation(libs.navigation.compose)
 
             api(libs.gitlive.firebase.kotlin.crashlytics)
+            api(libs.gitlive.firebase.kotlin.analytics)
         }
     }
 }

@@ -11,7 +11,7 @@ navigationCompose = "2.8.0-alpha10"
 gradlePlugins-google-services = "4.4.2"
 gradlePlugins-crashlytics = "3.0.2"
 firebase-android-bom = "33.7.0"
-firebase-gitlive-sdk = "1.12.0"
+firebase-gitlive-sdk = "2.1.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -32,6 +32,7 @@ firebase-android-bom = { module = "com.google.firebase:firebase-bom", version.re
 firebase-android-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics" }
 #Gitlive
 gitlive-firebase-kotlin-crashlytics = { module = "dev.gitlive:firebase-crashlytics", version.ref = "firebase-gitlive-sdk" }
+gitlive-firebase-kotlin-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "firebase-gitlive-sdk" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

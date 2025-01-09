@@ -10,19 +10,23 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.navigation.TopLevelDestination
 import com.ai.bardly.screens.chats.ChatsScreen
 import com.ai.bardly.screens.games.GamesScreen
 import com.ai.bardly.screens.home.HomeScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 @Composable
 fun App() {
@@ -31,6 +35,8 @@ fun App() {
     ) {
         Surface {
             val navController: NavHostController = rememberNavController()
+
+            ScreenAnalytics(navController)
 
             Scaffold(
                 bottomBar = {
@@ -94,4 +100,18 @@ fun BottomBar(navController: NavHostController) {
             )
         }
     }
+}
+
+@Composable
+private fun ScreenAnalytics(navController: NavHostController) {
+    val analyticsManager = koinInject<Analytics>()
+    LaunchedEffect(navController) {
+        navController.currentBackStackEntryFlow.collect { navBackStackEntry ->
+            logScreenView(analyticsManager, navBackStackEntry.destination)
+        }
+    }
+}
+
+private fun logScreenView(analytics: Analytics, navDestination: NavDestination) {
+    navDestination.route?.let { analytics.log("screen_view", "screen_details", it) }
 }
