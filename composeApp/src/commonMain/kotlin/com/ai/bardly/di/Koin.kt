@@ -5,8 +5,9 @@ import com.ai.bardly.data.KtorMuseumApi
 import com.ai.bardly.data.MuseumApi
 import com.ai.bardly.data.MuseumRepository
 import com.ai.bardly.data.MuseumStorage
-import com.ai.bardly.screens.detail.DetailViewModel
-import com.ai.bardly.screens.list.ListViewModel
+import com.ai.bardly.screens.chats.ChatsViewModel
+import com.ai.bardly.screens.games.GamesViewModel
+import com.ai.bardly.screens.home.HomeViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
@@ -37,8 +38,9 @@ val dataModule = module {
 }
 
 val viewModelModule = module {
-    factoryOf(::ListViewModel)
-    factoryOf(::DetailViewModel)
+    factoryOf(::HomeViewModel)
+    factoryOf(::GamesViewModel)
+    factoryOf(::ChatsViewModel)
 }
 
 fun initKoin() {

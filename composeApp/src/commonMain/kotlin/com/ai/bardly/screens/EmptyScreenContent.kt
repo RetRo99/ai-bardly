@@ -5,20 +5,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.no_data_available
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun EmptyScreenContent(
     modifier: Modifier = Modifier,
+    text: String,
 ) {
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        Text(stringResource(Res.string.no_data_available))
+        Text(text)
     }
 }

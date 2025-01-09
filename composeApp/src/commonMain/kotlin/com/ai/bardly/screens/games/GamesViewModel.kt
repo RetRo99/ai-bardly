@@ -1,11 +1,11 @@
-package com.ai.bardly.screens.detail
+package com.ai.bardly.screens.games
 
 import androidx.lifecycle.ViewModel
 import com.ai.bardly.data.MuseumObject
 import com.ai.bardly.data.MuseumRepository
 import kotlinx.coroutines.flow.Flow
 
-class DetailViewModel(private val museumRepository: MuseumRepository) : ViewModel() {
+class GamesViewModel(private val museumRepository: MuseumRepository) : ViewModel() {
     fun getObject(objectId: Int): Flow<MuseumObject?> =
         museumRepository.getObjectById(objectId)
 }
