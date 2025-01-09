@@ -7,7 +7,7 @@ import dev.gitlive.firebase.initialize
 
 fun MainViewController() = ComposeUIViewController { App() }
 
-fun init() {
+fun initFirebase() {
     Firebase.initialize()
     Firebase.crashlytics.setCrashlyticsCollectionEnabled(true)
 }

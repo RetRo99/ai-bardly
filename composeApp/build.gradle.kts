@@ -66,6 +66,9 @@ android {
     namespace = "com.ai.bardly"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.ai.bardly"
         minSdk = 24
@@ -79,8 +82,13 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") {
+            resValue("string", "app_name", "Bardly Debug")
+        }
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
+            resValue("string", "app_name", "Bardly")
         }
     }
     compileOptions {
