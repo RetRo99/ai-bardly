@@ -89,7 +89,6 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             manifestPlaceholders["crashlyticsCollectionEnabled"] = true
-            signingConfig = signingConfigs.getByName("debug")
             resValue("string", "app_name", "Bardly")
         }
     }
