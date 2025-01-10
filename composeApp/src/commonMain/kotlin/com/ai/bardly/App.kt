@@ -10,13 +10,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.ai.bardly.analytics.Analytics
@@ -84,12 +91,16 @@ fun App() {
 @Composable
 fun BottomBar(navController: NavHostController) {
     NavigationBar {
-        val currentDestination = null
-        // TODO(SELECTED DESTINATION)
-//            RootDestination.fromRoute(navController.currentBackStackEntryAsState().value?.destination?.route)
-
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
         RootDestination.entries.forEach { destination ->
-            val isSelected = currentDestination == destination
+            val isSelected = currentDestination?.hierarchy?.any {
+                it.hasRoute(
+                    destination::class.qualifiedName.orEmpty(),
+                    arguments = null
+                )
+            } == true
+
             NavigationBarItem(
                 icon = {
                     Icon(
