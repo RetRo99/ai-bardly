@@ -23,7 +23,7 @@ import androidx.navigation.toRoute
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.navigation.NavigationManager
-import com.ai.bardly.navigation.TopLevelDestination
+import com.ai.bardly.navigation.RootDestinations
 import com.ai.bardly.screens.games.details.GameDetailsScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -53,9 +53,9 @@ fun App() {
                 NavHost(
                     modifier = Modifier.padding(innerPadding),
                     navController = navController,
-                    startDestination = TopLevelDestination.Home.route,
+                    startDestination = RootDestinations.Home.route,
                 ) {
-                    TopLevelDestination.entries.forEach { destination ->
+                    RootDestinations.entries.forEach { destination ->
                         composable(destination.route) {
                             destination.screen()
                         }
@@ -78,9 +78,9 @@ fun App() {
 fun BottomBar(navController: NavHostController) {
     NavigationBar {
         val currentDestination =
-            TopLevelDestination.fromRoute(navController.currentBackStackEntryAsState().value?.destination?.route)
+            RootDestinations.fromRoute(navController.currentBackStackEntryAsState().value?.destination?.route)
 
-        TopLevelDestination.entries.forEach { destination ->
+        RootDestinations.entries.forEach { destination ->
             val isSelected = currentDestination == destination
             NavigationBarItem(
                 icon = {

@@ -14,7 +14,7 @@ import com.ai.bardly.screens.home.HomeScreen
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
-enum class TopLevelDestination(
+enum class RootDestinations(
     val route: String,
     val title: StringResource,
     val icon: DrawableResource,
@@ -40,7 +40,7 @@ enum class TopLevelDestination(
     );
 
     companion object {
-        fun fromRoute(route: String?): TopLevelDestination? {
+        fun fromRoute(route: String?): RootDestinations? {
             return entries.find { it.route == route }
         }
     }
