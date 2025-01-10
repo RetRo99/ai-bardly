@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,8 +18,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.ai.bardly.GameUiModel
 
 @Composable
@@ -36,7 +42,17 @@ fun GameCard(game: GameUiModel, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(48.dp)
                     .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
-            )
+            ) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalPlatformContext.current)
+                        .data(game.thumbnail)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = "Image",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
             Text(
                 text = game.title,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
