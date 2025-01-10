@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -35,7 +36,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -117,11 +117,11 @@ private fun SharedTransitionScope.GameDetails(
 
         // Game Image
         Card(
-            modifier = Modifier.fillMaxWidth().sharedElement(
+            modifier = Modifier.wrapContentSize().sharedElement(
                 state = rememberSharedContentState(
                     key = "${game.listNumber} thumbnail",
                 ), animatedVisibilityScope
-            ),
+            ).align(Alignment.CenterHorizontally),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
@@ -132,9 +132,8 @@ private fun SharedTransitionScope.GameDetails(
                     .build(),
                 contentDescription = "Image",
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .wrapContentSize()
                     .height(180.dp),
-                contentScale = ContentScale.FillBounds
             )
         }
 
@@ -164,7 +163,7 @@ private fun SharedTransitionScope.GameDetails(
                                 key = "${game.listNumber} year",
                             ), animatedVisibilityScope
                         ),
-                        text = game.yearPublished,
+                        text = "\uD83D\uDCC5 ${game.yearPublished}",
                         color = Color.Gray,
                         fontSize = 14.sp
                     )
@@ -180,7 +179,7 @@ private fun SharedTransitionScope.GameDetails(
                                 key = "${game.listNumber} rating",
                             ), animatedVisibilityScope
                         ),
-                        text = game.rating,
+                        text = "⭐ ${game.rating}",
                         color = Color.Gray,
                         fontSize = 14.sp
                     )
