@@ -5,17 +5,17 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.utils.io.CancellationException
 
-interface MuseumApi {
-    suspend fun getData(): List<MuseumObject>
+interface GamesApi {
+    suspend fun getGames(): List<GameApiModel>
 }
 
-class KtorMuseumApi(private val client: HttpClient) : MuseumApi {
+class KtorGamesApi(private val client: HttpClient) : GamesApi {
     companion object {
         private const val API_URL =
-            "https://raw.githubusercontent.com/Kotlin/KMP-App-Template/main/list.json"
+            "http://localhost:3000/games"
     }
 
-    override suspend fun getData(): List<MuseumObject> {
+    override suspend fun getGames(): List<GameApiModel> {
         return try {
             client.get(API_URL).body()
         } catch (e: Exception) {

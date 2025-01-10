@@ -5,11 +5,11 @@ import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
-import com.ai.bardly.data.InMemoryMuseumStorage
-import com.ai.bardly.data.KtorMuseumApi
-import com.ai.bardly.data.MuseumApi
-import com.ai.bardly.data.MuseumRepository
-import com.ai.bardly.data.MuseumStorage
+import com.ai.bardly.data.InMemoryGamesStorage
+import com.ai.bardly.data.KtorGamesApi
+import com.ai.bardly.data.GamesApi
+import com.ai.bardly.data.GamesRepository
+import com.ai.bardly.data.GamesStorage
 import com.ai.bardly.screens.chats.ChatsViewModel
 import com.ai.bardly.screens.games.list.GamesListViewModel
 import com.ai.bardly.screens.games.details.GameDetailsViewModel
@@ -36,10 +36,10 @@ val dataModule = module {
         }
     }
 
-    single<MuseumApi> { KtorMuseumApi(get()) }
-    single<MuseumStorage> { InMemoryMuseumStorage() }
+    single<GamesApi> { KtorGamesApi(get()) }
+    single<GamesStorage> { InMemoryGamesStorage() }
     single {
-        MuseumRepository(get(), get()).apply {
+        GamesRepository(get(), get()).apply {
             initialize()
         }
     }
