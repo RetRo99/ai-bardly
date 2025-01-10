@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GamesListApiResponse(
-    val games: List<GameApiModel>
+    val games: List<GameApiModel>,
+    val totalPages: Int,
 )

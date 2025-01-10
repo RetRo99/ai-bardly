@@ -164,7 +164,7 @@ private fun RecentGamesSection() {
                             complexity = "dui",
                             link = "omittam",
                             thumbnail = "dicam",
-                            listNumber = 5870
+                            id = 5870
                         ),
                         modifier = Modifier.weight(1f),
                         onGameClicked = {},
@@ -182,7 +182,7 @@ private fun RecentGamesSection() {
                             complexity = "deseruisse",
                             link = "eu",
                             thumbnail = "quot",
-                            listNumber = 7759
+                            id = 7759
                         ),
                         modifier = Modifier.weight(1f),
                         onGameClicked = {},

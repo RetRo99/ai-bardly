@@ -119,7 +119,7 @@ private fun SharedTransitionScope.GameDetails(
         Card(
             modifier = Modifier.wrapContentSize().sharedElement(
                 state = rememberSharedContentState(
-                    key = "${game.listNumber} thumbnail",
+                    key = "${game.id} thumbnail",
                 ), animatedVisibilityScope
             ).align(Alignment.CenterHorizontally),
             shape = RoundedCornerShape(16.dp),
@@ -149,7 +149,7 @@ private fun SharedTransitionScope.GameDetails(
                 Text(
                     modifier = Modifier.sharedElement(
                         state = rememberSharedContentState(
-                            key = "${game.listNumber} title",
+                            key = "${game.id} title",
                         ), animatedVisibilityScope
                     ).skipToLookaheadSize(),
                     text = game.title,
@@ -160,7 +160,7 @@ private fun SharedTransitionScope.GameDetails(
                     Text(
                         modifier = Modifier.sharedElement(
                             state = rememberSharedContentState(
-                                key = "${game.listNumber} year",
+                                key = "${game.id} year",
                             ), animatedVisibilityScope
                         ),
                         text = "\uD83D\uDCC5 ${game.yearPublished}",
@@ -176,7 +176,7 @@ private fun SharedTransitionScope.GameDetails(
                     Text(
                         modifier = Modifier.sharedElement(
                             state = rememberSharedContentState(
-                                key = "${game.listNumber} rating",
+                                key = "${game.id} rating",
                             ), animatedVisibilityScope
                         ),
                         text = "⭐ ${game.rating}",
@@ -223,7 +223,7 @@ private fun SharedTransitionScope.GameInformationCards(
         GameInfoCard(
             modifier = Modifier.sharedElement(
                 state = rememberSharedContentState(
-                    key = "${game.listNumber} numberOfPlayers",
+                    key = "${game.id} numberOfPlayers",
                 ), animatedVisibilityScope
             ).skipToLookaheadSize(),
             label = Res.string.players,
@@ -232,7 +232,7 @@ private fun SharedTransitionScope.GameInformationCards(
         GameInfoCard(
             modifier = Modifier.sharedElement(
                 state = rememberSharedContentState(
-                    key = "${game.listNumber} playingTime",
+                    key = "${game.id} playingTime",
                 ), animatedVisibilityScope
             ).skipToLookaheadSize(),
             label = Res.string.game_length,
@@ -241,7 +241,7 @@ private fun SharedTransitionScope.GameInformationCards(
         GameInfoCard(
             modifier = Modifier.sharedElement(
                 state = rememberSharedContentState(
-                    key = "${game.listNumber} ageRange",
+                    key = "${game.id} ageRange",
                 ), animatedVisibilityScope
             ).skipToLookaheadSize(),
             label = Res.string.age,
@@ -250,7 +250,7 @@ private fun SharedTransitionScope.GameInformationCards(
         GameInfoCard(
             modifier = Modifier.sharedElement(
                 state = rememberSharedContentState(
-                    key = "${game.listNumber} complexity",
+                    key = "${game.id} complexity",
                 ), animatedVisibilityScope
             ).skipToLookaheadSize(),
             label = Res.string.complexity,

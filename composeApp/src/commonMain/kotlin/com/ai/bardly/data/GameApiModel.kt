@@ -1,5 +1,7 @@
 package com.ai.bardly.data
 
+import com.ai.bardly.paging.PagingItem
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,5 +16,6 @@ data class GameApiModel(
     val complexity: String,
     val link: String,
     val thumbnail: String,
-    val listNumber: Int
-)
+    @SerialName("listNumber")
+    override val id: Int
+): PagingItem

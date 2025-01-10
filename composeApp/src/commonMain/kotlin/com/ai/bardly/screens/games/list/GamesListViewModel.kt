@@ -7,21 +7,26 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.data.GamesRepository
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.toUiModels
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class GamesListViewModel(
     private val gamesRepository: GamesRepository
 ) : BaseViewModel<BaseViewState<GamesListViewState>>() {
 
     init {
-        gamesRepository.getObjects()
-            .onEach { games ->
-                updateState {
-                    BaseViewState.Loaded(GamesListViewState(games.toUiModels()))
-                }
+        viewModelScope.launch {
+            val items = gamesRepository
+                .getObjects()
+//                .cachedIn(viewModelScope)
+                .toUiModels()
+            updateState {
+                BaseViewState.Loaded(
+                    GamesListViewState(
+                        items
+                    )
+                )
             }
-            .launchIn(viewModelScope)
+        }
     }
 
     fun onGameClicked(game: GameUiModel) {

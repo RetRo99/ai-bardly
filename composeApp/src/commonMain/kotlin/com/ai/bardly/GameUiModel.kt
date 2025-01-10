@@ -1,6 +1,11 @@
 package com.ai.bardly
 
+import androidx.paging.PagingData
+import app.cash.paging.map
 import com.ai.bardly.data.GameApiModel
+import com.ai.bardly.paging.PagingItem
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,10 +20,12 @@ data class GameUiModel(
     val complexity: String,
     val link: String,
     val thumbnail: String,
-    val listNumber: Int
-)
+    override val id: Int
+): PagingItem
 
-fun List<GameApiModel>.toUiModels() = map(GameApiModel::toUiModel)
+
+fun PagingData<GameApiModel>.toUiModels() = map(GameApiModel::toUiModel)
+fun Flow<PagingData<GameApiModel>>.toUiModels() = map { it.toUiModels() }
 
 fun GameApiModel.toUiModel() = GameUiModel(
     title = title,
@@ -31,5 +38,5 @@ fun GameApiModel.toUiModel() = GameUiModel(
     complexity = complexity,
     link = link,
     thumbnail = thumbnail,
-    listNumber = listNumber,
+    id = id,
 )

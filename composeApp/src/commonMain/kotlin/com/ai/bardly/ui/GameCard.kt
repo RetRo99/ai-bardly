@@ -58,7 +58,7 @@ fun SharedTransitionScope.GameCard(
                         shape = RoundedCornerShape(8.dp)
                     ).sharedElement(
                         state = rememberSharedContentState(
-                            key = "${game.listNumber} thumbnail",
+                            key = "${game.id} thumbnail",
                         ), animatedVisibilityScope
                     ),
                 shape = RoundedCornerShape(8.dp),
@@ -79,7 +79,7 @@ fun SharedTransitionScope.GameCard(
             Text(
                 modifier = Modifier.sharedElement(
                     state = rememberSharedContentState(
-                        key = "${game.listNumber} title",
+                        key = "${game.id} title",
                     ), animatedVisibilityScope
                 ),
                 text = game.title,
@@ -88,7 +88,7 @@ fun SharedTransitionScope.GameCard(
             Text(
                 modifier = Modifier.sharedElement(
                     state = rememberSharedContentState(
-                        key = "${game.listNumber} rating",
+                        key = "${game.id} rating",
                     ), animatedVisibilityScope
                 ),
                 text = "⭐ ${game.rating}",
@@ -102,7 +102,7 @@ fun SharedTransitionScope.GameCard(
                 Text(
                     modifier = Modifier.sharedElement(
                         state = rememberSharedContentState(
-                            key = "${game.listNumber} numberOfPlayers",
+                            key = "${game.id} numberOfPlayers",
                         ), animatedVisibilityScope
                     ),
                     text = "\uD83D\uDC65 ${game.numberOfPlayers}",
@@ -112,7 +112,7 @@ fun SharedTransitionScope.GameCard(
                 Text(
                     modifier = Modifier.sharedElement(
                         state = rememberSharedContentState(
-                            key = "${game.listNumber} playingTime",
+                            key = "${game.id} playingTime",
                         ), animatedVisibilityScope
                     ),
                     text = "\uD83D\uDD52 ${game.playingTime}",
