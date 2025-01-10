@@ -5,7 +5,7 @@ import com.ai.bardly.data.MuseumObject
 import com.ai.bardly.data.MuseumRepository
 import kotlinx.coroutines.flow.Flow
 
-class GamesViewModel(private val museumRepository: MuseumRepository) : BaseViewModel() {
+class GamesListViewModel(private val museumRepository: MuseumRepository) : BaseViewModel() {
     fun getObject(objectId: Int): Flow<MuseumObject?> =
         museumRepository.getObjectById(objectId)
 }

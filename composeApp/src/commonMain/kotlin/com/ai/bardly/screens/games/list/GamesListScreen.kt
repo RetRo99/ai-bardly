@@ -15,7 +15,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun GamesScreen(
 ) {
-    val viewModel = koinViewModel<GamesViewModel>()
+    val viewModel = koinViewModel<GamesListViewModel>()
     GamesScreenContent()
 }
 
