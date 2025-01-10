@@ -7,7 +7,7 @@ import com.ai.bardly.screens.EmptyScreenContent
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ChatsScreen(
+fun ChatsListScreen(
 ) {
     val viewModel = koinViewModel<ChatsViewModel>()
     EmptyScreenContent(Modifier.fillMaxSize(), "CHATS")

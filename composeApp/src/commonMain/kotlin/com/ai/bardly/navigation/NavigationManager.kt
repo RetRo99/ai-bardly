@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.SharedFlow
 
 class NavigationManager {
 
-    private val _destinations = MutableSharedFlow<GeneralDestination>(
+    private val _destinations = MutableSharedFlow<GameDetail>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val destinations: SharedFlow<GeneralDestination> = _destinations
+    val destinations: SharedFlow<GameDetail> = _destinations
 
-    fun navigate(command: GeneralDestination) {
+    fun navigate(command: GameDetail) {
         _destinations.tryEmit(command)
     }
 }

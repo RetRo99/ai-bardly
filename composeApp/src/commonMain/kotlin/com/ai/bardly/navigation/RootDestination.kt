@@ -7,41 +7,38 @@ import ai_bardly.composeapp.generated.resources.home
 import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
-import androidx.compose.runtime.Composable
-import com.ai.bardly.screens.chats.ChatsScreen
-import com.ai.bardly.screens.games.list.GamesScreen
-import com.ai.bardly.screens.home.HomeScreen
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
-enum class RootDestinations(
-    val route: String,
+@Serializable
+sealed class RootDestination(
+    @Contextual
     val title: StringResource,
+    @Contextual
     val icon: DrawableResource,
-    val screen: @Composable () -> Unit
-)  {
-    Home(
-        route = "home",
+) {
+
+    @Serializable
+    data object Home : RootDestination(
         title = Res.string.home,
         icon = Res.drawable.ic_home,
-        screen = { HomeScreen() }
-    ),
-    Games(
-        route = "games",
+    )
+
+    @Serializable
+    data object GamesList : RootDestination(
         title = Res.string.games,
         icon = Res.drawable.ic_games,
-        screen = { GamesScreen() }
-    ),
-    Chats(
-        route = "chats",
+    )
+
+    @Serializable
+    data object ChatsList : RootDestination(
         title = Res.string.chats,
         icon = Res.drawable.ic_chats,
-        screen = {  ChatsScreen() }
-    );
+    )
 
     companion object {
-        fun fromRoute(route: String?): RootDestinations? {
-            return entries.find { it.route == route }
-        }
+        val entries = listOf(Home, GamesList, ChatsList)
     }
 }

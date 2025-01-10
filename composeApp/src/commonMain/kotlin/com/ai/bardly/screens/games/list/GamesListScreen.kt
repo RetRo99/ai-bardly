@@ -17,7 +17,7 @@ import com.ai.bardly.ui.GameCard
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun GamesScreen(
+fun GamesListScreen(
 ) {
     val viewModel = koinViewModel<GamesListViewModel>()
     val viewState = viewModel.viewState.collectAsState()

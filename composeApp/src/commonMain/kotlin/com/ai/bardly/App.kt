@@ -17,14 +17,17 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.navigation.GeneralDestination
+import com.ai.bardly.navigation.GameDetail
 import com.ai.bardly.navigation.NavigationManager
-import com.ai.bardly.navigation.RootDestinations
+import com.ai.bardly.navigation.RootDestination
+import com.ai.bardly.screens.chats.ChatsListScreen
 import com.ai.bardly.screens.games.details.GameDetailsScreen
+import com.ai.bardly.screens.games.list.GamesListScreen
+import com.ai.bardly.screens.home.HomeScreen
+import com.ai.bardly.util.serializableType
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
@@ -41,8 +44,8 @@ fun App() {
             ScreenAnalytics(navController)
 
             LaunchedEffect(Unit) {
-                navigationManager.destinations.collect { destinations ->
-                    navController.navigate(destinations)
+                navigationManager.destinations.collect { destination ->
+                    navController.navigate(destination)
                 }
             }
             Scaffold(
@@ -53,19 +56,23 @@ fun App() {
                 NavHost(
                     modifier = Modifier.padding(innerPadding),
                     navController = navController,
-                    startDestination = RootDestinations.Home.route,
+                    startDestination = RootDestination.Home,
                 ) {
-                    RootDestinations.entries.forEach { destination ->
-                        composable(destination.route) {
-                            destination.screen()
-                        }
+
+                    composable<RootDestination.Home> {
+                        HomeScreen()
                     }
-                    composable<GeneralDestination.GameDetail>(
-                        typeMap = mapOf(
-                            typeOf<GameUiModel>() to GameUiModelNavType()
-                        )
+                    composable<RootDestination.GamesList> {
+                        GamesListScreen()
+                    }
+                    composable<RootDestination.ChatsList> {
+                        ChatsListScreen()
+                    }
+
+                    composable<GameDetail>(
+                        typeMap = mapOf(typeOf<GameUiModel>() to serializableType<GameUiModel>())
                     ) { backStackEntry ->
-                        val game = backStackEntry.toRoute<GeneralDestination.GameDetail>().game
+                        val game = backStackEntry.toRoute<GameDetail>().game
                         GameDetailsScreen(game)
                     }
                 }
@@ -77,10 +84,11 @@ fun App() {
 @Composable
 fun BottomBar(navController: NavHostController) {
     NavigationBar {
-        val currentDestination =
-            RootDestinations.fromRoute(navController.currentBackStackEntryAsState().value?.destination?.route)
+        val currentDestination = null
+        // TODO(SELECTED DESTINATION)
+//            RootDestination.fromRoute(navController.currentBackStackEntryAsState().value?.destination?.route)
 
-        RootDestinations.entries.forEach { destination ->
+        RootDestination.entries.forEach { destination ->
             val isSelected = currentDestination == destination
             NavigationBarItem(
                 icon = {
@@ -99,7 +107,7 @@ fun BottomBar(navController: NavHostController) {
                 selected = isSelected,
                 onClick = {
                     if (!isSelected) {
-                        navController.navigate(destination.route) {
+                        navController.navigate(destination) {
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }
@@ -118,7 +126,7 @@ private fun ScreenAnalytics(navController: NavHostController) {
     val analyticsManager = koinInject<Analytics>()
     LaunchedEffect(navController) {
         navController.currentBackStackEntryFlow.collect { navBackStackEntry ->
-//            logScreenView(analyticsManager, navBackStackEntry.destination)
+            logScreenView(analyticsManager, navBackStackEntry.destination)
         }
     }
 }
