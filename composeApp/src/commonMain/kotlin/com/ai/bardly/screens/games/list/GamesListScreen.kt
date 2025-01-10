@@ -24,12 +24,11 @@ fun GamesListScreen(
     GamesScreenContent(
         state = viewState,
         onGameClicked = viewModel::onGameClicked
-
     )
 }
 
 @Composable
-fun GamesScreenContent(
+private fun GamesScreenContent(
     state: State<BaseViewState<GamesListViewState>>,
     onGameClicked: (GameUiModel) -> Unit
 ) {
@@ -43,20 +42,31 @@ fun GamesScreenContent(
         }
 
         is BaseViewState.Loaded -> {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2), // Ensures 2 cards per row
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                items(viewState.data.games) { game ->
-                    GameCard(
-                        game,
-                        onGameClicked = onGameClicked,
-                    )
-                }
-            }
+            GamesList(
+                games = viewState.data.games,
+                onGameClicked = onGameClicked
+            )
+        }
+    }
+}
+
+@Composable
+private fun GamesList(
+    games: List<GameUiModel>,
+    onGameClicked: (GameUiModel) -> Unit
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2), // Ensures 2 cards per row
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(8.dp)
+    ) {
+        items(games) { game ->
+            GameCard(
+                game,
+                onGameClicked = onGameClicked,
+            )
         }
     }
 }
