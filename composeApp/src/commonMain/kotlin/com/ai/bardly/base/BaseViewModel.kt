@@ -2,6 +2,8 @@ package com.ai.bardly.base
 
 import androidx.lifecycle.ViewModel
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.navigation.GeneralDestination
+import com.ai.bardly.navigation.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,9 +24,15 @@ abstract class BaseViewModel<VIEW_STATE : BaseViewState<*>> : ViewModel(), KoinC
 
     protected val analytics by inject<Analytics>()
 
-    fun updateState(updatedState: (lastState: VIEW_STATE) -> VIEW_STATE) {
+    private val navigationManager by inject<NavigationManager>()
+
+    protected fun updateState(updatedState: (lastState: VIEW_STATE) -> VIEW_STATE) {
         _viewState.update {
             updatedState(it)
         }
+    }
+
+    protected fun navigate(destination: GeneralDestination) {
+        navigationManager.navigate(destination)
     }
 }

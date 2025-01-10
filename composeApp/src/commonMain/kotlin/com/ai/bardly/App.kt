@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -23,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.navigation.GeneralDestination
+import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.TopLevelDestination
 import com.ai.bardly.screens.games.details.GameDetailsScreen
 import org.jetbrains.compose.resources.painterResource
@@ -37,9 +37,14 @@ fun App() {
     ) {
         Surface {
             val navController: NavHostController = rememberNavController()
-
+            val navigationManager = koinInject<NavigationManager>()
             ScreenAnalytics(navController)
 
+            LaunchedEffect(Unit) {
+                navigationManager.destinations.collect { destinations ->
+                    navController.navigate(destinations)
+                }
+            }
             Scaffold(
                 bottomBar = {
                     BottomBar(navController)

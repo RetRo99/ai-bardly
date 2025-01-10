@@ -10,6 +10,7 @@ import com.ai.bardly.data.KtorGamesApi
 import com.ai.bardly.data.GamesApi
 import com.ai.bardly.data.GamesRepository
 import com.ai.bardly.data.GamesStorage
+import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.screens.chats.ChatsViewModel
 import com.ai.bardly.screens.games.list.GamesListViewModel
 import com.ai.bardly.screens.games.details.GameDetailsViewModel
@@ -55,6 +56,10 @@ val viewModelModule = module {
 val buildConfigModule = module {
     single<BuildConfig> { getBuildConfig() }
 }
+
+val navigationModule = module {
+    single { NavigationManager() }
+}
 val analyticsModule = module {
     single { Firebase.analytics }
     single<Analytics> {
@@ -71,6 +76,7 @@ fun initKoin() {
             viewModelModule,
             analyticsModule,
             buildConfigModule,
+            navigationModule,
         )
     }
 }
