@@ -152,7 +152,7 @@ private fun SharedTransitionScope.GameDetails(
                         state = rememberSharedContentState(
                             key = "${game.listNumber} title",
                         ), animatedVisibilityScope
-                    ),
+                    ).skipToLookaheadSize(),
                     text = game.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
@@ -226,7 +226,7 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.listNumber} numberOfPlayers",
                 ), animatedVisibilityScope
-            ),
+            ).skipToLookaheadSize(),
             label = Res.string.players,
             value = game.numberOfPlayers
         )
@@ -235,7 +235,7 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.listNumber} playingTime",
                 ), animatedVisibilityScope
-            ),
+            ).skipToLookaheadSize(),
             label = Res.string.game_length,
             value = game.playingTime
         )
@@ -244,7 +244,7 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.listNumber} ageRange",
                 ), animatedVisibilityScope
-            ),
+            ).skipToLookaheadSize(),
             label = Res.string.age,
             value = game.ageRange
         )
@@ -253,7 +253,7 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.listNumber} complexity",
                 ), animatedVisibilityScope
-            ),
+            ).skipToLookaheadSize(),
             label = Res.string.complexity,
             value = "${game.complexity}/5"
         )
@@ -276,7 +276,6 @@ fun GameInfoCard(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = modifier,
         shape = RoundedCornerShape(8.dp),
         color = Color(0xFFF0F0F0)
     ) {
@@ -285,6 +284,7 @@ fun GameInfoCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
+                modifier = modifier,
                 text = value,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
