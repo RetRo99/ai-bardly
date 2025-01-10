@@ -1,7 +1,10 @@
 package com.ai.bardly
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +17,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.navigation.NavDestination
@@ -49,7 +55,6 @@ fun App() {
             val navController: NavHostController = rememberNavController()
             val navigationManager = koinInject<NavigationManager>()
             ScreenAnalytics(navController)
-
             LaunchedEffect(Unit) {
                 navigationManager.destinations.collect { destination ->
                     when (destination) {
@@ -64,9 +69,27 @@ fun App() {
                 }
             }
 
+            var bottomBarVisible by remember { mutableStateOf(true) }
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
+            bottomBarVisible = RootDestination.entries.any { destination ->
+                currentDestination?.hierarchy?.any {
+                    it.hasRoute(
+                        destination::class.qualifiedName.orEmpty(),
+                        arguments = null
+                    )
+                } == true
+            }
+
             Scaffold(
                 bottomBar = {
-                    BottomBar(navController)
+                    AnimatedVisibility(
+                        bottomBarVisible,
+                        enter = slideInVertically(initialOffsetY = { it }),
+                        exit = slideOutVertically(targetOffsetY = { it })
+                    ) {
+                        BottomBar(navController)
+                    }
                 }
             ) { innerPadding ->
                 SharedTransitionLayout(
