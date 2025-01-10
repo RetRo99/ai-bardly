@@ -1,10 +1,11 @@
 package com.ai.bardly.buildconfig
 
-import platform.Foundation.NSProcessInfo
+import kotlin.experimental.ExperimentalNativeApi
 
 class BuildConfigIos : BuildConfig {
+    @OptIn(ExperimentalNativeApi::class)
     override val isDebug: Boolean
-        get() = NSProcessInfo.processInfo.environment["IS_DEBUG"] == "true"
+        get() = Platform.isDebugBinary
 }
 
 actual fun getBuildConfig(): BuildConfig = BuildConfigIos()
