@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.map
 interface GamesStorage {
     suspend fun saveObjects(newObjects: List<GameApiModel>)
 
-    fun getObjectById(objectId: Int): Flow<GameApiModel?>
-
     fun getObjects(): Flow<List<GameApiModel>>
 }
 
@@ -17,12 +15,6 @@ class InMemoryGamesStorage : GamesStorage {
 
     override suspend fun saveObjects(newObjects: List<GameApiModel>) {
         storedObjects.value = newObjects
-    }
-
-    override fun getObjectById(objectId: Int): Flow<GameApiModel?> {
-        return storedObjects.map { objects ->
-            objects.find { it.objectID == objectId }
-        }
     }
 
     override fun getObjects(): Flow<List<GameApiModel>> = storedObjects

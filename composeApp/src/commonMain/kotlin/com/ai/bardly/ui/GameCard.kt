@@ -19,9 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ai.bardly.GameUiModel
 
 @Composable
-fun GameCard(gameName: String, modifier: Modifier = Modifier) {
+fun GameCard(game: GameUiModel, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
@@ -37,22 +38,22 @@ fun GameCard(gameName: String, modifier: Modifier = Modifier) {
                     .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
             )
             Text(
-                text = gameName,
+                text = game.title,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
             Text(
-                text = "rating",
+                text = game.rating,
                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
             )
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "2-4",
+                    text = game.numberOfPlayers,
                     style = MaterialTheme.typography.bodySmall
                 )
                 Text(
-                    text = "⏱ 70 - 120",
+                    text = "⏱ ${game.playingTime}",
                     style = MaterialTheme.typography.bodySmall
                 )
             }

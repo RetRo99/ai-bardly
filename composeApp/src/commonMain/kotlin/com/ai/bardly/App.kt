@@ -28,6 +28,7 @@ import com.ai.bardly.screens.games.details.GameDetailsScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import kotlin.reflect.typeOf
 
 @Composable
 fun App() {
@@ -54,8 +55,13 @@ fun App() {
                             destination.screen()
                         }
                     }
-                    composable<GeneralDestination.GameDetail> { backStackEntry ->
-                        backStackEntry.toRoute<GeneralDestination.GameDetail>().screen()
+                    composable<GeneralDestination.GameDetail>(
+                        typeMap = mapOf(
+                            typeOf<GameUiModel>() to GameUiModelNavType()
+                        )
+                    ) { backStackEntry ->
+                        val game = backStackEntry.toRoute<GeneralDestination.GameDetail>().game
+                        GameDetailsScreen(game)
                     }
                 }
             }
@@ -107,7 +113,7 @@ private fun ScreenAnalytics(navController: NavHostController) {
     val analyticsManager = koinInject<Analytics>()
     LaunchedEffect(navController) {
         navController.currentBackStackEntryFlow.collect { navBackStackEntry ->
-            logScreenView(analyticsManager, navBackStackEntry.destination)
+//            logScreenView(analyticsManager, navBackStackEntry.destination)
         }
     }
 }

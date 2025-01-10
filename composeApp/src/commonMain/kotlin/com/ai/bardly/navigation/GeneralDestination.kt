@@ -1,18 +1,13 @@
 package com.ai.bardly.navigation
 
-import androidx.compose.runtime.Composable
 import com.ai.bardly.GameUiModel
-import com.ai.bardly.screens.games.details.GameDetailsScreen
+import kotlinx.serialization.Serializable
 
-sealed class GeneralDestination(
-    val screen: @Composable () -> Unit,
-) {
+@Serializable
+sealed interface GeneralDestination {
 
+    @Serializable
     data class GameDetail(
         val game: GameUiModel,
-    ) : GeneralDestination(
-        screen = {
-            GameDetailsScreen(game)
-        }
-    )
+    ) : GeneralDestination
 }
