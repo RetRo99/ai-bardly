@@ -25,7 +25,7 @@ class GamesListViewModel(
     }
 
     fun onGameClicked(game: GameUiModel) {
-        navigate(GeneralDestination.GameDetail(game))
+        navigateTo(GeneralDestination.GameDetail(game))
     }
 
 }

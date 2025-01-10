@@ -23,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.RootDestination
@@ -48,9 +49,17 @@ fun App() {
 
             LaunchedEffect(Unit) {
                 navigationManager.destinations.collect { destination ->
-                    navController.navigate(destination)
+                    when (destination) {
+                        is GeneralDestination.Back -> {
+                            navController.navigateUp()
+                        }
+                        else -> {
+                            navController.navigate(destination)
+                        }
+                    }
                 }
             }
+
             Scaffold(
                 bottomBar = {
                     BottomBar(navController)

@@ -11,6 +11,6 @@ class GameDetailsViewModel(private val game: GameUiModel) :
         get() = BaseViewState.Loaded(GameDetailsViewState(game))
 
     fun onBackClick() {
-        TODO("Not yet implemented")
+        navigateBack()
     }
 }

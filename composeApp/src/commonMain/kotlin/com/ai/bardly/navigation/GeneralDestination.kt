@@ -10,4 +10,6 @@ sealed interface GeneralDestination {
     data class GameDetail(
         val game: GameUiModel,
     ) : GeneralDestination
+
+    data object Back : GeneralDestination
 }

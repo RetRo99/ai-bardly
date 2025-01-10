@@ -32,7 +32,11 @@ abstract class BaseViewModel<VIEW_STATE : BaseViewState<*>> : ViewModel(), KoinC
         }
     }
 
-    protected fun navigate(destination: GeneralDestination) {
+    protected fun navigateTo(destination: GeneralDestination) {
         navigationManager.navigate(destination)
+    }
+
+    protected fun navigateBack() {
+        navigationManager.navigate(GeneralDestination.Back)
     }
 }
