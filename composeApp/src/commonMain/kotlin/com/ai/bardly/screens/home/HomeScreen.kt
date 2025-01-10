@@ -160,7 +160,8 @@ private fun RecentGamesSection() {
                     thumbnail = "dicam",
                     listNumber = 5870
                 ),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onGameClicked = {}
             )
             GameCard(
                 game = GameUiModel(
@@ -176,7 +177,8 @@ private fun RecentGamesSection() {
                     thumbnail = "quot",
                     listNumber = 7759
                 ),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onGameClicked = {}
             )
         }
     }

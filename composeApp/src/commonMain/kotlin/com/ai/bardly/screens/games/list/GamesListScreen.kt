@@ -11,6 +11,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.ui.GameCard
 import org.koin.compose.viewmodel.koinViewModel
@@ -21,13 +22,16 @@ fun GamesScreen(
     val viewModel = koinViewModel<GamesListViewModel>()
     val viewState = viewModel.viewState.collectAsState()
     GamesScreenContent(
-        state = viewState
+        state = viewState,
+        onGameClicked = viewModel::onGameClicked
+
     )
 }
 
 @Composable
 fun GamesScreenContent(
-    state: State<BaseViewState<GamesListViewState>>
+    state: State<BaseViewState<GamesListViewState>>,
+    onGameClicked: (GameUiModel) -> Unit
 ) {
     when (val viewState = state.value) {
         is BaseViewState.Loading -> {
@@ -47,7 +51,10 @@ fun GamesScreenContent(
                 contentPadding = PaddingValues(8.dp)
             ) {
                 items(viewState.data.games) { game ->
-                    GameCard(game)
+                    GameCard(
+                        game,
+                        onGameClicked = onGameClicked,
+                    )
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.ai.bardly.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,19 +29,23 @@ import coil3.request.crossfade
 import com.ai.bardly.GameUiModel
 
 @Composable
-fun GameCard(game: GameUiModel, modifier: Modifier = Modifier) {
+fun GameCard(
+    game: GameUiModel,
+    onGameClicked: (GameUiModel) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.clickable(onClick = { onGameClicked(game) }).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(80.dp)
                     .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
             ) {
                 AsyncImage(
@@ -50,7 +55,7 @@ fun GameCard(game: GameUiModel, modifier: Modifier = Modifier) {
                         .build(),
                     contentDescription = "Image",
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.FillBounds
                 )
             }
             Text(
