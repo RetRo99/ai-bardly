@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.games
+package com.ai.bardly.screens.games.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

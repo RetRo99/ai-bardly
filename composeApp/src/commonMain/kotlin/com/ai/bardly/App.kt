@@ -13,17 +13,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.navigation.TopLevelDestination
-import com.ai.bardly.screens.chats.ChatsScreen
-import com.ai.bardly.screens.games.GamesScreen
-import com.ai.bardly.screens.home.HomeScreen
+import com.ai.bardly.screens.games.details.GameDetailsScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
@@ -48,14 +49,13 @@ fun App() {
                     navController = navController,
                     startDestination = TopLevelDestination.Home.route,
                 ) {
-                    composable(TopLevelDestination.Home.route) {
-                        HomeScreen()
+                    TopLevelDestination.entries.forEach { destination ->
+                        composable(destination.route) {
+                            destination.screen()
+                        }
                     }
-                    composable(TopLevelDestination.Games.route) {
-                        GamesScreen()
-                    }
-                    composable(TopLevelDestination.Chats.route) {
-                        ChatsScreen()
+                    composable<GeneralDestination.GameDetail> { backStackEntry ->
+                        backStackEntry.toRoute<GeneralDestination.GameDetail>().screen()
                     }
                 }
             }

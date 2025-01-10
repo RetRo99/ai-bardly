@@ -11,7 +11,8 @@ import com.ai.bardly.data.MuseumApi
 import com.ai.bardly.data.MuseumRepository
 import com.ai.bardly.data.MuseumStorage
 import com.ai.bardly.screens.chats.ChatsViewModel
-import com.ai.bardly.screens.games.GamesViewModel
+import com.ai.bardly.screens.games.list.GamesViewModel
+import com.ai.bardly.screens.games.details.GameDetailsViewModel
 import com.ai.bardly.screens.home.HomeViewModel
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.analytics
@@ -48,6 +49,7 @@ val viewModelModule = module {
     factoryOf(::HomeViewModel)
     factoryOf(::GamesViewModel)
     factoryOf(::ChatsViewModel)
+    factoryOf(::GameDetailsViewModel)
 }
 
 val buildConfigModule = module {

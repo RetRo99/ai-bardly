@@ -1,6 +1,5 @@
-package com.ai.bardly.screens.games
+package com.ai.bardly.screens.games.list
 
-import androidx.lifecycle.ViewModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.data.MuseumObject
 import com.ai.bardly.data.MuseumRepository
