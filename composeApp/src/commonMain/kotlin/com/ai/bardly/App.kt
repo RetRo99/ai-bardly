@@ -1,5 +1,7 @@
 package com.ai.bardly
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +39,7 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import kotlin.reflect.typeOf
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun App() {
     MaterialTheme(
@@ -53,6 +56,7 @@ fun App() {
                         is GeneralDestination.Back -> {
                             navController.navigateUp()
                         }
+
                         else -> {
                             navController.navigate(destination)
                         }
@@ -65,28 +69,36 @@ fun App() {
                     BottomBar(navController)
                 }
             ) { innerPadding ->
-                NavHost(
+                SharedTransitionLayout(
                     modifier = Modifier.padding(innerPadding),
-                    navController = navController,
-                    startDestination = RootDestination.Home,
                 ) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = RootDestination.Home,
+                    ) {
+                        composable<RootDestination.Home> {
+                            HomeScreen()
+                        }
+                        composable<RootDestination.GamesList> {
+                            GamesListScreen(
+                                animatedVisibilityScope = this@composable,
+                            )
+                        }
+                        composable<RootDestination.ChatsList> {
+                            ChatsListScreen()
+                        }
 
-                    composable<RootDestination.Home> {
-                        HomeScreen()
-                    }
-                    composable<RootDestination.GamesList> {
-                        GamesListScreen()
-                    }
-                    composable<RootDestination.ChatsList> {
-                        ChatsListScreen()
+                        composable<GameDetail>(
+                            typeMap = mapOf(typeOf<GameUiModel>() to serializableType<GameUiModel>())
+                        ) { backStackEntry ->
+                            val game = backStackEntry.toRoute<GameDetail>().game
+                            GameDetailsScreen(
+                                game = game,
+                                animatedVisibilityScope = this@composable,
+                            )
+                        }
                     }
 
-                    composable<GameDetail>(
-                        typeMap = mapOf(typeOf<GameUiModel>() to serializableType<GameUiModel>())
-                    ) { backStackEntry ->
-                        val game = backStackEntry.toRoute<GameDetail>().game
-                        GameDetailsScreen(game)
-                    }
                 }
             }
         }

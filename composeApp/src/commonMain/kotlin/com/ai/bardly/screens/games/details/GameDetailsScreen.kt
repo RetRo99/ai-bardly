@@ -5,6 +5,9 @@ import ai_bardly.composeapp.generated.resources.age
 import ai_bardly.composeapp.generated.resources.complexity
 import ai_bardly.composeapp.generated.resources.game_length
 import ai_bardly.composeapp.generated.resources.players
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -48,22 +51,27 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun GameDetailsScreen(
-    game: GameUiModel
+fun SharedTransitionScope.GameDetailsScreen(
+    game: GameUiModel,
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val viewModel: GameDetailsViewModel = koinViewModel { parametersOf(game) }
     val viewState = viewModel.viewState.collectAsState()
     GamesScreenContent(
         state = viewState,
-        onBackClick = viewModel::onBackClick
+        onBackClick = viewModel::onBackClick,
+        animatedVisibilityScope = animatedVisibilityScope,
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun GamesScreenContent(
+private fun SharedTransitionScope.GamesScreenContent(
     state: State<BaseViewState<GameDetailsViewState>>,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     when (val viewState = state.value) {
         is BaseViewState.Loading -> {
@@ -78,15 +86,18 @@ fun GamesScreenContent(
             GameDetails(
                 game = viewState.data.game,
                 onBackClick = onBackClick,
+                animatedVisibilityScope = animatedVisibilityScope,
             )
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun GameDetails(
+private fun SharedTransitionScope.GameDetails(
     game: GameUiModel,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Column(
         modifier = Modifier
@@ -106,7 +117,11 @@ private fun GameDetails(
 
         // Game Image
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().sharedElement(
+                state = rememberSharedContentState(
+                    key = "${game.listNumber} thumbnail",
+                ), animatedVisibilityScope
+            ),
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
@@ -131,17 +146,45 @@ private fun GameDetails(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column() {
+            Column {
                 Text(
+                    modifier = Modifier.sharedElement(
+                        state = rememberSharedContentState(
+                            key = "${game.listNumber} title",
+                        ), animatedVisibilityScope
+                    ),
                     text = game.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
                 )
-                Text(
-                    text = "${game.yearPublished} | ${game.rating}",
-                    color = Color.Gray,
-                    fontSize = 14.sp
-                )
+                Row {
+                    Text(
+                        modifier = Modifier.sharedElement(
+                            state = rememberSharedContentState(
+                                key = "${game.listNumber} year",
+                            ), animatedVisibilityScope
+                        ),
+                        text = game.yearPublished,
+                        color = Color.Gray,
+                        fontSize = 14.sp
+                    )
+                    Text(
+                        modifier = Modifier.padding(horizontal = 4.dp), // Add padding for spacing around the separator
+                        text = "|",
+                        color = Color.Gray,
+                        fontSize = 14.sp
+                    )
+                    Text(
+                        modifier = Modifier.sharedElement(
+                            state = rememberSharedContentState(
+                                key = "${game.listNumber} rating",
+                            ), animatedVisibilityScope
+                        ),
+                        text = game.rating,
+                        color = Color.Gray,
+                        fontSize = 14.sp
+                    )
+                }
             }
         }
 
@@ -155,7 +198,10 @@ private fun GameDetails(
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        GameInformationCards(game)
+        GameInformationCards(
+            game = game,
+            animatedVisibilityScope = animatedVisibilityScope,
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -163,19 +209,54 @@ private fun GameDetails(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
-private fun GameInformationCards(game: GameUiModel) {
+private fun SharedTransitionScope.GameInformationCards(
+    game: GameUiModel,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+) {
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement =
             Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        GameInfoCard(label = Res.string.players, value = game.numberOfPlayers)
-        GameInfoCard(label = Res.string.game_length, value = game.playingTime)
-        GameInfoCard(label = Res.string.age, value = game.ageRange)
-        GameInfoCard(label = Res.string.complexity, value = "${game.complexity}/5")
+        GameInfoCard(
+            modifier = Modifier.sharedElement(
+                state = rememberSharedContentState(
+                    key = "${game.listNumber} numberOfPlayers",
+                ), animatedVisibilityScope
+            ),
+            label = Res.string.players,
+            value = game.numberOfPlayers
+        )
+        GameInfoCard(
+            modifier = Modifier.sharedElement(
+                state = rememberSharedContentState(
+                    key = "${game.listNumber} playingTime",
+                ), animatedVisibilityScope
+            ),
+            label = Res.string.game_length,
+            value = game.playingTime
+        )
+        GameInfoCard(
+            modifier = Modifier.sharedElement(
+                state = rememberSharedContentState(
+                    key = "${game.listNumber} ageRange",
+                ), animatedVisibilityScope
+            ),
+            label = Res.string.age,
+            value = game.ageRange
+        )
+        GameInfoCard(
+            modifier = Modifier.sharedElement(
+                state = rememberSharedContentState(
+                    key = "${game.listNumber} complexity",
+                ), animatedVisibilityScope
+            ),
+            label = Res.string.complexity,
+            value = "${game.complexity}/5"
+        )
     }
 }
 
@@ -189,8 +270,13 @@ private fun Description(description: String) {
 }
 
 @Composable
-fun GameInfoCard(label: StringResource, value: String) {
+fun GameInfoCard(
+    label: StringResource,
+    value: String,
+    modifier: Modifier = Modifier
+) {
     Surface(
+        modifier = modifier,
         shape = RoundedCornerShape(8.dp),
         color = Color(0xFFF0F0F0)
     ) {

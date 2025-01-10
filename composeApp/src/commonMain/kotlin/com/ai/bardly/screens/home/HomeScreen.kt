@@ -1,5 +1,8 @@
 package com.ai.bardly.screens.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -131,55 +134,63 @@ private fun WhatsNewSection() {
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun RecentGamesSection() {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text(
-            text = "Recent games",
-            style = MaterialTheme.typography.headlineLarge,
-            color = Color.Black
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+    SharedTransitionLayout {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            GameCard(
-                GameUiModel(
-                    title = "omittam",
-                    description = "dolorum",
-                    rating = "massa",
-                    yearPublished = "torquent",
-                    numberOfPlayers = "scripta",
-                    playingTime = "periculis",
-                    ageRange = "scripta",
-                    complexity = "dui",
-                    link = "omittam",
-                    thumbnail = "dicam",
-                    listNumber = 5870
-                ),
-                modifier = Modifier.weight(1f),
-                onGameClicked = {}
+            Text(
+                text = "Recent games",
+                style = MaterialTheme.typography.headlineLarge,
+                color = Color.Black
             )
-            GameCard(
-                game = GameUiModel(
-                    title = "consetetur",
-                    description = "ridens",
-                    rating = "semper",
-                    yearPublished = "suas",
-                    numberOfPlayers = "mutat",
-                    playingTime = "magna",
-                    ageRange = "scelerisque",
-                    complexity = "deseruisse",
-                    link = "eu",
-                    thumbnail = "quot",
-                    listNumber = 7759
-                ),
-                modifier = Modifier.weight(1f),
-                onGameClicked = {}
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                AnimatedVisibility(true) {
+                    GameCard(
+                        GameUiModel(
+                            title = "omittam",
+                            description = "dolorum",
+                            rating = "massa",
+                            yearPublished = "torquent",
+                            numberOfPlayers = "scripta",
+                            playingTime = "periculis",
+                            ageRange = "scripta",
+                            complexity = "dui",
+                            link = "omittam",
+                            thumbnail = "dicam",
+                            listNumber = 5870
+                        ),
+                        modifier = Modifier.weight(1f),
+                        onGameClicked = {},
+                        animatedVisibilityScope = this
+                    )
+                    GameCard(
+                        game = GameUiModel(
+                            title = "consetetur",
+                            description = "ridens",
+                            rating = "semper",
+                            yearPublished = "suas",
+                            numberOfPlayers = "mutat",
+                            playingTime = "magna",
+                            ageRange = "scelerisque",
+                            complexity = "deseruisse",
+                            link = "eu",
+                            thumbnail = "quot",
+                            listNumber = 7759
+                        ),
+                        modifier = Modifier.weight(1f),
+                        onGameClicked = {},
+                        animatedVisibilityScope = this
+                    )
+
+                }
+            }
         }
     }
 }

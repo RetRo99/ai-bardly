@@ -1,5 +1,8 @@
 package com.ai.bardly.screens.games.list
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,20 +19,25 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.ui.GameCard
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun GamesListScreen(
+fun SharedTransitionScope.GamesListScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val viewModel = koinViewModel<GamesListViewModel>()
     val viewState = viewModel.viewState.collectAsState()
     GamesScreenContent(
         state = viewState,
-        onGameClicked = viewModel::onGameClicked
+        onGameClicked = viewModel::onGameClicked,
+        animatedVisibilityScope = animatedVisibilityScope
     )
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun GamesScreenContent(
+private fun SharedTransitionScope.GamesScreenContent(
     state: State<BaseViewState<GamesListViewState>>,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit
 ) {
     when (val viewState = state.value) {
@@ -44,15 +52,18 @@ private fun GamesScreenContent(
         is BaseViewState.Loaded -> {
             GamesList(
                 games = viewState.data.games,
-                onGameClicked = onGameClicked
+                onGameClicked = onGameClicked,
+                animatedVisibilityScope = animatedVisibilityScope,
             )
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun GamesList(
+private fun SharedTransitionScope.GamesList(
     games: List<GameUiModel>,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit
 ) {
     LazyVerticalGrid(
@@ -64,8 +75,9 @@ private fun GamesList(
     ) {
         items(games) { game ->
             GameCard(
-                game,
+                game = game,
                 onGameClicked = onGameClicked,
+                animatedVisibilityScope = animatedVisibilityScope
             )
         }
     }

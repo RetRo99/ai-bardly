@@ -1,9 +1,11 @@
 package com.ai.bardly.ui
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,10 +30,12 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.ai.bardly.GameUiModel
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun GameCard(
+fun SharedTransitionScope.GameCard(
     game: GameUiModel,
     onGameClicked: (GameUiModel) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -43,10 +47,19 @@ fun GameCard(
             modifier = Modifier.clickable(onClick = { onGameClicked(game) }).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Box(
+            Card(
                 modifier = Modifier
                     .size(80.dp)
-                    .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
+                    .background(
+                        Color.LightGray,
+                        shape = RoundedCornerShape(8.dp)
+                    ).sharedElement(
+                        state = rememberSharedContentState(
+                            key = "${game.listNumber} thumbnail",
+                        ), animatedVisibilityScope
+                    ),
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalPlatformContext.current)
@@ -54,15 +67,27 @@ fun GameCard(
                         .crossfade(true)
                         .build(),
                     contentDescription = "Image",
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
             }
+
             Text(
+                modifier = Modifier.sharedElement(
+                    state = rememberSharedContentState(
+                        key = "${game.listNumber} title",
+                    ), animatedVisibilityScope
+                ),
                 text = game.title,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
             Text(
+                modifier = Modifier.sharedElement(
+                    state = rememberSharedContentState(
+                        key = "${game.listNumber} rating",
+                    ), animatedVisibilityScope
+                ),
                 text = game.rating,
                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
             )
@@ -70,10 +95,20 @@ fun GameCard(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
+                    modifier = Modifier.sharedElement(
+                        state = rememberSharedContentState(
+                            key = "${game.listNumber} numberOfPlayers",
+                        ), animatedVisibilityScope
+                    ),
                     text = game.numberOfPlayers,
                     style = MaterialTheme.typography.bodySmall
                 )
                 Text(
+                    modifier = Modifier.sharedElement(
+                        state = rememberSharedContentState(
+                            key = "${game.listNumber} playingTime",
+                        ), animatedVisibilityScope
+                    ),
                     text = "⏱ ${game.playingTime}",
                     style = MaterialTheme.typography.bodySmall
                 )
