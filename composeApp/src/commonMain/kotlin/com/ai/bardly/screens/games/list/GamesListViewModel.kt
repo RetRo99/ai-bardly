@@ -5,7 +5,7 @@ import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.data.GamesRepository
-import com.ai.bardly.navigation.GameDetail
+import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.toUiModels
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,7 +25,7 @@ class GamesListViewModel(
     }
 
     fun onGameClicked(game: GameUiModel) {
-        navigate(GameDetail(game))
+        navigate(GeneralDestination.GameDetail(game))
     }
 
 }

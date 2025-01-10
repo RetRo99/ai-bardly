@@ -4,6 +4,10 @@ import com.ai.bardly.GameUiModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameDetail(
-    val game: GameUiModel,
-)
+sealed interface GeneralDestination {
+
+    @Serializable
+    data class GameDetail(
+        val game: GameUiModel,
+    ) : GeneralDestination
+}

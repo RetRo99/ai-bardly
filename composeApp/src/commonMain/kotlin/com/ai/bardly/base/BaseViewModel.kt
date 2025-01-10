@@ -2,7 +2,7 @@ package com.ai.bardly.base
 
 import androidx.lifecycle.ViewModel
 import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.navigation.GameDetail
+import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.navigation.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +32,7 @@ abstract class BaseViewModel<VIEW_STATE : BaseViewState<*>> : ViewModel(), KoinC
         }
     }
 
-    protected fun navigate(destination: GameDetail) {
+    protected fun navigate(destination: GeneralDestination) {
         navigationManager.navigate(destination)
     }
 }
