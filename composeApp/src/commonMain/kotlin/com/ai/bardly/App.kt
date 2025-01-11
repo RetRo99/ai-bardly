@@ -22,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -30,7 +29,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
@@ -54,7 +52,6 @@ fun App() {
         Surface {
             val navController: NavHostController = rememberNavController()
             val navigationManager = koinInject<NavigationManager>()
-            ScreenAnalytics(navController)
             LaunchedEffect(Unit) {
                 navigationManager.destinations.collect { destination ->
                     when (destination) {
@@ -66,6 +63,7 @@ fun App() {
                             navController.navigate(destination)
                         }
                     }
+                    destination.logScreenOpen()
                 }
             }
 
@@ -159,6 +157,7 @@ fun BottomBar(navController: NavHostController) {
                 onClick = {
                     if (!isSelected) {
                         navController.navigate(destination) {
+                            destination.logScreenOpen()
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }
@@ -170,18 +169,4 @@ fun BottomBar(navController: NavHostController) {
             )
         }
     }
-}
-
-@Composable
-private fun ScreenAnalytics(navController: NavHostController) {
-    val analyticsManager = koinInject<Analytics>()
-    LaunchedEffect(navController) {
-        navController.currentBackStackEntryFlow.collect { navBackStackEntry ->
-            logScreenView(analyticsManager, navBackStackEntry.destination)
-        }
-    }
-}
-
-private fun logScreenView(analytics: Analytics, navDestination: NavDestination) {
-    navDestination.route?.let { analytics.log("screen_view", "screen_details", it) }
 }
