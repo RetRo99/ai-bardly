@@ -81,7 +81,7 @@ fun SharedTransitionScope.GameCard(
                     state = rememberSharedContentState(
                         key = "${game.id} title",
                     ), animatedVisibilityScope
-                ),
+                ).skipToLookaheadSize(),
                 text = game.title,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
@@ -90,7 +90,7 @@ fun SharedTransitionScope.GameCard(
                     state = rememberSharedContentState(
                         key = "${game.id} rating",
                     ), animatedVisibilityScope
-                ),
+                ).skipToLookaheadSize(),
                 text = "⭐ ${game.rating}",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
@@ -104,7 +104,7 @@ fun SharedTransitionScope.GameCard(
                         state = rememberSharedContentState(
                             key = "${game.id} numberOfPlayers",
                         ), animatedVisibilityScope
-                    ),
+                    ).skipToLookaheadSize(),
                     text = "\uD83D\uDC65 ${game.numberOfPlayers}",
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -114,7 +114,7 @@ fun SharedTransitionScope.GameCard(
                         state = rememberSharedContentState(
                             key = "${game.id} playingTime",
                         ), animatedVisibilityScope
-                    ),
+                    ).skipToLookaheadSize(),
                     text = "\uD83D\uDD52 ${game.playingTime}",
                     style = MaterialTheme.typography.bodySmall
                 )
