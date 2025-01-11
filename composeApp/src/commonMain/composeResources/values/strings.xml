@@ -4,7 +4,7 @@
     <string name="games">Games</string>
     <string name="chats">Chats</string>
     <string name="game_length">Game Length</string>
-    <string name="complexity">Complexity</string>
-    <string name="age">Age</string>
-    <string name="players">Players</string>
+    <string name="game_complexity">Complexity</string>
+    <string name="game_age_recommendation">Age</string>
+    <string name="amount_of_players">Players</string>
 </resources>

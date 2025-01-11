@@ -1,14 +1,16 @@
 package com.ai.bardly.screens.games.details
 
 import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.age
-import ai_bardly.composeapp.generated.resources.complexity
+import ai_bardly.composeapp.generated.resources.amount_of_players
+import ai_bardly.composeapp.generated.resources.game_age_recommendation
+import ai_bardly.composeapp.generated.resources.game_complexity
 import ai_bardly.composeapp.generated.resources.game_length
-import ai_bardly.composeapp.generated.resources.players
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -46,6 +48,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.ui.CoilImage
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -73,21 +76,25 @@ private fun SharedTransitionScope.GamesScreenContent(
     onBackClick: () -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    when (val viewState = state.value) {
-        is BaseViewState.Loading -> {
-            // Loading state
-        }
+    Box(
+        modifier = Modifier.fillMaxSize().background(Color.White)
+    ) {
+        when (val viewState = state.value) {
+            is BaseViewState.Loading -> {
+                // Loading state
+            }
 
-        is BaseViewState.Error -> {
-            // Error state
-        }
+            is BaseViewState.Error -> {
+                // Error state
+            }
 
-        is BaseViewState.Loaded -> {
-            GameDetails(
-                game = viewState.data.game,
-                onBackClick = onBackClick,
-                animatedVisibilityScope = animatedVisibilityScope,
-            )
+            is BaseViewState.Loaded -> {
+                GameDetails(
+                    game = viewState.data.game,
+                    onBackClick = onBackClick,
+                    animatedVisibilityScope = animatedVisibilityScope,
+                )
+            }
         }
     }
 }
@@ -125,12 +132,9 @@ private fun SharedTransitionScope.GameDetails(
             shape = RoundedCornerShape(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalPlatformContext.current)
-                    .data(game.thumbnail)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = "Image",
+            CoilImage(
+                data = game.thumbnail,
+                cacheKey = game.thumbnail,
                 modifier = Modifier
                     .wrapContentSize()
                     .height(180.dp),
@@ -151,7 +155,7 @@ private fun SharedTransitionScope.GameDetails(
                         state = rememberSharedContentState(
                             key = "${game.id} title",
                         ), animatedVisibilityScope
-                    ).skipToLookaheadSize(),
+                    ),
                     text = game.title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
@@ -225,8 +229,8 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.id} numberOfPlayers",
                 ), animatedVisibilityScope
-            ).skipToLookaheadSize(),
-            label = Res.string.players,
+            ),
+            label = Res.string.amount_of_players,
             value = game.numberOfPlayers
         )
         GameInfoCard(
@@ -234,7 +238,7 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.id} playingTime",
                 ), animatedVisibilityScope
-            ).skipToLookaheadSize(),
+            ),
             label = Res.string.game_length,
             value = game.playingTime
         )
@@ -243,8 +247,8 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.id} ageRange",
                 ), animatedVisibilityScope
-            ).skipToLookaheadSize(),
-            label = Res.string.age,
+            ),
+            label = Res.string.game_age_recommendation,
             value = game.ageRange
         )
         GameInfoCard(
@@ -252,8 +256,8 @@ private fun SharedTransitionScope.GameInformationCards(
                 state = rememberSharedContentState(
                     key = "${game.id} complexity",
                 ), animatedVisibilityScope
-            ).skipToLookaheadSize(),
-            label = Res.string.complexity,
+            ),
+            label = Res.string.game_complexity,
             value = "${game.complexity}/5"
         )
     }

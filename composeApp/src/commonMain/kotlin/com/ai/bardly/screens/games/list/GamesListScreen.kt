@@ -78,7 +78,7 @@ private fun SharedTransitionScope.GamesList(
         contentPadding = PaddingValues(8.dp)
     ) {
         items(
-            count = items.itemCount,
+            count = items.itemCount / 2,
             key = items.itemKey { it.id },
         ) { index ->
             val game = items[index]

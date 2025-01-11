@@ -1,6 +1,7 @@
 package com.ai.bardly.screens.games.list
 
 import androidx.lifecycle.viewModelScope
+import app.cash.paging.cachedIn
 import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
@@ -17,7 +18,7 @@ class GamesListViewModel(
         viewModelScope.launch {
             val items = gamesRepository
                 .getObjects()
-//                .cachedIn(viewModelScope)
+                .cachedIn(viewModelScope)
                 .toUiModels()
             updateState {
                 BaseViewState.Loaded(

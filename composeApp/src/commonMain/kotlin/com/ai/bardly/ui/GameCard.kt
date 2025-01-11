@@ -7,10 +7,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -64,12 +66,9 @@ fun SharedTransitionScope.GameCard(
                 shape = RoundedCornerShape(8.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalPlatformContext.current)
-                        .data(game.thumbnail)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = "Image",
+                CoilImage(
+                    data = game.thumbnail,
+                    cacheKey = game.thumbnail,
                     modifier = Modifier
                         .fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -81,7 +80,7 @@ fun SharedTransitionScope.GameCard(
                     state = rememberSharedContentState(
                         key = "${game.id} title",
                     ), animatedVisibilityScope
-                ).skipToLookaheadSize(),
+                ),
                 text = game.title,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
@@ -90,7 +89,7 @@ fun SharedTransitionScope.GameCard(
                     state = rememberSharedContentState(
                         key = "${game.id} rating",
                     ), animatedVisibilityScope
-                ).skipToLookaheadSize(),
+                ),
                 text = "⭐ ${game.rating}",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
@@ -104,7 +103,7 @@ fun SharedTransitionScope.GameCard(
                         state = rememberSharedContentState(
                             key = "${game.id} numberOfPlayers",
                         ), animatedVisibilityScope
-                    ).skipToLookaheadSize(),
+                    ),
                     text = "\uD83D\uDC65 ${game.numberOfPlayers}",
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -114,7 +113,7 @@ fun SharedTransitionScope.GameCard(
                         state = rememberSharedContentState(
                             key = "${game.id} playingTime",
                         ), animatedVisibilityScope
-                    ).skipToLookaheadSize(),
+                    ),
                     text = "\uD83D\uDD52 ${game.playingTime}",
                     style = MaterialTheme.typography.bodySmall
                 )
