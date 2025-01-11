@@ -28,15 +28,15 @@ fun PagingData<GameApiModel>.toUiModels() = map(GameApiModel::toUiModel)
 fun Flow<PagingData<GameApiModel>>.toUiModels() = map { it.toUiModels() }
 
 fun GameApiModel.toUiModel() = GameUiModel(
-    title = title,
-    description = description,
-    rating = rating,
-    yearPublished = yearPublished,
-    numberOfPlayers = numberOfPlayers.substringBefore(" "),
-    playingTime = playingTime,
-    ageRange = ageRange.substringAfter(" "),
-    complexity = complexity,
-    link = link,
-    thumbnail = thumbnail,
+    title = title.orEmpty(),
+    description = description.orEmpty(),
+    rating = rating.orEmpty(),
+    yearPublished = yearPublished.orEmpty(),
+    numberOfPlayers = numberOfPlayers.orEmpty().substringBefore(" "),
+    playingTime = playingTime.orEmpty(),
+    ageRange = ageRange.orEmpty().substringAfter(" "),
+    complexity = complexity.orEmpty(),
+    link = link.orEmpty(),
+    thumbnail = thumbnail.orEmpty(),
     id = id,
 )
