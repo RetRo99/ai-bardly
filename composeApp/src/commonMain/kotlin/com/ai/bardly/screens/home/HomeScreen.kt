@@ -36,11 +36,13 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HomeScreen(
 ) {
     val viewModel = koinViewModel<HomeViewModel>()
-    HomeScreenContent()
+    HomeScreenContent(
+        onOpenChatClicked = viewModel::onOpenChatClicked,
+    )
 }
 
 @Composable
-private fun HomeScreenContent() {
+private fun HomeScreenContent(onOpenChatClicked: (String) -> Unit) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -51,7 +53,7 @@ private fun HomeScreenContent() {
     ) {
         GreetingSection()
         WhatsNewSection()
-        RecentGamesSection()
+        RecentGamesSection(onOpenChatClicked)
     }
 }
 
@@ -136,7 +138,7 @@ private fun WhatsNewSection() {
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun RecentGamesSection() {
+private fun RecentGamesSection(onOpenChatClicked: (String) -> Unit) {
     SharedTransitionLayout {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -168,7 +170,7 @@ private fun RecentGamesSection() {
                         ),
                         onGameClicked = {},
                         animatedVisibilityScope = this,
-                        onOpenChatClicked = {}
+                        onOpenChatClicked = onOpenChatClicked
                     )
                     GameCard(
                         game = GameUiModel(
@@ -186,7 +188,7 @@ private fun RecentGamesSection() {
                         ),
                         onGameClicked = {},
                         animatedVisibilityScope = this,
-                        onOpenChatClicked = {}
+                        onOpenChatClicked = onOpenChatClicked
                     )
 
                 }
