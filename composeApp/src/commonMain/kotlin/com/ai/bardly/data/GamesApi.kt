@@ -16,7 +16,7 @@ interface GamesApi {
 // TODO(Create network client)
 class KtorGamesApi(private val client: HttpClient) : GamesApi {
     companion object {
-        private const val API_URL = "http://10.0.2.2:3000/games"
+        private const val API_URL = "https://dolphin-app-zeoxd.ondigitalocean.app/games"
     }
 
     override suspend fun getGames(): Flow<PagingData<GameApiModel>> {

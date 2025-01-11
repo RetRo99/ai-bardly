@@ -18,4 +18,4 @@ data class GameApiModel(
     val thumbnail: String,
     @SerialName("listNumber")
     override val id: Int
-): PagingItem
+) : PagingItem
