@@ -9,6 +9,7 @@ import com.ai.bardly.data.GamesApi
 import com.ai.bardly.data.GamesRepository
 import com.ai.bardly.data.KtorGamesApi
 import com.ai.bardly.navigation.NavigationManager
+import com.ai.bardly.networking.getHttpEngine
 import com.ai.bardly.screens.chats.ChatsViewModel
 import com.ai.bardly.screens.games.details.GameDetailsViewModel
 import com.ai.bardly.screens.games.list.GamesListViewModel
@@ -16,6 +17,7 @@ import com.ai.bardly.screens.home.HomeViewModel
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.analytics
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
@@ -27,13 +29,14 @@ import org.koin.dsl.module
 val dataModule = module {
     single {
         val json = Json { ignoreUnknownKeys = true }
-        HttpClient {
+        HttpClient(get<HttpClientEngineFactory<*>>()) {
             install(ContentNegotiation) {
                 // TODO Fix API so it serves application/json
-                json(json, contentType = ContentType.Any)
+                json(json, contentType = ContentType.Application.Json)
             }
         }
     }
+    single<HttpClientEngineFactory<*>>{ getHttpEngine() }
 
     single<GamesApi> { KtorGamesApi(get()) }
     single {
