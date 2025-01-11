@@ -42,10 +42,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
-import coil3.compose.LocalPlatformContext
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.ui.CoilImage
@@ -124,8 +120,8 @@ private fun SharedTransitionScope.GameDetails(
 
         // Game Image
         Card(
-            modifier = Modifier.wrapContentSize().sharedElement(
-                state = rememberSharedContentState(
+            modifier = Modifier.wrapContentSize().sharedBounds(
+                sharedContentState = rememberSharedContentState(
                     key = "${game.id} thumbnail",
                 ), animatedVisibilityScope
             ).align(Alignment.CenterHorizontally),
@@ -151,10 +147,12 @@ private fun SharedTransitionScope.GameDetails(
         ) {
             Column {
                 Text(
-                    modifier = Modifier.sharedElement(
-                        state = rememberSharedContentState(
+                    modifier = Modifier.sharedBounds(
+                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                        sharedContentState = rememberSharedContentState(
                             key = "${game.id} title",
-                        ), animatedVisibilityScope
+                        ),
+                        animatedVisibilityScope = animatedVisibilityScope
                     ),
                     text = game.title,
                     fontWeight = FontWeight.Bold,
@@ -162,10 +160,12 @@ private fun SharedTransitionScope.GameDetails(
                 )
                 Row {
                     Text(
-                        modifier = Modifier.sharedElement(
-                            state = rememberSharedContentState(
+                        modifier = Modifier.sharedBounds(
+                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                            sharedContentState = rememberSharedContentState(
                                 key = "${game.id} year",
-                            ), animatedVisibilityScope
+                            ),
+                            animatedVisibilityScope = animatedVisibilityScope
                         ),
                         text = "\uD83D\uDCC5 ${game.yearPublished}",
                         color = Color.Gray,
@@ -178,10 +178,12 @@ private fun SharedTransitionScope.GameDetails(
                         fontSize = 14.sp
                     )
                     Text(
-                        modifier = Modifier.sharedElement(
-                            state = rememberSharedContentState(
+                        modifier = Modifier.sharedBounds(
+                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                            sharedContentState = rememberSharedContentState(
                                 key = "${game.id} rating",
-                            ), animatedVisibilityScope
+                            ),
+                            animatedVisibilityScope = animatedVisibilityScope
                         ),
                         text = "⭐ ${game.rating}",
                         color = Color.Gray,
@@ -225,37 +227,45 @@ private fun SharedTransitionScope.GameInformationCards(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         GameInfoCard(
-            modifier = Modifier.sharedElement(
-                state = rememberSharedContentState(
+            modifier = Modifier.sharedBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                sharedContentState = rememberSharedContentState(
                     key = "${game.id} numberOfPlayers",
-                ), animatedVisibilityScope
+                ),
+                animatedVisibilityScope = animatedVisibilityScope
             ),
             label = Res.string.amount_of_players,
             value = game.numberOfPlayers
         )
         GameInfoCard(
-            modifier = Modifier.sharedElement(
-                state = rememberSharedContentState(
+            modifier = Modifier.sharedBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                sharedContentState = rememberSharedContentState(
                     key = "${game.id} playingTime",
-                ), animatedVisibilityScope
+                ),
+                animatedVisibilityScope = animatedVisibilityScope
             ),
             label = Res.string.game_length,
             value = game.playingTime
         )
         GameInfoCard(
-            modifier = Modifier.sharedElement(
-                state = rememberSharedContentState(
+            modifier = Modifier.sharedBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                sharedContentState = rememberSharedContentState(
                     key = "${game.id} ageRange",
-                ), animatedVisibilityScope
+                ),
+                animatedVisibilityScope = animatedVisibilityScope
             ),
             label = Res.string.game_age_recommendation,
             value = game.ageRange
         )
         GameInfoCard(
-            modifier = Modifier.sharedElement(
-                state = rememberSharedContentState(
+            modifier = Modifier.sharedBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                sharedContentState = rememberSharedContentState(
                     key = "${game.id} complexity",
-                ), animatedVisibilityScope
+                ),
+                animatedVisibilityScope = animatedVisibilityScope
             ),
             label = Res.string.game_complexity,
             value = "${game.complexity}/5"

@@ -58,8 +58,8 @@ fun SharedTransitionScope.GameCard(
                     .background(
                         Color.LightGray,
                         shape = RoundedCornerShape(8.dp)
-                    ).sharedElement(
-                        state = rememberSharedContentState(
+                    ).sharedBounds(
+                        sharedContentState = rememberSharedContentState(
                             key = "${game.id} thumbnail",
                         ), animatedVisibilityScope
                     ),
@@ -76,19 +76,23 @@ fun SharedTransitionScope.GameCard(
             }
 
             Text(
-                modifier = Modifier.sharedElement(
-                    state = rememberSharedContentState(
+                modifier = Modifier.sharedBounds(
+                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                    sharedContentState = rememberSharedContentState(
                         key = "${game.id} title",
-                    ), animatedVisibilityScope
+                    ),
+                    animatedVisibilityScope = animatedVisibilityScope
                 ),
                 text = game.title,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
             Text(
-                modifier = Modifier.sharedElement(
-                    state = rememberSharedContentState(
+                modifier = Modifier.sharedBounds(
+                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                    sharedContentState = rememberSharedContentState(
                         key = "${game.id} rating",
-                    ), animatedVisibilityScope
+                    ),
+                    animatedVisibilityScope = animatedVisibilityScope
                 ),
                 text = "⭐ ${game.rating}",
                 textAlign = TextAlign.Center,
@@ -99,20 +103,24 @@ fun SharedTransitionScope.GameCard(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    modifier = Modifier.sharedElement(
-                        state = rememberSharedContentState(
+                    modifier = Modifier.sharedBounds(
+                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                        sharedContentState = rememberSharedContentState(
                             key = "${game.id} numberOfPlayers",
-                        ), animatedVisibilityScope
+                        ),
+                        animatedVisibilityScope = animatedVisibilityScope
                     ),
                     text = "\uD83D\uDC65 ${game.numberOfPlayers}",
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    modifier = Modifier.sharedElement(
-                        state = rememberSharedContentState(
+                    modifier = Modifier.sharedBounds(
+                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                        sharedContentState = rememberSharedContentState(
                             key = "${game.id} playingTime",
-                        ), animatedVisibilityScope
+                        ),
+                        animatedVisibilityScope = animatedVisibilityScope
                     ),
                     text = "\uD83D\uDD52 ${game.playingTime}",
                     style = MaterialTheme.typography.bodySmall
