@@ -30,10 +30,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.ai.bardly.navigation.GeneralDestination
+import com.ai.bardly.navigation.GeneralDestination.ChatDetail
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.RootDestination
-import com.ai.bardly.screens.chats.ChatsListScreen
+import com.ai.bardly.screens.chats.details.ChatDetailsScreen
+import com.ai.bardly.screens.chats.list.ChatsListScreen
 import com.ai.bardly.screens.games.details.GameDetailsScreen
 import com.ai.bardly.screens.games.list.GamesListScreen
 import com.ai.bardly.screens.home.HomeScreen
@@ -107,6 +109,13 @@ fun App() {
                         }
                         composable<RootDestination.ChatsList> {
                             ChatsListScreen()
+                        }
+                        composable<ChatDetail> { backStackEntry ->
+                            val gameTitle = backStackEntry.toRoute<ChatDetail>().gameTitle
+                            ChatDetailsScreen(
+                                gameTitle = gameTitle,
+                                animatedVisibilityScope = this@composable,
+                                )
                         }
 
                         composable<GameDetail>(

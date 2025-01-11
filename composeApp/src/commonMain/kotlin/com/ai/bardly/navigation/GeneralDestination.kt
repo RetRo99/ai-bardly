@@ -21,6 +21,20 @@ sealed class GeneralDestination : ScreenViewAnalytics() {
         }
     }
 
+    @Serializable
+    data class ChatDetail(
+        val gameTitle: String,
+    ) : GeneralDestination() {
+
+        override fun logScreenOpen() {
+            val params = mapOf(
+                "screen_name" to "chat",
+                "game_title" to gameTitle
+            )
+            analytics.log(AnalyticsEvent.SCREEN_OPEN, params)
+        }
+    }
+
     data object Back : GeneralDestination() {
         override fun logScreenOpen() {
             // Not logging

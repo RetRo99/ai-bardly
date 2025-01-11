@@ -35,8 +35,9 @@ fun SharedTransitionScope.GamesListScreen(
     val viewState = viewModel.viewState.collectAsState()
     GamesScreenContent(
         state = viewState,
+        animatedVisibilityScope = animatedVisibilityScope,
         onGameClicked = viewModel::onGameClicked,
-        animatedVisibilityScope = animatedVisibilityScope
+        onOpenChatClicked = viewModel::onOpenChatClicked,
     )
 }
 
@@ -45,7 +46,8 @@ fun SharedTransitionScope.GamesListScreen(
 private fun SharedTransitionScope.GamesScreenContent(
     state: State<BaseViewState<GamesListViewState>>,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onGameClicked: (GameUiModel) -> Unit
+    onGameClicked: (GameUiModel) -> Unit,
+    onOpenChatClicked: (String) -> Unit
 ) {
     when (val viewState = state.value) {
         is BaseViewState.Loading -> {
@@ -59,8 +61,9 @@ private fun SharedTransitionScope.GamesScreenContent(
         is BaseViewState.Loaded -> {
             GamesList(
                 games = viewState.data.games,
-                onGameClicked = onGameClicked,
                 animatedVisibilityScope = animatedVisibilityScope,
+                onGameClicked = onGameClicked,
+                onOpenChatClicked = onOpenChatClicked,
             )
         }
     }
@@ -71,7 +74,8 @@ private fun SharedTransitionScope.GamesScreenContent(
 private fun SharedTransitionScope.GamesList(
     games: Flow<PagingData<GameUiModel>>,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onGameClicked: (GameUiModel) -> Unit
+    onGameClicked: (GameUiModel) -> Unit,
+    onOpenChatClicked: (String) -> Unit
 ) {
     val items = games.collectAsLazyPagingItems()
     val state = rememberLazyGridState()
@@ -95,10 +99,11 @@ private fun SharedTransitionScope.GamesList(
                 val maxHeightInRow = itemsInRow.maxOfOrNull { it.size.height }
                 val maxHeightInRowDp = with(density) { maxHeightInRow?.toDp() } ?: Dp.Unspecified
                 GameCard(
-                    modifier = Modifier.height(maxHeightInRowDp),
                     game = game,
                     onGameClicked = onGameClicked,
-                    animatedVisibilityScope = animatedVisibilityScope
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    modifier = Modifier.height(maxHeightInRowDp),
+                    onOpenChatClicked = onOpenChatClicked
                 )
             }
         }

@@ -34,4 +34,8 @@ class GamesListViewModel(
         navigateTo(GeneralDestination.GameDetail(game))
     }
 
+    fun onOpenChatClicked(gameTitle: String) {
+        navigateTo(GeneralDestination.ChatDetail(gameTitle))
+    }
+
 }

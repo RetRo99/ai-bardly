@@ -166,9 +166,9 @@ private fun RecentGamesSection() {
                             thumbnail = "dicam",
                             id = 5870
                         ),
-                        modifier = Modifier.weight(1f),
                         onGameClicked = {},
-                        animatedVisibilityScope = this
+                        animatedVisibilityScope = this,
+                        onOpenChatClicked = {}
                     )
                     GameCard(
                         game = GameUiModel(
@@ -184,9 +184,9 @@ private fun RecentGamesSection() {
                             thumbnail = "quot",
                             id = 7759
                         ),
-                        modifier = Modifier.weight(1f),
                         onGameClicked = {},
-                        animatedVisibilityScope = this
+                        animatedVisibilityScope = this,
+                        onOpenChatClicked = {}
                     )
 
                 }

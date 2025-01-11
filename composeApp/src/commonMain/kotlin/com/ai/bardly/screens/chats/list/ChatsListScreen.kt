@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.chats
+package com.ai.bardly.screens.chats.list
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

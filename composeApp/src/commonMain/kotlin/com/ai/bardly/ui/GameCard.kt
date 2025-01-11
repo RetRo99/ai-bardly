@@ -35,7 +35,8 @@ fun SharedTransitionScope.GameCard(
     game: GameUiModel,
     onGameClicked: (GameUiModel) -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    modifier: Modifier = Modifier
+    onOpenChatClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
@@ -122,7 +123,7 @@ fun SharedTransitionScope.GameCard(
             }
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                onClick = { /* TODO: Add navigation or action */ },
+                onClick = { onOpenChatClicked(game.title) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             ) {
