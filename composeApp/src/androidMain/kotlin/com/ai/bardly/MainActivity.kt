@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(isSystemInDarkTheme()) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.light(
-                        Color.GRAY, Color.GRAY
+                        Color.LTGRAY, Color.LTGRAY
                     ),
                     navigationBarStyle = SystemBarStyle.light(
                         Color.WHITE, Color.WHITE
