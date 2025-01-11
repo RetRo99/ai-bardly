@@ -120,6 +120,7 @@ fun SharedTransitionScope.GameCard(
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
             Button(
                 onClick = { /* TODO: Add navigation or action */ },
                 modifier = Modifier.fillMaxWidth(),
