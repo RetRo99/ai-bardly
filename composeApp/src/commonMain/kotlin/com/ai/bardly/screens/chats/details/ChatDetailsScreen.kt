@@ -39,7 +39,7 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(Color.White)
     ) {
         when (val viewState = state.value) {
             is BaseViewState.Loading -> {
