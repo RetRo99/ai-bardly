@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class GamesListApiResponse(
     val games: List<GameApiModel>,
     val totalPages: Int,
+    val currentPage: Int,
 )

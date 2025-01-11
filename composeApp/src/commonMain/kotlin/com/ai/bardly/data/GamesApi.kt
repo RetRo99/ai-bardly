@@ -2,6 +2,7 @@ package com.ai.bardly.data
 
 import androidx.paging.PagingData
 import app.cash.paging.PagingConfig
+import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.paging.CustomPager
 import com.ai.bardly.paging.PagingResult
 import io.ktor.client.HttpClient
@@ -14,7 +15,10 @@ interface GamesApi {
 }
 
 // TODO(Create network client)
-class KtorGamesApi(private val client: HttpClient) : GamesApi {
+class KtorGamesApi(
+    private val client: HttpClient,
+    private val analytics: Analytics,
+) : GamesApi {
     companion object {
         private const val API_URL = "https://dolphin-app-zeoxd.ondigitalocean.app/games"
     }
@@ -24,10 +28,15 @@ class KtorGamesApi(private val client: HttpClient) : GamesApi {
             config = PagingConfig(pageSize = 20),
             initialKey = 0,
             getItems = { key, _ ->
-                val response = client.get("$API_URL?page=$key").body<GamesListApiResponse>()
-                val prevKey = if (key == 0) null else (key.dec())
+                val response =  try {
+                     client.get("$API_URL?page=$key").body<GamesListApiResponse>()
+                } catch (e: Exception) {
+//                    analytics.logException(e, "games endpoint")
+                    client.get("$API_URL?page=${key.inc()}").body<GamesListApiResponse>()
+                }
+                val prevKey = if (response.currentPage == 0) null else (response.currentPage.dec())
                 val nextKey =
-                    if (key == response.totalPages) null else (key.inc())
+                    if (response.currentPage == response.totalPages) null else (response.currentPage.inc())
                 PagingResult(response.games, prevKey, nextKey)
             }
         ).pagingData

@@ -16,8 +16,10 @@ import com.ai.bardly.screens.games.list.GamesListViewModel
 import com.ai.bardly.screens.home.HomeViewModel
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.analytics
+import dev.gitlive.firebase.crashlytics.crashlytics
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
@@ -34,11 +36,16 @@ val dataModule = module {
                 // TODO Fix API so it serves application/json
                 json(json, contentType = ContentType.Application.Json)
             }
+            HttpResponseValidator {
+                handleResponseExceptionWithRequest { cause, request ->
+                    get<Analytics>().logException(cause, request.url.toString())
+                }
+            }
         }
     }
-    single<HttpClientEngineFactory<*>>{ getHttpEngine() }
+    single<HttpClientEngineFactory<*>> { getHttpEngine() }
 
-    single<GamesApi> { KtorGamesApi(get()) }
+    single<GamesApi> { KtorGamesApi(get(), get()) }
     single {
         GamesRepository(get())
     }
@@ -60,8 +67,10 @@ val navigationModule = module {
 }
 val analyticsModule = module {
     single { Firebase.analytics }
+    single { Firebase.crashlytics }
     single<Analytics> {
         if (get<BuildConfig>().isDebug) DebugAnalyticsManager() else AnalyticsManager(
+            get(),
             get()
         )
     }
