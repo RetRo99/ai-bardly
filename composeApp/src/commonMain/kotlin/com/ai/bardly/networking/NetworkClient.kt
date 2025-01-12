@@ -8,8 +8,10 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
 import io.ktor.http.HeadersBuilder
 import io.ktor.http.URLBuilder
+import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.path
 
@@ -39,8 +41,8 @@ open class NetworkClient(
         httpClient.post(url) {
             headers(headers)
             setBody(body)
+            contentType(ContentType.Application.Json)
         }.body()
-
     }
 
     @PublishedApi

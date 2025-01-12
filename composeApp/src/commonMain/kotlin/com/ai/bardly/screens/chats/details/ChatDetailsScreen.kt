@@ -27,14 +27,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -126,7 +124,7 @@ private fun SharedTransitionScope.ChatDetails(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBackClick) {
-                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Box(
                     modifier = Modifier
@@ -152,6 +150,7 @@ private fun SharedTransitionScope.ChatDetails(
                 modifier = Modifier.weight(1f),
                 contentPadding = PaddingValues(16.dp),
                 reverseLayout = true,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(messages) { message ->
                     MessageBubble(message)

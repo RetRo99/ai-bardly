@@ -5,6 +5,9 @@ import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
+import com.ai.bardly.data.chat.ChatsDataSource
+import com.ai.bardly.data.chat.ChatsRepository
+import com.ai.bardly.data.chat.RemoteChatsDataSource
 import com.ai.bardly.data.game.GamesDataSource
 import com.ai.bardly.data.game.GamesRepository
 import com.ai.bardly.data.game.RemoteGamesDataSource
@@ -34,6 +37,13 @@ val gamesDataModule = module {
     single<GamesDataSource> { RemoteGamesDataSource(get()) }
     single {
         GamesRepository(get())
+    }
+}
+
+val chatsDataModule = module {
+    single<ChatsDataSource> { RemoteChatsDataSource(get()) }
+    single {
+        ChatsRepository(get())
     }
 }
 
@@ -90,6 +100,7 @@ fun initKoin() {
             buildConfigModule,
             navigationModule,
             networkingModule,
+            chatsDataModule,
         )
     }
 }
