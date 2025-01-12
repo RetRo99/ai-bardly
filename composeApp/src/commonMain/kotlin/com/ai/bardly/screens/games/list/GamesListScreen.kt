@@ -4,11 +4,15 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
@@ -20,19 +24,25 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import app.cash.paging.PagingData
 import app.cash.paging.compose.LazyPagingItems
@@ -41,6 +51,7 @@ import app.cash.paging.compose.itemKey
 import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.ui.GameCard
+import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -117,7 +128,13 @@ private fun SharedTransitionScope.GamesList(
         AnimatedContent(
             isSearchActive,
         ) {
+            val focusRequester = remember { FocusRequester() }
+            val focusManager = LocalFocusManager.current
             if (it) {
+                LaunchedEffect(Unit) {
+                    focusRequester.requestFocus() // Request focus on the TextField
+                }
+
                 TextField(
                     value = query,
                     onValueChange = {
@@ -125,7 +142,8 @@ private fun SharedTransitionScope.GamesList(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .focusRequester(focusRequester),
                     colors = TextFieldDefaults.colors(
                         unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                         focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -139,18 +157,6 @@ private fun SharedTransitionScope.GamesList(
                             contentDescription = "Search"
                         )
                     },
-                    trailingIcon = if (query.isNotEmpty()) {
-                        {
-                            IconButton(onClick = {
-                                onSearchQueryChanged("")
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Clear search"
-                                )
-                            }
-                        }
-                    } else null,
                     singleLine = true,
                     shape = RoundedCornerShape(28.dp)
                 )
@@ -163,7 +169,9 @@ private fun SharedTransitionScope.GamesList(
                     onOpenChatClicked = onOpenChatClicked
                 )
             } else {
-
+                LaunchedEffect(Unit) {
+                    focusManager.clearFocus()
+                }
                 GridContent(
                     gridState = gamesState,
                     items = games,
@@ -173,8 +181,18 @@ private fun SharedTransitionScope.GamesList(
                 )
             }
         }
+        val isKeyboardOpen by keyboardAsState() // true or false
+        val offset by animateDpAsState(
+            targetValue = if (!isKeyboardOpen) 0.dp else 68.dp,
+            animationSpec = tween(durationMillis = 300)
+        )
         FloatingActionButton(
-            modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            modifier = Modifier.imePadding().align(Alignment.BottomEnd).padding(16.dp).offset {
+                IntOffset(
+                    0,
+                    offset.roundToPx()
+                )
+            },
             onClick = {
                 onSearchStateChanged(!isSearchActive)
             }
