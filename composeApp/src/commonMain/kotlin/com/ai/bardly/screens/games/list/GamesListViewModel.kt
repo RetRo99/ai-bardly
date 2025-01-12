@@ -10,16 +10,29 @@ import com.ai.bardly.base.copy
 import com.ai.bardly.domain.games.GamesRepository
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.toUiModels
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class GamesListViewModel(
     private val gamesRepository: GamesRepository
 ) : BaseViewModel<BaseViewState<GamesListViewState>>() {
 
+    private val searchFlow = MutableStateFlow<String?>(null)
+
     init {
         loadInitialGames()
+        subscribeToSearchQuery()
     }
 
     fun onGameClicked(game: GameUiModel) {
@@ -31,7 +44,6 @@ class GamesListViewModel(
     }
 
     fun onSearchQueryChanged(query: String) {
-        searchGames(query)
         updateState {
             it.copy {
                 it.copy(
@@ -39,6 +51,7 @@ class GamesListViewModel(
                 )
             }
         }
+        searchFlow.update { query }
     }
 
     fun onSearchStateChanged(isActive: Boolean) {
@@ -51,6 +64,18 @@ class GamesListViewModel(
                 )
             }
         }
+    }
+
+    private fun subscribeToSearchQuery() {
+        searchFlow
+            .filterNotNull()
+            .debounce(300)
+            .distinctUntilChanged()
+            .onEach { query ->
+                searchGames(query)
+            }
+            .flowOn(Dispatchers.IO)
+            .launchIn(viewModelScope)
     }
 
     private fun loadInitialGames(query: String? = null) {
