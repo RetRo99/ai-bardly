@@ -42,7 +42,7 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeScreenContent(onOpenChatClicked: (String) -> Unit) {
+private fun HomeScreenContent(onOpenChatClicked: (String, Int) -> Unit) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -138,7 +138,7 @@ private fun WhatsNewSection() {
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun RecentGamesSection(onOpenChatClicked: (String) -> Unit) {
+private fun RecentGamesSection(onOpenChatClicked: (String, Int) -> Unit) {
     SharedTransitionLayout {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

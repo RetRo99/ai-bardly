@@ -12,7 +12,7 @@ import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.networking.getHttpEngine
 import com.ai.bardly.screens.chats.list.ChatsViewModel
 import com.ai.bardly.screens.games.details.GameDetailsViewModel
-import com.ai.bardly.screens.chats.details.ChatsDetailsModel
+import com.ai.bardly.screens.chats.details.ChatsDetailsViewModel
 import com.ai.bardly.screens.games.list.GamesListViewModel
 import com.ai.bardly.screens.home.HomeViewModel
 import dev.gitlive.firebase.Firebase
@@ -57,7 +57,7 @@ val viewModelModule = module {
     factoryOf(::GamesListViewModel)
     factoryOf(::ChatsViewModel)
     factoryOf(::GameDetailsViewModel)
-    factoryOf(::ChatsDetailsModel)
+    factoryOf(::ChatsDetailsViewModel)
 }
 
 val buildConfigModule = module {

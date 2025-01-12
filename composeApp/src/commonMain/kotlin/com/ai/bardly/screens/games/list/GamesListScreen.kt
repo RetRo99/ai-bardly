@@ -47,7 +47,7 @@ private fun SharedTransitionScope.GamesScreenContent(
     state: State<BaseViewState<GamesListViewState>>,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String) -> Unit
+    onOpenChatClicked: (String, Int) -> Unit
 ) {
     when (val viewState = state.value) {
         is BaseViewState.Loading -> {
@@ -75,7 +75,7 @@ private fun SharedTransitionScope.GamesList(
     games: Flow<PagingData<GameUiModel>>,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String) -> Unit
+    onOpenChatClicked: (String, Int) -> Unit
 ) {
     val items = games.collectAsLazyPagingItems()
     val state = rememberLazyGridState()

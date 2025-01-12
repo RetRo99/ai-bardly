@@ -6,7 +6,7 @@ import com.ai.bardly.navigation.GeneralDestination
 
 class HomeViewModel : BaseViewModel<BaseViewState<Unit>>() {
 
-    fun onOpenChatClicked(gameTitle: String) {
-        navigateTo(GeneralDestination.ChatDetail(gameTitle))
+    fun onOpenChatClicked(gameTitle: String, gameId: Int) {
+        navigateTo(GeneralDestination.ChatDetail(gameTitle, gameId))
     }
 }

@@ -24,6 +24,7 @@ sealed class GeneralDestination : ScreenViewAnalytics() {
     @Serializable
     data class ChatDetail(
         val gameTitle: String,
+        val gameId: Int,
     ) : GeneralDestination() {
 
         override fun logScreenOpen() {

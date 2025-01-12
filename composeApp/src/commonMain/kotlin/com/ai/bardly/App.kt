@@ -112,10 +112,12 @@ fun App() {
                         }
                         composable<ChatDetail> { backStackEntry ->
                             val gameTitle = backStackEntry.toRoute<ChatDetail>().gameTitle
+                            val gameId = backStackEntry.toRoute<ChatDetail>().gameId
                             ChatDetailsScreen(
                                 gameTitle = gameTitle,
+                                gameId = gameId,
                                 animatedVisibilityScope = this@composable,
-                                )
+                            )
                         }
 
                         composable<GameDetail>(
