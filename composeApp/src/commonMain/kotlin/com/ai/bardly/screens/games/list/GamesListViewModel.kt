@@ -10,6 +10,7 @@ import com.ai.bardly.base.copy
 import com.ai.bardly.domain.games.GamesRepository
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.toUiModels
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,7 @@ class GamesListViewModel(
 ) : BaseViewModel<BaseViewState<GamesListViewState>>() {
 
     init {
-        loadGames()
+        loadInitialGames()
     }
 
     fun onGameClicked(game: GameUiModel) {
@@ -30,6 +31,7 @@ class GamesListViewModel(
     }
 
     fun onSearchQueryChanged(query: String) {
+        searchGames(query)
         updateState {
             it.copy {
                 it.copy(
@@ -51,19 +53,36 @@ class GamesListViewModel(
         }
     }
 
-    private fun loadGames() {
-        viewModelScope.launch {
-            val items = gamesRepository
-                .getObjects()
-                .cachedIn(viewModelScope)
-                .toUiModels()
+    private fun loadInitialGames(query: String? = null) {
+        fetchGames(query) { items ->
             updateState {
                 BaseViewState.Loaded(
-                    GamesListViewState(
-                        items
-                    )
+                    GamesListViewState(items)
                 )
             }
+        }
+    }
+
+    private fun searchGames(query: String) {
+        fetchGames(query) { items ->
+            updateState {
+                it.copy {
+                    it.copy(searchResults = items)
+                }
+            }
+        }
+    }
+
+    private fun fetchGames(
+        query: String?,
+        onResult: (Flow<PagingData<GameUiModel>>) -> Unit
+    ) {
+        viewModelScope.launch {
+            gamesRepository
+                .getGames(query)
+                .cachedIn(viewModelScope)
+                .toUiModels()
+                .let(onResult)
         }
     }
 

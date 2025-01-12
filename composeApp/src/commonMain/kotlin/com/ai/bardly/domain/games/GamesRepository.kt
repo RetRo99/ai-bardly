@@ -5,5 +5,5 @@ import com.ai.bardly.domain.games.model.GameDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface GamesRepository {
-    suspend fun getObjects(): Flow<PagingData<GameDomainModel>>
+    suspend fun getGames(query: String?): Flow<PagingData<GameDomainModel>>
 }

@@ -17,6 +17,7 @@ sealed class BaseViewState<out T> {
     fun isLoaded() = this is Loaded<*>
     fun isError() = this is Error
 
+    fun getDataOrNull(): T? = (this as? Loaded<T>)?.data
 }
 
 fun <T> BaseViewState<T>.copy(update: (T) -> T): BaseViewState<T> {

@@ -8,5 +8,8 @@ import kotlinx.coroutines.flow.Flow
 class GamesDataRepository(
     private val gamesApi: GamesDataSource,
 ) : GamesRepository {
-    override suspend fun getObjects(): Flow<PagingData<GameDomainModel>> = gamesApi.getGames()
+    override suspend fun getGames(
+        query: String?,
+    ): Flow<PagingData<GameDomainModel>> = gamesApi
+        .getGames(query)
 }

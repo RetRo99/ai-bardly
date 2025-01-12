@@ -15,12 +15,12 @@ class RemoteGamesDataSource(
     private val networkClient: NetworkClient,
 ) : GamesDataSource {
 
-    override suspend fun getGames(): Flow<PagingData<GameDomainModel>> {
+    override suspend fun getGames(query: String?): Flow<PagingData<GameDomainModel>> {
         return CustomPager(
             config = PagingConfig(pageSize = 20),
             initialKey = 0,
             getItems = { key, _ ->
-                val response = getGamesUrl(key)
+                val response = getGamesUrl(key, query)
                 val prevKey =
                     if (response.currentPage == 0) null else (response.currentPage.dec())
                 val nextKey =
@@ -30,11 +30,12 @@ class RemoteGamesDataSource(
         ).pagingData
     }
 
-    private suspend fun getGamesUrl(page: Int): GamesListApiResponse {
+    private suspend fun getGamesUrl(page: Int, query: String?): GamesListApiResponse {
         return networkClient.get<GamesListApiResponse>(
             path = "games",
             queryBuilder = {
                 "page" to page
+                "search" to query
             }
         ).getOrThrow()
     }
