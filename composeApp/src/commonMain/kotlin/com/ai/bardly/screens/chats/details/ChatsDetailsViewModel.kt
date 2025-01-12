@@ -26,6 +26,33 @@ class ChatsDetailsViewModel(
         )
     )
 
+    init {
+        viewModelScope.launch {
+            val messages = chatsRepository.getMessages(gameTitle)
+            when {
+                messages.isSuccess -> {
+                    updateState {
+                        it.copy {
+                            it.copy(
+                                messages = messages.getOrThrow().map { it.toUiModel() }
+                            )
+                        }
+                    }
+                }
+
+                messages.isFailure -> {
+                    updateState {
+                        it.copy {
+                            it.copy(
+                                messages = emptyList()
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun onBackClick() {
         navigateBack()
     }
@@ -72,7 +99,8 @@ class ChatsDetailsViewModel(
         updateState {
             it.copy {
                 it.copy(
-                    messages = listOf(message) + it.messages
+                    messages = listOf(message) + it.messages,
+                    isResponding = message.isUserMessage,
                 )
             }
         }

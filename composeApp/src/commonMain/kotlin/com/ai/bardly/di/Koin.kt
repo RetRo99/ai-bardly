@@ -7,10 +7,13 @@ import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
 import com.ai.bardly.data.chat.ChatsDataRepository
 import com.ai.bardly.data.chat.ChatsDataSource
+import com.ai.bardly.data.chat.LocalChatsDataSource
 import com.ai.bardly.data.chat.RemoteChatsDataSource
 import com.ai.bardly.data.game.GamesDataSource
 import com.ai.bardly.data.game.GamesRepository
 import com.ai.bardly.data.game.RemoteGamesDataSource
+import com.ai.bardly.database.AppDatabase
+import com.ai.bardly.database.getDatabaseModule
 import com.ai.bardly.domain.chats.ChatsRepository
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.networking.NetworkClient
@@ -32,6 +35,8 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.qualifier.named
+import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 val gamesDataModule = module {
@@ -42,10 +47,12 @@ val gamesDataModule = module {
 }
 
 val chatsDataModule = module {
-    single<ChatsDataSource> { RemoteChatsDataSource(get()) }
+    single<ChatsDataSource>(named<RemoteChatsDataSource>()) { RemoteChatsDataSource(get()) }
+    single<ChatsDataSource>(named<LocalChatsDataSource>()) { LocalChatsDataSource(get()) }
     single<ChatsRepository> {
-        ChatsDataRepository(get())
+        ChatsDataRepository(get(named<RemoteChatsDataSource>()), get(named<LocalChatsDataSource>()))
     }
+    single { get<AppDatabase>().getMessagesDao() }
 }
 
 val networkingModule = module {
@@ -92,8 +99,11 @@ val analyticsModule = module {
     }
 }
 
-fun initKoin() {
+fun initKoin(
+    appDeclaration: KoinAppDeclaration = {}
+) {
     startKoin {
+        appDeclaration()
         modules(
             gamesDataModule,
             viewModelModule,
@@ -102,6 +112,7 @@ fun initKoin() {
             navigationModule,
             networkingModule,
             chatsDataModule,
+            getDatabaseModule()
         )
     }
 }

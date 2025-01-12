@@ -24,4 +24,12 @@ class RemoteChatsDataSource(
             )
         }
     }
+
+    override suspend fun getMessages(id: String): Result<List<MessageDomainModel>> {
+        throw NotImplementedError("RemoteChatsDataSource is not for getting messages")
+    }
+
+    override suspend fun saveMessage(message: MessageDomainModel): Result<Unit> {
+        throw NotImplementedError("RemoteChatsDataSource is not for saving messages")
+    }
 }
