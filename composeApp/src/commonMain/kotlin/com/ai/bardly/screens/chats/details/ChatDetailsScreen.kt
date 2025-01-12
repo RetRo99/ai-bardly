@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -58,6 +59,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.bardly.MessageUiModel
 import com.ai.bardly.base.BaseViewState
+import com.mohamedrejeb.richeditor.model.rememberRichTextState
+import com.mohamedrejeb.richeditor.ui.material3.RichText
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -169,18 +172,17 @@ private fun SharedTransitionScope.ChatDetails(
                 items(messages) { message ->
                     MessageBubble(
                         message = message,
-                        modifier = Modifier.animateItem(),
                     )
                 }
             }
 
             if (isResponding) {
                 BardlyThinkingDots(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(start = 16.dp, top = 16.dp),
                 )
             }
             MessageInputField(
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+                modifier = Modifier.padding(16.dp),
                 onMessageSendClicked = onMessageSendClicked
             )
         }
@@ -188,7 +190,10 @@ private fun SharedTransitionScope.ChatDetails(
 }
 
 @Composable
-private fun MessageBubble(message: MessageUiModel, modifier: Modifier) {
+private fun LazyItemScope.MessageBubble(
+    message: MessageUiModel,
+    modifier: Modifier = Modifier
+) {
     val textAlignment = if (message is MessageUiModel.UserMessage) {
         Alignment.CenterEnd
     } else {
@@ -211,10 +216,13 @@ private fun MessageBubble(message: MessageUiModel, modifier: Modifier) {
     ) {
         Box(
             modifier = Modifier
-                .background(color, shape = shape),
+                .background(color, shape = shape)
+                .animateItem(),
         ) {
-            Text(
-                text = message.text,
+            val richTextState = rememberRichTextState()
+            richTextState.setMarkdown(message.text)
+            RichText(
+                state = richTextState,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 color = Color.White
             )
