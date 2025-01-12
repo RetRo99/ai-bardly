@@ -1,23 +1,41 @@
 package com.ai.bardly.screens.games.list
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.cash.paging.PagingData
+import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.ai.bardly.GameUiModel
@@ -38,6 +56,8 @@ fun SharedTransitionScope.GamesListScreen(
         animatedVisibilityScope = animatedVisibilityScope,
         onGameClicked = viewModel::onGameClicked,
         onOpenChatClicked = viewModel::onOpenChatClicked,
+        onSearchQueryChanged = viewModel::onSearchQueryChanged,
+        onSearchStateChanged = viewModel::onSearchStateChanged,
     )
 }
 
@@ -47,7 +67,9 @@ private fun SharedTransitionScope.GamesScreenContent(
     state: State<BaseViewState<GamesListViewState>>,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String, Int) -> Unit
+    onOpenChatClicked: (String, Int) -> Unit,
+    onSearchQueryChanged: (String) -> Unit,
+    onSearchStateChanged: (Boolean) -> Unit,
 ) {
     when (val viewState = state.value) {
         is BaseViewState.Loading -> {
@@ -64,6 +86,11 @@ private fun SharedTransitionScope.GamesScreenContent(
                 animatedVisibilityScope = animatedVisibilityScope,
                 onGameClicked = onGameClicked,
                 onOpenChatClicked = onOpenChatClicked,
+                onSearchQueryChanged = onSearchQueryChanged,
+                onSearchStateChanged = onSearchStateChanged,
+                isSearchActive = viewState.data.isSearchActive,
+                query = viewState.data.query,
+                searchResults = viewState.data.searchResults
             )
         }
     }
@@ -75,18 +102,107 @@ private fun SharedTransitionScope.GamesList(
     games: Flow<PagingData<GameUiModel>>,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String, Int) -> Unit
+    onOpenChatClicked: (String, Int) -> Unit,
+    onSearchQueryChanged: (String) -> Unit,
+    onSearchStateChanged: (Boolean) -> Unit,
+    isSearchActive: Boolean,
+    query: String,
+    searchResults: Flow<PagingData<GameUiModel>>
 ) {
-    val items = games.collectAsLazyPagingItems()
-    val state = rememberLazyGridState()
+    Box {
+        val searchResults = searchResults.collectAsLazyPagingItems()
+        val searchState = rememberLazyGridState()
+        val games = games.collectAsLazyPagingItems()
+        val gamesState = rememberLazyGridState()
+        AnimatedContent(
+            isSearchActive,
+        ) {
+            if (it) {
+                TextField(
+                    value = query,
+                    onValueChange = {
+                        onSearchQueryChanged(it)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                    ),
+                    placeholder = { Text("Search games...") },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search"
+                        )
+                    },
+                    trailingIcon = if (query.isNotEmpty()) {
+                        {
+                            IconButton(onClick = {
+                                onSearchQueryChanged("")
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = "Clear search"
+                                )
+                            }
+                        }
+                    } else null,
+                    singleLine = true,
+                    shape = RoundedCornerShape(28.dp)
+                )
+
+                GridContent(
+                    gridState = searchState,
+                    items = searchResults,
+                    onGameClicked = onGameClicked,
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    onOpenChatClicked = onOpenChatClicked
+                )
+            } else {
+
+                GridContent(
+                    gridState = gamesState,
+                    items = games,
+                    onGameClicked = onGameClicked,
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    onOpenChatClicked = onOpenChatClicked,
+                )
+            }
+        }
+        FloatingActionButton(
+            modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            onClick = {
+                onSearchStateChanged(!isSearchActive)
+            }
+        ) {
+            Icon(
+                imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
+                contentDescription = if (isSearchActive) "Close search" else "Search"
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+private fun SharedTransitionScope.GridContent(
+    gridState: LazyGridState,
+    items: LazyPagingItems<GameUiModel>,
+    onGameClicked: (GameUiModel) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    onOpenChatClicked: (String, Int) -> Unit,
+) {
     val density = LocalDensity.current
     LazyVerticalGrid(
-        state = state,
-        columns = GridCells.Fixed(2), // Ensures 2 cards per row
+        state = gridState,
+        columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(8.dp)
     ) {
         items(
             count = items.itemCount,
@@ -94,10 +210,11 @@ private fun SharedTransitionScope.GamesList(
         ) { index ->
             val game = items[index]
             if (game != null) {
-                val row = state.layoutInfo.visibleItemsInfo.find { it.index == index }?.row
-                val itemsInRow = state.layoutInfo.visibleItemsInfo.filter { it.row == row }
+                val row = gridState.layoutInfo.visibleItemsInfo.find { it.index == index }?.row
+                val itemsInRow = gridState.layoutInfo.visibleItemsInfo.filter { it.row == row }
                 val maxHeightInRow = itemsInRow.maxOfOrNull { it.size.height }
-                val maxHeightInRowDp = with(density) { maxHeightInRow?.toDp() } ?: Dp.Unspecified
+                val maxHeightInRowDp =
+                    with(density) { maxHeightInRow?.toDp() } ?: Dp.Unspecified
                 GameCard(
                     game = game,
                     onGameClicked = onGameClicked,
