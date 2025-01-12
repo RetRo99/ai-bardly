@@ -180,7 +180,7 @@ private fun SharedTransitionScope.ChatDetails(
                 )
             }
             MessageInputField(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp),
                 onMessageSendClicked = onMessageSendClicked
             )
         }
