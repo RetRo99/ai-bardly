@@ -2,7 +2,7 @@ package com.ai.bardly
 
 import androidx.paging.PagingData
 import app.cash.paging.map
-import com.ai.bardly.data.GameApiModel
+import com.ai.bardly.data.game.model.GameApiModel
 import com.ai.bardly.paging.PagingItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

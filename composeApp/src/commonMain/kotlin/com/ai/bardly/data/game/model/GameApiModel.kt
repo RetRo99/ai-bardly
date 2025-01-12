@@ -1,4 +1,4 @@
-package com.ai.bardly.data
+package com.ai.bardly.data.game.model
 
 import com.ai.bardly.paging.PagingItem
 import kotlinx.serialization.SerialName
