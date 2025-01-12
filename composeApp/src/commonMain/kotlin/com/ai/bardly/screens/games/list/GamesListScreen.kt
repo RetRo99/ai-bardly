@@ -8,6 +8,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +20,8 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -41,6 +44,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -121,6 +125,12 @@ private fun SharedTransitionScope.GamesList(
     searchResults: Flow<PagingData<GameUiModel>>
 ) {
     Box {
+        val focusRequester = remember { FocusRequester() }
+        val focusManager = LocalFocusManager.current
+        val onGameClicked = { game: GameUiModel ->
+            focusManager.clearFocus()
+            onGameClicked(game)
+        }
         val searchResults = searchResults.collectAsLazyPagingItems()
         val searchState = rememberLazyGridState()
         val games = games.collectAsLazyPagingItems()
@@ -128,46 +138,53 @@ private fun SharedTransitionScope.GamesList(
         AnimatedContent(
             isSearchActive,
         ) {
-            val focusRequester = remember { FocusRequester() }
-            val focusManager = LocalFocusManager.current
             if (it) {
                 LaunchedEffect(Unit) {
                     focusRequester.requestFocus() // Request focus on the TextField
                 }
+                Column {
+                    TextField(
+                        value = query,
+                        onValueChange = {
+                            onSearchQueryChanged(it)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .focusRequester(focusRequester),
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                        ),
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            imeAction = ImeAction.Done // Set the "Done" action
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                focusManager.clearFocus() // Clear focus to hide the keyboard
+                            }
+                        ),
+                        placeholder = { Text("Search games...") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Search"
+                            )
+                        },
+                        singleLine = true,
+                        shape = RoundedCornerShape(28.dp)
+                    )
 
-                TextField(
-                    value = query,
-                    onValueChange = {
-                        onSearchQueryChanged(it)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .focusRequester(focusRequester),
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                    ),
-                    placeholder = { Text("Search games...") },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search"
-                        )
-                    },
-                    singleLine = true,
-                    shape = RoundedCornerShape(28.dp)
-                )
-
-                GridContent(
-                    gridState = searchState,
-                    items = searchResults,
-                    onGameClicked = onGameClicked,
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    onOpenChatClicked = onOpenChatClicked
-                )
+                    GridContent(
+                        gridState = searchState,
+                        items = searchResults,
+                        onGameClicked = onGameClicked,
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        onOpenChatClicked = onOpenChatClicked
+                    )
+                }
             } else {
                 LaunchedEffect(Unit) {
                     focusManager.clearFocus()
