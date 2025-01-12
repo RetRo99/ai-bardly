@@ -2,7 +2,7 @@ package com.ai.bardly
 
 import androidx.paging.PagingData
 import app.cash.paging.map
-import com.ai.bardly.data.game.model.GameApiModel
+import com.ai.bardly.domain.games.model.GameDomainModel
 import com.ai.bardly.paging.PagingItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -21,22 +21,21 @@ data class GameUiModel(
     val link: String,
     val thumbnail: String,
     override val id: Int
-): PagingItem
+) : PagingItem
 
+fun PagingData<GameDomainModel>.toUiModels() = map(GameDomainModel::toUiModel)
+fun Flow<PagingData<GameDomainModel>>.toUiModels() = map { it.toUiModels() }
 
-fun PagingData<GameApiModel>.toUiModels() = map(GameApiModel::toUiModel)
-fun Flow<PagingData<GameApiModel>>.toUiModels() = map { it.toUiModels() }
-
-fun GameApiModel.toUiModel() = GameUiModel(
-    title = title.orEmpty(),
-    description = description.orEmpty(),
-    rating = rating.orEmpty(),
-    yearPublished = yearPublished.orEmpty(),
-    numberOfPlayers = numberOfPlayers.orEmpty().substringBefore(" "),
-    playingTime = playingTime.orEmpty(),
-    ageRange = ageRange.orEmpty().substringAfter(" "),
-    complexity = complexity.orEmpty(),
-    link = link.orEmpty(),
-    thumbnail = thumbnail.orEmpty(),
+fun GameDomainModel.toUiModel() = GameUiModel(
+    title = title,
+    description = description,
+    rating = rating,
+    yearPublished = yearPublished,
+    numberOfPlayers = numberOfPlayers,
+    playingTime = playingTime,
+    ageRange = ageRange,
+    complexity = complexity,
+    link = link,
+    thumbnail = thumbnail,
     id = id,
 )

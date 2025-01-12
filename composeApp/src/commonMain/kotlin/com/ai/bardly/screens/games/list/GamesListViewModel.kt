@@ -7,7 +7,7 @@ import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.base.copy
-import com.ai.bardly.data.game.GamesRepository
+import com.ai.bardly.domain.games.GamesRepository
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.toUiModels
 import kotlinx.coroutines.flow.flowOf

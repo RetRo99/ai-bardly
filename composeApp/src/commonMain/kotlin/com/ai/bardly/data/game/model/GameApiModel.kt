@@ -1,9 +1,9 @@
 package com.ai.bardly.data.game.model
 
+import com.ai.bardly.domain.games.model.GameDomainModel
 import com.ai.bardly.paging.PagingItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.random.Random
 
 @Serializable
 data class GameApiModel(
@@ -18,5 +18,21 @@ data class GameApiModel(
     val link: String?,
     val thumbnail: String?,
     @SerialName("listNumber")
-    override val id: Int = Random.nextInt(),
+    override val id: Int,
 ) : PagingItem
+
+fun List<GameApiModel>.toDomainModel() = map(GameApiModel::toDomainModel)
+
+fun GameApiModel.toDomainModel() = GameDomainModel(
+    title = title.orEmpty(),
+    description = description.orEmpty(),
+    rating = rating.orEmpty(),
+    yearPublished = yearPublished.orEmpty(),
+    numberOfPlayers = numberOfPlayers.orEmpty().substringBefore(" "),
+    playingTime = playingTime.orEmpty(),
+    ageRange = ageRange.orEmpty().substringAfter(" "),
+    complexity = complexity.orEmpty(),
+    link = link.orEmpty(),
+    thumbnail = thumbnail.orEmpty(),
+    id = id,
+)
