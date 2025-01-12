@@ -9,14 +9,13 @@ import com.ai.bardly.paging.CustomPager
 import com.ai.bardly.paging.PagingResult
 import kotlinx.coroutines.flow.Flow
 
-interface GamesApi {
+interface GamesDataSource {
     suspend fun getGames(): Flow<PagingData<GameApiModel>>
 }
 
-// TODO(Create network client)
-class KtorGamesApi(
+class RemoteGamesDataSource(
     private val networkClient: NetworkClient,
-) : GamesApi {
+) : GamesDataSource {
 
     override suspend fun getGames(): Flow<PagingData<GameApiModel>> {
         return CustomPager(

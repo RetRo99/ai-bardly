@@ -5,9 +5,9 @@ import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
-import com.ai.bardly.data.game.GamesApi
+import com.ai.bardly.data.game.GamesDataSource
 import com.ai.bardly.data.game.GamesRepository
-import com.ai.bardly.data.game.KtorGamesApi
+import com.ai.bardly.data.game.RemoteGamesDataSource
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.networking.getHttpEngine
@@ -31,7 +31,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val gamesDataModule = module {
-    single<GamesApi> { KtorGamesApi(get()) }
+    single<GamesDataSource> { RemoteGamesDataSource(get()) }
     single {
         GamesRepository(get())
     }
