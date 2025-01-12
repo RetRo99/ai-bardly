@@ -1,5 +1,6 @@
-package com.ai.bardly.data.chat
+package com.ai.bardly.data.chat.local
 
+import com.ai.bardly.data.chat.ChatsDataSource
 import com.ai.bardly.domain.chats.local.MessagesDao
 import com.ai.bardly.domain.chats.local.toDomainModel
 import com.ai.bardly.domain.chats.local.toLocalModel

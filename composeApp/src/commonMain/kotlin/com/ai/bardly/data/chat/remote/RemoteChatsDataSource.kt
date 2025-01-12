@@ -1,5 +1,6 @@
-package com.ai.bardly.data.chat
+package com.ai.bardly.data.chat.remote
 
+import com.ai.bardly.data.chat.ChatsDataSource
 import com.ai.bardly.data.chat.model.PromptResponseApiModel
 import com.ai.bardly.data.chat.model.toRequest
 import com.ai.bardly.domain.chats.model.MessageDomainModel

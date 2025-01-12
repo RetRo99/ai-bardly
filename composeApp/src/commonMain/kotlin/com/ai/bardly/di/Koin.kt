@@ -7,11 +7,11 @@ import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
 import com.ai.bardly.data.chat.ChatsDataRepository
 import com.ai.bardly.data.chat.ChatsDataSource
-import com.ai.bardly.data.chat.LocalChatsDataSource
-import com.ai.bardly.data.chat.RemoteChatsDataSource
+import com.ai.bardly.data.chat.local.LocalChatsDataSource
+import com.ai.bardly.data.chat.remote.RemoteChatsDataSource
 import com.ai.bardly.data.game.GamesDataRepository
 import com.ai.bardly.data.game.GamesDataSource
-import com.ai.bardly.data.game.RemoteGamesDataSource
+import com.ai.bardly.data.game.remote.RemoteGamesDataSource
 import com.ai.bardly.database.AppDatabase
 import com.ai.bardly.database.getDatabaseModule
 import com.ai.bardly.domain.chats.ChatsRepository

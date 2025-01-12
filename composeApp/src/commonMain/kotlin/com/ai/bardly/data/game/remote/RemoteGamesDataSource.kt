@@ -1,7 +1,8 @@
-package com.ai.bardly.data.game
+package com.ai.bardly.data.game.remote
 
 import androidx.paging.PagingData
 import app.cash.paging.PagingConfig
+import com.ai.bardly.data.game.GamesDataSource
 import com.ai.bardly.data.game.model.GamesListApiResponse
 import com.ai.bardly.data.game.model.toDomainModel
 import com.ai.bardly.domain.games.model.GameDomainModel
