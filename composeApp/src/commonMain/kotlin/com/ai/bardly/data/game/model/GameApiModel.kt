@@ -3,6 +3,7 @@ package com.ai.bardly.data.game.model
 import com.ai.bardly.paging.PagingItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.random.Random
 
 @Serializable
 data class GameApiModel(
@@ -17,5 +18,5 @@ data class GameApiModel(
     val link: String?,
     val thumbnail: String?,
     @SerialName("listNumber")
-    override val id: Int
+    override val id: Int = Random.nextInt(),
 ) : PagingItem
