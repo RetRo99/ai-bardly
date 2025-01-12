@@ -1,7 +1,7 @@
 package com.ai.bardly.data.chat
 
-import com.ai.bardly.data.chat.model.QuestionRequestApiModel
+import com.ai.bardly.domain.chats.model.MessageDomainModel
 
 interface ChatsDataSource {
-    suspend fun getAnswer(request: QuestionRequestApiModel): Result<String>
+    suspend fun getAnswer(message: MessageDomainModel): Result<MessageDomainModel>
 }

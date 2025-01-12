@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.crashlytics)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -52,6 +53,8 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kermit)
             implementation(libs.richeditor.compose)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.datetime)
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
@@ -106,4 +109,5 @@ android {
 
 dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
+    ksp(libs.androidx.room.compiler)
 }

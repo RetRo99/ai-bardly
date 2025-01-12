@@ -1,13 +1,30 @@
 package com.ai.bardly
 
-sealed class MessageUiModel(
-    val text: String
-) {
-    data class UserMessage(
-        val message: String
-    ) : MessageUiModel(message)
+import com.ai.bardly.domain.chats.model.MessageDomainModel
+import com.ai.bardly.domain.chats.model.MessageType
+import com.ai.bardly.util.now
+import kotlinx.datetime.LocalDateTime
 
-    data class BardlyMessage(
-        val message: String
-    ) : MessageUiModel(message)
+data class MessageUiModel(
+    val text: String,
+    val type: MessageType,
+    val id: String,
+    val timestamp: LocalDateTime = now(),
+) {
+    val isUserMessage: Boolean
+        get() = type == MessageType.User
 }
+
+fun MessageUiModel.toDomainModel() = MessageDomainModel(
+    text = text,
+    type = type,
+    id = id,
+    timestamp = timestamp
+)
+
+fun MessageDomainModel.toUiModel() = MessageUiModel(
+    text = text,
+    type = type,
+    id = id,
+    timestamp = timestamp
+)

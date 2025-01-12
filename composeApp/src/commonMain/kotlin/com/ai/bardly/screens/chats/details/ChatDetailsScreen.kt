@@ -194,18 +194,18 @@ private fun LazyItemScope.MessageBubble(
     message: MessageUiModel,
     modifier: Modifier = Modifier
 ) {
-    val textAlignment = if (message is MessageUiModel.UserMessage) {
+    val textAlignment = if (message.isUserMessage) {
         Alignment.CenterEnd
     } else {
         Alignment.CenterStart
     }
-    val shape = if (message is MessageUiModel.UserMessage) {
+    val shape = if (message.isUserMessage) {
         RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp, bottomStart = 8.dp)
     } else {
         RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp, bottomEnd = 8.dp)
     }
 
-    val color = if (message is MessageUiModel.UserMessage) {
+    val color = if (message.isUserMessage) {
         Color(0xFFA55E5D)
     } else {
         Color(0xFF56479C)

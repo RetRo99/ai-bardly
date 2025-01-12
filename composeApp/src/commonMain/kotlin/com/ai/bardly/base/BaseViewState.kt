@@ -19,7 +19,7 @@ sealed class BaseViewState<out T> {
 
 }
 
-fun <T> BaseViewState<T>.updateData(update: (T) -> T): BaseViewState<T> {
+fun <T> BaseViewState<T>.copy(update: (T) -> T): BaseViewState<T> {
     return when (this) {
         is BaseViewState.Loaded -> copy(data = update(data))
         else -> this

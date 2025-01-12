@@ -5,12 +5,13 @@ import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
+import com.ai.bardly.data.chat.ChatsDataRepository
 import com.ai.bardly.data.chat.ChatsDataSource
-import com.ai.bardly.data.chat.ChatsRepository
 import com.ai.bardly.data.chat.RemoteChatsDataSource
 import com.ai.bardly.data.game.GamesDataSource
 import com.ai.bardly.data.game.GamesRepository
 import com.ai.bardly.data.game.RemoteGamesDataSource
+import com.ai.bardly.domain.chats.ChatsRepository
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.networking.getHttpEngine
@@ -42,8 +43,8 @@ val gamesDataModule = module {
 
 val chatsDataModule = module {
     single<ChatsDataSource> { RemoteChatsDataSource(get()) }
-    single {
-        ChatsRepository(get())
+    single<ChatsRepository> {
+        ChatsDataRepository(get())
     }
 }
 

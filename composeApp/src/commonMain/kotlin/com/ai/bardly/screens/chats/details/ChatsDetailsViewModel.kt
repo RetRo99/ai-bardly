@@ -4,9 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.ai.bardly.MessageUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.base.updateData
-import com.ai.bardly.data.chat.ChatsRepository
-import com.ai.bardly.data.chat.model.QuestionRequestApiModel
+import com.ai.bardly.base.copy
+import com.ai.bardly.domain.chats.ChatsRepository
+import com.ai.bardly.domain.chats.model.MessageType
+import com.ai.bardly.toDomainModel
+import com.ai.bardly.toUiModel
 import kotlinx.coroutines.launch
 
 class ChatsDetailsViewModel(
@@ -28,33 +30,49 @@ class ChatsDetailsViewModel(
         navigateBack()
     }
 
-    fun onMessageSendClicked(message: String) {
-        addMessage(MessageUiModel.UserMessage(message))
+    fun onMessageSendClicked(messageText: String) {
+        val message = displayAndGetMessage(
+            type = MessageType.User,
+            messageText = messageText,
+            id = gameTitle,
+        )
         viewModelScope.launch {
-            val answer = chatsRepository.getAnswer(
-                QuestionRequestApiModel(
-                    question = message,
-                    game = gameTitle
-                )
-            )
+            val answer = chatsRepository.getAnswerFor(message.toDomainModel())
             when {
                 answer.isSuccess -> {
-                    addMessage(MessageUiModel.BardlyMessage(answer.getOrThrow()))
+                    displayMessage(answer.getOrThrow().toUiModel())
                 }
 
                 answer.isFailure -> {
-                    // TODO handle error
+                    updateState {
+                        it.copy {
+                            it.copy(
+                                isResponding = false
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 
-    private fun addMessage(message: MessageUiModel) {
-        updateState { state ->
-            state.updateData {
+    private fun displayAndGetMessage(
+        type: MessageType,
+        messageText: String,
+        id: String,
+    ): MessageUiModel {
+        val message = MessageUiModel(messageText, type, id)
+        displayMessage(message)
+        return message
+    }
+
+    private fun displayMessage(
+        message: MessageUiModel
+    ) {
+        updateState {
+            it.copy {
                 it.copy(
-                    messages = listOf(message) + it.messages,
-                    isResponding = message is MessageUiModel.UserMessage,
+                    messages = listOf(message) + it.messages
                 )
             }
         }
