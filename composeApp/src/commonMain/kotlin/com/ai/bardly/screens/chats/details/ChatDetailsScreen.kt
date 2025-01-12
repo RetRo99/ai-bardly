@@ -6,6 +6,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
@@ -15,13 +20,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.clearText
@@ -37,6 +47,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -93,6 +104,7 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
                     title = viewState.data.title,
                     id = viewState.data.gameId,
                     messages = viewState.data.messages,
+                    isResponding = viewState.data.isResponding,
                     onBackClick = onBackClick,
                     animatedVisibilityScope = animatedVisibilityScope,
                     onMessageSendClicked = onMessageSendClicked,
@@ -108,6 +120,7 @@ private fun SharedTransitionScope.ChatDetails(
     title: String,
     id: Int,
     messages: List<MessageUiModel>,
+    isResponding: Boolean,
     onBackClick: () -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onMessageSendClicked: (String) -> Unit,
@@ -154,10 +167,18 @@ private fun SharedTransitionScope.ChatDetails(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(messages) { message ->
-                    MessageBubble(message)
+                    MessageBubble(
+                        message = message,
+                        modifier = Modifier.animateItem(),
+                    )
                 }
             }
 
+            if (isResponding) {
+                BardlyThinkingDots(
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
             MessageInputField(
                 modifier = Modifier.padding(16.dp),
                 onMessageSendClicked = onMessageSendClicked
@@ -167,7 +188,7 @@ private fun SharedTransitionScope.ChatDetails(
 }
 
 @Composable
-private fun MessageBubble(message: MessageUiModel) {
+private fun MessageBubble(message: MessageUiModel, modifier: Modifier) {
     val textAlignment = if (message is MessageUiModel.UserMessage) {
         Alignment.CenterEnd
     } else {
@@ -185,7 +206,7 @@ private fun MessageBubble(message: MessageUiModel) {
         Color(0xFF56479C)
     }
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         contentAlignment = textAlignment
     ) {
         Box(
@@ -264,5 +285,58 @@ fun MessageInputField(
                 }
             }
         )
+    }
+}
+
+@Composable
+private fun BardlyThinkingDots(modifier: Modifier) {
+    val delayUnit = 300
+    val maxOffset = 10f
+
+    @Composable
+    fun Dot(
+        offset: Float
+    ) = Spacer(
+        Modifier
+            .size(4.dp)
+            .offset(y = -offset.dp)
+            .background(
+                color = Color(0xFF56479C),
+                shape = CircleShape
+            )
+    )
+
+    val infiniteTransition = rememberInfiniteTransition()
+
+    @Composable
+    fun animateOffsetWithDelay(delay: Int) = infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 0f,
+        animationSpec = infiniteRepeatable(
+            animation = keyframes {
+                durationMillis = delayUnit * 4
+                0f at delay using LinearEasing
+                maxOffset at delay + delayUnit using LinearEasing
+                0f at delay + delayUnit * 2
+            }
+        )
+    )
+
+    val offset1 by animateOffsetWithDelay(0)
+    val offset2 by animateOffsetWithDelay(delayUnit)
+    val offset3 by animateOffsetWithDelay(delayUnit * 2)
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .padding(vertical = 12.dp),
+    ) {
+        val spaceSize = 4.dp
+        Spacer(modifier = Modifier.width(12.dp))
+        Dot(offset1)
+        Spacer(Modifier.width(spaceSize))
+        Dot(offset2)
+        Spacer(Modifier.width(spaceSize))
+        Dot(offset3)
     }
 }

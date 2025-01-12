@@ -19,7 +19,8 @@ class ChatsDetailsViewModel(
         ChatDetailsViewState(
             gameTitle,
             gameId,
-            emptyList()
+            emptyList(),
+            false
         )
     )
 
@@ -52,7 +53,8 @@ class ChatsDetailsViewModel(
         updateState { state ->
             state.updateData {
                 it.copy(
-                    messages = listOf(message) + it.messages
+                    messages = listOf(message) + it.messages,
+                    isResponding = message is MessageUiModel.UserMessage,
                 )
             }
         }
