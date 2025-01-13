@@ -6,9 +6,6 @@ import kotlinx.datetime.LocalDateTime
 data class MessageDomainModel(
     val text: String,
     val type: MessageType,
-    val id: String,
+    val gameId: Int,
     val timestamp: LocalDateTime = now(),
-) {
-    val isUserMessage: Boolean
-        get() = type == MessageType.User
-}
+)

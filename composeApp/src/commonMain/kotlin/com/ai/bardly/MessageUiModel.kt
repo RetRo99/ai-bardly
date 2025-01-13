@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDateTime
 data class MessageUiModel(
     val text: String,
     val type: MessageType,
-    val id: String,
+    val gameId: Int,
     val timestamp: LocalDateTime = now(),
 ) {
     val isUserMessage: Boolean
@@ -18,13 +18,13 @@ data class MessageUiModel(
 fun MessageUiModel.toDomainModel() = MessageDomainModel(
     text = text,
     type = type,
-    id = id,
+    gameId = gameId,
     timestamp = timestamp
 )
 
 fun MessageDomainModel.toUiModel() = MessageUiModel(
     text = text,
     type = type,
-    id = id,
+    gameId = gameId,
     timestamp = timestamp
 )

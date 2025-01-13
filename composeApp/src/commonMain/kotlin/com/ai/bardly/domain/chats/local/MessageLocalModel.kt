@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDateTime
 
 @Entity
 data class MessageLocalModel(
-    val id: String,
+    val gameId: Int,
     val text: String,
     val type: MessageType,
     @PrimaryKey
@@ -16,14 +16,14 @@ data class MessageLocalModel(
 )
 
 fun MessageLocalModel.toDomainModel() = MessageDomainModel(
-    id = id,
+    gameId = gameId,
     text = text,
     type = type,
     timestamp = timestamp,
 )
 
 fun MessageDomainModel.toLocalModel() = MessageLocalModel(
-    id = id,
+    gameId = gameId,
     text = text,
     type = type,
     timestamp = timestamp,

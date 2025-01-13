@@ -61,7 +61,7 @@ class ChatsDetailsViewModel(
         val message = displayAndGetMessage(
             type = MessageType.User,
             messageText = messageText,
-            id = gameTitle,
+            id = gameId,
         )
         viewModelScope.launch {
             val answer = chatsRepository.getAnswerFor(message.toDomainModel())
@@ -86,7 +86,7 @@ class ChatsDetailsViewModel(
     private fun displayAndGetMessage(
         type: MessageType,
         messageText: String,
-        id: String,
+        id: Int,
     ): MessageUiModel {
         val message = MessageUiModel(messageText, type, id)
         displayMessage(message)

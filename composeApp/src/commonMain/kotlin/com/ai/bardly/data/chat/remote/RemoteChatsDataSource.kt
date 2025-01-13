@@ -20,13 +20,13 @@ class RemoteChatsDataSource(
             MessageDomainModel(
                 text = it.data.result.text,
                 type = MessageType.Bardly,
-                id = message.id,
+                gameId = message.gameId,
                 timestamp = now()
             )
         }
     }
 
-    override suspend fun getMessages(id: String): Result<List<MessageDomainModel>> {
+    override suspend fun getMessages(gameId: String): Result<List<MessageDomainModel>> {
         throw NotImplementedError("RemoteChatsDataSource is not for getting messages")
     }
 

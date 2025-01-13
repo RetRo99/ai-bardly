@@ -52,7 +52,7 @@ fun GameDomainModel.toLocalModel() = GameLocalModel(
 )
 
 fun MessageDomainModel.toLocalModel(): MessageLocalModel = MessageLocalModel(
-    id = id,
+    gameId = gameId,
     text = text,
     type = type,
     timestamp = timestamp,

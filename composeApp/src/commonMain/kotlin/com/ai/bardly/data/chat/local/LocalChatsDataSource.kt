@@ -14,9 +14,9 @@ class LocalChatsDataSource(
         throw NotImplementedError("LocalChatsDataSource is not for getting answers")
     }
 
-    override suspend fun getMessages(id: String): Result<List<MessageDomainModel>> {
+    override suspend fun getMessages(gameId: String): Result<List<MessageDomainModel>> {
         return try {
-            val messages = dao.getMessage(id)
+            val messages = dao.getMessage(gameId)
             Result.success(messages.map { it.toDomainModel() })
         } catch (e: Exception) {
             Result.failure(e)
