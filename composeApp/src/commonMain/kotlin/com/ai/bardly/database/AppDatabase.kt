@@ -5,15 +5,24 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
-import com.ai.bardly.domain.chats.local.MessageEntity
+import com.ai.bardly.domain.chats.local.MessageLocalModel
 import com.ai.bardly.domain.chats.local.MessagesDao
+import com.ai.bardly.domain.games.model.local.GameLocalModel
+import com.ai.bardly.domain.games.model.local.GamesDao
 import org.koin.core.module.Module
 
-@Database(entities = [MessageEntity::class], version = 1)
+@Database(
+    entities = [
+        MessageLocalModel::class,
+        GameLocalModel::class,
+    ],
+    version = 1
+)
 @ConstructedBy(AppDatabaseConstructor::class)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getMessagesDao(): MessagesDao
+    abstract fun getGamesDao(): GamesDao
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")

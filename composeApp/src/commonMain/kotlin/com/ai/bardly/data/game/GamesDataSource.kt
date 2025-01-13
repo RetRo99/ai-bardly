@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GamesDataSource {
     suspend fun getGames(query: String?): Flow<PagingData<GameDomainModel>>
+    suspend fun saveGames(games: List<GameDomainModel>)
 }

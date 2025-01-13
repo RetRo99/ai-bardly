@@ -30,6 +30,10 @@ class RemoteGamesDataSource(
         ).pagingData
     }
 
+    override suspend fun saveGames(games: List<GameDomainModel>) {
+        throw NotImplementedError()
+    }
+
     private suspend fun getGamesUrl(page: Int, query: String?): GamesListApiResponse {
         return networkClient.get<GamesListApiResponse>(
             path = "games",

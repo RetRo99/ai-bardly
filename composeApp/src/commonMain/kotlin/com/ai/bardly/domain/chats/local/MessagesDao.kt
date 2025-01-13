@@ -7,8 +7,11 @@ import androidx.room.Query
 @Dao
 interface MessagesDao {
     @Insert
-    suspend fun insert(item: MessageEntity)
+    suspend fun insert(item: MessageLocalModel)
 
-    @Query("SELECT * FROM MessageEntity WHERE id = :id ORDER BY timestamp DESC")
-    suspend fun getMessages(id: String): List<MessageEntity>
+    @Insert
+    suspend fun insert(items: List<MessageLocalModel>)
+
+    @Query("SELECT * FROM MessageLocalModel WHERE id = :id ORDER BY timestamp DESC")
+    suspend fun getMessage(id: String): List<MessageLocalModel>
 }

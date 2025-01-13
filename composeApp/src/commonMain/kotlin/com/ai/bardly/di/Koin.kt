@@ -42,13 +42,14 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 val gamesDataModule = module {
-    single<GamesDataSource>(named<LocalGamesDataSource>()) { LocalGamesDataSource() }
+    single<GamesDataSource>(named<LocalGamesDataSource>()) { LocalGamesDataSource(get()) }
     single<GamesDataSource>(named<RemoteGamesDataSource>()) { RemoteGamesDataSource(get()) }
     single<GamesRepository> {
         GamesDataRepository(
             get(named<RemoteGamesDataSource>()), get(named<LocalGamesDataSource>())
         )
     }
+    single { get<AppDatabase>().getGamesDao() }
 }
 
 val chatsDataModule = module {

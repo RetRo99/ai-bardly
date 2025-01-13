@@ -3,8 +3,8 @@ package com.ai.bardly.data.chat.local
 import com.ai.bardly.data.chat.ChatsDataSource
 import com.ai.bardly.domain.chats.local.MessagesDao
 import com.ai.bardly.domain.chats.local.toDomainModel
-import com.ai.bardly.domain.chats.local.toLocalModel
 import com.ai.bardly.domain.chats.model.MessageDomainModel
+import com.ai.bardly.domain.games.model.local.toLocalModel
 
 class LocalChatsDataSource(
     private val dao: MessagesDao,
@@ -16,7 +16,7 @@ class LocalChatsDataSource(
 
     override suspend fun getMessages(id: String): Result<List<MessageDomainModel>> {
         return try {
-            val messages = dao.getMessages(id)
+            val messages = dao.getMessage(id)
             Result.success(messages.map { it.toDomainModel() })
         } catch (e: Exception) {
             Result.failure(e)

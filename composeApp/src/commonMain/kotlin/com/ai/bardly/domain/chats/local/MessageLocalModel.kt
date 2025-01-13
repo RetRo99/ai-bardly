@@ -7,7 +7,7 @@ import com.ai.bardly.domain.chats.model.MessageType
 import kotlinx.datetime.LocalDateTime
 
 @Entity
-data class MessageEntity(
+data class MessageLocalModel(
     val id: String,
     val text: String,
     val type: MessageType,
@@ -15,14 +15,14 @@ data class MessageEntity(
     val timestamp: LocalDateTime,
 )
 
-fun MessageEntity.toDomainModel() = MessageDomainModel(
+fun MessageLocalModel.toDomainModel() = MessageDomainModel(
     id = id,
     text = text,
     type = type,
     timestamp = timestamp,
 )
 
-fun MessageDomainModel.toLocalModel(): MessageEntity = MessageEntity(
+fun MessageDomainModel.toLocalModel() = MessageLocalModel(
     id = id,
     text = text,
     type = type,
