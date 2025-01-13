@@ -6,10 +6,11 @@ import com.ai.bardly.domain.games.model.GameDomainModel
 import kotlinx.coroutines.flow.Flow
 
 class GamesDataRepository(
-    private val gamesApi: GamesDataSource,
+    private val remoteSource: GamesDataSource,
+    private val localSource: GamesDataSource,
 ) : GamesRepository {
     override suspend fun getGames(
         query: String?,
-    ): Flow<PagingData<GameDomainModel>> = gamesApi
+    ): Flow<PagingData<GameDomainModel>> = remoteSource
         .getGames(query)
 }
