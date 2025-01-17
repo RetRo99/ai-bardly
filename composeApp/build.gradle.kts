@@ -99,6 +99,8 @@ android {
             isMinifyEnabled = false
             manifestPlaceholders["crashlyticsCollectionEnabled"] = true
             manifestPlaceholders["usesCleartextTraffic"] = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             resValue("string", "app_name", "Bardly")
         }
     }
