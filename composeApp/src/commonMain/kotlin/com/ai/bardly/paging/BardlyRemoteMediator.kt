@@ -12,7 +12,7 @@ class BardlyRemoteMediator<ITEM : PagingItem>(
     private val localSource: PagingSource<Int, ITEM>,
     private val saveToLocal: suspend (List<ITEM>) -> Unit,
     private val clearLocal: suspend () -> Unit,
-    private val shouldRefresh: () -> Boolean = { false }
+    private val shouldRefresh: () -> Boolean = { true }
 ) : RemoteMediator<Int, ITEM>() {
 
     private var currentPage = 1

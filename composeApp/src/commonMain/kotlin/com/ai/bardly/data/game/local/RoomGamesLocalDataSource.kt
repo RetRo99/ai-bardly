@@ -6,20 +6,19 @@ import com.ai.bardly.domain.games.model.local.GameLocalModel
 import com.ai.bardly.domain.games.model.local.GamesDao
 import com.ai.bardly.domain.games.model.local.toLocalModel
 
-// TODO: interface should be implemented
-class LocalGamesDataSource(
+class RoomGamesLocalDataSource(
     private val gamesDao: GamesDao
-) {
+) : GamesLocalDataSource {
 
-    fun getGames(query: String?): PagingSource<Int, GameLocalModel> {
+    override fun getGames(query: String?): PagingSource<Int, GameLocalModel> {
         return gamesDao.getGames()
     }
 
-    suspend fun saveGames(games: List<GameDomainModel>) {
+    override suspend fun saveGames(games: List<GameDomainModel>) {
         gamesDao.insert(games.map { it.toLocalModel() })
     }
 
-    suspend fun clearAll() {
+    override suspend fun clearAll() {
         gamesDao.clearAll()
     }
 }
