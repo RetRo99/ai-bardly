@@ -13,5 +13,5 @@ interface MessagesDao {
     suspend fun insert(items: List<MessageLocalModel>)
 
     @Query("SELECT * FROM MessageLocalModel WHERE gameId = :gameId ORDER BY timestamp DESC")
-    suspend fun getMessage(gameId: String): List<MessageLocalModel>
+    suspend fun getMessage(gameId: Int): List<MessageLocalModel>
 }

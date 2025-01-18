@@ -16,7 +16,7 @@ class ChatsDataRepository(
         return answerMessage
     }
 
-    override suspend fun getMessages(gameId: String): Result<List<MessageDomainModel>> {
+    override suspend fun getMessages(gameId: Int): Result<List<MessageDomainModel>> {
         return localChatsDataSource.getMessages(gameId)
     }
 }

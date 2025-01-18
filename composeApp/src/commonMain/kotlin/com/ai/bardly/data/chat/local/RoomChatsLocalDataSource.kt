@@ -9,7 +9,7 @@ class RoomChatsLocalDataSource(
     private val dao: MessagesDao,
 ) : ChatsLocalDataSource {
 
-    override suspend fun getMessages(gameId: String): Result<List<MessageDomainModel>> {
+    override suspend fun getMessages(gameId: Int): Result<List<MessageDomainModel>> {
         return try {
             val messages = dao.getMessage(gameId)
             Result.success(messages.map { it.toDomainModel() })

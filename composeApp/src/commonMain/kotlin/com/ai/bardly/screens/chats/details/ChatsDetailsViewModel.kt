@@ -28,19 +28,17 @@ class ChatsDetailsViewModel(
 
     init {
         viewModelScope.launch {
-            val messages = chatsRepository.getMessages(gameTitle)
-            when {
-                messages.isSuccess -> {
+            chatsRepository
+                .getMessages(gameId)
+                .onSuccess { messages ->
                     updateState {
                         it.copy {
                             it.copy(
-                                messages = messages.getOrThrow().map { it.toUiModel() }
+                                messages = messages.map { it.toUiModel() }
                             )
                         }
                     }
-                }
-
-                messages.isFailure -> {
+                }.onFailure {
                     updateState {
                         it.copy {
                             it.copy(
@@ -49,7 +47,6 @@ class ChatsDetailsViewModel(
                         }
                     }
                 }
-            }
         }
     }
 
