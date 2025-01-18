@@ -9,9 +9,9 @@ import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.paging.BardlyPagingSource
 import com.ai.bardly.paging.PagingResult
 
-class KtorRemoteGamesDataSource(
+class KtorGamesRemoteDataSource(
     private val networkClient: NetworkClient,
-) : RemoteGamesDataSource {
+) : GamesRemoteDataSource {
 
     override suspend fun getGames(query: String?): PagingSource<Int, GameLocalModel> {
         return BardlyPagingSource(

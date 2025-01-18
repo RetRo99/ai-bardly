@@ -12,8 +12,8 @@ import com.ai.bardly.data.chat.remote.RemoteChatsDataSource
 import com.ai.bardly.data.game.GamesDataRepository
 import com.ai.bardly.data.game.local.GamesLocalDataSource
 import com.ai.bardly.data.game.local.RoomGamesLocalDataSource
-import com.ai.bardly.data.game.remote.KtorRemoteGamesDataSource
-import com.ai.bardly.data.game.remote.RemoteGamesDataSource
+import com.ai.bardly.data.game.remote.GamesRemoteDataSource
+import com.ai.bardly.data.game.remote.KtorGamesRemoteDataSource
 import com.ai.bardly.database.AppDatabase
 import com.ai.bardly.database.getDatabaseModule
 import com.ai.bardly.domain.chats.ChatsRepository
@@ -44,7 +44,7 @@ import org.koin.dsl.module
 
 val gamesDataModule = module {
     single<GamesLocalDataSource> { RoomGamesLocalDataSource(get()) }
-    single<RemoteGamesDataSource> { KtorRemoteGamesDataSource(get()) }
+    single<GamesRemoteDataSource> { KtorGamesRemoteDataSource(get()) }
     single<GamesRepository> { GamesDataRepository(get(), get()) }
     single { get<AppDatabase>().getGamesDao() }
 }
