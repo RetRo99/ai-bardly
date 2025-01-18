@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.ai.bardly.data.game.local.GamesLocalDataSource
-import com.ai.bardly.data.game.remote.GamesDataSource
+import com.ai.bardly.data.game.remote.RemoteGamesDataSource
 import com.ai.bardly.domain.games.GamesRepository
 import com.ai.bardly.domain.games.model.GameDomainModel
 import com.ai.bardly.domain.games.model.local.toDomainModel
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GamesDataRepository(
-    private val remoteSource: GamesDataSource,
+    private val remoteSource: RemoteGamesDataSource,
     private val localSource: GamesLocalDataSource,
 ) : GamesRepository {
 
