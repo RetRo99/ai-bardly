@@ -16,6 +16,7 @@ import io.ktor.http.isSuccess
 import io.ktor.http.path
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
 open class NetworkClient(
@@ -87,6 +88,7 @@ open class NetworkClient(
             }
 
         } catch (e: Exception) {
+            ensureActive()
             Result.failure(e)
         }
     }
