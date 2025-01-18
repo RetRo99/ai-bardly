@@ -1,13 +1,15 @@
 package com.ai.bardly.data.game.local
 
 import androidx.paging.PagingSource
+import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.domain.games.model.GameDomainModel
 import com.ai.bardly.domain.games.model.local.GameLocalModel
 import com.ai.bardly.domain.games.model.local.GamesDao
 import com.ai.bardly.domain.games.model.local.toLocalModel
 
 class RoomGamesLocalDataSource(
-    private val gamesDao: GamesDao
+    private val gamesDao: GamesDao,
+    private val daoExecutor: DaoExecutor,
 ) : GamesLocalDataSource {
 
     override fun getGames(query: String?): PagingSource<Int, GameLocalModel> {
@@ -15,10 +17,14 @@ class RoomGamesLocalDataSource(
     }
 
     override suspend fun saveGames(games: List<GameDomainModel>) {
-        gamesDao.insert(games.map { it.toLocalModel() })
+        daoExecutor.executeDaoOperation {
+            gamesDao.insert(games.map { it.toLocalModel() })
+        }
     }
 
     override suspend fun clearAll() {
-        gamesDao.clearAll()
+        daoExecutor.executeDaoOperation {
+            gamesDao.clearAll()
+        }
     }
 }

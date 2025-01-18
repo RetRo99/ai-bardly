@@ -16,6 +16,7 @@ import com.ai.bardly.data.game.local.RoomGamesLocalDataSource
 import com.ai.bardly.data.game.remote.GamesRemoteDataSource
 import com.ai.bardly.data.game.remote.NetworkGamesRemoteDataSource
 import com.ai.bardly.database.AppDatabase
+import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.database.getDatabaseModule
 import com.ai.bardly.domain.chats.ChatsRepository
 import com.ai.bardly.domain.games.GamesRepository
@@ -43,7 +44,7 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 val gamesDataModule = module {
-    single<GamesLocalDataSource> { RoomGamesLocalDataSource(get()) }
+    single<GamesLocalDataSource> { RoomGamesLocalDataSource(get(), get()) }
     single<GamesRemoteDataSource> { NetworkGamesRemoteDataSource(get()) }
     single<GamesRepository> { GamesDataRepository(get(), get()) }
     single { get<AppDatabase>().getGamesDao() }
@@ -51,7 +52,7 @@ val gamesDataModule = module {
 
 val chatsDataModule = module {
     single<ChatsRemoteDataSource> { NetworkChatsRemoteDataSource(get()) }
-    single<ChatsLocalDataSource> { RoomChatsLocalDataSource(get()) }
+    single<ChatsLocalDataSource> { RoomChatsLocalDataSource(get(), get()) }
     single<ChatsRepository> { ChatsDataRepository(get(), get()) }
     single { get<AppDatabase>().getMessagesDao() }
 }
@@ -100,6 +101,10 @@ val analyticsModule = module {
     }
 }
 
+val daoModule = module {
+    single { DaoExecutor() }
+}
+
 fun initKoin(
     appDeclaration: KoinAppDeclaration = {}
 ) {
@@ -113,7 +118,8 @@ fun initKoin(
             navigationModule,
             networkingModule,
             chatsDataModule,
-            getDatabaseModule()
+            getDatabaseModule(),
+            daoModule,
         )
     }
 }
