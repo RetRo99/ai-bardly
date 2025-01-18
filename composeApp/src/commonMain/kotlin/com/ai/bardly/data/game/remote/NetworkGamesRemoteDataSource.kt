@@ -9,7 +9,7 @@ import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.paging.BardlyPagingSource
 import com.ai.bardly.paging.PagingResult
 
-class KtorGamesRemoteDataSource(
+class NetworkGamesRemoteDataSource(
     private val networkClient: NetworkClient,
 ) : GamesRemoteDataSource {
 

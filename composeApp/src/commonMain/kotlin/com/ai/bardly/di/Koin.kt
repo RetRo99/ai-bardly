@@ -9,12 +9,12 @@ import com.ai.bardly.data.chat.ChatsDataRepository
 import com.ai.bardly.data.chat.local.ChatsLocalDataSource
 import com.ai.bardly.data.chat.local.RoomChatsLocalDataSource
 import com.ai.bardly.data.chat.remote.ChatsRemoteDataSource
-import com.ai.bardly.data.chat.remote.KtorChatsRemoteDataSource
+import com.ai.bardly.data.chat.remote.NetworkChatsRemoteDataSource
 import com.ai.bardly.data.game.GamesDataRepository
 import com.ai.bardly.data.game.local.GamesLocalDataSource
 import com.ai.bardly.data.game.local.RoomGamesLocalDataSource
 import com.ai.bardly.data.game.remote.GamesRemoteDataSource
-import com.ai.bardly.data.game.remote.KtorGamesRemoteDataSource
+import com.ai.bardly.data.game.remote.NetworkGamesRemoteDataSource
 import com.ai.bardly.database.AppDatabase
 import com.ai.bardly.database.getDatabaseModule
 import com.ai.bardly.domain.chats.ChatsRepository
@@ -44,13 +44,13 @@ import org.koin.dsl.module
 
 val gamesDataModule = module {
     single<GamesLocalDataSource> { RoomGamesLocalDataSource(get()) }
-    single<GamesRemoteDataSource> { KtorGamesRemoteDataSource(get()) }
+    single<GamesRemoteDataSource> { NetworkGamesRemoteDataSource(get()) }
     single<GamesRepository> { GamesDataRepository(get(), get()) }
     single { get<AppDatabase>().getGamesDao() }
 }
 
 val chatsDataModule = module {
-    single<ChatsRemoteDataSource> { KtorChatsRemoteDataSource(get()) }
+    single<ChatsRemoteDataSource> { NetworkChatsRemoteDataSource(get()) }
     single<ChatsLocalDataSource> { RoomChatsLocalDataSource(get()) }
     single<ChatsRepository> { ChatsDataRepository(get(), get()) }
     single { get<AppDatabase>().getMessagesDao() }

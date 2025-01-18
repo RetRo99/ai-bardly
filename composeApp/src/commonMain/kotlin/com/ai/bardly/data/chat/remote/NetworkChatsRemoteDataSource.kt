@@ -7,7 +7,7 @@ import com.ai.bardly.domain.chats.model.MessageType
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.util.now
 
-class KtorChatsRemoteDataSource(
+class NetworkChatsRemoteDataSource(
     private val networkClient: NetworkClient,
 ) : ChatsRemoteDataSource {
 
