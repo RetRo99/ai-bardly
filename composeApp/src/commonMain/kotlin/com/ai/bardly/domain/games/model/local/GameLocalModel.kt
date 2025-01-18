@@ -56,4 +56,5 @@ fun MessageDomainModel.toLocalModel(): MessageLocalModel = MessageLocalModel(
     text = text,
     type = type,
     timestamp = timestamp,
+    gameTitle = gameTitle,
 )

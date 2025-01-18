@@ -20,7 +20,8 @@ class NetworkChatsRemoteDataSource(
                 text = it.data.result.text,
                 type = MessageType.Bardly,
                 gameId = message.gameId,
-                timestamp = now()
+                timestamp = now(),
+                gameTitle = message.gameTitle
             )
         }
     }

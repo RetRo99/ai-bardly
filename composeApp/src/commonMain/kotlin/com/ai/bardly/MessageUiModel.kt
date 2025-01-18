@@ -9,6 +9,7 @@ data class MessageUiModel(
     val text: String,
     val type: MessageType,
     val gameId: Int,
+    val gameTitle: String,
     val timestamp: LocalDateTime = now(),
 ) {
     val isUserMessage: Boolean
@@ -19,12 +20,14 @@ fun MessageUiModel.toDomainModel() = MessageDomainModel(
     text = text,
     type = type,
     gameId = gameId,
-    timestamp = timestamp
+    timestamp = timestamp,
+    gameTitle = gameTitle,
 )
 
 fun MessageDomainModel.toUiModel() = MessageUiModel(
     text = text,
     type = type,
     gameId = gameId,
-    timestamp = timestamp
+    timestamp = timestamp,
+    gameTitle = gameTitle,
 )

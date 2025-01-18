@@ -11,6 +11,7 @@ data class MessageLocalModel(
     val gameId: Int,
     val text: String,
     val type: MessageType,
+    val gameTitle: String,
     @PrimaryKey
     val timestamp: LocalDateTime,
 )
@@ -20,6 +21,7 @@ fun MessageLocalModel.toDomainModel() = MessageDomainModel(
     text = text,
     type = type,
     timestamp = timestamp,
+    gameTitle = gameTitle,
 )
 
 fun MessageDomainModel.toLocalModel() = MessageLocalModel(
@@ -27,4 +29,5 @@ fun MessageDomainModel.toLocalModel() = MessageLocalModel(
     text = text,
     type = type,
     timestamp = timestamp,
+    gameTitle = gameTitle,
 )

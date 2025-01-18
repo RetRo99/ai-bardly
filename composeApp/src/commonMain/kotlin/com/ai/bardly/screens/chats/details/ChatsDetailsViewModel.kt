@@ -56,18 +56,15 @@ class ChatsDetailsViewModel(
 
     fun onMessageSendClicked(messageText: String) {
         val message = displayAndGetMessage(
-            type = MessageType.User,
             messageText = messageText,
             id = gameId,
         )
         viewModelScope.launch {
-            val answer = chatsRepository.getAnswerFor(message.toDomainModel())
-            when {
-                answer.isSuccess -> {
-                    displayMessage(answer.getOrThrow().toUiModel())
-                }
-
-                answer.isFailure -> {
+            chatsRepository
+                .getAnswerFor(message.toDomainModel())
+                .onSuccess { answer ->
+                    displayMessage(answer.toUiModel())
+                }.onFailure {
                     updateState {
                         it.copy {
                             it.copy(
@@ -75,17 +72,16 @@ class ChatsDetailsViewModel(
                             )
                         }
                     }
+
                 }
-            }
         }
     }
 
     private fun displayAndGetMessage(
-        type: MessageType,
         messageText: String,
         id: Int,
     ): MessageUiModel {
-        val message = MessageUiModel(messageText, type, id)
+        val message = MessageUiModel(messageText, MessageType.User, id, gameTitle)
         displayMessage(message)
         return message
     }

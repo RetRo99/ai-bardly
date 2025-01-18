@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class QuestionRequestApiModel(
     val question: String,
-    val game: Int
+    val game: String
 )
 
 fun MessageDomainModel.toRequest() = QuestionRequestApiModel(
     question = text,
-    game = gameId
+    game = gameTitle,
 )
