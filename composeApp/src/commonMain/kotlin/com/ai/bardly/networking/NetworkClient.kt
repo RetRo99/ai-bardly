@@ -14,6 +14,9 @@ import io.ktor.http.URLBuilder
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.path
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 
 open class NetworkClient(
     @PublishedApi
@@ -72,8 +75,10 @@ open class NetworkClient(
     }
 
     @PublishedApi
-    internal suspend inline fun <reified T> performRequest(block: () -> HttpResponse): Result<T> {
-        return try {
+    internal suspend inline fun <reified T> performRequest(
+        crossinline block: suspend () -> HttpResponse
+    ): Result<T> = withContext(Dispatchers.IO) {
+        try {
             val response = block()
             if (response.status.isSuccess()) {
                 Result.success(response.body())
