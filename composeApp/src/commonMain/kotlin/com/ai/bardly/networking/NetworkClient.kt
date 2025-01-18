@@ -28,7 +28,7 @@ open class NetworkClient(
         val url = buildUrl(path, queryBuilder)
         httpClient.get(url) {
             headers(headers)
-        }.body()
+        }
     }
 
     suspend inline fun <reified T> post(
@@ -42,7 +42,7 @@ open class NetworkClient(
             headers(headers)
             setBody(body)
             contentType(ContentType.Application.Json)
-        }.body()
+        }
     }
 
     @PublishedApi
