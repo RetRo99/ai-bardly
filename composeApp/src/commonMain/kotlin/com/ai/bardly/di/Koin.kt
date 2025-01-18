@@ -6,9 +6,10 @@ import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
 import com.ai.bardly.data.chat.ChatsDataRepository
-import com.ai.bardly.data.chat.ChatsDataSource
-import com.ai.bardly.data.chat.local.LocalChatsDataSource
-import com.ai.bardly.data.chat.remote.RemoteChatsDataSource
+import com.ai.bardly.data.chat.local.ChatsLocalDataSource
+import com.ai.bardly.data.chat.local.RoomChatsLocalDataSource
+import com.ai.bardly.data.chat.remote.ChatsRemoteDataSource
+import com.ai.bardly.data.chat.remote.KtorChatsRemoteDataSource
 import com.ai.bardly.data.game.GamesDataRepository
 import com.ai.bardly.data.game.local.GamesLocalDataSource
 import com.ai.bardly.data.game.local.RoomGamesLocalDataSource
@@ -38,7 +39,6 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.factoryOf
-import org.koin.core.qualifier.named
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
@@ -50,11 +50,9 @@ val gamesDataModule = module {
 }
 
 val chatsDataModule = module {
-    single<ChatsDataSource>(named<RemoteChatsDataSource>()) { RemoteChatsDataSource(get()) }
-    single<ChatsDataSource>(named<LocalChatsDataSource>()) { LocalChatsDataSource(get()) }
-    single<ChatsRepository> {
-        ChatsDataRepository(get(named<RemoteChatsDataSource>()), get(named<LocalChatsDataSource>()))
-    }
+    single<ChatsRemoteDataSource> { KtorChatsRemoteDataSource(get()) }
+    single<ChatsLocalDataSource> { RoomChatsLocalDataSource(get()) }
+    single<ChatsRepository> { ChatsDataRepository(get(), get()) }
     single { get<AppDatabase>().getMessagesDao() }
 }
 

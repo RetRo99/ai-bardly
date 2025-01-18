@@ -1,18 +1,13 @@
 package com.ai.bardly.data.chat.local
 
-import com.ai.bardly.data.chat.ChatsDataSource
 import com.ai.bardly.domain.chats.local.MessagesDao
 import com.ai.bardly.domain.chats.local.toDomainModel
 import com.ai.bardly.domain.chats.model.MessageDomainModel
 import com.ai.bardly.domain.games.model.local.toLocalModel
 
-class LocalChatsDataSource(
+class RoomChatsLocalDataSource(
     private val dao: MessagesDao,
-) : ChatsDataSource {
-
-    override suspend fun getAnswer(message: MessageDomainModel): Result<MessageDomainModel> {
-        throw NotImplementedError("LocalChatsDataSource is not for getting answers")
-    }
+) : ChatsLocalDataSource {
 
     override suspend fun getMessages(gameId: String): Result<List<MessageDomainModel>> {
         return try {
