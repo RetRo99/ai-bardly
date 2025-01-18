@@ -63,6 +63,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.navigation.compose)
             implementation(libs.paging.compose.common)
+            implementation(libs.androidx.room.paging)
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
@@ -96,12 +97,13 @@ android {
             resValue("string", "app_name", "Bardly Debug")
         }
         getByName("release") {
-            isMinifyEnabled = false
+            manifestPlaceholders += mapOf()
             manifestPlaceholders["crashlyticsCollectionEnabled"] = true
             manifestPlaceholders["usesCleartextTraffic"] = false
             isMinifyEnabled = true
             isShrinkResources = true
             resValue("string", "app_name", "Bardly")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

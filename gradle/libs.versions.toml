@@ -12,7 +12,7 @@ navigationCompose = "2.8.0-alpha11"
 gradlePlugins-google-services = "4.4.2"
 gradlePlugins-crashlytics = "3.0.2"
 firebase-gitlive-sdk = "2.1.0"
-pagingCommon = "3.3.0-alpha02-0.4.0"
+pagingCommon = "3.3.5"
 richeditorCompose = "1.0.0-rc10"
 roomKtx = "2.7.0-alpha12"
 ksp = "2.1.0-1.0.29"
@@ -24,6 +24,7 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", versi
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-ui-tooling" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomKtx" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomKtx" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
@@ -41,8 +42,8 @@ datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version
 #Gitlive
 gitlive-firebase-kotlin-crashlytics = { module = "dev.gitlive:firebase-crashlytics", version.ref = "firebase-gitlive-sdk" }
 gitlive-firebase-kotlin-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "firebase-gitlive-sdk" }
-paging-common = { module = "app.cash.paging:paging-common", version.ref = "pagingCommon" }
-paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingCommon" }
+paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingCommon" }
+paging-compose-common = { module = "androidx.paging:paging-compose", version.ref = "pagingCommon" }
 richeditor-compose = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version.ref = "richeditorCompose" }
 
 [plugins]

@@ -1,20 +1,25 @@
 package com.ai.bardly.data.game.local
 
-import androidx.paging.PagingData
-import com.ai.bardly.data.game.GamesDataSource
+import androidx.paging.PagingSource
 import com.ai.bardly.domain.games.model.GameDomainModel
+import com.ai.bardly.domain.games.model.local.GameLocalModel
 import com.ai.bardly.domain.games.model.local.GamesDao
-import kotlinx.coroutines.flow.Flow
+import com.ai.bardly.domain.games.model.local.toLocalModel
 
+// TODO: interface should be implemented
 class LocalGamesDataSource(
     private val gamesDao: GamesDao
-) : GamesDataSource {
+) {
 
-    override suspend fun getGames(query: String?): Flow<PagingData<GameDomainModel>> {
-        throw NotImplementedError()
+    fun getGames(query: String?): PagingSource<Int, GameLocalModel> {
+        return gamesDao.getGames()
     }
 
-    override suspend fun saveGames(games: List<GameDomainModel>) {
-        throw NotImplementedError()
+    suspend fun saveGames(games: List<GameDomainModel>) {
+        gamesDao.insert(games.map { it.toLocalModel() })
+    }
+
+    suspend fun clearAll() {
+        gamesDao.clearAll()
     }
 }
