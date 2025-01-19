@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.0"
+agp = "8.6.1"
 androidx-activityCompose = "1.9.3"
 androidx-ui-tooling = "1.7.6"
 coil = "3.0.0"
@@ -12,8 +12,7 @@ navigationCompose = "2.8.0-alpha11"
 gradlePlugins-google-services = "4.4.2"
 gradlePlugins-crashlytics = "3.0.2"
 firebase-gitlive-sdk = "2.1.0"
-pagingAndroidx = "3.3.5"
-pagingCashApp = "3.3.0-alpha02-0.5.1"
+pagingCommon = "3.3.5"
 richeditorCompose = "1.0.0-rc10"
 roomKtx = "2.7.0-alpha12"
 ksp = "2.1.0-1.0.29"
@@ -43,8 +42,8 @@ datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version
 #Gitlive
 gitlive-firebase-kotlin-crashlytics = { module = "dev.gitlive:firebase-crashlytics", version.ref = "firebase-gitlive-sdk" }
 gitlive-firebase-kotlin-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "firebase-gitlive-sdk" }
-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingAndroidx" }
-paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "pagingCashApp" }
+paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingCommon" }
+paging-compose-common = { module = "androidx.paging:paging-compose", version.ref = "pagingCommon" }
 richeditor-compose = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version.ref = "richeditorCompose" }
 
 [plugins]

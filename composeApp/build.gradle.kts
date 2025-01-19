@@ -92,17 +92,14 @@ android {
     }
     buildTypes {
         getByName("debug") {
-            manifestPlaceholders += mapOf(
-                "crashlyticsCollectionEnabled" to false,
-                "usesCleartextTraffic" to true
-            )
+            manifestPlaceholders["crashlyticsCollectionEnabled"] = false
+            manifestPlaceholders["usesCleartextTraffic"] = true
             resValue("string", "app_name", "Bardly Debug")
         }
         getByName("release") {
-            manifestPlaceholders += mapOf(
-                "crashlyticsCollectionEnabled" to true,
-                "usesCleartextTraffic" to false
-            )
+            manifestPlaceholders += mapOf()
+            manifestPlaceholders["crashlyticsCollectionEnabled"] = true
+            manifestPlaceholders["usesCleartextTraffic"] = false
             isMinifyEnabled = true
             isShrinkResources = true
             resValue("string", "app_name", "Bardly")
