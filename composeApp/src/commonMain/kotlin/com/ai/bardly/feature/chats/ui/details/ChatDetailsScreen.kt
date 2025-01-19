@@ -47,7 +47,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -61,12 +60,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.bardly.MessageUiModel
-import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.ui.BaseScreen
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import org.jetbrains.compose.resources.painterResource
-import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -75,20 +72,22 @@ fun SharedTransitionScope.ChatDetailsScreen(
     gameId: Int,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    val viewModel: ChatsDetailsViewModel = koinViewModel { parametersOf(gameTitle, gameId) }
-    val viewState by viewModel.viewState.collectAsState()
-    ChatDetailsScreenContent(
-        viewState = viewState,
-        onBackClick = viewModel::onBackClick,
-        animatedVisibilityScope = animatedVisibilityScope,
-        onMessageSendClicked = viewModel::onMessageSendClicked,
-    )
+    BaseScreen<ChatsDetailsViewModel, ChatDetailsViewState>(
+        parameters = arrayOf(gameTitle, gameId)
+    ) { viewModel, viewState ->
+        ChatDetailsScreenContent(
+            viewState = viewState,
+            onBackClick = viewModel::onBackClick,
+            onMessageSendClicked = viewModel::onMessageSendClicked,
+            animatedVisibilityScope = animatedVisibilityScope,
+        )
+    }
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun SharedTransitionScope.ChatDetailsScreenContent(
-    viewState: BaseViewState<ChatDetailsViewState>,
+    viewState: ChatDetailsViewState,
     onBackClick: () -> Unit,
     onMessageSendClicked: (String) -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
@@ -96,27 +95,15 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
     Box(
         modifier = Modifier.fillMaxSize().background(Color.White)
     ) {
-        when (viewState) {
-            is BaseViewState.Loading -> {
-                // Loading state
-            }
-
-            is BaseViewState.Error -> {
-                // Error state
-            }
-
-            is BaseViewState.Success -> {
-                ChatDetails(
-                    title = viewState.data.title,
-                    id = viewState.data.gameId,
-                    messages = viewState.data.messages,
-                    isResponding = viewState.data.isResponding,
-                    onBackClick = onBackClick,
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    onMessageSendClicked = onMessageSendClicked,
-                )
-            }
-        }
+        ChatDetails(
+            title = viewState.title,
+            id = viewState.gameId,
+            messages = viewState.messages,
+            isResponding = viewState.isResponding,
+            onBackClick = onBackClick,
+            animatedVisibilityScope = animatedVisibilityScope,
+            onMessageSendClicked = onMessageSendClicked,
+        )
     }
 }
 
