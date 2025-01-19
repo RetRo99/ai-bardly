@@ -5,6 +5,7 @@ import androidx.core.uri.UriUtils
 import androidx.navigation.NavType
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.reflect.typeOf
 
 inline fun <reified T : Any> serializableType(
     isNullableAllowed: Boolean = false,
@@ -21,3 +22,5 @@ inline fun <reified T : Any> serializableType(
         bundle.putString(key, json.encodeToString(value))
     }
 }
+
+inline fun <reified T : Any> serializableNavType() = mapOf(typeOf<T>() to serializableType<T>())

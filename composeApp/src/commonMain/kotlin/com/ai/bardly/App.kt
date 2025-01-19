@@ -39,11 +39,10 @@ import com.ai.bardly.navigation.GeneralDestination.ChatDetail
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.RootDestination
-import com.ai.bardly.util.serializableType
+import com.ai.bardly.util.serializableNavType
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import kotlin.reflect.typeOf
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -121,7 +120,7 @@ fun App() {
                         }
 
                         composable<GameDetail>(
-                            typeMap = mapOf(typeOf<GameUiModel>() to serializableType<GameUiModel>())
+                            typeMap = serializableNavType<GameUiModel>()
                         ) { backStackEntry ->
                             val game = backStackEntry.toRoute<GameDetail>().game
                             GameDetailsScreen(
