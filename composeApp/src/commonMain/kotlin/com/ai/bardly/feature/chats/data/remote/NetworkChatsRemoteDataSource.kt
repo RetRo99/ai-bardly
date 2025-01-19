@@ -1,6 +1,6 @@
 package com.ai.bardly.feature.chats.data.remote
 
-import com.ai.bardly.feature.chats.data.remote.model.PromptResponseApiModel
+import com.ai.bardly.feature.chats.data.remote.model.PromptResponseDto
 import com.ai.bardly.feature.chats.data.remote.model.toRequest
 import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import com.ai.bardly.feature.chats.domain.model.MessageType
@@ -12,7 +12,7 @@ class NetworkChatsRemoteDataSource(
 ) : ChatsRemoteDataSource {
 
     override suspend fun getAnswer(message: MessageDomainModel): Result<MessageDomainModel> {
-        return networkClient.post<PromptResponseApiModel>(
+        return networkClient.post<PromptResponseDto>(
             path = "prompt",
             body = message.toRequest()
         ).map {
