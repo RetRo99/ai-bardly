@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.sp
 import com.ai.bardly.GameUiModel
 import com.ai.bardly.ui.BaseScreen
 import com.ai.bardly.ui.CoilImage
+import com.mohamedrejeb.richeditor.model.rememberRichTextState
+import com.mohamedrejeb.richeditor.ui.material3.RichText
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -241,8 +243,11 @@ private fun SharedTransitionScope.GameInformationCards(
 
 @Composable
 private fun Description(description: String) {
-    Text(
-        text = description,
+    val richTextState = rememberRichTextState()
+    richTextState.setMarkdown(description)
+
+    RichText(
+        state = richTextState,
         color = Color.Black,
         fontSize = 14.sp
     )
