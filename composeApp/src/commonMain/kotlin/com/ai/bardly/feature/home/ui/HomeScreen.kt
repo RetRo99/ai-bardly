@@ -29,16 +29,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.GameUiModel
+import com.ai.bardly.ui.BaseScreen
 import com.ai.bardly.ui.GameCard
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
 ) {
-    val viewModel = koinViewModel<HomeViewModel>()
-    HomeScreenContent(
-        onOpenChatClicked = viewModel::onOpenChatClicked,
-    )
+    BaseScreen<HomeViewModel, Unit> { viewModel, viewState ->
+        HomeScreenContent(
+            onOpenChatClicked = viewModel::onOpenChatClicked,
+        )
+    }
 }
 
 @Composable
