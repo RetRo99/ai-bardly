@@ -86,7 +86,6 @@ open class NetworkClient(
             } else {
                 Result.failure(Exception("HTTP error ${response.status}: ${response.bodyAsText()}"))
             }
-
         } catch (e: Exception) {
             ensureActive()
             Result.failure(e)
