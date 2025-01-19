@@ -13,6 +13,6 @@ interface MessagesDao {
     @Insert
     suspend fun insert(items: List<MessageEntity>)
 
-    @Query("SELECT * FROM MessageLocalModel WHERE gameId = :gameId ORDER BY timestamp DESC")
+    @Query("SELECT * FROM MessageEntity WHERE gameId = :gameId ORDER BY timestamp DESC")
     suspend fun getMessage(gameId: Int): List<MessageEntity>
 }
