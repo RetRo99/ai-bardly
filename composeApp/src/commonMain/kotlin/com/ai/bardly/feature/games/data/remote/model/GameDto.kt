@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameApiModel(
+data class GameDto(
     val title: String?,
     val description: String?,
     val rating: String?,
@@ -21,9 +21,9 @@ data class GameApiModel(
     override val id: Int,
 ) : PagingItem
 
-fun List<GameApiModel>.toDomainModel() = map(GameApiModel::toDomainModel)
+fun List<GameDto>.toDomainModel() = map(GameDto::toDomainModel)
 
-fun GameApiModel.toDomainModel() = GameDomainModel(
+fun GameDto.toDomainModel() = GameDomainModel(
     title = title.orEmpty(),
     description = description.orEmpty(),
     rating = rating.orEmpty(),

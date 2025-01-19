@@ -3,8 +3,8 @@ package com.ai.bardly.feature.games.data.remote.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GamesListApiResponse(
-    val games: List<GameApiModel>,
+data class GamesListDto(
+    val games: List<GameDto>,
     val totalPages: Int,
     val currentPage: Int,
 )
