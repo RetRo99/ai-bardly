@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import org.koin.compose.viewmodel.koinViewModel
@@ -21,13 +21,12 @@ inline fun <reified ViewModel : BaseViewModel<ScreenData>, ScreenData> BaseScree
     noinline content: @Composable (ViewModel, ScreenData) -> Unit
 ) {
     val viewModel: ViewModel = koinViewModel { parametersOf(*parameters) }
-    val viewState by viewModel.viewState.collectAsState()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     when (val state = viewState) {
         is BaseViewState.Success -> content(viewModel, state.data)
         is BaseViewState.Error -> errorContent(state)
         is BaseViewState.Loading -> loadingContent()
-        else -> Unit
     }
 }
 

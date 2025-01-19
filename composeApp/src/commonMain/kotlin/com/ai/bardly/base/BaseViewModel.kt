@@ -15,11 +15,8 @@ abstract class BaseViewModel<ScreenData> : ViewModel(), KoinComponent {
     protected open val initialState: BaseViewState<ScreenData> = BaseViewState.Loading
     protected abstract val defaultScreenData: ScreenData
 
-    private val _viewState = MutableStateFlow(initialState)
-    val viewState: StateFlow<BaseViewState<ScreenData>> = _viewState.asStateFlow()
-
-
-    protected fun getCurrentState(): BaseViewState<ScreenData> = _viewState.value
+    private val _viewState by lazy { MutableStateFlow(initialState) }
+    val viewState: StateFlow<BaseViewState<ScreenData>> by lazy { _viewState.asStateFlow() }
 
     protected val analytics by inject<Analytics>()
 
