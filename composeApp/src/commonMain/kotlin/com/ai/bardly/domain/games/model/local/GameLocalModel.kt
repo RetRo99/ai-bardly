@@ -3,7 +3,7 @@ package com.ai.bardly.domain.games.model.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ai.bardly.domain.games.model.GameDomainModel
-import com.ai.bardly.feature.chats.data.local.model.MessageLocalModel
+import com.ai.bardly.feature.chats.data.local.model.MessageEntity
 import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import com.ai.bardly.paging.PagingItem
 
@@ -51,7 +51,7 @@ fun GameDomainModel.toLocalModel() = GameLocalModel(
     id = id,
 )
 
-fun MessageDomainModel.toLocalModel(): MessageLocalModel = MessageLocalModel(
+fun MessageDomainModel.toLocalModel(): MessageEntity = MessageEntity(
     gameId = gameId,
     text = text,
     type = type,

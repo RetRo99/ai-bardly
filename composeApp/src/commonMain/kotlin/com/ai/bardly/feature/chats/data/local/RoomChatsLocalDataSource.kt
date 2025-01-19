@@ -12,7 +12,7 @@ class RoomChatsLocalDataSource(
 
     override suspend fun getMessages(gameId: Int): Result<List<MessageDomainModel>> {
         return daoExecutor.executeDaoOperation {
-            dao.getMessage(gameId).map { it.toDomainModel() }
+            dao.getMessage(gameId).toDomainModel()
         }
     }
 

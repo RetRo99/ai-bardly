@@ -8,12 +8,12 @@ import androidx.room.TypeConverters
 import com.ai.bardly.domain.games.model.local.GameLocalModel
 import com.ai.bardly.domain.games.model.local.GamesDao
 import com.ai.bardly.feature.chats.data.local.MessagesDao
-import com.ai.bardly.feature.chats.data.local.model.MessageLocalModel
+import com.ai.bardly.feature.chats.data.local.model.MessageEntity
 import org.koin.core.module.Module
 
 @Database(
     entities = [
-        MessageLocalModel::class,
+        MessageEntity::class,
         GameLocalModel::class,
     ],
     version = 1
