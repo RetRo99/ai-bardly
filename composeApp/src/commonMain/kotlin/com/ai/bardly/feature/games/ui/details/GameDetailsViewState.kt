@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.games.details
+package com.ai.bardly.feature.games.ui.details
 
 import com.ai.bardly.GameUiModel
 

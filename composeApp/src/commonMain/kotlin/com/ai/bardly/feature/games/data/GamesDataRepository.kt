@@ -1,15 +1,15 @@
-package com.ai.bardly.data.game
+package com.ai.bardly.feature.games.data
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.ai.bardly.data.game.local.GamesLocalDataSource
-import com.ai.bardly.data.game.remote.GamesRemoteDataSource
-import com.ai.bardly.domain.games.GamesRepository
-import com.ai.bardly.domain.games.model.GameDomainModel
-import com.ai.bardly.domain.games.model.local.toDomainModel
+import com.ai.bardly.feature.games.data.local.GamesLocalDataSource
+import com.ai.bardly.feature.games.data.local.model.toDomainModel
+import com.ai.bardly.feature.games.data.remote.GamesRemoteDataSource
+import com.ai.bardly.feature.games.domain.GamesRepository
+import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.BardlyRemoteMediator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

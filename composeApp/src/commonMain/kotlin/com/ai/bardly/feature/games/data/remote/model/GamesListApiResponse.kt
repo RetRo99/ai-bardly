@@ -1,4 +1,4 @@
-package com.ai.bardly.data.game.model
+package com.ai.bardly.feature.games.data.remote.model
 
 import kotlinx.serialization.Serializable
 

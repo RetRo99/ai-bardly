@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
-import com.ai.bardly.domain.games.model.local.GameLocalModel
-import com.ai.bardly.domain.games.model.local.GamesDao
 import com.ai.bardly.feature.chats.data.local.MessagesDao
 import com.ai.bardly.feature.chats.data.local.model.MessageEntity
+import com.ai.bardly.feature.games.data.local.GamesDao
+import com.ai.bardly.feature.games.data.local.model.GameLocalModel
 import org.koin.core.module.Module
 
 @Database(

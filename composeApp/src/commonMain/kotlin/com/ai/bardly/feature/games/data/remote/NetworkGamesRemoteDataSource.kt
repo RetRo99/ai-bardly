@@ -1,10 +1,10 @@
-package com.ai.bardly.data.game.remote
+package com.ai.bardly.feature.games.data.remote
 
 import androidx.paging.PagingSource
-import com.ai.bardly.data.game.model.GamesListApiResponse
-import com.ai.bardly.data.game.model.toDomainModel
-import com.ai.bardly.domain.games.model.local.GameLocalModel
-import com.ai.bardly.domain.games.model.local.toLocalModel
+import com.ai.bardly.feature.games.data.local.model.GameLocalModel
+import com.ai.bardly.feature.games.data.local.model.toLocalModel
+import com.ai.bardly.feature.games.data.remote.model.GamesListApiResponse
+import com.ai.bardly.feature.games.data.remote.model.toDomainModel
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.paging.BardlyPagingSource
 import com.ai.bardly.paging.PagingResult

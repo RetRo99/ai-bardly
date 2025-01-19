@@ -1,4 +1,4 @@
-package com.ai.bardly.domain.games.model
+package com.ai.bardly.feature.games.domain.model
 
 import com.ai.bardly.paging.PagingItem
 

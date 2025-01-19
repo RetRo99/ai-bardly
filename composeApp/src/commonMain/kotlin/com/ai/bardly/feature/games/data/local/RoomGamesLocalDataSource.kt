@@ -1,11 +1,10 @@
-package com.ai.bardly.data.game.local
+package com.ai.bardly.feature.games.data.local
 
 import androidx.paging.PagingSource
 import com.ai.bardly.database.DaoExecutor
-import com.ai.bardly.domain.games.model.GameDomainModel
-import com.ai.bardly.domain.games.model.local.GameLocalModel
-import com.ai.bardly.domain.games.model.local.GamesDao
-import com.ai.bardly.domain.games.model.local.toLocalModel
+import com.ai.bardly.feature.games.data.local.model.GameLocalModel
+import com.ai.bardly.feature.games.data.local.model.toLocalModel
+import com.ai.bardly.feature.games.domain.model.GameDomainModel
 
 class RoomGamesLocalDataSource(
     private val gamesDao: GamesDao,

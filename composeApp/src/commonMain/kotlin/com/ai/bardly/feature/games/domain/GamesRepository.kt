@@ -1,7 +1,7 @@
-package com.ai.bardly.domain.games
+package com.ai.bardly.feature.games.domain
 
 import androidx.paging.PagingData
-import com.ai.bardly.domain.games.model.GameDomainModel
+import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface GamesRepository {

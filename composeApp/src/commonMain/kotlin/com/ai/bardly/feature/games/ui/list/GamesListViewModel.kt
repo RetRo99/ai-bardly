@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.games.list
+package com.ai.bardly.feature.games.ui.list
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -7,7 +7,7 @@ import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.base.copy
-import com.ai.bardly.domain.games.GamesRepository
+import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.toUiModels
 import kotlinx.coroutines.Dispatchers

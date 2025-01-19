@@ -1,9 +1,10 @@
-package com.ai.bardly.domain.games.model.local
+package com.ai.bardly.feature.games.data.local
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.ai.bardly.feature.games.data.local.model.GameLocalModel
 
 @Dao
 interface GamesDao {

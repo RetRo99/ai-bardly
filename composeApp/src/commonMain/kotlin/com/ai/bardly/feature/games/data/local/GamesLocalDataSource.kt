@@ -1,8 +1,8 @@
-package com.ai.bardly.data.game.local
+package com.ai.bardly.feature.games.data.local
 
 import androidx.paging.PagingSource
-import com.ai.bardly.domain.games.model.GameDomainModel
-import com.ai.bardly.domain.games.model.local.GameLocalModel
+import com.ai.bardly.feature.games.data.local.model.GameLocalModel
+import com.ai.bardly.feature.games.domain.model.GameDomainModel
 
 interface GamesLocalDataSource {
     fun getGames(query: String?): PagingSource<Int, GameLocalModel>

@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.games.details
+package com.ai.bardly.feature.games.ui.details
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.amount_of_players

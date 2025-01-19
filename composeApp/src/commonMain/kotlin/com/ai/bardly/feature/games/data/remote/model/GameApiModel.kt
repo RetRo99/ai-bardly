@@ -1,6 +1,6 @@
-package com.ai.bardly.data.game.model
+package com.ai.bardly.feature.games.data.remote.model
 
-import com.ai.bardly.domain.games.model.GameDomainModel
+import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.PagingItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
