@@ -18,6 +18,13 @@ abstract class BaseViewModel<ScreenData> : ViewModel(), KoinComponent {
     private val _viewState = MutableStateFlow(initialState)
     val viewState: StateFlow<BaseViewState<ScreenData>> = _viewState.asStateFlow()
 
+
+    protected fun getCurrentState(): BaseViewState<ScreenData> = _viewState.value
+
+    protected val analytics by inject<Analytics>()
+
+    private val navigationManager by inject<NavigationManager>()
+
     protected fun updateOrSetSuccess(update: (ScreenData) -> ScreenData) {
         _viewState.update { currentState ->
             when (currentState) {
@@ -42,12 +49,6 @@ abstract class BaseViewModel<ScreenData> : ViewModel(), KoinComponent {
             BaseViewState.Loading
         }
     }
-
-    protected fun getCurrentState(): BaseViewState<ScreenData> = _viewState.value
-
-    protected val analytics by inject<Analytics>()
-
-    private val navigationManager by inject<NavigationManager>()
 
     protected fun navigateTo(destination: GeneralDestination) {
         navigationManager.navigate(destination)

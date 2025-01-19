@@ -101,8 +101,7 @@ android {
             manifestPlaceholders += mapOf()
             manifestPlaceholders["crashlyticsCollectionEnabled"] = true
             manifestPlaceholders["usesCleartextTraffic"] = false
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             resValue("string", "app_name", "Bardly")
             signingConfig = signingConfigs.getByName("debug")
         }
