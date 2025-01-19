@@ -10,6 +10,7 @@ actual fun getDatabaseModule() = module {
         Room.databaseBuilder<AppDatabase>(
             context = androidContext(),
             name = dbFile.absolutePath
-        ).build()
+        ).fallbackToDestructiveMigration(true)
+            .build()
     }
 }

@@ -12,7 +12,8 @@ actual fun getDatabaseModule() = module {
         val dbFilePath = documentDirectory() + "/bardly.db"
         Room.databaseBuilder<AppDatabase>(
             name = dbFilePath,
-        ).build()
+        ).fallbackToDestructiveMigration(true)
+            .build()
     }
 }
 

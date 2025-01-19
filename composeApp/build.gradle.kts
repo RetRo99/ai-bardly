@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.googleServices)
     alias(libs.plugins.crashlytics)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -115,4 +116,8 @@ android {
 dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     ksp(libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory(layout.buildDirectory.dir("schemas"))
 }

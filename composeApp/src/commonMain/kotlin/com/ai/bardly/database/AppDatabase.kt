@@ -16,7 +16,8 @@ import org.koin.core.module.Module
         MessageEntity::class,
         GameEntity::class,
     ],
-    version = 1
+    version = 1,
+    exportSchema = true,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 @TypeConverters(Converters::class)
