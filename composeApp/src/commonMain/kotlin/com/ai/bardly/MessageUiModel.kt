@@ -10,6 +10,7 @@ data class MessageUiModel(
     val type: MessageType,
     val gameId: Int,
     val gameTitle: String,
+    val animateText: Boolean = false,
     val timestamp: LocalDateTime = now(),
 ) {
     val isUserMessage: Boolean
@@ -24,10 +25,11 @@ fun MessageUiModel.toDomainModel() = MessageDomainModel(
     gameTitle = gameTitle,
 )
 
-fun MessageDomainModel.toUiModel() = MessageUiModel(
+fun MessageDomainModel.toUiModel(animateText: Boolean) = MessageUiModel(
     text = text,
     type = type,
     gameId = gameId,
     timestamp = timestamp,
     gameTitle = gameTitle,
+    animateText = animateText,
 )

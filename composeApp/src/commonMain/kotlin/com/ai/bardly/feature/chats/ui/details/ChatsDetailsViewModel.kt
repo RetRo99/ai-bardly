@@ -32,7 +32,7 @@ class ChatsDetailsViewModel(
                 .onSuccess { messages ->
                     updateOrSetSuccess {
                         it.copy(
-                            messages = messages.map { it.toUiModel() }
+                            messages = messages.map { it.toUiModel(false) }
                         )
                     }
                 }
@@ -59,7 +59,7 @@ class ChatsDetailsViewModel(
             chatsRepository
                 .getAnswerFor(message.toDomainModel())
                 .onSuccess { answer ->
-                    displayMessage(answer.toUiModel())
+                    displayMessage(answer.toUiModel(true))
                 }.onFailure {
                     updateOrSetSuccess {
                         it.copy(
@@ -67,6 +67,20 @@ class ChatsDetailsViewModel(
                         )
                     }
                 }
+        }
+    }
+
+    fun onMessageAnimationEnded(message: MessageUiModel) {
+        updateOrSetSuccess {
+            it.copy(
+                messages = it.messages.map {
+                    if (it == message) {
+                        it.copy(animateText = false)
+                    } else {
+                        it
+                    }
+                }
+            )
         }
     }
 

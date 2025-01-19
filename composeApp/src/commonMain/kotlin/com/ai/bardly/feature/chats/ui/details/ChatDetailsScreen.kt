@@ -48,7 +48,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,6 +65,7 @@ import com.ai.bardly.MessageUiModel
 import com.ai.bardly.ui.BaseScreen
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -80,6 +83,7 @@ fun SharedTransitionScope.ChatDetailsScreen(
             onBackClick = viewModel::onBackClick,
             onMessageSendClicked = viewModel::onMessageSendClicked,
             animatedVisibilityScope = animatedVisibilityScope,
+            onMessageAnimationEnded = viewModel::onMessageAnimationEnded,
         )
     }
 }
@@ -90,6 +94,7 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
     viewState: ChatDetailsViewState,
     onBackClick: () -> Unit,
     onMessageSendClicked: (String) -> Unit,
+    onMessageAnimationEnded: (MessageUiModel) -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
@@ -103,6 +108,7 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
             onBackClick = onBackClick,
             animatedVisibilityScope = animatedVisibilityScope,
             onMessageSendClicked = onMessageSendClicked,
+            onMessageAnimationEnded = onMessageAnimationEnded,
         )
     }
 }
@@ -117,6 +123,7 @@ private fun SharedTransitionScope.ChatDetails(
     onBackClick: () -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onMessageSendClicked: (String) -> Unit,
+    onMessageAnimationEnded: (MessageUiModel) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -162,6 +169,7 @@ private fun SharedTransitionScope.ChatDetails(
                 items(messages) { message ->
                     MessageBubble(
                         message = message,
+                        onAnimationEnded = onMessageAnimationEnded
                     )
                 }
             }
@@ -182,6 +190,7 @@ private fun SharedTransitionScope.ChatDetails(
 @Composable
 private fun LazyItemScope.MessageBubble(
     message: MessageUiModel,
+    onAnimationEnded: (MessageUiModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val textAlignment = if (message.isUserMessage) {
@@ -210,7 +219,18 @@ private fun LazyItemScope.MessageBubble(
                 .animateItem(),
         ) {
             val richTextState = rememberRichTextState()
-            richTextState.setMarkdown(message.text)
+            var animatedText by remember { mutableStateOf(if (message.animateText) "" else message.text) }
+
+            if (message.animateText) {
+                LaunchedEffect(Unit) {
+                    message.text.indices.forEach { index ->
+                        delay(10)
+                        animatedText = message.text.substring(0..index)
+                    }
+                    onAnimationEnded(message)
+                }
+            }
+            richTextState.setMarkdown(animatedText)
             RichText(
                 state = richTextState,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -283,7 +303,10 @@ fun MessageInputField(
                                 containerColor = Color(0xFFA55E5D)
                             )
                         ) {
-                            Image(painterResource(Res.drawable.ic_send), contentDescription = null)
+                            Image(
+                                painterResource(Res.drawable.ic_send),
+                                contentDescription = null
+                            )
                         }
                     }
                 }
