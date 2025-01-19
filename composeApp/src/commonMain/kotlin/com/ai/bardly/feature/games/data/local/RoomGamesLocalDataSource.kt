@@ -3,8 +3,6 @@ package com.ai.bardly.feature.games.data.local
 import androidx.paging.PagingSource
 import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.feature.games.data.local.model.GameEntity
-import com.ai.bardly.feature.games.data.local.model.toLocalModel
-import com.ai.bardly.feature.games.domain.model.GameDomainModel
 
 class RoomGamesLocalDataSource(
     private val gamesDao: GamesDao,
@@ -15,9 +13,9 @@ class RoomGamesLocalDataSource(
         return gamesDao.getGames()
     }
 
-    override suspend fun saveGames(games: List<GameDomainModel>) {
+    override suspend fun saveGames(games: List<GameEntity>) {
         daoExecutor.executeDaoOperation {
-            gamesDao.insert(games.map { it.toLocalModel() })
+            gamesDao.insert(games)
         }
     }
 

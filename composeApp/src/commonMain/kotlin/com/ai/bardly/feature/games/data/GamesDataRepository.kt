@@ -30,7 +30,7 @@ class GamesDataRepository(
                 remoteSource = remotePagingSource,
                 localSource = localSource.getGames(query),
                 saveToLocal = {
-                    localSource.saveGames(it.toDomainModel())
+                    localSource.saveGames(it)
                 },
                 clearLocal = {
                     localSource.clearAll()

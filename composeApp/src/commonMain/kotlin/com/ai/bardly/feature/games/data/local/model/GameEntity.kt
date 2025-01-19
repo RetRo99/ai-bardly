@@ -42,7 +42,7 @@ fun GameEntity.toDomainModel() = GameDomainModel(
 fun List<GameEntity>.toDomainModel() = map(GameEntity::toDomainModel)
 fun Flow<PagingData<GameEntity>>.toDomainModel() = map { it.map(GameEntity::toDomainModel) }
 
-fun GameDomainModel.toLocalModel() = GameEntity(
+fun GameDomainModel.toEntity() = GameEntity(
     title = title,
     description = description,
     rating = rating,
@@ -55,3 +55,5 @@ fun GameDomainModel.toLocalModel() = GameEntity(
     thumbnail = thumbnail,
     id = id,
 )
+
+fun List<GameDomainModel>.toEntity() = map(GameDomainModel::toEntity)

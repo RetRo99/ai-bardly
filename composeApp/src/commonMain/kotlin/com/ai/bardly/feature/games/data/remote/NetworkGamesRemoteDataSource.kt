@@ -2,7 +2,7 @@ package com.ai.bardly.feature.games.data.remote
 
 import androidx.paging.PagingSource
 import com.ai.bardly.feature.games.data.local.model.GameEntity
-import com.ai.bardly.feature.games.data.local.model.toLocalModel
+import com.ai.bardly.feature.games.data.local.model.toEntity
 import com.ai.bardly.feature.games.data.remote.model.GamesListDto
 import com.ai.bardly.feature.games.data.remote.model.toDomainModel
 import com.ai.bardly.networking.NetworkClient
@@ -23,7 +23,7 @@ class NetworkGamesRemoteDataSource(
                 val nextKey =
                     if (response.currentPage == response.totalPages) null else (response.currentPage.inc())
                 PagingResult(
-                    response.games.toDomainModel().map { it.toLocalModel() },
+                    response.games.toDomainModel().map { it.toEntity() },
                     prevKey,
                     nextKey
                 )
