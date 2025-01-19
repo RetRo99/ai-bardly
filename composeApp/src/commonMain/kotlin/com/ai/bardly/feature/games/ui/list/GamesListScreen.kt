@@ -33,7 +33,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -65,9 +64,9 @@ fun SharedTransitionScope.GamesListScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val viewModel = koinViewModel<GamesListViewModel>()
-    val viewState = viewModel.viewState.collectAsState()
+    val viewState by viewModel.viewState.collectAsState()
     GamesScreenContent(
-        state = viewState,
+        viewState = viewState,
         animatedVisibilityScope = animatedVisibilityScope,
         onGameClicked = viewModel::onGameClicked,
         onOpenChatClicked = viewModel::onOpenChatClicked,
@@ -79,14 +78,14 @@ fun SharedTransitionScope.GamesListScreen(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun SharedTransitionScope.GamesScreenContent(
-    state: State<BaseViewState<GamesListViewState>>,
+    viewState: BaseViewState<GamesListViewState>,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit,
     onOpenChatClicked: (String, Int) -> Unit,
     onSearchQueryChanged: (String) -> Unit,
     onSearchStateChanged: (Boolean) -> Unit,
 ) {
-    when (val viewState = state.value) {
+    when (viewState) {
         is BaseViewState.Loading -> {
             // Loading state
         }
@@ -95,7 +94,7 @@ private fun SharedTransitionScope.GamesScreenContent(
             // Error state
         }
 
-        is BaseViewState.Loaded -> {
+        is BaseViewState.Success -> {
             GamesList(
                 games = viewState.data.games,
                 animatedVisibilityScope = animatedVisibilityScope,

@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data class GamesListViewState(
-    val games: Flow<PagingData<GameUiModel>>,
+    val games: Flow<PagingData<GameUiModel>> = flowOf(PagingData.empty()),
     val isSearchActive: Boolean = false,
     val query: String = "",
-    val searchResults: Flow<PagingData<GameUiModel>> = flowOf(PagingData.empty())
+    val searchResults: Flow<PagingData<GameUiModel>> = flowOf(PagingData.empty()),
 )

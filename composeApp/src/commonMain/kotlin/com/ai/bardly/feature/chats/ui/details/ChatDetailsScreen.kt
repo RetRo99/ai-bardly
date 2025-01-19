@@ -106,7 +106,7 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
                 // Error state
             }
 
-            is BaseViewState.Loaded -> {
+            is BaseViewState.Success -> {
                 ChatDetails(
                     title = viewState.data.title,
                     id = viewState.data.gameId,

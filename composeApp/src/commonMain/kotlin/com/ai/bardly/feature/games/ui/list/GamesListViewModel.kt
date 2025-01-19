@@ -5,8 +5,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewModel
-import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.base.copy
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.toUiModels
@@ -26,8 +24,9 @@ import kotlinx.coroutines.launch
 
 class GamesListViewModel(
     private val gamesRepository: GamesRepository
-) : BaseViewModel<BaseViewState<GamesListViewState>>() {
+) : BaseViewModel<GamesListViewState>() {
 
+    override val defaultScreenData = GamesListViewState()
     private val searchFlow = MutableStateFlow<String?>(null)
 
     init {
@@ -44,25 +43,21 @@ class GamesListViewModel(
     }
 
     fun onSearchQueryChanged(query: String) {
-        updateState {
-            it.copy {
-                it.copy(
-                    query = query
-                )
-            }
+        updateOrSetSuccess {
+            it.copy(
+                query = query
+            )
         }
         searchFlow.update { query }
     }
 
     fun onSearchStateChanged(isActive: Boolean) {
-        updateState {
-            it.copy {
-                it.copy(
-                    isSearchActive = isActive,
-                    searchResults = flowOf(PagingData.empty()),
-                    query = if (isActive) it.query else ""
-                )
-            }
+        updateOrSetSuccess {
+            it.copy(
+                isSearchActive = isActive,
+                searchResults = flowOf(PagingData.empty()),
+                query = if (isActive) it.query else ""
+            )
         }
     }
 
@@ -80,20 +75,16 @@ class GamesListViewModel(
 
     private fun loadInitialGames(query: String? = null) {
         fetchGames(query) { items ->
-            updateState {
-                BaseViewState.Loaded(
-                    GamesListViewState(items)
-                )
+            updateOrSetSuccess {
+                it.copy(games = items)
             }
         }
     }
 
     private fun searchGames(query: String) {
         fetchGames(query) { items ->
-            updateState {
-                it.copy {
-                    it.copy(searchResults = items)
-                }
+            updateOrSetSuccess {
+                it.copy(searchResults = items)
             }
         }
     }
@@ -110,5 +101,4 @@ class GamesListViewModel(
                 .let(onResult)
         }
     }
-
 }

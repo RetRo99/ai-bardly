@@ -11,26 +11,43 @@ import kotlinx.coroutines.flow.update
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class BaseViewModel<VIEW_STATE : BaseViewState<*>> : ViewModel(), KoinComponent {
+abstract class BaseViewModel<ScreenData> : ViewModel(), KoinComponent {
+    protected open val initialState: BaseViewState<ScreenData> = BaseViewState.Loading
+    protected abstract val defaultScreenData: ScreenData
 
-    protected open val initialState: VIEW_STATE
-        get() = BaseViewState.Loading as VIEW_STATE // Default to Loading, allows override
+    private val _viewState = MutableStateFlow(initialState)
+    val viewState: StateFlow<BaseViewState<ScreenData>> = _viewState.asStateFlow()
 
-    private val _viewState: MutableStateFlow<VIEW_STATE> by lazy { MutableStateFlow(initialState) }
+    protected fun updateOrSetSuccess(update: (ScreenData) -> ScreenData) {
+        _viewState.update { currentState ->
+            when (currentState) {
+                is BaseViewState.Success<*> -> BaseViewState.Success(update(currentState.data as ScreenData))
+                else -> BaseViewState.Success(update(defaultScreenData))
+            }
+        }
+    }
 
-    val viewState: StateFlow<VIEW_STATE> by lazy { _viewState.asStateFlow() }
+    protected fun setError(
+        message: String? = null,
+        code: String? = null,
+        throwable: Throwable? = null
+    ) {
+        _viewState.update {
+            BaseViewState.Error(message, code, throwable)
+        }
+    }
 
-    protected fun getCurrentState(): VIEW_STATE = _viewState.value
+    protected fun setLoading() {
+        _viewState.update {
+            BaseViewState.Loading
+        }
+    }
+
+    protected fun getCurrentState(): BaseViewState<ScreenData> = _viewState.value
 
     protected val analytics by inject<Analytics>()
 
     private val navigationManager by inject<NavigationManager>()
-
-    protected fun updateState(updatedState: (lastState: VIEW_STATE) -> VIEW_STATE) {
-        _viewState.update {
-            updatedState(it)
-        }
-    }
 
     protected fun navigateTo(destination: GeneralDestination) {
         navigationManager.navigate(destination)

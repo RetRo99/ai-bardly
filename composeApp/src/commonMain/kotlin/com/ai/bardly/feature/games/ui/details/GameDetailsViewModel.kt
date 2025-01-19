@@ -4,11 +4,12 @@ import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 
-class GameDetailsViewModel(private val game: GameUiModel) :
-    BaseViewModel<BaseViewState<GameDetailsViewState>>() {
+class GameDetailsViewModel(
+    private val game: GameUiModel,
+) : BaseViewModel<GameDetailsViewState>() {
 
-    override val initialState: BaseViewState<GameDetailsViewState>
-        get() = BaseViewState.Loaded(GameDetailsViewState(game))
+    override val defaultScreenData = GameDetailsViewState(game)
+    override val initialState = BaseViewState.Success(defaultScreenData)
 
     fun onBackClick() {
         navigateBack()

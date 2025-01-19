@@ -33,8 +33,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.ui.CoilImage
@@ -57,9 +57,9 @@ fun SharedTransitionScope.GameDetailsScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val viewModel: GameDetailsViewModel = koinViewModel { parametersOf(game) }
-    val viewState = viewModel.viewState.collectAsState()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     GamesScreenContent(
-        state = viewState,
+        viewState = viewState,
         onBackClick = viewModel::onBackClick,
         animatedVisibilityScope = animatedVisibilityScope,
     )
@@ -68,14 +68,14 @@ fun SharedTransitionScope.GameDetailsScreen(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun SharedTransitionScope.GamesScreenContent(
-    state: State<BaseViewState<GameDetailsViewState>>,
+    viewState: BaseViewState<GameDetailsViewState>,
     onBackClick: () -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
         modifier = Modifier.fillMaxSize().background(Color.White)
     ) {
-        when (val viewState = state.value) {
+        when (viewState) {
             is BaseViewState.Loading -> {
                 // Loading state
             }
@@ -84,7 +84,7 @@ private fun SharedTransitionScope.GamesScreenContent(
                 // Error state
             }
 
-            is BaseViewState.Loaded -> {
+            is BaseViewState.Success -> {
                 GameDetails(
                     game = viewState.data.game,
                     onBackClick = onBackClick,

@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.ai.bardly.MessageUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.base.copy
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.model.MessageType
 import com.ai.bardly.toDomainModel
@@ -15,9 +14,16 @@ class ChatsDetailsViewModel(
     private val gameTitle: String,
     private val gameId: Int,
     private val chatsRepository: ChatsRepository,
-) : BaseViewModel<BaseViewState<ChatDetailsViewState>>() {
+) : BaseViewModel<ChatDetailsViewState>() {
 
-    override val initialState: BaseViewState<ChatDetailsViewState> = BaseViewState.Loaded(
+    override val defaultScreenData = ChatDetailsViewState(
+        title = gameTitle,
+        gameId = gameId,
+        messages = emptyList(),
+        isResponding = false
+    )
+
+    override val initialState: BaseViewState<ChatDetailsViewState> = BaseViewState.Success(
         ChatDetailsViewState(
             gameTitle,
             gameId,
@@ -31,20 +37,17 @@ class ChatsDetailsViewModel(
             chatsRepository
                 .getMessages(gameId)
                 .onSuccess { messages ->
-                    updateState {
-                        it.copy {
-                            it.copy(
-                                messages = messages.map { it.toUiModel() }
-                            )
-                        }
+                    updateOrSetSuccess {
+                        it.copy(
+                            messages = messages.map { it.toUiModel() }
+                        )
                     }
-                }.onFailure {
-                    updateState {
-                        it.copy {
-                            it.copy(
-                                messages = emptyList()
-                            )
-                        }
+                }
+                .onFailure {
+                    updateOrSetSuccess {
+                        it.copy(
+                            messages = emptyList()
+                        )
                     }
                 }
         }
@@ -65,14 +68,11 @@ class ChatsDetailsViewModel(
                 .onSuccess { answer ->
                     displayMessage(answer.toUiModel())
                 }.onFailure {
-                    updateState {
-                        it.copy {
-                            it.copy(
-                                isResponding = false
-                            )
-                        }
+                    updateOrSetSuccess {
+                        it.copy(
+                            isResponding = false
+                        )
                     }
-
                 }
         }
     }
@@ -89,13 +89,11 @@ class ChatsDetailsViewModel(
     private fun displayMessage(
         message: MessageUiModel
     ) {
-        updateState {
-            it.copy {
-                it.copy(
-                    messages = listOf(message) + it.messages,
-                    isResponding = message.isUserMessage,
-                )
-            }
+        updateOrSetSuccess {
+            it.copy(
+                messages = listOf(message) + it.messages,
+                isResponding = message.isUserMessage,
+            )
         }
     }
 }
