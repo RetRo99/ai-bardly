@@ -47,7 +47,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -77,9 +76,9 @@ fun SharedTransitionScope.ChatDetailsScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val viewModel: ChatsDetailsViewModel = koinViewModel { parametersOf(gameTitle, gameId) }
-    val viewState = viewModel.viewState.collectAsState()
+    val viewState by viewModel.viewState.collectAsState()
     ChatDetailsScreenContent(
-        state = viewState,
+        viewState = viewState,
         onBackClick = viewModel::onBackClick,
         animatedVisibilityScope = animatedVisibilityScope,
         onMessageSendClicked = viewModel::onMessageSendClicked,
@@ -89,7 +88,7 @@ fun SharedTransitionScope.ChatDetailsScreen(
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun SharedTransitionScope.ChatDetailsScreenContent(
-    state: State<BaseViewState<ChatDetailsViewState>>,
+    viewState: BaseViewState<ChatDetailsViewState>,
     onBackClick: () -> Unit,
     onMessageSendClicked: (String) -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
@@ -97,7 +96,7 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
     Box(
         modifier = Modifier.fillMaxSize().background(Color.White)
     ) {
-        when (val viewState = state.value) {
+        when (viewState) {
             is BaseViewState.Loading -> {
                 // Loading state
             }
