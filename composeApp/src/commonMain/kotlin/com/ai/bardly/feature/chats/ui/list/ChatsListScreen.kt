@@ -10,7 +10,7 @@ import com.ai.bardly.ui.BaseScreen
 @Composable
 fun ChatsListScreen(
 ) {
-    BaseScreen<ChatsViewModel, Unit> { viewMode, viewState ->
+    BaseScreen<ChatsViewModel, Unit> { viewModel, viewState ->
         ChatsListContent()
     }
 }

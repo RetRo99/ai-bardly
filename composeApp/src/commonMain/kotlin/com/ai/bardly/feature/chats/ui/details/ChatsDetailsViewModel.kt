@@ -23,14 +23,7 @@ class ChatsDetailsViewModel(
         isResponding = false
     )
 
-    override val initialState: BaseViewState<ChatDetailsViewState> = BaseViewState.Success(
-        ChatDetailsViewState(
-            gameTitle,
-            gameId,
-            emptyList(),
-            false
-        )
-    )
+    override val initialState = BaseViewState.Success(defaultScreenData)
 
     init {
         viewModelScope.launch {

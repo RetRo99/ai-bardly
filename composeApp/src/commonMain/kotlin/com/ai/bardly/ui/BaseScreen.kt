@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
@@ -33,13 +34,13 @@ inline fun <reified ViewModel : BaseViewModel<ScreenData>, ScreenData> BaseScree
 @Composable
 fun ErrorScreen(error: BaseViewState.Error) {
     Box(Modifier.fillMaxSize()) {
-        Text("Error")
+        Text("Error", modifier = Modifier.align(Alignment.Center))
     }
 }
 
 @Composable
 fun LoadingScreen() {
     Box(Modifier.fillMaxSize()) {
-        Text("Loading")
+        Text("Loading", modifier = Modifier.align(Alignment.Center))
     }
 }
