@@ -5,13 +5,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.koin.compose.viewmodel.koinViewModel
+import com.ai.bardly.ui.BaseScreen
 
 @Composable
 fun ChatsListScreen(
 ) {
-    koinViewModel<ChatsViewModel>()
+    BaseScreen<ChatsViewModel, Unit> { viewMode, viewState ->
+        ChatsListContent()
+    }
+}
+
+@Composable
+private fun ChatsListContent() {
     Box(Modifier.fillMaxSize()) {
-        Text("CHATS")
+        Text("Chats")
     }
 }

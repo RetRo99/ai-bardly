@@ -16,7 +16,7 @@ import org.koin.core.parameter.parametersOf
 inline fun <reified ViewModel : BaseViewModel<ScreenData>, ScreenData> BaseScreen(
     noinline loadingContent: @Composable () -> Unit = { LoadingScreen() },
     noinline errorContent: @Composable (BaseViewState.Error) -> Unit = { ErrorScreen(it) },
-    vararg parameters: Any,
+    vararg parameters: Any = emptyArray(),
     noinline content: @Composable (ViewModel, ScreenData) -> Unit
 ) {
     val viewModel: ViewModel = koinViewModel { parametersOf(*parameters) }
