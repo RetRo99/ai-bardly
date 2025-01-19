@@ -4,8 +4,6 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ai.bardly.feature.chats.data.local.model.MessageEntity
-import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.PagingItem
 import kotlinx.coroutines.flow.Flow
@@ -56,12 +54,4 @@ fun GameDomainModel.toLocalModel() = GameEntity(
     link = link,
     thumbnail = thumbnail,
     id = id,
-)
-
-fun MessageDomainModel.toLocalModel(): MessageEntity = MessageEntity(
-    gameId = gameId,
-    text = text,
-    type = type,
-    timestamp = timestamp,
-    gameTitle = gameTitle,
 )

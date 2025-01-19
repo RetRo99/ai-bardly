@@ -1,6 +1,8 @@
 package com.ai.bardly.feature.chats.data
 
 import com.ai.bardly.feature.chats.data.local.ChatsLocalDataSource
+import com.ai.bardly.feature.chats.data.local.model.toDomainModel
+import com.ai.bardly.feature.chats.data.local.model.toEntity
 import com.ai.bardly.feature.chats.data.remote.ChatsRemoteDataSource
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
@@ -15,16 +17,16 @@ class ChatsDataRepository(
     override suspend fun getAnswerFor(
         request: MessageDomainModel
     ): Result<MessageDomainModel> = coroutineScope {
-        val saveRequestDeferred = async { localChatsDataSource.saveMessage(request) }
+        val saveRequestDeferred = async { localChatsDataSource.saveMessage(request.toEntity()) }
         val answerMessage = remoteChatsDataSource.getAnswer(request)
         val saveAnswerDeferred =
-            async { localChatsDataSource.saveMessage(answerMessage.getOrThrow()) }
+            async { localChatsDataSource.saveMessage(answerMessage.getOrThrow().toEntity()) }
         saveAnswerDeferred.await()
         saveRequestDeferred.await()
         answerMessage
     }
 
     override suspend fun getMessages(gameId: Int): Result<List<MessageDomainModel>> {
-        return localChatsDataSource.getMessages(gameId)
+        return localChatsDataSource.getMessages(gameId).map { it.toDomainModel() }
     }
 }
