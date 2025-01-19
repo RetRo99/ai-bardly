@@ -24,10 +24,10 @@ import com.ai.bardly.feature.games.data.remote.NetworkGamesRemoteDataSource
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.details.GameDetailsViewModel
 import com.ai.bardly.feature.games.ui.list.GamesListViewModel
+import com.ai.bardly.feature.home.ui.HomeViewModel
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.networking.getHttpEngine
-import com.ai.bardly.screens.home.HomeViewModel
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.analytics
 import dev.gitlive.firebase.crashlytics.crashlytics

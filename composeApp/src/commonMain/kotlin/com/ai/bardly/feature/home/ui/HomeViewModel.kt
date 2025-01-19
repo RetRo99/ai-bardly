@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.home
+package com.ai.bardly.feature.home.ui
 
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState

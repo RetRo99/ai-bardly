@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.home
+package com.ai.bardly.feature.home.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi

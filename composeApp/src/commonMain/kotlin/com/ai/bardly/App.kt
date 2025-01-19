@@ -33,12 +33,12 @@ import com.ai.bardly.feature.chats.ui.details.ChatDetailsScreen
 import com.ai.bardly.feature.chats.ui.list.ChatsListScreen
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
+import com.ai.bardly.feature.home.ui.HomeScreen
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.navigation.GeneralDestination.ChatDetail
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.RootDestination
-import com.ai.bardly.screens.home.HomeScreen
 import com.ai.bardly.util.serializableType
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
