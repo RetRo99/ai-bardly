@@ -61,6 +61,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.touchlab.kermit.Logger
 import com.ai.bardly.MessageUiModel
 import com.ai.bardly.ui.BaseScreen
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
@@ -166,6 +167,14 @@ private fun SharedTransitionScope.ChatDetails(
                 reverseLayout = true,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                if (isResponding) {
+                    item {
+                        BardlyThinkingDots(
+                            modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+                        )
+                    }
+                }
+                Logger.withTag("čič").d { "ui: ${messages.map { it.text }}" }
                 items(messages) { message ->
                     MessageBubble(
                         message = message,
@@ -174,11 +183,6 @@ private fun SharedTransitionScope.ChatDetails(
                 }
             }
 
-            if (isResponding) {
-                BardlyThinkingDots(
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp),
-                )
-            }
             MessageInputField(
                 modifier = Modifier.padding(16.dp),
                 onMessageSendClicked = onMessageSendClicked
@@ -219,12 +223,14 @@ private fun LazyItemScope.MessageBubble(
                 .animateItem(),
         ) {
             val richTextState = rememberRichTextState()
-            var animatedText by remember { mutableStateOf(if (message.animateText) "" else message.text) }
+            var animatedText by remember(message) {
+                mutableStateOf(if (message.animateText) "" else message.text)
+            }
 
             if (message.animateText) {
                 LaunchedEffect(Unit) {
                     message.text.indices.forEach { index ->
-                        delay(10)
+                        delay(20)
                         animatedText = message.text.substring(0..index)
                     }
                     onAnimationEnded(message)

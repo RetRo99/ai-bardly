@@ -74,7 +74,7 @@ class ChatsDetailsViewModel(
         updateOrSetSuccess {
             it.copy(
                 messages = it.messages.map {
-                    if (it == message) {
+                    if (it.timestamp == message.timestamp) {
                         it.copy(animateText = false)
                     } else {
                         it
