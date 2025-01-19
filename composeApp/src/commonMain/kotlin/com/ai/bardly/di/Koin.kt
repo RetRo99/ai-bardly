@@ -21,7 +21,7 @@ import com.ai.bardly.feature.chats.data.remote.ChatsRemoteDataSource
 import com.ai.bardly.feature.chats.data.remote.NetworkChatsRemoteDataSource
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.ui.details.ChatsDetailsViewModel
-import com.ai.bardly.feature.chats.ui.recent.ChatsViewModel
+import com.ai.bardly.feature.chats.ui.list.ChatsViewModel
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.networking.getHttpEngine

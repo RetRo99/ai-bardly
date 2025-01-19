@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.chats.ui.recent
+package com.ai.bardly.feature.chats.ui.list
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
