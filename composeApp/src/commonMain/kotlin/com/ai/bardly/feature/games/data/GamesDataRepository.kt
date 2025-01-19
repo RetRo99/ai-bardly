@@ -6,7 +6,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.ai.bardly.feature.games.data.local.GamesLocalDataSource
 import com.ai.bardly.feature.games.data.local.model.toDomainModel
+import com.ai.bardly.feature.games.data.local.model.toEntity
 import com.ai.bardly.feature.games.data.remote.GamesRemoteDataSource
+import com.ai.bardly.feature.games.data.remote.model.toDomainModel
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.BardlyRemoteMediator
@@ -29,12 +31,9 @@ class GamesDataRepository(
             remoteMediator = BardlyRemoteMediator(
                 remoteSource = remotePagingSource,
                 localSource = localSource.getGames(query),
-                saveToLocal = {
-                    localSource.saveGames(it)
-                },
-                clearLocal = {
-                    localSource.clearAll()
-                }
+                saveToLocal = { localSource.saveGames(it) },
+                clearLocal = { localSource.clearAll() },
+                remoteToLocal = { it.toDomainModel().toEntity() }
             ),
             pagingSourceFactory = { localSource.getGames(query) }
         ).flow.toDomainModel()

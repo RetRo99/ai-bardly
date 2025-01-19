@@ -7,13 +7,14 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 
 @OptIn(ExperimentalPagingApi::class)
-class BardlyRemoteMediator<ITEM : PagingItem>(
-    private val remoteSource: PagingSource<Int, ITEM>,
-    private val localSource: PagingSource<Int, ITEM>,
-    private val saveToLocal: suspend (List<ITEM>) -> Unit,
+class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
+    private val remoteSource: PagingSource<Int, RemoteItem>,
+    private val localSource: PagingSource<Int, LocalItem>,
+    private val saveToLocal: suspend (List<LocalItem>) -> Unit,
     private val clearLocal: suspend () -> Unit,
+    private val remoteToLocal: (List<RemoteItem>) -> List<LocalItem>,
     private val shouldRefresh: () -> Boolean = { true }
-) : RemoteMediator<Int, ITEM>() {
+) : RemoteMediator<Int, LocalItem>() {
 
     private var currentPage = 1
 
@@ -27,10 +28,9 @@ class BardlyRemoteMediator<ITEM : PagingItem>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, ITEM>
+        state: PagingState<Int, LocalItem>
     ): MediatorResult {
         return try {
-            // Create type-safe load params
             val loadParams = when (loadType) {
                 LoadType.REFRESH -> {
                     currentPage = 1
@@ -62,7 +62,7 @@ class BardlyRemoteMediator<ITEM : PagingItem>(
                     if (loadType == LoadType.REFRESH) {
                         clearLocal()
                     }
-                    saveToLocal(remoteResult.data)
+                    saveToLocal(remoteToLocal(remoteResult.data))
 
                     MediatorResult.Success(
                         endOfPaginationReached = remoteResult.data.isEmpty()
