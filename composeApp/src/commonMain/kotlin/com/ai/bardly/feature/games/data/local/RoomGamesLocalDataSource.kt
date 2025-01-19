@@ -2,7 +2,7 @@ package com.ai.bardly.feature.games.data.local
 
 import androidx.paging.PagingSource
 import com.ai.bardly.database.DaoExecutor
-import com.ai.bardly.feature.games.data.local.model.GameLocalModel
+import com.ai.bardly.feature.games.data.local.model.GameEntity
 import com.ai.bardly.feature.games.data.local.model.toLocalModel
 import com.ai.bardly.feature.games.domain.model.GameDomainModel
 
@@ -11,7 +11,7 @@ class RoomGamesLocalDataSource(
     private val daoExecutor: DaoExecutor,
 ) : GamesLocalDataSource {
 
-    override fun getGames(query: String?): PagingSource<Int, GameLocalModel> {
+    override fun getGames(query: String?): PagingSource<Int, GameEntity> {
         return gamesDao.getGames()
     }
 

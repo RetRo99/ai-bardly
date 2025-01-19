@@ -4,7 +4,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.map
 import com.ai.bardly.feature.games.data.local.GamesLocalDataSource
 import com.ai.bardly.feature.games.data.local.model.toDomainModel
 import com.ai.bardly.feature.games.data.remote.GamesRemoteDataSource
@@ -12,7 +11,6 @@ import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.BardlyRemoteMediator
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class GamesDataRepository(
     private val remoteSource: GamesRemoteDataSource,
@@ -32,13 +30,13 @@ class GamesDataRepository(
                 remoteSource = remotePagingSource,
                 localSource = localSource.getGames(query),
                 saveToLocal = {
-                    localSource.saveGames(it.map { it.toDomainModel() })
+                    localSource.saveGames(it.toDomainModel())
                 },
                 clearLocal = {
                     localSource.clearAll()
                 }
             ),
             pagingSourceFactory = { localSource.getGames(query) }
-        ).flow.map { it.map { it.toDomainModel() } }
+        ).flow.toDomainModel()
     }
 }

@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.games.data.remote
 
 import androidx.paging.PagingSource
-import com.ai.bardly.feature.games.data.local.model.GameLocalModel
+import com.ai.bardly.feature.games.data.local.model.GameEntity
 import com.ai.bardly.feature.games.data.local.model.toLocalModel
 import com.ai.bardly.feature.games.data.remote.model.GamesListApiResponse
 import com.ai.bardly.feature.games.data.remote.model.toDomainModel
@@ -13,7 +13,7 @@ class NetworkGamesRemoteDataSource(
     private val networkClient: NetworkClient,
 ) : GamesRemoteDataSource {
 
-    override suspend fun getGames(query: String?): PagingSource<Int, GameLocalModel> {
+    override suspend fun getGames(query: String?): PagingSource<Int, GameEntity> {
         return BardlyPagingSource(
             initialKey = 1,
             getItems = { key, _ ->

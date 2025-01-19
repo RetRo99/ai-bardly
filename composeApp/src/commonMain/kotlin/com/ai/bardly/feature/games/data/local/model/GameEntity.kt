@@ -1,14 +1,18 @@
 package com.ai.bardly.feature.games.data.local.model
 
+import androidx.paging.PagingData
+import androidx.paging.map
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ai.bardly.feature.chats.data.local.model.MessageEntity
 import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.PagingItem
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 @Entity
-data class GameLocalModel(
+data class GameEntity(
     val title: String,
     val description: String,
     val rating: String,
@@ -23,7 +27,7 @@ data class GameLocalModel(
     override val id: Int
 ) : PagingItem
 
-fun GameLocalModel.toDomainModel() = GameDomainModel(
+fun GameEntity.toDomainModel() = GameDomainModel(
     title = title,
     description = description,
     rating = rating,
@@ -37,7 +41,10 @@ fun GameLocalModel.toDomainModel() = GameDomainModel(
     id = id,
 )
 
-fun GameDomainModel.toLocalModel() = GameLocalModel(
+fun List<GameEntity>.toDomainModel() = map(GameEntity::toDomainModel)
+fun Flow<PagingData<GameEntity>>.toDomainModel() = map { it.map(GameEntity::toDomainModel) }
+
+fun GameDomainModel.toLocalModel() = GameEntity(
     title = title,
     description = description,
     rating = rating,
