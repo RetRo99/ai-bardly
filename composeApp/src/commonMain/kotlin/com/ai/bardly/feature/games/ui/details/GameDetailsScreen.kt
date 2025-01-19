@@ -8,9 +8,7 @@ import ai_bardly.composeapp.generated.resources.game_length
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -33,7 +31,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,14 +38,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ai.bardly.GameUiModel
-import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.ui.BaseScreen
 import com.ai.bardly.ui.CoilImage
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -56,48 +50,21 @@ fun SharedTransitionScope.GameDetailsScreen(
     game: GameUiModel,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    val viewModel: GameDetailsViewModel = koinViewModel { parametersOf(game) }
-    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
-    GamesScreenContent(
-        viewState = viewState,
-        onBackClick = viewModel::onBackClick,
-        animatedVisibilityScope = animatedVisibilityScope,
-    )
-}
+    BaseScreen<GameDetailsViewModel, GameDetailsViewState>(
+        parameters = arrayOf(game)
+    ) { viewModel, viewState ->
+        GamesScreenContent(
+            game = viewState.game,
+            onBackClick = viewModel::onBackClick,
+            animatedVisibilityScope = animatedVisibilityScope,
+        )
 
-@OptIn(ExperimentalSharedTransitionApi::class)
-@Composable
-private fun SharedTransitionScope.GamesScreenContent(
-    viewState: BaseViewState<GameDetailsViewState>,
-    onBackClick: () -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
-) {
-    Box(
-        modifier = Modifier.fillMaxSize().background(Color.White)
-    ) {
-        when (viewState) {
-            is BaseViewState.Loading -> {
-                // Loading state
-            }
-
-            is BaseViewState.Error -> {
-                // Error state
-            }
-
-            is BaseViewState.Success -> {
-                GameDetails(
-                    game = viewState.data.game,
-                    onBackClick = onBackClick,
-                    animatedVisibilityScope = animatedVisibilityScope,
-                )
-            }
-        }
     }
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun SharedTransitionScope.GameDetails(
+private fun SharedTransitionScope.GamesScreenContent(
     game: GameUiModel,
     onBackClick: () -> Unit,
     animatedVisibilityScope: AnimatedVisibilityScope,
@@ -108,7 +75,6 @@ private fun SharedTransitionScope.GameDetails(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Top Bar with Back Button
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
