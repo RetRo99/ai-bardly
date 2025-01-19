@@ -33,7 +33,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -52,62 +51,51 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.ai.bardly.GameUiModel
-import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.ui.BaseScreen
 import com.ai.bardly.ui.GameCard
 import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow
-import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.GamesListScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    val viewModel = koinViewModel<GamesListViewModel>()
-    val viewState by viewModel.viewState.collectAsState()
-    GamesScreenContent(
-        viewState = viewState,
-        animatedVisibilityScope = animatedVisibilityScope,
-        onGameClicked = viewModel::onGameClicked,
-        onOpenChatClicked = viewModel::onOpenChatClicked,
-        onSearchQueryChanged = viewModel::onSearchQueryChanged,
-        onSearchStateChanged = viewModel::onSearchStateChanged,
-    )
+    BaseScreen<GamesListViewModel, GamesListViewState> { viewModel, viewState ->
+        GamesScreenContent(
+            viewState = viewState,
+            animatedVisibilityScope = animatedVisibilityScope,
+            onGameClicked = viewModel::onGameClicked,
+            onOpenChatClicked = viewModel::onOpenChatClicked,
+            onSearchQueryChanged = viewModel::onSearchQueryChanged,
+            onSearchStateChanged = viewModel::onSearchStateChanged,
+        )
+
+    }
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun SharedTransitionScope.GamesScreenContent(
-    viewState: BaseViewState<GamesListViewState>,
+    viewState: GamesListViewState,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onGameClicked: (GameUiModel) -> Unit,
     onOpenChatClicked: (String, Int) -> Unit,
     onSearchQueryChanged: (String) -> Unit,
     onSearchStateChanged: (Boolean) -> Unit,
 ) {
-    when (viewState) {
-        is BaseViewState.Loading -> {
-            // Loading state
-        }
 
-        is BaseViewState.Error -> {
-            // Error state
-        }
-
-        is BaseViewState.Success -> {
-            GamesList(
-                games = viewState.data.games,
-                animatedVisibilityScope = animatedVisibilityScope,
-                onGameClicked = onGameClicked,
-                onOpenChatClicked = onOpenChatClicked,
-                onSearchQueryChanged = onSearchQueryChanged,
-                onSearchStateChanged = onSearchStateChanged,
-                isSearchActive = viewState.data.isSearchActive,
-                query = viewState.data.query,
-                searchResults = viewState.data.searchResults
-            )
-        }
-    }
+    GamesList(
+        games = viewState.games,
+        animatedVisibilityScope = animatedVisibilityScope,
+        onGameClicked = onGameClicked,
+        onOpenChatClicked = onOpenChatClicked,
+        onSearchQueryChanged = onSearchQueryChanged,
+        onSearchStateChanged = onSearchStateChanged,
+        isSearchActive = viewState.isSearchActive,
+        query = viewState.query,
+        searchResults = viewState.searchResults
+    )
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
