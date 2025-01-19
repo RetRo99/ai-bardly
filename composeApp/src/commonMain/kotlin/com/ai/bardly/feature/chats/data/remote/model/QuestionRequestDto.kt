@@ -4,12 +4,12 @@ import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QuestionRequestApiModel(
+data class QuestionRequestDto(
     val question: String,
     val game: String
 )
 
-fun MessageDomainModel.toRequest() = QuestionRequestApiModel(
+fun MessageDomainModel.toRequest() = QuestionRequestDto(
     question = text,
     game = gameTitle,
 )
