@@ -1,7 +1,7 @@
 package com.ai.bardly
 
-import com.ai.bardly.domain.chats.model.MessageDomainModel
-import com.ai.bardly.domain.chats.model.MessageType
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
+import com.ai.bardly.feature.chats.domain.model.MessageType
 import com.ai.bardly.util.now
 import kotlinx.datetime.LocalDateTime
 

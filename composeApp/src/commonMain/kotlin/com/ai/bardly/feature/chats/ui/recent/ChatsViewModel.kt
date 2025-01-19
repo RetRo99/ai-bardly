@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.chats.list
+package com.ai.bardly.feature.chats.ui.recent
 
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState

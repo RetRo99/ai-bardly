@@ -1,4 +1,4 @@
-package com.ai.bardly.domain.chats.model
+package com.ai.bardly.feature.chats.domain.model
 
 import com.ai.bardly.util.now
 import kotlinx.datetime.LocalDateTime

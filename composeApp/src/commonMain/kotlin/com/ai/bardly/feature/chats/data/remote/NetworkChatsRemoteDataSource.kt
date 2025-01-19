@@ -1,9 +1,9 @@
-package com.ai.bardly.data.chat.remote
+package com.ai.bardly.feature.chats.data.remote
 
-import com.ai.bardly.data.chat.model.PromptResponseApiModel
-import com.ai.bardly.data.chat.model.toRequest
-import com.ai.bardly.domain.chats.model.MessageDomainModel
-import com.ai.bardly.domain.chats.model.MessageType
+import com.ai.bardly.feature.chats.data.remote.model.PromptResponseApiModel
+import com.ai.bardly.feature.chats.data.remote.model.toRequest
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
+import com.ai.bardly.feature.chats.domain.model.MessageType
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.util.now
 

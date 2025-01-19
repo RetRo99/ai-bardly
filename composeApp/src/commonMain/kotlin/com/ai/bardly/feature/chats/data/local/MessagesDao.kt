@@ -1,8 +1,9 @@
-package com.ai.bardly.domain.chats.local
+package com.ai.bardly.feature.chats.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.ai.bardly.feature.chats.data.local.model.MessageLocalModel
 
 @Dao
 interface MessagesDao {

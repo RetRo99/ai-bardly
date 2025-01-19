@@ -1,12 +1,12 @@
-package com.ai.bardly.screens.chats.details
+package com.ai.bardly.feature.chats.ui.details
 
 import androidx.lifecycle.viewModelScope
 import com.ai.bardly.MessageUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.base.copy
-import com.ai.bardly.domain.chats.ChatsRepository
-import com.ai.bardly.domain.chats.model.MessageType
+import com.ai.bardly.feature.chats.domain.ChatsRepository
+import com.ai.bardly.feature.chats.domain.model.MessageType
 import com.ai.bardly.toDomainModel
 import com.ai.bardly.toUiModel
 import kotlinx.coroutines.launch

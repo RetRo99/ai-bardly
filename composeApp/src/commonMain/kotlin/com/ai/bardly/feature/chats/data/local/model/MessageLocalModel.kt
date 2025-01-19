@@ -1,9 +1,9 @@
-package com.ai.bardly.domain.chats.local
+package com.ai.bardly.feature.chats.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ai.bardly.domain.chats.model.MessageDomainModel
-import com.ai.bardly.domain.chats.model.MessageType
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
+import com.ai.bardly.feature.chats.domain.model.MessageType
 import kotlinx.datetime.LocalDateTime
 
 @Entity

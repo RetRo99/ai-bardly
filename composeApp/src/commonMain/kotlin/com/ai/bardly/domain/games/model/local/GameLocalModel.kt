@@ -2,9 +2,9 @@ package com.ai.bardly.domain.games.model.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ai.bardly.domain.chats.local.MessageLocalModel
-import com.ai.bardly.domain.chats.model.MessageDomainModel
 import com.ai.bardly.domain.games.model.GameDomainModel
+import com.ai.bardly.feature.chats.data.local.model.MessageLocalModel
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import com.ai.bardly.paging.PagingItem
 
 @Entity

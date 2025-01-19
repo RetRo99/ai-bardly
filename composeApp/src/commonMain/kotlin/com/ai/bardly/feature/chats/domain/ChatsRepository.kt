@@ -1,6 +1,6 @@
-package com.ai.bardly.domain.chats
+package com.ai.bardly.feature.chats.domain
 
-import com.ai.bardly.domain.chats.model.MessageDomainModel
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 
 interface ChatsRepository {
     suspend fun getAnswerFor(request: MessageDomainModel): Result<MessageDomainModel>

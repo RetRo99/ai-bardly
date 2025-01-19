@@ -1,6 +1,6 @@
-package com.ai.bardly.data.chat.model
+package com.ai.bardly.feature.chats.data.remote.model
 
-import com.ai.bardly.domain.chats.model.MessageDomainModel
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import kotlinx.serialization.Serializable
 
 @Serializable

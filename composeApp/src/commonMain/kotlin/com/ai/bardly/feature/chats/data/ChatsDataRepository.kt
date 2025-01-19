@@ -1,9 +1,9 @@
-package com.ai.bardly.data.chat
+package com.ai.bardly.feature.chats.data
 
-import com.ai.bardly.data.chat.local.ChatsLocalDataSource
-import com.ai.bardly.data.chat.remote.ChatsRemoteDataSource
-import com.ai.bardly.domain.chats.ChatsRepository
-import com.ai.bardly.domain.chats.model.MessageDomainModel
+import com.ai.bardly.feature.chats.data.local.ChatsLocalDataSource
+import com.ai.bardly.feature.chats.data.remote.ChatsRemoteDataSource
+import com.ai.bardly.feature.chats.domain.ChatsRepository
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 

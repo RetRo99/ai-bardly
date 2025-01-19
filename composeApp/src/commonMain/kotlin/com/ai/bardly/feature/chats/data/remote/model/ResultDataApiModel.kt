@@ -1,4 +1,4 @@
-package com.ai.bardly.data.chat.model
+package com.ai.bardly.feature.chats.data.remote.model
 
 import kotlinx.serialization.Serializable
 

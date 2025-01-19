@@ -1,4 +1,4 @@
-package com.ai.bardly.screens.chats.details
+package com.ai.bardly.feature.chats.ui.details
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_send

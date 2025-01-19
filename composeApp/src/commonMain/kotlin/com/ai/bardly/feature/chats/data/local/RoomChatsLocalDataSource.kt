@@ -1,10 +1,9 @@
-package com.ai.bardly.data.chat.local
+package com.ai.bardly.feature.chats.data.local
 
 import com.ai.bardly.database.DaoExecutor
-import com.ai.bardly.domain.chats.local.MessagesDao
-import com.ai.bardly.domain.chats.local.toDomainModel
-import com.ai.bardly.domain.chats.model.MessageDomainModel
 import com.ai.bardly.domain.games.model.local.toLocalModel
+import com.ai.bardly.feature.chats.data.local.model.toDomainModel
+import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 
 class RoomChatsLocalDataSource(
     private val dao: MessagesDao,
