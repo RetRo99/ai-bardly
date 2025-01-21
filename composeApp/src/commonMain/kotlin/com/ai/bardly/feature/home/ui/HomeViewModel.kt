@@ -4,9 +4,9 @@ import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.navigation.GeneralDestination
 
-class HomeViewModel : BaseViewModel<Unit, HomeIntent>() {
+class HomeViewModel : BaseViewModel<HomeViewState, HomeIntent>() {
 
-    override val defaultViewState = Unit
+    override val defaultViewState = HomeViewState()
     override suspend fun handleScreenIntent(intent: HomeIntent) {
         when (intent) {
             is HomeIntent.OpenChatClicked -> openChat(intent.gameTitle, intent.gameId)

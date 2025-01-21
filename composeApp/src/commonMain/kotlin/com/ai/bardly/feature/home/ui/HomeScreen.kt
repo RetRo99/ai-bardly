@@ -36,8 +36,9 @@ import com.ai.bardly.ui.GameCard
 @Composable
 fun HomeScreen(
 ) {
-    BaseScreen<HomeViewModel, Unit, HomeIntent> { viewState, intentDispatcher ->
+    BaseScreen<HomeViewModel, HomeViewState, HomeIntent> { viewState, intentDispatcher ->
         HomeScreenContent(
+            viewState = viewState,
             intentDispatcher = intentDispatcher,
         )
     }
@@ -45,6 +46,7 @@ fun HomeScreen(
 
 @Composable
 private fun HomeScreenContent(
+    viewState: HomeViewState,
     intentDispatcher: IntentDispatcher<HomeIntent>,
 ) {
     Column(
