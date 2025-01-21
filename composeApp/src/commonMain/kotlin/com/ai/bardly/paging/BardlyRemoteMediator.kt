@@ -5,6 +5,9 @@ import androidx.paging.LoadType
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import com.ai.bardly.analytics.Analytics
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 @OptIn(ExperimentalPagingApi::class)
 class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
@@ -14,7 +17,9 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
     private val remoteToLocal: (List<RemoteItem>) -> List<LocalItem>,
     private val clearLocal: suspend () -> Unit = { },
     private val shouldRefresh: () -> Boolean = { true }
-) : RemoteMediator<Int, LocalItem>() {
+) : RemoteMediator<Int, LocalItem>(), KoinComponent {
+
+    private val analytics by inject<Analytics>()
 
     private var currentPage = 1
 
@@ -94,6 +99,7 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
                 }
             }
         } catch (e: Exception) {
+            analytics.logException(e, "Failed remote mediator load")
             MediatorResult.Error(e)
         }
     }
