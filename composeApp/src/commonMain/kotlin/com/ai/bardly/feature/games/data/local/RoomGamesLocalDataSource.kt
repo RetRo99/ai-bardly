@@ -3,6 +3,7 @@ package com.ai.bardly.feature.games.data.local
 import androidx.paging.PagingSource
 import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.feature.games.data.local.model.GameEntity
+import com.ai.bardly.feature.games.data.local.model.GameMetadataEntity
 import kotlinx.datetime.LocalDateTime
 
 class RoomGamesLocalDataSource(
@@ -34,7 +35,7 @@ class RoomGamesLocalDataSource(
 
     override suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime): Result<Unit> {
         return daoExecutor.executeDaoOperation {
-            gamesDao.updateGameOpenTime(id, openedDateTime)
+            gamesDao.updateGameOpenTime(GameMetadataEntity(id, openedDateTime))
         }
     }
 }

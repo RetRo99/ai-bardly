@@ -9,12 +9,14 @@ import com.ai.bardly.feature.chats.data.local.MessagesDao
 import com.ai.bardly.feature.chats.data.local.model.MessageEntity
 import com.ai.bardly.feature.games.data.local.GamesDao
 import com.ai.bardly.feature.games.data.local.model.GameEntity
+import com.ai.bardly.feature.games.data.local.model.GameMetadataEntity
 import org.koin.core.module.Module
 
 @Database(
     entities = [
         MessageEntity::class,
         GameEntity::class,
+        GameMetadataEntity::class,
     ],
     version = 1,
     exportSchema = true,

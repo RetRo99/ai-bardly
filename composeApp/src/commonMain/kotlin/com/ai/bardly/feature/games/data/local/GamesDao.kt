@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ai.bardly.feature.games.data.local.model.GameEntity
-import kotlinx.datetime.LocalDateTime
+import com.ai.bardly.feature.games.data.local.model.GameMetadataEntity
 
 @Dao
 interface GamesDao {
@@ -26,9 +26,22 @@ interface GamesDao {
     @Query("DELETE FROM GameEntity")
     suspend fun clearAll()
 
-    @Query("SELECT * FROM GameEntity WHERE lastOpenTime IS NOT NULL ORDER BY lastOpenTime DESC LIMIT :amount")
+    @Query(
+        """
+        SELECT * FROM GameEntity
+        WHERE id IN (
+            SELECT gameId FROM GameMetadataEntity 
+            WHERE lastOpenTime IS NOT NULL
+            ORDER BY lastOpenTime DESC
+            LIMIT :amount
+        )
+        ORDER BY (
+            SELECT lastOpenTime FROM GameMetadataEntity WHERE GameEntity.id = GameMetadataEntity.gameId
+        ) DESC
+    """
+    )
     suspend fun getRecentlyOpenGames(amount: Int): List<GameEntity>
 
-    @Query("UPDATE GameEntity SET lastOpenTime = :openedDateTime WHERE id = :id")
-    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateGameOpenTime(game: GameMetadataEntity)
 }

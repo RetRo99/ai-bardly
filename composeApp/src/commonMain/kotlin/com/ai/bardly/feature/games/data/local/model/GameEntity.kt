@@ -8,7 +8,6 @@ import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.PagingItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.LocalDateTime
 
 @Entity
 data class GameEntity(
@@ -22,7 +21,6 @@ data class GameEntity(
     val complexity: String,
     val link: String,
     val thumbnail: String,
-    val lastOpenTime: LocalDateTime?,
     @PrimaryKey
     override val id: Int
 ) : PagingItem
@@ -56,7 +54,6 @@ fun GameDomainModel.toEntity() = GameEntity(
     link = link,
     thumbnail = thumbnail,
     id = id,
-    lastOpenTime = null,
 )
 
 fun List<GameDomainModel>.toEntity() = map(GameDomainModel::toEntity)
