@@ -3,6 +3,7 @@ package com.ai.bardly.feature.games.data.local
 import androidx.paging.PagingSource
 import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.feature.games.data.local.model.GameEntity
+import kotlinx.datetime.LocalDateTime
 
 class RoomGamesLocalDataSource(
     private val gamesDao: GamesDao,
@@ -19,9 +20,21 @@ class RoomGamesLocalDataSource(
         }
     }
 
+    override suspend fun getRecentlyOpenGames(amount: Int): Result<List<GameEntity>> {
+        return daoExecutor.executeDaoOperation {
+            gamesDao.getRecentlyOpenGames(amount)
+        }
+    }
+
     override suspend fun clearAll() {
         daoExecutor.executeDaoOperation {
             gamesDao.clearAll()
+        }
+    }
+
+    override suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime): Result<Unit> {
+        return daoExecutor.executeDaoOperation {
+            gamesDao.updateGameOpenTime(id, openedDateTime)
         }
     }
 }

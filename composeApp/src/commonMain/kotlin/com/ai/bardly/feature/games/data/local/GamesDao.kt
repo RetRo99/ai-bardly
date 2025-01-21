@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.ai.bardly.feature.games.data.local.model.GameEntity
+import kotlinx.datetime.LocalDateTime
 
 @Dao
 interface GamesDao {
@@ -22,4 +23,10 @@ interface GamesDao {
 
     @Query("DELETE FROM GameEntity")
     suspend fun clearAll()
+
+    @Query("SELECT * FROM GameEntity WHERE lastOpenTime IS NOT NULL ORDER BY lastOpenTime DESC LIMIT :amount")
+    suspend fun getRecentlyOpenGames(amount: Int): List<GameEntity>
+
+    @Query("UPDATE GameEntity SET lastOpenTime = :openedDateTime WHERE id = :id")
+    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime)
 }

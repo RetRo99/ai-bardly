@@ -12,6 +12,7 @@ import com.ai.bardly.feature.games.data.remote.model.toDomainModel
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.BardlyRemoteMediator
+import com.ai.bardly.util.now
 import kotlinx.coroutines.flow.Flow
 
 class GamesDataRepository(
@@ -37,5 +38,13 @@ class GamesDataRepository(
             ),
             pagingSourceFactory = { localSource.getGames(query) }
         ).flow.toDomainModel()
+    }
+
+    override suspend fun getRecentlyOpenGames(amount: Int): Result<List<GameDomainModel>> {
+        return localSource.getRecentlyOpenGames(amount).map { it.toDomainModel() }
+    }
+
+    override suspend fun updateGameOpenDate(gameId: Int): Result<Unit> {
+        return localSource.updateGameOpenTime(gameId, now())
     }
 }
