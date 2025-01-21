@@ -33,7 +33,6 @@ class GamesDataRepository(
                 remoteSource = remotePagingSource,
                 localSource = localSource.getGames(query),
                 saveToLocal = { localSource.saveGames(it) },
-                clearLocal = { localSource.clearAll() },
                 remoteToLocal = { it.toDomainModel().toEntity() }
             ),
             pagingSourceFactory = { localSource.getGames(query) }

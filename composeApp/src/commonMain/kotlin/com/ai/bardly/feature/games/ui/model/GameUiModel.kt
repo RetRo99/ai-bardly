@@ -25,7 +25,7 @@ data class GameUiModel(
 
 fun PagingData<GameDomainModel>.toUiModels() = map(GameDomainModel::toUiModel)
 fun Flow<PagingData<GameDomainModel>>.toUiModels() = map { it.toUiModels() }
-
+fun List<GameDomainModel>.toUiModel() = map(GameDomainModel::toUiModel)
 fun GameDomainModel.toUiModel() = GameUiModel(
     title = title,
     description = description,

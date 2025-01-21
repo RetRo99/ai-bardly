@@ -3,10 +3,14 @@ package com.ai.bardly.feature.home.ui
 import androidx.lifecycle.viewModelScope
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.feature.games.domain.GamesRepository
+import com.ai.bardly.feature.games.ui.model.toUiModel
 import com.ai.bardly.navigation.GeneralDestination
 import kotlinx.coroutines.launch
 
-class HomeViewModel : BaseViewModel<HomeViewState, HomeIntent>() {
+class HomeViewModel(
+    private val gamesRepository: GamesRepository,
+) : BaseViewModel<HomeViewState, HomeIntent>() {
 
     override val defaultViewState = HomeViewState()
 
@@ -28,7 +32,17 @@ class HomeViewModel : BaseViewModel<HomeViewState, HomeIntent>() {
 
     private fun loadRecentGames() {
         viewModelScope.launch {
-
+            gamesRepository.getRecentlyOpenGames()
+                .onSuccess { games ->
+                    updateOrSetSuccess {
+                        it.copy(
+                            recentGames = games.toUiModel()
+                        )
+                    }
+                }
+                .onFailure { error ->
+                    setError(throwable = error)
+                }
         }
     }
 }

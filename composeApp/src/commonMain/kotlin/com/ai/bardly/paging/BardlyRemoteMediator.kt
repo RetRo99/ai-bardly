@@ -11,8 +11,8 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
     private val remoteSource: PagingSource<Int, RemoteItem>,
     private val localSource: PagingSource<Int, LocalItem>,
     private val saveToLocal: suspend (List<LocalItem>) -> Unit,
-    private val clearLocal: suspend () -> Unit,
     private val remoteToLocal: (List<RemoteItem>) -> List<LocalItem>,
+    private val clearLocal: suspend () -> Unit = { },
     private val shouldRefresh: () -> Boolean = { true }
 ) : RemoteMediator<Int, LocalItem>() {
 
