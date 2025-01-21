@@ -102,7 +102,7 @@ val analyticsModule = module {
 }
 
 val daoModule = module {
-    single { DaoExecutor() }
+    single { DaoExecutor(get()) }
 }
 
 fun initKoin(

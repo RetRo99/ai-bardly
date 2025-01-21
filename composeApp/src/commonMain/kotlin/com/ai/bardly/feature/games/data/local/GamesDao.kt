@@ -3,16 +3,18 @@ package com.ai.bardly.feature.games.data.local
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ai.bardly.feature.games.data.local.model.GameEntity
 import kotlinx.datetime.LocalDateTime
 
 @Dao
 interface GamesDao {
-    @Insert
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: GameEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<GameEntity>)
 
     @Query("SELECT * FROM GameEntity WHERE id = :id")

@@ -2,11 +2,16 @@ package com.ai.bardly.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.ai.bardly.analytics.Analytics
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class BardlyPagingSource<ITEM : PagingItem>(
     private val initialKey: Int,
     private val getItems: suspend (Int, Int) -> PagingResult<ITEM>
-) : PagingSource<Int, ITEM>() {
+) : PagingSource<Int, ITEM>(), KoinComponent {
+
+    private val analytics by inject<Analytics>()
 
     override val jumpingSupported: Boolean
         get() = true
@@ -24,6 +29,7 @@ class BardlyPagingSource<ITEM : PagingItem>(
                 nextKey = pagingResult.nextKey
             )
         } catch (exception: Throwable) {
+            analytics.logException(exception, "Failed paging load")
             return LoadResult.Error(exception)
         }
     }
