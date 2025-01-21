@@ -7,7 +7,7 @@ import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.model.MessageType
 import com.ai.bardly.feature.chats.ui.model.MessageUiModel
 import com.ai.bardly.feature.chats.ui.model.toDomainModel
-import com.ai.bardly.feature.games.ui.model.toUiModel
+import com.ai.bardly.feature.chats.ui.model.toUiModel
 import kotlinx.coroutines.launch
 
 class ChatsDetailsViewModel(
