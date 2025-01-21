@@ -24,9 +24,10 @@ import kotlinx.coroutines.launch
 
 class GamesListViewModel(
     private val gamesRepository: GamesRepository
-) : BaseViewModel<GamesListViewState>() {
+) : BaseViewModel<GamesListViewState, GamesListIntent>() {
 
-    override val defaultScreenData = GamesListViewState()
+    override val defaultViewState = GamesListViewState()
+
     private val searchFlow = MutableStateFlow<String?>(null)
 
     init {
@@ -34,15 +35,25 @@ class GamesListViewModel(
         subscribeToSearchQuery()
     }
 
-    fun onGameClicked(game: GameUiModel) {
+    override suspend fun handleScreenIntent(intent: GamesListIntent) {
+        when (intent) {
+            is GamesListIntent.NavigateBack -> navigateBack()
+            is GamesListIntent.GameClicked -> onGameClicked(intent.game)
+            is GamesListIntent.OpenChatClicked -> onOpenChatClicked(intent.gameTitle, intent.gameId)
+            is GamesListIntent.SearchQueryChanged -> onSearchQueryChanged(intent.query)
+            is GamesListIntent.SearchStateChanged -> onSearchStateChanged(intent.isActive)
+        }
+    }
+
+    private fun onGameClicked(game: GameUiModel) {
         navigateTo(GeneralDestination.GameDetail(game))
     }
 
-    fun onOpenChatClicked(gameTitle: String, gameId: Int) {
+    private fun onOpenChatClicked(gameTitle: String, gameId: Int) {
         navigateTo(GeneralDestination.ChatDetail(gameTitle, gameId))
     }
 
-    fun onSearchQueryChanged(query: String) {
+    private fun onSearchQueryChanged(query: String) {
         updateOrSetSuccess {
             it.copy(
                 query = query
@@ -51,7 +62,7 @@ class GamesListViewModel(
         searchFlow.update { query }
     }
 
-    fun onSearchStateChanged(isActive: Boolean) {
+    private fun onSearchStateChanged(isActive: Boolean) {
         updateOrSetSuccess {
             it.copy(
                 isSearchActive = isActive,

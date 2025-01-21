@@ -6,12 +6,14 @@ import com.ai.bardly.base.BaseViewState
 
 class GameDetailsViewModel(
     private val game: GameUiModel,
-) : BaseViewModel<GameDetailsViewState>() {
+) : BaseViewModel<GameDetailsViewState, GameDetailsIntent>() {
 
-    override val defaultScreenData = GameDetailsViewState(game)
-    override val initialState = BaseViewState.Success(defaultScreenData)
+    override val defaultViewState = GameDetailsViewState(game)
 
-    fun onBackClick() {
-        navigateBack()
+    override val initialState = BaseViewState.Success(defaultViewState)
+
+    override suspend fun handleScreenIntent(intent: GameDetailsIntent) {
+        TODO("Not yet implemented")
     }
+
 }

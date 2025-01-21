@@ -39,7 +39,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.bardly.GameUiModel
-import com.ai.bardly.ui.BaseScreen
+import com.ai.bardly.base.BaseScreen
+import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.ui.CoilImage
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
@@ -52,15 +53,14 @@ fun SharedTransitionScope.GameDetailsScreen(
     game: GameUiModel,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    BaseScreen<GameDetailsViewModel, GameDetailsViewState>(
+    BaseScreen<GameDetailsViewModel, GameDetailsViewState, GameDetailsIntent>(
         parameters = arrayOf(game)
-    ) { viewModel, viewState ->
+    ) { viewState, intentDispatcher ->
         GamesScreenContent(
             game = viewState.game,
-            onBackClick = viewModel::onBackClick,
             animatedVisibilityScope = animatedVisibilityScope,
+            intentDispatcher = intentDispatcher,
         )
-
     }
 }
 
@@ -68,7 +68,7 @@ fun SharedTransitionScope.GameDetailsScreen(
 @Composable
 private fun SharedTransitionScope.GamesScreenContent(
     game: GameUiModel,
-    onBackClick: () -> Unit,
+    intentDispatcher: IntentDispatcher<GameDetailsIntent>,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Column(
@@ -81,7 +81,7 @@ private fun SharedTransitionScope.GamesScreenContent(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onBackClick) {
+            IconButton(onClick = { intentDispatcher(GameDetailsIntent.NavigateBack) }) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
         }

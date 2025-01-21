@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ai.bardly.ui.BaseScreen
+import com.ai.bardly.base.BaseScreen
 
 @Composable
 fun ChatsListScreen(
 ) {
-    BaseScreen<ChatsViewModel, Unit> { viewModel, viewState ->
+    BaseScreen<ChatListViewModel, Unit, ChatListIntent> { viewState, intentDispatcher ->
         ChatsListContent()
     }
 }

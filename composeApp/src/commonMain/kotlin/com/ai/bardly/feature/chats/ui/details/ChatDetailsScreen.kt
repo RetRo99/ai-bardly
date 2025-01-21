@@ -63,7 +63,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
 import com.ai.bardly.MessageUiModel
-import com.ai.bardly.ui.BaseScreen
+import com.ai.bardly.base.BaseScreen
+import com.ai.bardly.base.IntentDispatcher
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import kotlinx.coroutines.delay
@@ -76,15 +77,13 @@ fun SharedTransitionScope.ChatDetailsScreen(
     gameId: Int,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    BaseScreen<ChatsDetailsViewModel, ChatDetailsViewState>(
+    BaseScreen<ChatsDetailsViewModel, ChatDetailsViewState, ChatDetailsIntent>(
         parameters = arrayOf(gameTitle, gameId)
-    ) { viewModel, viewState ->
+    ) { viewState, intentDispatcher ->
         ChatDetailsScreenContent(
             viewState = viewState,
-            onBackClick = viewModel::onBackClick,
-            onMessageSendClicked = viewModel::onMessageSendClicked,
+            intentDispatcher = intentDispatcher,
             animatedVisibilityScope = animatedVisibilityScope,
-            onMessageAnimationEnded = viewModel::onMessageAnimationEnded,
         )
     }
 }
@@ -93,9 +92,7 @@ fun SharedTransitionScope.ChatDetailsScreen(
 @Composable
 private fun SharedTransitionScope.ChatDetailsScreenContent(
     viewState: ChatDetailsViewState,
-    onBackClick: () -> Unit,
-    onMessageSendClicked: (String) -> Unit,
-    onMessageAnimationEnded: (MessageUiModel) -> Unit,
+    intentDispatcher: IntentDispatcher<ChatDetailsIntent>,
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
@@ -106,10 +103,8 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
             id = viewState.gameId,
             messages = viewState.messages,
             isResponding = viewState.isResponding,
-            onBackClick = onBackClick,
+            intentDispatcher = intentDispatcher,
             animatedVisibilityScope = animatedVisibilityScope,
-            onMessageSendClicked = onMessageSendClicked,
-            onMessageAnimationEnded = onMessageAnimationEnded,
         )
     }
 }
@@ -121,10 +116,8 @@ private fun SharedTransitionScope.ChatDetails(
     id: Int,
     messages: List<MessageUiModel>,
     isResponding: Boolean,
-    onBackClick: () -> Unit,
+    intentDispatcher: IntentDispatcher<ChatDetailsIntent>,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onMessageSendClicked: (String) -> Unit,
-    onMessageAnimationEnded: (MessageUiModel) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -138,7 +131,7 @@ private fun SharedTransitionScope.ChatDetails(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBackClick) {
+                IconButton(onClick = { intentDispatcher(ChatDetailsIntent.NavigateBack) }) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Box(
@@ -178,14 +171,19 @@ private fun SharedTransitionScope.ChatDetails(
                 items(messages) { message ->
                     MessageBubble(
                         message = message,
-                        onAnimationEnded = onMessageAnimationEnded
+                        onAnimationEnded = {
+                            intentDispatcher
+                            (ChatDetailsIntent.MessageAnimationDone(it))
+                        },
                     )
                 }
             }
 
             MessageInputField(
                 modifier = Modifier.padding(16.dp),
-                onMessageSendClicked = onMessageSendClicked
+                onMessageSendClicked = {
+                    intentDispatcher(ChatDetailsIntent.SendMessage(it))
+                }
             )
         }
     }

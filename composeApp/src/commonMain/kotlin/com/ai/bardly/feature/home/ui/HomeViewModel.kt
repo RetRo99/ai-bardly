@@ -4,13 +4,18 @@ import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.navigation.GeneralDestination
 
-class HomeViewModel : BaseViewModel<Unit>() {
+class HomeViewModel : BaseViewModel<Unit, HomeIntent>() {
 
-    override val defaultScreenData = Unit
+    override val defaultViewState = Unit
+    override suspend fun handleScreenIntent(intent: HomeIntent) {
+        when (intent) {
+            is HomeIntent.OpenChatClicked -> openChat(intent.gameTitle, intent.gameId)
+        }
+    }
 
-    override val initialState = BaseViewState.Success(defaultScreenData)
+    override val initialState = BaseViewState.Success(defaultViewState)
 
-    fun onOpenChatClicked(gameTitle: String, gameId: Int) {
+    private fun openChat(gameTitle: String, gameId: Int) {
         navigateTo(GeneralDestination.ChatDetail(gameTitle, gameId))
     }
 }

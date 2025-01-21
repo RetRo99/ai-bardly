@@ -1,4 +1,4 @@
-package com.ai.bardly.ui
+package com.ai.bardly.base
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,23 +8,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ai.bardly.base.BaseViewModel
-import com.ai.bardly.base.BaseViewState
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
-inline fun <reified ViewModel : BaseViewModel<ScreenData>, ScreenData> BaseScreen(
+inline fun <reified ViewModel : BaseViewModel<ScreenViewState, Intent>, ScreenViewState, Intent : ScreenIntent> BaseScreen(
     noinline loadingContent: @Composable () -> Unit = { LoadingScreen() },
     noinline errorContent: @Composable (BaseViewState.Error) -> Unit = { ErrorScreen(it) },
     vararg parameters: Any = emptyArray(),
-    noinline content: @Composable (ViewModel, ScreenData) -> Unit
+    noinline content: @Composable (ScreenViewState, IntentDispatcher<Intent>) -> Unit
 ) {
     val viewModel: ViewModel = koinViewModel { parametersOf(*parameters) }
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     when (val state = viewState) {
-        is BaseViewState.Success -> content(viewModel, state.data)
+        is BaseViewState.Success -> content(
+            state.data,
+            IntentDispatcher(viewModel::onScreenIntent)
+        )
+
         is BaseViewState.Error -> errorContent(state)
         is BaseViewState.Loading -> loadingContent()
     }

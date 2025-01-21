@@ -51,7 +51,9 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.ai.bardly.GameUiModel
-import com.ai.bardly.ui.BaseScreen
+import com.ai.bardly.base.BaseScreen
+import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.games.ui.list.GamesListIntent.OpenChatClicked
 import com.ai.bardly.ui.GameCard
 import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow
@@ -61,14 +63,11 @@ import kotlinx.coroutines.flow.Flow
 fun SharedTransitionScope.GamesListScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
-    BaseScreen<GamesListViewModel, GamesListViewState> { viewModel, viewState ->
+    BaseScreen<GamesListViewModel, GamesListViewState, GamesListIntent> { viewState, intentDispatcher ->
         GamesScreenContent(
             viewState = viewState,
             animatedVisibilityScope = animatedVisibilityScope,
-            onGameClicked = viewModel::onGameClicked,
-            onOpenChatClicked = viewModel::onOpenChatClicked,
-            onSearchQueryChanged = viewModel::onSearchQueryChanged,
-            onSearchStateChanged = viewModel::onSearchStateChanged,
+            intentDispatcher = intentDispatcher,
         )
 
     }
@@ -79,19 +78,13 @@ fun SharedTransitionScope.GamesListScreen(
 private fun SharedTransitionScope.GamesScreenContent(
     viewState: GamesListViewState,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String, Int) -> Unit,
-    onSearchQueryChanged: (String) -> Unit,
-    onSearchStateChanged: (Boolean) -> Unit,
+    intentDispatcher: IntentDispatcher<GamesListIntent>,
 ) {
 
     GamesList(
         games = viewState.games,
         animatedVisibilityScope = animatedVisibilityScope,
-        onGameClicked = onGameClicked,
-        onOpenChatClicked = onOpenChatClicked,
-        onSearchQueryChanged = onSearchQueryChanged,
-        onSearchStateChanged = onSearchStateChanged,
+        intentDispatcher = intentDispatcher,
         isSearchActive = viewState.isSearchActive,
         query = viewState.query,
         searchResults = viewState.searchResults
@@ -103,20 +96,17 @@ private fun SharedTransitionScope.GamesScreenContent(
 private fun SharedTransitionScope.GamesList(
     games: Flow<PagingData<GameUiModel>>,
     animatedVisibilityScope: AnimatedVisibilityScope,
-    onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String, Int) -> Unit,
-    onSearchQueryChanged: (String) -> Unit,
-    onSearchStateChanged: (Boolean) -> Unit,
     isSearchActive: Boolean,
     query: String,
-    searchResults: Flow<PagingData<GameUiModel>>
+    searchResults: Flow<PagingData<GameUiModel>>,
+    intentDispatcher: IntentDispatcher<GamesListIntent>
 ) {
     Box {
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
         val onGameClicked = { game: GameUiModel ->
             focusManager.clearFocus()
-            onGameClicked(game)
+            intentDispatcher(GamesListIntent.GameClicked(game))
         }
         val searchResults = searchResults.collectAsLazyPagingItems()
         val searchState = rememberLazyGridState()
@@ -133,7 +123,7 @@ private fun SharedTransitionScope.GamesList(
                     TextField(
                         value = query,
                         onValueChange = {
-                            onSearchQueryChanged(it)
+                            intentDispatcher(GamesListIntent.SearchQueryChanged(it))
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -169,7 +159,9 @@ private fun SharedTransitionScope.GamesList(
                         items = searchResults,
                         onGameClicked = onGameClicked,
                         animatedVisibilityScope = animatedVisibilityScope,
-                        onOpenChatClicked = onOpenChatClicked
+                        onOpenChatClicked = { title, id ->
+                            intentDispatcher(OpenChatClicked(title, id))
+                        }
                     )
                 }
             } else {
@@ -181,11 +173,13 @@ private fun SharedTransitionScope.GamesList(
                     items = games,
                     onGameClicked = onGameClicked,
                     animatedVisibilityScope = animatedVisibilityScope,
-                    onOpenChatClicked = onOpenChatClicked,
+                    onOpenChatClicked = { title, id ->
+                        intentDispatcher(OpenChatClicked(title, id))
+                    },
                 )
             }
         }
-        val isKeyboardOpen by keyboardAsState() // true or false
+        val isKeyboardOpen by keyboardAsState()
         val offset by animateDpAsState(
             targetValue = if (!isKeyboardOpen) 0.dp else 68.dp,
             animationSpec = tween(durationMillis = 300)
@@ -198,7 +192,7 @@ private fun SharedTransitionScope.GamesList(
                 )
             },
             onClick = {
-                onSearchStateChanged(!isSearchActive)
+                intentDispatcher(GamesListIntent.SearchStateChanged(!isSearchActive))
             }
         ) {
             Icon(

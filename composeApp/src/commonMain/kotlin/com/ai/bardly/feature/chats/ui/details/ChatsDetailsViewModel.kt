@@ -14,16 +14,24 @@ class ChatsDetailsViewModel(
     private val gameTitle: String,
     private val gameId: Int,
     private val chatsRepository: ChatsRepository,
-) : BaseViewModel<ChatDetailsViewState>() {
+) : BaseViewModel<ChatDetailsViewState, ChatDetailsIntent>() {
 
-    override val defaultScreenData = ChatDetailsViewState(
+    override val defaultViewState = ChatDetailsViewState(
         title = gameTitle,
         gameId = gameId,
         messages = emptyList(),
         isResponding = false
     )
 
-    override val initialState = BaseViewState.Success(defaultScreenData)
+    override suspend fun handleScreenIntent(intent: ChatDetailsIntent) {
+        when (intent) {
+            ChatDetailsIntent.NavigateBack -> navigateBack()
+            is ChatDetailsIntent.MessageAnimationDone -> onMessageAnimationEnded(intent.message)
+            is ChatDetailsIntent.SendMessage -> onMessageSendClicked(intent.messageText)
+        }
+    }
+
+    override val initialState = BaseViewState.Success(defaultViewState)
 
     init {
         viewModelScope.launch {
@@ -46,31 +54,25 @@ class ChatsDetailsViewModel(
         }
     }
 
-    fun onBackClick() {
-        navigateBack()
-    }
-
-    fun onMessageSendClicked(messageText: String) {
+    private suspend fun onMessageSendClicked(messageText: String) {
         val message = displayAndGetMessage(
             messageText = messageText,
             id = gameId,
         )
-        viewModelScope.launch {
-            chatsRepository
-                .getAnswerFor(message.toDomainModel())
-                .onSuccess { answer ->
-                    displayMessage(answer.toUiModel(true))
-                }.onFailure {
-                    updateOrSetSuccess {
-                        it.copy(
-                            isResponding = false
-                        )
-                    }
+        chatsRepository
+            .getAnswerFor(message.toDomainModel())
+            .onSuccess { answer ->
+                displayMessage(answer.toUiModel(true))
+            }.onFailure {
+                updateOrSetSuccess {
+                    it.copy(
+                        isResponding = false
+                    )
                 }
-        }
+            }
     }
 
-    fun onMessageAnimationEnded(message: MessageUiModel) {
+    private fun onMessageAnimationEnded(message: MessageUiModel) {
         updateOrSetSuccess {
             it.copy(
                 messages = it.messages.map {

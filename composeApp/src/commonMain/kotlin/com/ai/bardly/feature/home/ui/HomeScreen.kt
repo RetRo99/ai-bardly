@@ -29,21 +29,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.GameUiModel
-import com.ai.bardly.ui.BaseScreen
+import com.ai.bardly.base.BaseScreen
+import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.ui.GameCard
 
 @Composable
 fun HomeScreen(
 ) {
-    BaseScreen<HomeViewModel, Unit> { viewModel, viewState ->
+    BaseScreen<HomeViewModel, Unit, HomeIntent> { viewState, intentDispatcher ->
         HomeScreenContent(
-            onOpenChatClicked = viewModel::onOpenChatClicked,
+            intentDispatcher = intentDispatcher,
         )
     }
 }
 
 @Composable
-private fun HomeScreenContent(onOpenChatClicked: (String, Int) -> Unit) {
+private fun HomeScreenContent(
+    intentDispatcher: IntentDispatcher<HomeIntent>,
+) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -54,7 +57,13 @@ private fun HomeScreenContent(onOpenChatClicked: (String, Int) -> Unit) {
     ) {
         GreetingSection()
         WhatsNewSection()
-        RecentGamesSection(onOpenChatClicked)
+        RecentGamesSection(
+            onOpenChatClicked = { title, id ->
+                intentDispatcher(
+                    HomeIntent.OpenChatClicked(title, id)
+                )
+            }
+        )
     }
 }
 
