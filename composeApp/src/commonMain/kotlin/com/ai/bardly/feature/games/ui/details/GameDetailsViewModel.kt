@@ -13,7 +13,9 @@ class GameDetailsViewModel(
     override val initialState = BaseViewState.Success(defaultViewState)
 
     override suspend fun handleScreenIntent(intent: GameDetailsIntent) {
-        TODO("Not yet implemented")
+        when (intent) {
+            GameDetailsIntent.NavigateBack -> navigateBack()
+        }
     }
 
 }
