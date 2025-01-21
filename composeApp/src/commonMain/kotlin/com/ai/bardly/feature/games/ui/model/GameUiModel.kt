@@ -1,4 +1,4 @@
-package com.ai.bardly
+package com.ai.bardly.feature.games.ui.model
 
 import androidx.paging.PagingData
 import androidx.paging.map

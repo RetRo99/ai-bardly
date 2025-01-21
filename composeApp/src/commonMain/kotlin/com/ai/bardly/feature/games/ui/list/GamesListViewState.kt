@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.games.ui.list
 
 import androidx.paging.PagingData
-import com.ai.bardly.GameUiModel
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

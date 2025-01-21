@@ -50,10 +50,10 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
-import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.games.ui.list.GamesListIntent.OpenChatClicked
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.ui.GameCard
 import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow

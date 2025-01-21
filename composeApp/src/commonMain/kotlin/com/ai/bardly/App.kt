@@ -33,6 +33,7 @@ import com.ai.bardly.feature.chats.ui.details.ChatDetailsScreen
 import com.ai.bardly.feature.chats.ui.list.ChatsListScreen
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.home.ui.HomeScreen
 import com.ai.bardly.navigation.GeneralDestination
 import com.ai.bardly.navigation.GeneralDestination.ChatDetail

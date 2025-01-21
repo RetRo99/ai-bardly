@@ -1,4 +1,4 @@
-package com.ai.bardly
+package com.ai.bardly.feature.chats.ui.model
 
 import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import com.ai.bardly.feature.chats.domain.model.MessageType

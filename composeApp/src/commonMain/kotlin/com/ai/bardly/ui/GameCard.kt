@@ -27,7 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ai.bardly.GameUiModel
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

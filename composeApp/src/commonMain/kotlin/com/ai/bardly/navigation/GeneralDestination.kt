@@ -1,7 +1,7 @@
 package com.ai.bardly.navigation
 
-import com.ai.bardly.GameUiModel
 import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 import kotlinx.serialization.Serializable
 
 @Serializable

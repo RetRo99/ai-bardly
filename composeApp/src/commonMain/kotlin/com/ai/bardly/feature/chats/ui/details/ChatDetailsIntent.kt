@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.chats.ui.details
 
-import com.ai.bardly.MessageUiModel
 import com.ai.bardly.base.ScreenIntent
+import com.ai.bardly.feature.chats.ui.model.MessageUiModel
 
 sealed interface ChatDetailsIntent : ScreenIntent {
     object NavigateBack : ChatDetailsIntent

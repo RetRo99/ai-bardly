@@ -3,11 +3,11 @@ package com.ai.bardly.feature.games.ui.list
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.feature.games.domain.GamesRepository
+import com.ai.bardly.feature.games.ui.model.GameUiModel
+import com.ai.bardly.feature.games.ui.model.toUiModels
 import com.ai.bardly.navigation.GeneralDestination
-import com.ai.bardly.toUiModels
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow

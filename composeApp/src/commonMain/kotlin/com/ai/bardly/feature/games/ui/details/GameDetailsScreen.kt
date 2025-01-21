@@ -38,9 +38,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.ui.CoilImage
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText

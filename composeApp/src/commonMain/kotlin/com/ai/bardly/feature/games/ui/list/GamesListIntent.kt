@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.games.ui.list
 
-import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.ScreenIntent
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 
 sealed interface GamesListIntent : ScreenIntent {
     object NavigateBack : GamesListIntent

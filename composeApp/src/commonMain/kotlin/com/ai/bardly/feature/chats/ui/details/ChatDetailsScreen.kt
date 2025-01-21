@@ -62,9 +62,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import co.touchlab.kermit.Logger
-import com.ai.bardly.MessageUiModel
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.chats.ui.model.MessageUiModel
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import kotlinx.coroutines.delay

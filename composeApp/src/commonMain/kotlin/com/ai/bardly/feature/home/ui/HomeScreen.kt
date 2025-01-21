@@ -28,9 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ai.bardly.GameUiModel
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.ui.GameCard
 
 @Composable
