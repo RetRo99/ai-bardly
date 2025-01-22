@@ -88,6 +88,7 @@ open class NetworkClient(
             }
         } catch (e: Exception) {
             ensureActive()
+            // Already logged in http client
             Result.failure(e)
         }
     }
