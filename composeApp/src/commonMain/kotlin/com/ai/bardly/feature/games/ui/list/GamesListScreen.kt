@@ -6,18 +6,12 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -40,21 +34,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.games.ui.components.GamesLazyGrid
 import com.ai.bardly.feature.games.ui.list.GamesListIntent.OpenChatClicked
 import com.ai.bardly.feature.games.ui.model.GameUiModel
-import com.ai.bardly.ui.GameCard
 import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow
 
@@ -154,9 +145,11 @@ private fun SharedTransitionScope.GamesList(
                         shape = RoundedCornerShape(28.dp)
                     )
 
-                    GridContent(
+                    GamesLazyGrid(
                         gridState = searchState,
-                        items = searchResults,
+                        itemCount = { searchResults.itemCount },
+                        getItem = searchResults::get,
+                        getKey = searchResults.itemKey { it.id },
                         onGameClicked = onGameClicked,
                         animatedVisibilityScope = animatedVisibilityScope,
                         onOpenChatClicked = { title, id ->
@@ -168,9 +161,11 @@ private fun SharedTransitionScope.GamesList(
                 LaunchedEffect(Unit) {
                     focusManager.clearFocus()
                 }
-                GridContent(
+                GamesLazyGrid(
                     gridState = gamesState,
-                    items = games,
+                    itemCount = { games.itemCount },
+                    getItem = games::get,
+                    getKey = games.itemKey { it.id },
                     onGameClicked = onGameClicked,
                     animatedVisibilityScope = animatedVisibilityScope,
                     onOpenChatClicked = { title, id ->
@@ -199,46 +194,6 @@ private fun SharedTransitionScope.GamesList(
                 imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
                 contentDescription = if (isSearchActive) "Close search" else "Search"
             )
-        }
-    }
-}
-
-@OptIn(ExperimentalSharedTransitionApi::class)
-@Composable
-private fun SharedTransitionScope.GridContent(
-    gridState: LazyGridState,
-    items: LazyPagingItems<GameUiModel>,
-    onGameClicked: (GameUiModel) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
-    onOpenChatClicked: (String, Int) -> Unit,
-) {
-    val density = LocalDensity.current
-    LazyVerticalGrid(
-        state = gridState,
-        columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(
-            count = items.itemCount,
-            key = items.itemKey { it.id },
-        ) { index ->
-            val game = items[index]
-            if (game != null) {
-                val row = gridState.layoutInfo.visibleItemsInfo.find { it.index == index }?.row
-                val itemsInRow = gridState.layoutInfo.visibleItemsInfo.filter { it.row == row }
-                val maxHeightInRow = itemsInRow.maxOfOrNull { it.size.height }
-                val maxHeightInRowDp =
-                    with(density) { maxHeightInRow?.toDp() } ?: Dp.Unspecified
-                GameCard(
-                    game = game,
-                    onGameClicked = onGameClicked,
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    modifier = Modifier.height(maxHeightInRowDp),
-                    onOpenChatClicked = onOpenChatClicked
-                )
-            }
         }
     }
 }

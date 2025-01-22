@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.home.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
@@ -15,9 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -30,8 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.games.ui.components.GamesLazyGrid
 import com.ai.bardly.feature.games.ui.model.GameUiModel
-import com.ai.bardly.ui.GameCard
 
 @Composable
 fun HomeScreen(
@@ -51,20 +50,24 @@ private fun HomeScreenContent(
 ) {
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
             .fillMaxSize()
-            .background(Color.White)
-            .padding(16.dp),
+            .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         GreetingSection()
         WhatsNewSection()
         RecentGamesSection(
+            recentGames = viewState.recentGames,
             onOpenChatClicked = { title, id ->
                 intentDispatcher(
                     HomeIntent.OpenChatClicked(title, id)
                 )
-            }
+            },
+            onGameClicked = {
+                intentDispatcher(
+                    HomeIntent.OpenGameDetails(it)
+                )
+            },
         )
     }
 }
@@ -72,7 +75,7 @@ private fun HomeScreenContent(
 @Composable
 fun GreetingSection() {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(16.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF6F4ACB)
@@ -105,6 +108,7 @@ fun GreetingSection() {
 @Composable
 private fun WhatsNewSection() {
     Column(
+        modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
@@ -150,60 +154,31 @@ private fun WhatsNewSection() {
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun RecentGamesSection(onOpenChatClicked: (String, Int) -> Unit) {
+private fun RecentGamesSection(
+    recentGames: List<GameUiModel>,
+    onOpenChatClicked: (String, Int) -> Unit,
+    onGameClicked: (GameUiModel) -> Unit,
+) {
     SharedTransitionLayout {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "Recent games",
-                style = MaterialTheme.typography.headlineLarge,
-                color = Color.Black
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                AnimatedVisibility(true) {
-                    GameCard(
-                        GameUiModel(
-                            title = "omittam",
-                            description = "dolorum",
-                            rating = "massa",
-                            yearPublished = "torquent",
-                            numberOfPlayers = "scripta",
-                            playingTime = "periculis",
-                            ageRange = "scripta",
-                            complexity = "dui",
-                            link = "omittam",
-                            thumbnail = "dicam",
-                            id = 5870
-                        ),
-                        onGameClicked = {},
-                        animatedVisibilityScope = this,
-                        onOpenChatClicked = onOpenChatClicked
-                    )
-                    GameCard(
-                        game = GameUiModel(
-                            title = "consetetur",
-                            description = "ridens",
-                            rating = "semper",
-                            yearPublished = "suas",
-                            numberOfPlayers = "mutat",
-                            playingTime = "magna",
-                            ageRange = "scelerisque",
-                            complexity = "deseruisse",
-                            link = "eu",
-                            thumbnail = "quot",
-                            id = 7759
-                        ),
-                        onGameClicked = {},
-                        animatedVisibilityScope = this,
-                        onOpenChatClicked = onOpenChatClicked
-                    )
+        AnimatedVisibility(true) {
+            val scope: AnimatedVisibilityScope = this
+            Column {
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = "Recent games",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color.Black
+                )
 
-                }
+
+                GamesLazyGrid(
+                    itemCount = { recentGames.size },
+                    getItem = { index -> recentGames[index] },
+                    getKey = { index -> recentGames[index].id },
+                    onGameClicked = onGameClicked,
+                    animatedVisibilityScope = scope,
+                    onOpenChatClicked = onOpenChatClicked
+                )
             }
         }
     }

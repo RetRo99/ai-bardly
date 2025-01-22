@@ -8,8 +8,6 @@ sealed class BaseViewState<out T> {
     ) : BaseViewState<T>()
 
     data class Error(
-        val message: String?,
-        val code: String? = null,
-        val throwable: Throwable? = null
+        val throwable: Throwable
     ) : BaseViewState<Nothing>()
 }

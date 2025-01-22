@@ -39,15 +39,15 @@ abstract class BaseViewModel<ScreenViewState, Intent : ScreenIntent> : ViewModel
         }
     }
 
+    open fun onScreenDisplayed() {}
+
     abstract suspend fun handleScreenIntent(intent: Intent)
 
     protected fun setError(
-        message: String? = null,
-        code: String? = null,
-        throwable: Throwable? = null
+        throwable: Throwable,
     ) {
         _viewState.update {
-            BaseViewState.Error(message, code, throwable)
+            BaseViewState.Error(throwable)
         }
     }
 

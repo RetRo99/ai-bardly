@@ -61,7 +61,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import co.touchlab.kermit.Logger
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.chats.ui.model.MessageUiModel
@@ -167,7 +166,6 @@ private fun SharedTransitionScope.ChatDetails(
                         )
                     }
                 }
-                Logger.withTag("čič").d { "ui: ${messages.map { it.text }}" }
                 items(messages) { message ->
                     MessageBubble(
                         message = message,

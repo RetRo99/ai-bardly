@@ -45,11 +45,7 @@ class ChatsDetailsViewModel(
                     }
                 }
                 .onFailure {
-                    updateOrSetSuccess {
-                        it.copy(
-                            messages = emptyList()
-                        )
-                    }
+                    setError(throwable = it)
                 }
         }
     }

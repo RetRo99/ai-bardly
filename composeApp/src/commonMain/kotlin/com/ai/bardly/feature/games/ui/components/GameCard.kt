@@ -1,4 +1,4 @@
-package com.ai.bardly.ui
+package com.ai.bardly.feature.games.ui.components
 
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.games.ui.model.GameUiModel
+import com.ai.bardly.ui.CoilImage
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
