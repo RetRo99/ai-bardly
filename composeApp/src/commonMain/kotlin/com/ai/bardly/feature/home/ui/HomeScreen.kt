@@ -1,9 +1,6 @@
 package com.ai.bardly.feature.home.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -159,27 +156,20 @@ private fun RecentGamesSection(
     onOpenChatClicked: (String, Int) -> Unit,
     onGameClicked: (GameUiModel) -> Unit,
 ) {
-    SharedTransitionLayout {
-        AnimatedVisibility(true) {
-            val scope: AnimatedVisibilityScope = this
-            Column {
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    text = "Recent games",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = Color.Black
-                )
+    Column {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = "Recent games",
+            style = MaterialTheme.typography.headlineLarge,
+            color = Color.Black
+        )
 
-
-                GamesLazyGrid(
-                    itemCount = { recentGames.size },
-                    getItem = { index -> recentGames[index] },
-                    getKey = { index -> recentGames[index].id },
-                    onGameClicked = onGameClicked,
-                    animatedVisibilityScope = scope,
-                    onOpenChatClicked = onOpenChatClicked
-                )
-            }
-        }
+        GamesLazyGrid(
+            itemCount = { recentGames.size },
+            getItem = { index -> recentGames[index] },
+            getKey = { index -> recentGames[index].id },
+            onGameClicked = onGameClicked,
+            onOpenChatClicked = onOpenChatClicked
+        )
     }
 }

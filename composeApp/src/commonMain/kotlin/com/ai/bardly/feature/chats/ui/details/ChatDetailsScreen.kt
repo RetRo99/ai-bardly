@@ -3,7 +3,6 @@ package com.ai.bardly.feature.chats.ui.details
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_send
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.LinearEasing
@@ -64,6 +63,8 @@ import androidx.compose.ui.unit.sp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.chats.ui.model.MessageUiModel
+import com.ai.bardly.util.LocalScreenAnimationScope
+import com.ai.bardly.util.LocalScreenTransitionScope
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import kotlinx.coroutines.delay
@@ -71,10 +72,9 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.ChatDetailsScreen(
+fun ChatDetailsScreen(
     gameTitle: String,
     gameId: Int,
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     BaseScreen<ChatsDetailsViewModel, ChatDetailsViewState, ChatDetailsIntent>(
         parameters = arrayOf(gameTitle, gameId)
@@ -82,17 +82,15 @@ fun SharedTransitionScope.ChatDetailsScreen(
         ChatDetailsScreenContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,
-            animatedVisibilityScope = animatedVisibilityScope,
         )
     }
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun SharedTransitionScope.ChatDetailsScreenContent(
+private fun ChatDetailsScreenContent(
     viewState: ChatDetailsViewState,
     intentDispatcher: IntentDispatcher<ChatDetailsIntent>,
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
         modifier = Modifier.fillMaxSize().background(Color.White)
@@ -103,20 +101,18 @@ private fun SharedTransitionScope.ChatDetailsScreenContent(
             messages = viewState.messages,
             isResponding = viewState.isResponding,
             intentDispatcher = intentDispatcher,
-            animatedVisibilityScope = animatedVisibilityScope,
         )
     }
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun SharedTransitionScope.ChatDetails(
+private fun ChatDetails(
     title: String,
     id: Int,
     messages: List<MessageUiModel>,
     isResponding: Boolean,
     intentDispatcher: IntentDispatcher<ChatDetailsIntent>,
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Box(
         modifier = Modifier
@@ -139,18 +135,20 @@ private fun SharedTransitionScope.ChatDetails(
                         .padding(end = 48.dp),  // Compensate for IconButton width
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = title,
-                        modifier = Modifier.padding(8.dp).sharedBounds(
-                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                            sharedContentState = rememberSharedContentState(
-                                key = "$id title",
+                    with(LocalScreenTransitionScope.current) {
+                        Text(
+                            text = title,
+                            modifier = Modifier.padding(8.dp).sharedBounds(
+                                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                                sharedContentState = rememberSharedContentState(
+                                    key = "$id title",
+                                ),
+                                animatedVisibilityScope = LocalScreenAnimationScope.current
                             ),
-                            animatedVisibilityScope = animatedVisibilityScope
-                        ),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
-                    )
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
+                    }
                 }
             }
             LazyColumn(

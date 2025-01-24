@@ -1,6 +1,5 @@
 package com.ai.bardly.feature.games.ui.components
 
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
@@ -29,106 +28,120 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.ui.CoilImage
+import com.ai.bardly.util.LocalScreenAnimationScope
+import com.ai.bardly.util.LocalScreenTransitionScope
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.GameCard(
+fun GameCard(
     game: GameUiModel,
     onGameClicked: (GameUiModel) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     onOpenChatClicked: (String, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier.clickable(onClick = { onGameClicked(game) }).padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+    with(LocalScreenTransitionScope.current) {
+        Card(
+            modifier = modifier.sharedBounds(
+                sharedContentState = rememberSharedContentState(
+                    key = game.id,
+                ),
+                renderInOverlayDuringTransition = false,
+                animatedVisibilityScope = LocalScreenAnimationScope.current
+            ),
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Card(
-                modifier = Modifier
-                    .size(80.dp)
-                    .background(
-                        Color.LightGray,
-                        shape = RoundedCornerShape(8.dp)
-                    ).sharedBounds(
-                        sharedContentState = rememberSharedContentState(
-                            key = "${game.id} thumbnail",
-                        ), animatedVisibilityScope
-                    ),
-                shape = RoundedCornerShape(8.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            Column(
+                modifier = Modifier.clickable(onClick = { onGameClicked(game) }).padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                CoilImage(
-                    data = game.thumbnail,
-                    cacheKey = game.thumbnail,
+                Card(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    contentScale = ContentScale.FillBounds
-                )
-            }
-
-            Text(
-                modifier = Modifier.sharedBounds(
-                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                    sharedContentState = rememberSharedContentState(
-                        key = "${game.id} title",
-                    ),
-                    animatedVisibilityScope = animatedVisibilityScope
-                ),
-                text = game.title,
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
-            )
-            Text(
-                modifier = Modifier.sharedBounds(
-                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                    sharedContentState = rememberSharedContentState(
-                        key = "${game.id} rating",
-                    ),
-                    animatedVisibilityScope = animatedVisibilityScope
-                ),
-                text = "⭐ ${game.rating}",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
-            )
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
+                        .size(80.dp)
+                        .background(
+                            Color.LightGray,
+                            shape = RoundedCornerShape(8.dp)
+                        ).sharedBounds(
+                            sharedContentState = rememberSharedContentState(
+                                key = "${game.id} thumbnail",
+                            ),
+                            animatedVisibilityScope = LocalScreenAnimationScope.current,
+                            renderInOverlayDuringTransition = false,
+                        ),
+                    shape = RoundedCornerShape(8.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                ) {
+                    CoilImage(
+                        data = game.thumbnail,
+                        cacheKey = game.thumbnail,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
+                    )
+                }
                 Text(
                     modifier = Modifier.sharedBounds(
                         resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
                         sharedContentState = rememberSharedContentState(
-                            key = "${game.id} numberOfPlayers",
+                            key = "${game.id} title",
                         ),
-                        animatedVisibilityScope = animatedVisibilityScope
+                        renderInOverlayDuringTransition = false,
+                        animatedVisibilityScope = LocalScreenAnimationScope.current,
                     ),
-                    text = "\uD83D\uDC65 ${game.numberOfPlayers}",
-                    style = MaterialTheme.typography.bodySmall
+                    text = game.title,
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
+                Text(
+                    modifier = Modifier.sharedBounds(
+                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                        sharedContentState = rememberSharedContentState(
+                            key = "${game.id} rating",
+                        ),
+                        renderInOverlayDuringTransition = false,
+                        animatedVisibilityScope = LocalScreenAnimationScope.current
+                    ),
+                    text = "⭐ ${game.rating}",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        modifier = Modifier.sharedBounds(
+                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                            sharedContentState = rememberSharedContentState(
+                                key = "${game.id} numberOfPlayers",
+                            ),
+                            renderInOverlayDuringTransition = false,
+                            animatedVisibilityScope = LocalScreenAnimationScope.current
+                        ),
+                        text = "\uD83D\uDC65 ${game.numberOfPlayers}",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        modifier = Modifier.sharedBounds(
+                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                            sharedContentState = rememberSharedContentState(
+                                key = "${game.id} playingTime",
+                            ),
+                            renderInOverlayDuringTransition = false,
+                            animatedVisibilityScope = LocalScreenAnimationScope.current
+                        ),
+                        text = "\uD83D\uDD52 ${game.playingTime}",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
                 Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    modifier = Modifier.sharedBounds(
-                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                        sharedContentState = rememberSharedContentState(
-                            key = "${game.id} playingTime",
-                        ),
-                        animatedVisibilityScope = animatedVisibilityScope
-                    ),
-                    text = "\uD83D\uDD52 ${game.playingTime}",
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            Button(
-                onClick = { onOpenChatClicked(game.title, game.id) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text(text = "See Chat")
+                Button(
+                    onClick = { onOpenChatClicked(game.title, game.id) },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(text = "See Chat")
+                }
             }
         }
     }

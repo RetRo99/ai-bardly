@@ -5,7 +5,6 @@ import ai_bardly.composeapp.generated.resources.amount_of_players
 import ai_bardly.composeapp.generated.resources.game_age_recommendation
 import ai_bardly.composeapp.generated.resources.game_complexity
 import ai_bardly.composeapp.generated.resources.game_length
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +41,8 @@ import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.ui.CoilImage
+import com.ai.bardly.util.LocalScreenAnimationScope
+import com.ai.bardly.util.LocalScreenTransitionScope
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import org.jetbrains.compose.resources.StringResource
@@ -49,16 +50,14 @@ import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.GameDetailsScreen(
+fun GameDetailsScreen(
     game: GameUiModel,
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     BaseScreen<GameDetailsViewModel, GameDetailsViewState, GameDetailsIntent>(
         parameters = arrayOf(game)
     ) { viewState, intentDispatcher ->
         GamesScreenContent(
             game = viewState.game,
-            animatedVisibilityScope = animatedVisibilityScope,
             intentDispatcher = intentDispatcher,
         )
     }
@@ -66,10 +65,9 @@ fun SharedTransitionScope.GameDetailsScreen(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun SharedTransitionScope.GamesScreenContent(
+private fun GamesScreenContent(
     game: GameUiModel,
     intentDispatcher: IntentDispatcher<GameDetailsIntent>,
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     Column(
         modifier = Modifier
@@ -87,106 +85,107 @@ private fun SharedTransitionScope.GamesScreenContent(
         }
 
         // Game Image
-        Card(
-            modifier = Modifier.wrapContentSize().sharedBounds(
-                sharedContentState = rememberSharedContentState(
-                    key = "${game.id} thumbnail",
-                ), animatedVisibilityScope
-            ).align(Alignment.CenterHorizontally),
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-        ) {
-            CoilImage(
-                data = game.thumbnail,
-                cacheKey = game.thumbnail,
-                modifier = Modifier
-                    .wrapContentSize()
-                    .height(180.dp),
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Game Title and Meta Information
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    modifier = Modifier.sharedBounds(
-                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                        sharedContentState = rememberSharedContentState(
-                            key = "${game.id} title",
-                        ),
-                        animatedVisibilityScope = animatedVisibilityScope
-                    ),
-                    text = game.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+        with(LocalScreenTransitionScope.current) {
+            Card(
+                modifier = Modifier.wrapContentSize().sharedBounds(
+                    sharedContentState = rememberSharedContentState(
+                        key = "${game.id} thumbnail",
+                    ), animatedVisibilityScope = LocalScreenAnimationScope.current
+                ).align(Alignment.CenterHorizontally),
+                shape = RoundedCornerShape(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            ) {
+                CoilImage(
+                    data = game.thumbnail,
+                    cacheKey = game.thumbnail,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .height(180.dp),
                 )
-                Row {
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Game Title and Meta Information
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
                     Text(
                         modifier = Modifier.sharedBounds(
                             resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
                             sharedContentState = rememberSharedContentState(
-                                key = "${game.id} year",
+                                key = "${game.id} title",
                             ),
-                            animatedVisibilityScope = animatedVisibilityScope
+                            animatedVisibilityScope = LocalScreenAnimationScope.current
+
                         ),
-                        text = "\uD83D\uDCC5 ${game.yearPublished}",
-                        color = Color.Gray,
-                        fontSize = 14.sp
+                        text = game.title,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
                     )
-                    Text(
-                        modifier = Modifier.padding(horizontal = 4.dp), // Add padding for spacing around the separator
-                        text = "|",
-                        color = Color.Gray,
-                        fontSize = 14.sp
-                    )
-                    Text(
-                        modifier = Modifier.sharedBounds(
-                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                            sharedContentState = rememberSharedContentState(
-                                key = "${game.id} rating",
+                    Row {
+                        Text(
+                            modifier = Modifier.sharedBounds(
+                                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                                sharedContentState = rememberSharedContentState(
+                                    key = "${game.id} year",
+                                ),
+                                animatedVisibilityScope = LocalScreenAnimationScope.current
                             ),
-                            animatedVisibilityScope = animatedVisibilityScope
-                        ),
-                        text = "⭐ ${game.rating}",
-                        color = Color.Gray,
-                        fontSize = 14.sp
-                    )
+                            text = "\uD83D\uDCC5 ${game.yearPublished}",
+                            color = Color.Gray,
+                            fontSize = 14.sp
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp), // Add padding for spacing around the separator
+                            text = "|",
+                            color = Color.Gray,
+                            fontSize = 14.sp
+                        )
+                        Text(
+                            modifier = Modifier.sharedBounds(
+                                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                                sharedContentState = rememberSharedContentState(
+                                    key = "${game.id} rating",
+                                ),
+                                animatedVisibilityScope = LocalScreenAnimationScope.current
+                            ),
+                            text = "⭐ ${game.rating}",
+                            color = Color.Gray,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Description Section
+            Text(
+                text = "Description",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 18.sp
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            GameInformationCards(
+                game = game,
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Description(game.description)
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Description Section
-        Text(
-            text = "Description",
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 18.sp
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        GameInformationCards(
-            game = game,
-            animatedVisibilityScope = animatedVisibilityScope,
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Description(game.description)
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
-private fun SharedTransitionScope.GameInformationCards(
+private fun GameInformationCards(
     game: GameUiModel,
-    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
@@ -194,50 +193,52 @@ private fun SharedTransitionScope.GameInformationCards(
             Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        GameInfoCard(
-            modifier = Modifier.sharedBounds(
-                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                sharedContentState = rememberSharedContentState(
-                    key = "${game.id} numberOfPlayers",
+        with(LocalScreenTransitionScope.current) {
+            GameInfoCard(
+                modifier = Modifier.sharedBounds(
+                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                    sharedContentState = rememberSharedContentState(
+                        key = "${game.id} numberOfPlayers",
+                    ),
+                    animatedVisibilityScope = LocalScreenAnimationScope.current
                 ),
-                animatedVisibilityScope = animatedVisibilityScope
-            ),
-            label = Res.string.amount_of_players,
-            value = game.numberOfPlayers
-        )
-        GameInfoCard(
-            modifier = Modifier.sharedBounds(
-                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                sharedContentState = rememberSharedContentState(
-                    key = "${game.id} playingTime",
+                label = Res.string.amount_of_players,
+                value = game.numberOfPlayers
+            )
+            GameInfoCard(
+                modifier = Modifier.sharedBounds(
+                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                    sharedContentState = rememberSharedContentState(
+                        key = "${game.id} playingTime",
+                    ),
+                    animatedVisibilityScope = LocalScreenAnimationScope.current
                 ),
-                animatedVisibilityScope = animatedVisibilityScope
-            ),
-            label = Res.string.game_length,
-            value = game.playingTime
-        )
-        GameInfoCard(
-            modifier = Modifier.sharedBounds(
-                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                sharedContentState = rememberSharedContentState(
-                    key = "${game.id} ageRange",
+                label = Res.string.game_length,
+                value = game.playingTime
+            )
+            GameInfoCard(
+                modifier = Modifier.sharedBounds(
+                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                    sharedContentState = rememberSharedContentState(
+                        key = "${game.id} ageRange",
+                    ),
+                    animatedVisibilityScope = LocalScreenAnimationScope.current
                 ),
-                animatedVisibilityScope = animatedVisibilityScope
-            ),
-            label = Res.string.game_age_recommendation,
-            value = game.ageRange
-        )
-        GameInfoCard(
-            modifier = Modifier.sharedBounds(
-                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                sharedContentState = rememberSharedContentState(
-                    key = "${game.id} complexity",
+                label = Res.string.game_age_recommendation,
+                value = game.ageRange
+            )
+            GameInfoCard(
+                modifier = Modifier.sharedBounds(
+                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                    sharedContentState = rememberSharedContentState(
+                        key = "${game.id} complexity",
+                    ),
+                    animatedVisibilityScope = LocalScreenAnimationScope.current
                 ),
-                animatedVisibilityScope = animatedVisibilityScope
-            ),
-            label = Res.string.game_complexity,
-            value = "${game.complexity}/5"
-        )
+                label = Res.string.game_complexity,
+                value = "${game.complexity}/5"
+            )
+        }
     }
 }
 

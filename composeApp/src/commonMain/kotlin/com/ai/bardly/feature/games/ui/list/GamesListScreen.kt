@@ -1,9 +1,7 @@
 package com.ai.bardly.feature.games.ui.list
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
@@ -51,13 +49,10 @@ import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.GamesListScreen(
-    animatedVisibilityScope: AnimatedVisibilityScope,
-) {
+fun GamesListScreen() {
     BaseScreen<GamesListViewModel, GamesListViewState, GamesListIntent> { viewState, intentDispatcher ->
         GamesScreenContent(
             viewState = viewState,
-            animatedVisibilityScope = animatedVisibilityScope,
             intentDispatcher = intentDispatcher,
         )
 
@@ -66,15 +61,12 @@ fun SharedTransitionScope.GamesListScreen(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun SharedTransitionScope.GamesScreenContent(
+private fun GamesScreenContent(
     viewState: GamesListViewState,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     intentDispatcher: IntentDispatcher<GamesListIntent>,
 ) {
-
     GamesList(
         games = viewState.games,
-        animatedVisibilityScope = animatedVisibilityScope,
         intentDispatcher = intentDispatcher,
         isSearchActive = viewState.isSearchActive,
         query = viewState.query,
@@ -84,9 +76,8 @@ private fun SharedTransitionScope.GamesScreenContent(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun SharedTransitionScope.GamesList(
+private fun GamesList(
     games: Flow<PagingData<GameUiModel>>,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     isSearchActive: Boolean,
     query: String,
     searchResults: Flow<PagingData<GameUiModel>>,
@@ -151,7 +142,6 @@ private fun SharedTransitionScope.GamesList(
                         getItem = searchResults::get,
                         getKey = searchResults.itemKey { it.id },
                         onGameClicked = onGameClicked,
-                        animatedVisibilityScope = animatedVisibilityScope,
                         onOpenChatClicked = { title, id ->
                             intentDispatcher(OpenChatClicked(title, id))
                         }
@@ -167,7 +157,6 @@ private fun SharedTransitionScope.GamesList(
                     getItem = games::get,
                     getKey = games.itemKey { it.id },
                     onGameClicked = onGameClicked,
-                    animatedVisibilityScope = animatedVisibilityScope,
                     onOpenChatClicked = { title, id ->
                         intentDispatcher(OpenChatClicked(title, id))
                     },

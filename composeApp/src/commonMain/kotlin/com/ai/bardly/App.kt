@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +26,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
@@ -40,6 +40,8 @@ import com.ai.bardly.navigation.GeneralDestination.ChatDetail
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.RootDestination
+import com.ai.bardly.util.LocalScreenTransitionScope
+import com.ai.bardly.util.baseComposable
 import com.ai.bardly.util.serializableNavType
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -95,42 +97,42 @@ fun App() {
                 SharedTransitionLayout(
                     modifier = Modifier.padding(innerPadding),
                 ) {
-                    NavHost(
-                        navController = navController,
-                        startDestination = RootDestination.Home,
+                    CompositionLocalProvider(
+                        LocalScreenTransitionScope provides this,
                     ) {
-                        composable<RootDestination.Home> {
-                            HomeScreen()
-                        }
-                        composable<RootDestination.GamesList> {
-                            GamesListScreen(
-                                animatedVisibilityScope = this@composable,
-                            )
-                        }
-                        composable<RootDestination.ChatsList> {
-                            ChatsListScreen()
-                        }
-                        composable<ChatDetail> { backStackEntry ->
-                            val gameTitle = backStackEntry.toRoute<ChatDetail>().gameTitle
-                            val gameId = backStackEntry.toRoute<ChatDetail>().gameId
-                            ChatDetailsScreen(
-                                gameTitle = gameTitle,
-                                gameId = gameId,
-                                animatedVisibilityScope = this@composable,
-                            )
-                        }
+                        NavHost(
+                            navController = navController,
+                            startDestination = RootDestination.Home,
+                        ) {
+                            baseComposable<RootDestination.Home> {
+                                HomeScreen()
+                            }
+                            baseComposable<RootDestination.GamesList> {
+                                GamesListScreen(
+                                )
+                            }
+                            baseComposable<RootDestination.ChatsList> {
+                                ChatsListScreen()
+                            }
+                            baseComposable<ChatDetail> { backStackEntry ->
+                                val gameTitle = backStackEntry.toRoute<ChatDetail>().gameTitle
+                                val gameId = backStackEntry.toRoute<ChatDetail>().gameId
+                                ChatDetailsScreen(
+                                    gameTitle = gameTitle,
+                                    gameId = gameId,
+                                )
+                            }
 
-                        composable<GameDetail>(
-                            typeMap = serializableNavType<GameUiModel>()
-                        ) { backStackEntry ->
-                            val game = backStackEntry.toRoute<GameDetail>().game
-                            GameDetailsScreen(
-                                game = game,
-                                animatedVisibilityScope = this@composable,
-                            )
+                            baseComposable<GameDetail>(
+                                typeMap = serializableNavType<GameUiModel>()
+                            ) { backStackEntry ->
+                                val game = backStackEntry.toRoute<GameDetail>().game
+                                GameDetailsScreen(
+                                    game = game,
+                                )
+                            }
                         }
                     }
-
                 }
             }
         }

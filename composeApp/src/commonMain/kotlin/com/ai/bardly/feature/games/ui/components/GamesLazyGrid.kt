@@ -1,8 +1,6 @@
 package com.ai.bardly.feature.games.ui.components
 
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,12 +18,11 @@ import com.ai.bardly.feature.games.ui.model.GameUiModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.GamesLazyGrid(
+fun GamesLazyGrid(
     itemCount: () -> Int,
     getItem: (Int) -> GameUiModel?,
     getKey: (Int) -> Any,
     onGameClicked: (GameUiModel) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     onOpenChatClicked: (String, Int) -> Unit,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     gridState: LazyGridState = rememberLazyGridState(),
@@ -53,7 +50,6 @@ fun SharedTransitionScope.GamesLazyGrid(
                 GameCard(
                     game = game,
                     onGameClicked = onGameClicked,
-                    animatedVisibilityScope = animatedVisibilityScope,
                     modifier = Modifier.height(maxHeightInRowDp),
                     onOpenChatClicked = onOpenChatClicked
                 )
