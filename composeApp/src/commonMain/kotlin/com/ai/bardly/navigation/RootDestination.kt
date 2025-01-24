@@ -61,6 +61,6 @@ sealed class RootDestination(
     }
 
     companion object {
-        val entries = listOf(Home, GamesList, ChatsList)
+        val entries: List<RootDestination> = listOf(Home, GamesList, ChatsList)
     }
 }

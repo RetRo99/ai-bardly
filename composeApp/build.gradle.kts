@@ -29,6 +29,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            freeCompilerArgs += "-Xexpect-actual-classes"
         }
     }
 
@@ -49,7 +50,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-
+            implementation(libs.sqlite.bundled)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
@@ -68,6 +69,14 @@ kotlin {
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
+        }
+        configurations.all {
+            resolutionStrategy.eachDependency {
+                if (requested.group == "androidx.paging" && requested.name == "paging-compose") {
+                    useVersion("3.3.5")
+                    because("Enforce specific paging-compose version")
+                }
+            }
         }
     }
 }
