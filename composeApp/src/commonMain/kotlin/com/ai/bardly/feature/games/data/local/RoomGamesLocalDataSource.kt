@@ -12,7 +12,7 @@ class RoomGamesLocalDataSource(
 ) : GamesLocalDataSource {
 
     override fun getGames(query: String?): PagingSource<Int, GameEntity> {
-        return gamesDao.getGames()
+        return gamesDao.getGames(query)
     }
 
     override suspend fun saveGames(games: List<GameEntity>) {

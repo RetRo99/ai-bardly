@@ -20,8 +20,13 @@ interface GamesDao {
     @Query("SELECT * FROM GameEntity WHERE id = :id")
     suspend fun getGame(id: Int): GameEntity
 
-    @Query("SELECT * FROM GameEntity")
-    fun getGames(): PagingSource<Int, GameEntity>
+    @Query(
+        """
+    SELECT * FROM GameEntity 
+    WHERE (:query IS NULL OR title LIKE '%' || :query || '%')
+"""
+    )
+    fun getGames(query: String?): PagingSource<Int, GameEntity>
 
     @Query("DELETE FROM GameEntity")
     suspend fun clearAll()
