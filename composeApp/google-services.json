@@ -12,7 +12,20 @@
           "package_name": "com.ai.bardly"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "202431209061-6cqaq38n0cfjcg75ds6picq46f0jhu7j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ai.bardly",
+            "certificate_hash": "8a698e2def2b03019d9436e6afa9c955644971aa"
+          }
+        },
+        {
+          "client_id": "202431209061-5pgc4ingi2d60j0nn78qq40lugk8a3bi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD6Y6ZtfYfnlAntBZnTCYM4sGojuSIS2MM"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202431209061-0ku3miec01ehdhkp84jcpmp6lfbpefeq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "202431209061-h9mp703fvf0ut70pevlbtjc5fpuj923u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ai.bardly"
+              }
+            }
+          ]
         }
       }
     }

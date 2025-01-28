@@ -5,6 +5,7 @@ androidx-ui-tooling = "1.7.6"
 coil = "3.0.0"
 compose-multiplatform = "1.7.3"
 kermit = "2.0.5"
+kmpauth = "2.3.1"
 koin = "4.0.2"
 kotlin = "2.1.0"
 ktor = "3.0.1"
@@ -30,6 +31,9 @@ androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "ro
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+kmpauth-firebase = { module = "io.github.mirzemehdi:kmpauth-firebase", version.ref = "kmpauth" }
+kmpauth-google = { module = "io.github.mirzemehdi:kmpauth-google", version.ref = "kmpauth" }
+kmpauth-uihelper = { module = "io.github.mirzemehdi:kmpauth-uihelper", version.ref = "kmpauth" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }

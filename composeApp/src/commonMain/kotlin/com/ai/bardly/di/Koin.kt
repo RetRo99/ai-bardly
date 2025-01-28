@@ -28,6 +28,8 @@ import com.ai.bardly.feature.home.ui.HomeViewModel
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.networking.getHttpEngine
+import com.mmk.kmpauth.google.GoogleAuthCredentials
+import com.mmk.kmpauth.google.GoogleAuthProvider
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.analytics
 import dev.gitlive.firebase.crashlytics.crashlytics
@@ -108,6 +110,9 @@ val daoModule = module {
 fun initKoin(
     appDeclaration: KoinAppDeclaration = {}
 ) {
+    // TODO move somewhere else
+    GoogleAuthProvider.create(GoogleAuthCredentials(serverId = "202431209061-0ku3miec01ehdhkp84jcpmp6lfbpefeq.apps.googleusercontent.com"))
+
     startKoin {
         appDeclaration()
         modules(

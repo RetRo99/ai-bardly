@@ -58,7 +58,9 @@ kotlin {
             implementation(libs.richeditor.compose)
             implementation(libs.androidx.room.runtime)
             implementation(libs.datetime)
-
+            implementation(libs.kmpauth.google)
+            implementation(libs.kmpauth.firebase)
+            implementation(libs.kmpauth.uihelper)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.koin.core)
