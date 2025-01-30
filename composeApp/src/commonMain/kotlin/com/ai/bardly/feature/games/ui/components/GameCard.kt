@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.games.ui.components
 
 import ai_bardly.composeapp.generated.resources.Res
+import ai_bardly.composeapp.generated.resources.ic_chat
 import ai_bardly.composeapp.generated.resources.ic_clock
 import ai_bardly.composeapp.generated.resources.ic_players
 import ai_bardly.composeapp.generated.resources.ic_rating
@@ -52,20 +53,30 @@ fun GameCard(
                     renderInOverlayDuringTransition = false,
                     animatedVisibilityScope = LocalScreenAnimationScope.current
                 )
-                .padding(16.dp)
-                .clickable { onClick(game) }, // Clickable should be outside of Column for better UX
+                .padding(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.clickable { onClick(game) }.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                GameImage(
-                    imageUrl = game.thumbnail,
-                    gameId = game.id,
-                    size = 80.dp
-                )
+                Row {
+                    GameImage(
+                        imageUrl = game.thumbnail,
+                        gameId = game.id,
+                        size = 80.dp
+                    )
+                    Spacer(Modifier.weight(1f))
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_chat),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clickable { onChatClick(game.title, game.id) }
+                            .padding(end = 4.dp),
+                    )
+                }
+
 
                 SharedTransitionText(
                     key = "${game.id} title",
