@@ -5,6 +5,7 @@ import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
+import com.ai.bardly.navigation.GeneralDestination
 import kotlinx.coroutines.launch
 
 class GameDetailsViewModel(
@@ -23,6 +24,12 @@ class GameDetailsViewModel(
     override suspend fun handleScreenIntent(intent: GameDetailsIntent) {
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
+            GameDetailsIntent.OpenChatClicked -> navigateTo(
+                GeneralDestination.ChatDetails(
+                    game.title,
+                    game.id
+                )
+            )
         }
     }
 

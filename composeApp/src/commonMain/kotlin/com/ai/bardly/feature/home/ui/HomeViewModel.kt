@@ -29,7 +29,7 @@ class HomeViewModel(
     }
 
     private fun openChat(gameTitle: String, gameId: Int) {
-        navigateTo(GeneralDestination.ChatDetail(gameTitle, gameId))
+        navigateTo(GeneralDestination.ChatDetails(gameTitle, gameId))
     }
 
     private fun openGameDetails(game: GameUiModel) {

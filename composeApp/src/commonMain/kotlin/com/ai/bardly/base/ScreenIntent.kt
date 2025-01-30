@@ -5,7 +5,7 @@ import kotlin.jvm.JvmInline
 interface ScreenIntent
 
 @JvmInline
-value class IntentDispatcher<T : ScreenIntent>(val handler: (T) -> Unit) {
+value class IntentDispatcher<T : ScreenIntent>(private val handler: (T) -> Unit) {
     operator fun invoke(intent: T) {
         handler(intent)
     }

@@ -5,6 +5,7 @@ import ai_bardly.composeapp.generated.resources.amount_of_players
 import ai_bardly.composeapp.generated.resources.game_age_recommendation
 import ai_bardly.composeapp.generated.resources.game_complexity
 import ai_bardly.composeapp.generated.resources.game_length
+import ai_bardly.composeapp.generated.resources.ic_chat
 import ai_bardly.composeapp.generated.resources.ic_rating
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -47,6 +49,7 @@ import com.ai.bardly.util.LocalScreenTransitionScope
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -77,7 +80,10 @@ fun GamesScreenContent(
     ) {
         TopBar(onBackClick = { intentDispatcher(GameDetailsIntent.NavigateBack) })
 
-        GameDetailsContent(game = game)
+        GameDetailsContent(
+            game = game,
+            intentDispatcher = intentDispatcher,
+        )
     }
 }
 
@@ -99,6 +105,7 @@ private fun TopBar(onBackClick: () -> Unit) {
 @Composable
 private fun GameDetailsContent(
     game: GameUiModel,
+    intentDispatcher: IntentDispatcher<GameDetailsIntent>,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -113,7 +120,13 @@ private fun GameDetailsContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        GameHeaderSection(game = game)
+        GameHeaderSection(
+            rating = game.rating,
+            yearPublished = game.yearPublished,
+            title = game.title,
+            id = game.id,
+            onChatClicked = { intentDispatcher(GameDetailsIntent.OpenChatClicked) },
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -123,13 +136,49 @@ private fun GameDetailsContent(
 
 @Composable
 private fun GameHeaderSection(
-    game: GameUiModel,
+    rating: String,
+    yearPublished: String,
+    title: String,
+    id: Int,
+    onChatClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Row(modifier) {
+        TitleAndRating(
+            rating = rating, yearPublished = yearPublished, title = title, id = id,
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        OpenChatButton(onChatClicked)
+    }
+}
+
+@Composable
+private fun OpenChatButton(
+    onChatClicked: () -> Unit,
+) {
+    FloatingActionButton(
+        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        onClick = onChatClicked,
+    ) {
+        Icon(
+            painter = painterResource(Res.drawable.ic_chat),
+            contentDescription = null,
+        )
+    }
+}
+
+@Composable
+private fun TitleAndRating(
+    rating: String,
+    yearPublished: String,
+    title: String,
+    id: Int
+) {
+    Column {
         SharedTransitionText(
-            key = "${game.id} title",
-            text = game.title,
+            key = "$id title",
+            text = title,
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold
             )
@@ -137,8 +186,8 @@ private fun GameHeaderSection(
 
         Row {
             SharedTransitionText(
-                key = "${game.id} year",
-                text = game.yearPublished,
+                key = "$id year",
+                text = yearPublished,
                 style = MaterialTheme.typography.bodyMedium
             )
 
@@ -149,9 +198,9 @@ private fun GameHeaderSection(
             )
 
             SharedTransitionText(
-                key = "${game.id} rating",
+                key = "$id rating",
                 iconRes = Res.drawable.ic_rating,
-                text = game.rating,
+                text = rating,
                 style = MaterialTheme.typography.bodyMedium
             )
         }

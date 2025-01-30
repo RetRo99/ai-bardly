@@ -22,7 +22,7 @@ sealed class GeneralDestination : ScreenViewAnalytics() {
     }
 
     @Serializable
-    data class ChatDetail(
+    data class ChatDetails(
         val gameTitle: String,
         val gameId: Int,
     ) : GeneralDestination() {

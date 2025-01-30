@@ -50,7 +50,7 @@ class GamesListViewModel(
     }
 
     private fun onOpenChatClicked(gameTitle: String, gameId: Int) {
-        navigateTo(GeneralDestination.ChatDetail(gameTitle, gameId))
+        navigateTo(GeneralDestination.ChatDetails(gameTitle, gameId))
     }
 
     private fun onSearchQueryChanged(query: String) {

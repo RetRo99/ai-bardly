@@ -39,7 +39,7 @@ import com.ai.bardly.feature.games.ui.list.GamesListScreen
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.home.ui.HomeScreen
 import com.ai.bardly.navigation.GeneralDestination
-import com.ai.bardly.navigation.GeneralDestination.ChatDetail
+import com.ai.bardly.navigation.GeneralDestination.ChatDetails
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.RootDestination
@@ -117,9 +117,9 @@ fun App() {
                             baseComposable<RootDestination.ChatsList> {
                                 ChatsListScreen()
                             }
-                            baseComposable<ChatDetail> { backStackEntry ->
-                                val gameTitle = backStackEntry.toRoute<ChatDetail>().gameTitle
-                                val gameId = backStackEntry.toRoute<ChatDetail>().gameId
+                            baseComposable<ChatDetails> { backStackEntry ->
+                                val gameTitle = backStackEntry.toRoute<ChatDetails>().gameTitle
+                                val gameId = backStackEntry.toRoute<ChatDetails>().gameId
                                 ChatDetailsScreen(
                                     gameTitle = gameTitle,
                                     gameId = gameId,
