@@ -5,6 +5,7 @@ import ai_bardly.composeapp.generated.resources.amount_of_players
 import ai_bardly.composeapp.generated.resources.game_age_recommendation
 import ai_bardly.composeapp.generated.resources.game_complexity
 import ai_bardly.composeapp.generated.resources.game_length
+import ai_bardly.composeapp.generated.resources.ic_rating
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
@@ -38,8 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.games.ui.components.GameImage
+import com.ai.bardly.feature.games.ui.components.SharedTransitionText
 import com.ai.bardly.feature.games.ui.model.GameUiModel
-import com.ai.bardly.ui.CoilImage
 import com.ai.bardly.util.LocalScreenAnimationScope
 import com.ai.bardly.util.LocalScreenTransitionScope
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
@@ -61,119 +63,119 @@ fun GameDetailsScreen(
     }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun GamesScreenContent(
+fun GamesScreenContent(
     game: GameUiModel,
     intentDispatcher: IntentDispatcher<GameDetailsIntent>,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { intentDispatcher(GameDetailsIntent.NavigateBack) }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            }
+        TopBar(onBackClick = { intentDispatcher(GameDetailsIntent.NavigateBack) })
+
+        GameDetailsContent(game = game)
+    }
+}
+
+@Composable
+private fun TopBar(onBackClick: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = onBackClick) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = null
+            )
         }
+    }
+}
 
-        // Game Image
-        with(LocalScreenTransitionScope.current) {
-            Card(
-                modifier = Modifier.wrapContentSize().sharedBounds(
-                    sharedContentState = rememberSharedContentState(
-                        key = "${game.id} thumbnail",
-                    ), animatedVisibilityScope = LocalScreenAnimationScope.current
-                ).align(Alignment.CenterHorizontally),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                CoilImage(
-                    data = game.thumbnail,
-                    cacheKey = game.thumbnail,
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .height(180.dp),
-                )
-            }
+@Composable
+private fun GameDetailsContent(
+    game: GameUiModel,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        GameImage(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .wrapContentSize(),
+            imageUrl = game.thumbnail,
+            gameId = game.id,
+            size = 180.dp
+        )
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            // Game Title and Meta Information
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(
-                        modifier = Modifier.sharedBounds(
-                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                            sharedContentState = rememberSharedContentState(
-                                key = "${game.id} title",
-                            ),
-                            animatedVisibilityScope = LocalScreenAnimationScope.current
+        GameHeaderSection(game = game)
 
-                        ),
-                        text = game.title,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
-                    )
-                    Row {
-                        Text(
-                            modifier = Modifier.sharedBounds(
-                                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                                sharedContentState = rememberSharedContentState(
-                                    key = "${game.id} year",
-                                ),
-                                animatedVisibilityScope = LocalScreenAnimationScope.current
-                            ),
-                            text = "\uD83D\uDCC5 ${game.yearPublished}",
-                            fontSize = 14.sp
-                        )
-                        Text(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            text = "|",
-                            fontSize = 14.sp
-                        )
-                        Text(
-                            modifier = Modifier.sharedBounds(
-                                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                                sharedContentState = rememberSharedContentState(
-                                    key = "${game.id} rating",
-                                ),
-                                animatedVisibilityScope = LocalScreenAnimationScope.current
-                            ),
-                            text = "⭐ ${game.rating}",
-                            fontSize = 14.sp
-                        )
-                    }
-                }
-            }
+        Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
+        GameDescriptionSection(game = game)
+    }
+}
 
-            // Description Section
+@Composable
+private fun GameHeaderSection(
+    game: GameUiModel,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        SharedTransitionText(
+            key = "${game.id} title",
+            text = game.title,
+            style = MaterialTheme.typography.titleLarge.copy(
+                fontWeight = FontWeight.Bold
+            )
+        )
+
+        Row {
+            SharedTransitionText(
+                key = "${game.id} year",
+                text = game.yearPublished,
+                style = MaterialTheme.typography.bodyMedium
+            )
+
             Text(
-                text = "Description",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 18.sp
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            GameInformationCards(
-                game = game,
+                modifier = Modifier.padding(horizontal = 4.dp),
+                text = "|",
+                style = MaterialTheme.typography.bodyMedium
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Description(game.description)
+            SharedTransitionText(
+                key = "${game.id} rating",
+                iconRes = Res.drawable.ic_rating,
+                text = game.rating,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
+    }
+}
+
+@Composable
+private fun GameDescriptionSection(
+    game: GameUiModel,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = "Description",
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        GameInformationCards(game = game)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Description(game.description)
     }
 }
 
@@ -185,7 +187,7 @@ private fun GameInformationCards(
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement =
-            Arrangement.SpaceBetween,
+        Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         with(LocalScreenTransitionScope.current) {

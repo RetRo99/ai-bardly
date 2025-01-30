@@ -1,8 +1,6 @@
 package com.ai.bardly.feature.games.ui.components
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -17,7 +15,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GamesLazyGrid(
     itemCount: () -> Int,
@@ -33,8 +30,6 @@ fun GamesLazyGrid(
         state = gridState,
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = contentPadding,
     ) {
         items(
@@ -51,9 +46,9 @@ fun GamesLazyGrid(
                     with(density) { maxHeightInRow?.toDp() } ?: Dp.Unspecified
                 GameCard(
                     game = game,
-                    onGameClicked = onGameClicked,
+                    onClick = onGameClicked,
                     modifier = Modifier.height(maxHeightInRowDp).animateItem().animateContentSize(),
-                    onOpenChatClicked = onOpenChatClicked
+                    onChatClick = onOpenChatClicked
                 )
             }
         }

@@ -1,5 +1,9 @@
 package com.ai.bardly.feature.games.ui.components
 
+import ai_bardly.composeapp.generated.resources.Res
+import ai_bardly.composeapp.generated.resources.ic_clock
+import ai_bardly.composeapp.generated.resources.ic_players
+import ai_bardly.composeapp.generated.resources.ic_rating
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
@@ -7,136 +11,173 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.ui.CoilImage
 import com.ai.bardly.util.LocalScreenAnimationScope
 import com.ai.bardly.util.LocalScreenTransitionScope
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GameCard(
     game: GameUiModel,
-    onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String, Int) -> Unit,
+    onClick: (GameUiModel) -> Unit,
+    onChatClick: (String, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     with(LocalScreenTransitionScope.current) {
         Card(
-            modifier = modifier.sharedBounds(
-                sharedContentState = rememberSharedContentState(
-                    key = game.id,
-                ),
-                renderInOverlayDuringTransition = false,
-                animatedVisibilityScope = LocalScreenAnimationScope.current
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+            modifier = modifier
+                .sharedBounds(
+                    sharedContentState = rememberSharedContentState(game.id),
+                    renderInOverlayDuringTransition = false,
+                    animatedVisibilityScope = LocalScreenAnimationScope.current
+                )
+                .padding(16.dp)
+                .clickable { onClick(game) }, // Clickable should be outside of Column for better UX
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
-                modifier = Modifier.clickable(onClick = { onGameClicked(game) }).padding(16.dp),
+                modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Card(
-                    modifier = Modifier
-                        .size(80.dp)
-                        .sharedBounds(
-                            sharedContentState = rememberSharedContentState(
-                                key = "${game.id} thumbnail",
-                            ),
-                            animatedVisibilityScope = LocalScreenAnimationScope.current,
-                            renderInOverlayDuringTransition = false,
-                        ),
-                    shape = RoundedCornerShape(8.dp),
-                ) {
-                    CoilImage(
-                        data = game.thumbnail,
-                        cacheKey = game.thumbnail,
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentScale = ContentScale.FillBounds
-                    )
-                }
-                Text(
-                    modifier = Modifier.sharedBounds(
-                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                        sharedContentState = rememberSharedContentState(
-                            key = "${game.id} title",
-                        ),
-                        renderInOverlayDuringTransition = false,
-                        animatedVisibilityScope = LocalScreenAnimationScope.current,
-                    ),
+                GameImage(
+                    imageUrl = game.thumbnail,
+                    gameId = game.id,
+                    size = 80.dp
+                )
+
+                SharedTransitionText(
+                    key = "${game.id} title",
                     text = game.title,
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
-                Text(
-                    modifier = Modifier.sharedBounds(
-                        resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                        sharedContentState = rememberSharedContentState(
-                            key = "${game.id} rating",
-                        ),
-                        renderInOverlayDuringTransition = false,
-                        animatedVisibilityScope = LocalScreenAnimationScope.current
-                    ),
-                    text = "⭐ ${game.rating}",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium
-                )
+
+                Rating(game.rating, game.id)
+
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        modifier = Modifier.sharedBounds(
-                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                            sharedContentState = rememberSharedContentState(
-                                key = "${game.id} numberOfPlayers",
-                            ),
-                            renderInOverlayDuringTransition = false,
-                            animatedVisibilityScope = LocalScreenAnimationScope.current
-                        ),
-                        text = "\uD83D\uDC65 ${game.numberOfPlayers}",
+                    SharedTransitionText(
+                        key = "${game.id} numberOfPlayers",
+                        iconRes = Res.drawable.ic_players,
+                        text = game.numberOfPlayers,
                         style = MaterialTheme.typography.bodySmall
                     )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(
-                        modifier = Modifier.sharedBounds(
-                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                            sharedContentState = rememberSharedContentState(
-                                key = "${game.id} playingTime",
-                            ),
-                            renderInOverlayDuringTransition = false,
-                            animatedVisibilityScope = LocalScreenAnimationScope.current
-                        ),
-                        text = "\uD83D\uDD52 ${game.playingTime}",
+                    SharedTransitionText(
+                        key = "${game.id} playingTime",
+                        iconRes = Res.drawable.ic_clock,
+                        text = game.playingTime,
                         style = MaterialTheme.typography.bodySmall
                     )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    onClick = { onOpenChatClicked(game.title, game.id) },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(text = "See Chat")
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun Rating(rating: String, id: Int) {
+    Row {
+        Spacer(Modifier.weight(1f))
+        SharedTransitionText(
+            key = "$id rating",
+            text = rating,
+            iconRes = Res.drawable.ic_rating,
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+/**
+ * Extracted function for shared text elements to reduce redundancy.
+ */
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun SharedTransitionText(
+    key: String,
+    text: String,
+    style: TextStyle,
+    textAlign: TextAlign? = null,
+    iconRes: DrawableResource? = null,
+) {
+    with(LocalScreenTransitionScope.current) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.sharedBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                sharedContentState = rememberSharedContentState(key),
+                renderInOverlayDuringTransition = false,
+                animatedVisibilityScope = LocalScreenAnimationScope.current
+            )
+        ) {
+            iconRes?.let {
+                Icon(
+                    painter = painterResource(it),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 4.dp),
+                )
+            }
+
+            Text(
+                text = text,
+                style = style,
+                textAlign = textAlign
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun GameImage(
+    imageUrl: String,
+    gameId: Int,
+    size: Dp,
+    modifier: Modifier = Modifier,
+) {
+    with(LocalScreenTransitionScope.current) {
+        Card(
+            modifier = modifier
+                .sharedBounds(
+                    sharedContentState = rememberSharedContentState(
+                        key = "$gameId∑ thumbnail",
+                    ),
+                    animatedVisibilityScope = LocalScreenAnimationScope.current,
+                    renderInOverlayDuringTransition = false,
+                ),
+            shape = RoundedCornerShape(8.dp),
+        ) {
+            CoilImage(
+                data = imageUrl,
+                cacheKey = imageUrl,
+                modifier = Modifier.size(size),
+                contentScale = ContentScale.FillBounds
+            )
         }
     }
 }

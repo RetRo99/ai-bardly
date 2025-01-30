@@ -1,6 +1,5 @@
 package com.ai.bardly.feature.home.ui
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -138,7 +137,6 @@ private fun WhatsNewSection() {
     }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun RecentGamesSection(
     recentGames: List<GameUiModel>,
