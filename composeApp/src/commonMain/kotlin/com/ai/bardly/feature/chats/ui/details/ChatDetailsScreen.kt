@@ -93,7 +93,7 @@ private fun ChatDetailsScreenContent(
     intentDispatcher: IntentDispatcher<ChatDetailsIntent>,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.White)
+        modifier = Modifier.fillMaxSize()
     ) {
         ChatDetails(
             title = viewState.title,

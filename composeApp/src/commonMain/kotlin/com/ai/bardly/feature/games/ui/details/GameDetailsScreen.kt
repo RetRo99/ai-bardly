@@ -22,17 +22,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -80,7 +78,7 @@ private fun GamesScreenContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { intentDispatcher(GameDetailsIntent.NavigateBack) }) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
         }
 
@@ -136,13 +134,11 @@ private fun GamesScreenContent(
                                 animatedVisibilityScope = LocalScreenAnimationScope.current
                             ),
                             text = "\uD83D\uDCC5 ${game.yearPublished}",
-                            color = Color.Gray,
                             fontSize = 14.sp
                         )
                         Text(
-                            modifier = Modifier.padding(horizontal = 4.dp), // Add padding for spacing around the separator
+                            modifier = Modifier.padding(horizontal = 4.dp),
                             text = "|",
-                            color = Color.Gray,
                             fontSize = 14.sp
                         )
                         Text(
@@ -154,7 +150,6 @@ private fun GamesScreenContent(
                                 animatedVisibilityScope = LocalScreenAnimationScope.current
                             ),
                             text = "⭐ ${game.rating}",
-                            color = Color.Gray,
                             fontSize = 14.sp
                         )
                     }
@@ -249,7 +244,6 @@ private fun Description(description: String) {
 
     RichText(
         state = richTextState,
-        color = Color.Black,
         fontSize = 14.sp
     )
 }
@@ -260,9 +254,11 @@ fun GameInfoCard(
     value: String,
     modifier: Modifier = Modifier
 ) {
-    Surface(
+    Card(
         shape = RoundedCornerShape(8.dp),
-        color = Color(0xFFF0F0F0)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
         Column(
             modifier = Modifier.padding(8.dp),
@@ -278,7 +274,6 @@ fun GameInfoCard(
             Text(
                 text = stringResource(label),
                 fontSize = 12.sp,
-                color = Color.Gray,
                 textAlign = TextAlign.Center
             )
         }

@@ -13,7 +13,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -23,12 +22,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.details.ChatDetailsScreen
 import com.ai.bardly.feature.chats.ui.list.ChatsListScreen
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
@@ -51,7 +54,7 @@ import org.koin.compose.koinInject
 @Composable
 fun App() {
     MaterialTheme(
-        colorScheme = lightColorScheme()
+        colorScheme = bardlyLightColors
     ) {
         Surface {
             val navController: NavHostController = rememberNavController()
@@ -141,7 +144,20 @@ fun App() {
 
 @Composable
 fun BottomBar(navController: NavHostController) {
-    NavigationBar {
+    val outlineColor = MaterialTheme.colorScheme.outline
+    NavigationBar(
+        modifier = Modifier.drawBehind {
+            val strokeWidth = 2.dp.toPx()
+            drawLine(
+                color = outlineColor,
+                start = Offset(0f, 0f),
+                end = Offset(size.width, 0f),
+                strokeWidth = strokeWidth
+            )
+        },
+        tonalElevation = 8.dp,
+        containerColor = MaterialTheme.colorScheme.background,
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         RootDestination.entries.forEach { destination ->
@@ -166,7 +182,7 @@ fun BottomBar(navController: NavHostController) {
                         modifier = Modifier.alpha(if (isSelected) 1f else 0.5f)
                     )
                 },
-                selected = isSelected,
+                selected = false, // Always false otherwise there is overlay
                 onClick = {
                     if (!isSelected) {
                         navController.navigate(destination) {

@@ -2,7 +2,6 @@ package com.ai.bardly.feature.games.ui.components
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,8 +46,8 @@ fun GameCard(
                 renderInOverlayDuringTransition = false,
                 animatedVisibilityScope = LocalScreenAnimationScope.current
             ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
             shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
             Column(
                 modifier = Modifier.clickable(onClick = { onGameClicked(game) }).padding(16.dp),
@@ -58,10 +56,7 @@ fun GameCard(
                 Card(
                     modifier = Modifier
                         .size(80.dp)
-                        .background(
-                            Color.LightGray,
-                            shape = RoundedCornerShape(8.dp)
-                        ).sharedBounds(
+                        .sharedBounds(
                             sharedContentState = rememberSharedContentState(
                                 key = "${game.id} thumbnail",
                             ),
@@ -69,7 +64,6 @@ fun GameCard(
                             renderInOverlayDuringTransition = false,
                         ),
                     shape = RoundedCornerShape(8.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     CoilImage(
                         data = game.thumbnail,
@@ -102,7 +96,7 @@ fun GameCard(
                     ),
                     text = "⭐ ${game.rating}",
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+                    style = MaterialTheme.typography.bodyMedium
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),

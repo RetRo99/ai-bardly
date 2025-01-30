@@ -1,7 +1,6 @@
 package com.ai.bardly.feature.home.ui
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,8 +46,7 @@ private fun HomeScreenContent(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         GreetingSection()
@@ -74,9 +72,6 @@ fun GreetingSection() {
     Card(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF6F4ACB)
-        ),
     ) {
         Row(
             modifier = Modifier
@@ -87,15 +82,11 @@ fun GreetingSection() {
             Column {
                 Text(
                     text = "Good to see ya' back!",
-                    style = MaterialTheme.typography.headlineLarge.copy(color = Color.White)
+                    style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
                     text = "On what quest are we taking on today?",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = Color.White.copy(
-                            alpha = 0.7f
-                        )
-                    )
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -111,7 +102,6 @@ private fun WhatsNewSection() {
         Text(
             text = "What's new",
             style = MaterialTheme.typography.headlineLarge,
-            color = Color.Black
         )
         Card(
             modifier = Modifier
@@ -129,7 +119,6 @@ private fun WhatsNewSection() {
                 Box(
                     modifier = Modifier
                         .size(48.dp)
-                        .background(Color.LightGray, shape = RoundedCornerShape(8.dp))
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column(
@@ -141,7 +130,7 @@ private fun WhatsNewSection() {
                     )
                     Text(
                         text = "Explore now!",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
             }
