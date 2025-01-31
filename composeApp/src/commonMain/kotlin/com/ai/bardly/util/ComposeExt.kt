@@ -32,7 +32,6 @@ fun keyboardAsState(): State<Boolean> {
     return rememberUpdatedState(isImeVisible)
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 val LocalScreenAnimationScope = compositionLocalOf<AnimatedVisibilityScope> {
     error("No AnimatedVisibilityScope provided")
 }
@@ -42,7 +41,6 @@ val LocalScreenTransitionScope = compositionLocalOf<SharedTransitionScope> {
     error("No SharedTransitionScope provided")
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 inline fun <reified T : Any> NavGraphBuilder.baseComposable(
     typeMap: Map<KType, NavType<*>> = emptyMap(),
     deepLinks: List<NavDeepLink> = emptyList(),
