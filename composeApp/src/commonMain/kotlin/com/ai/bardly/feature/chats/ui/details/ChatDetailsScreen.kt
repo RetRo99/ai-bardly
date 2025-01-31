@@ -70,7 +70,6 @@ import com.mohamedrejeb.richeditor.ui.material3.RichText
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ChatDetailsScreen(
     gameTitle: String,
@@ -86,7 +85,6 @@ fun ChatDetailsScreen(
     }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun ChatDetailsScreenContent(
     viewState: ChatDetailsViewState,
@@ -168,8 +166,7 @@ private fun ChatDetails(
                     MessageBubble(
                         message = message,
                         onAnimationEnded = {
-                            intentDispatcher
-                            (ChatDetailsIntent.MessageAnimationDone(it))
+                            intentDispatcher(ChatDetailsIntent.MessageAnimationDone(it))
                         },
                     )
                 }
