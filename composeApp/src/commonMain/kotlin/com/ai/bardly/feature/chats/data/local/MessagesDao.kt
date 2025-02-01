@@ -16,4 +16,17 @@ interface MessagesDao {
 
     @Query("SELECT * FROM MessageEntity WHERE gameId = :gameId ORDER BY timestamp DESC")
     suspend fun getMessage(gameId: Int): List<MessageEntity>
+
+    @Query(
+        """
+            SELECT * FROM MessageEntity 
+            WHERE timestamp IN (
+                SELECT MAX(timestamp) FROM MessageEntity 
+                GROUP BY gameId
+            ) 
+            ORDER BY timestamp DESC
+         """
+    )
+    suspend fun getRecentChats(): List<MessageEntity>
+
 }

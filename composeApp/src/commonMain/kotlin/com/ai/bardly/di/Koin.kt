@@ -55,7 +55,7 @@ val gamesDataModule = module {
 val chatsDataModule = module {
     single<ChatsRemoteDataSource> { NetworkChatsRemoteDataSource(get()) }
     single<ChatsLocalDataSource> { RoomChatsLocalDataSource(get(), get()) }
-    single<ChatsRepository> { ChatsDataRepository(get(), get()) }
+    single<ChatsRepository> { ChatsDataRepository(get(), get(), get()) }
     single { get<AppDatabase>().getMessagesDao() }
 }
 

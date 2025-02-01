@@ -20,6 +20,9 @@ interface GamesDao {
     @Query("SELECT * FROM GameEntity WHERE id = :id")
     suspend fun getGame(id: Int): GameEntity
 
+    @Query("SELECT * FROM GameEntity WHERE id IN (:ids)")
+    suspend fun getGamesById(ids: List<Int>): List<GameEntity>
+
     @Query(
         """
     SELECT * FROM GameEntity 

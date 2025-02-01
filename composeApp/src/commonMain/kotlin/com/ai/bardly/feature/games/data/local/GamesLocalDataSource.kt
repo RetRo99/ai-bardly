@@ -7,6 +7,10 @@ import kotlinx.datetime.LocalDateTime
 interface GamesLocalDataSource {
     fun getGames(query: String?): PagingSource<Int, GameEntity>
 
+    suspend fun getGamesById(ids: List<Int>): Result<List<GameEntity>>
+
+    suspend fun getGame(id: Int): Result<GameEntity>
+
     suspend fun saveGames(games: List<GameEntity>)
 
     suspend fun getRecentlyOpenGames(amount: Int): Result<List<GameEntity>>

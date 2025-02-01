@@ -15,6 +15,18 @@ class RoomGamesLocalDataSource(
         return gamesDao.getGames(query)
     }
 
+    override suspend fun getGamesById(ids: List<Int>): Result<List<GameEntity>> {
+        return daoExecutor.executeDaoOperation {
+            gamesDao.getGamesById(ids)
+        }
+    }
+
+    override suspend fun getGame(id: Int): Result<GameEntity> {
+        return daoExecutor.executeDaoOperation {
+            gamesDao.getGame(id)
+        }
+    }
+
     override suspend fun saveGames(games: List<GameEntity>) {
         daoExecutor.executeDaoOperation {
             gamesDao.insert(games)
