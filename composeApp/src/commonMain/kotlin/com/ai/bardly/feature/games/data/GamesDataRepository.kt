@@ -43,6 +43,10 @@ class GamesDataRepository(
         return localSource.getRecentlyOpenGames(amount).map { it.toDomainModel() }
     }
 
+    override suspend fun getGamesById(ids: List<Int>): Result<List<GameDomainModel>> {
+        return localSource.getGamesById(ids).map { it.toDomainModel() }
+    }
+
     override suspend fun updateGameOpenDate(gameId: Int): Result<Unit> {
         return localSource.updateGameOpenTime(gameId, now())
     }

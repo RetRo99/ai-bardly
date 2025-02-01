@@ -8,4 +8,5 @@ interface GamesRepository {
     suspend fun getGames(query: String?): Flow<PagingData<GameDomainModel>>
     suspend fun getRecentlyOpenGames(amount: Int = 6): Result<List<GameDomainModel>>
     suspend fun updateGameOpenDate(gameId: Int): Result<Unit>
+    suspend fun getGamesById(ids: List<Int>): Result<List<GameDomainModel>>
 }

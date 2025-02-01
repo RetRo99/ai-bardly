@@ -20,9 +20,9 @@ class RoomChatsLocalDataSource(
         }
     }
 
-    override suspend fun getRecentChats(): Result<List<MessageEntity>> {
+    override suspend fun getLatestMessagesPerGame(): Result<List<MessageEntity>> {
         return daoExecutor.executeDaoOperation {
-            dao.getRecentChats()
+            dao.getLatestMessagesPerGame()
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.chats.ui.list
 
+import com.ai.bardly.feature.chats.ui.model.RecentMessageUiModel
+
 data class ChatListViewState(
-    // TODO no login at chat details
-    val userToken: String? = null,
+    val recentChats: List<RecentMessageUiModel> = emptyList(),
 )

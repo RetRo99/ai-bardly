@@ -14,6 +14,7 @@ import com.ai.bardly.feature.chats.data.local.RoomChatsLocalDataSource
 import com.ai.bardly.feature.chats.data.remote.ChatsRemoteDataSource
 import com.ai.bardly.feature.chats.data.remote.NetworkChatsRemoteDataSource
 import com.ai.bardly.feature.chats.domain.ChatsRepository
+import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.details.ChatsDetailsViewModel
 import com.ai.bardly.feature.chats.ui.list.ChatListViewModel
 import com.ai.bardly.feature.games.data.GamesDataRepository
@@ -55,8 +56,9 @@ val gamesDataModule = module {
 val chatsDataModule = module {
     single<ChatsRemoteDataSource> { NetworkChatsRemoteDataSource(get()) }
     single<ChatsLocalDataSource> { RoomChatsLocalDataSource(get(), get()) }
-    single<ChatsRepository> { ChatsDataRepository(get(), get(), get()) }
+    single<ChatsRepository> { ChatsDataRepository(get(), get()) }
     single { get<AppDatabase>().getMessagesDao() }
+    single { GetRecentChatsUseCase(get(), get()) }
 }
 
 val networkingModule = module {

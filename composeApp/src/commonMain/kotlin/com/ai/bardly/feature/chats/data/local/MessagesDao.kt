@@ -27,6 +27,6 @@ interface MessagesDao {
             ORDER BY timestamp DESC
          """
     )
-    suspend fun getRecentChats(): List<MessageEntity>
+    suspend fun getLatestMessagesPerGame(): List<MessageEntity>
 
 }
