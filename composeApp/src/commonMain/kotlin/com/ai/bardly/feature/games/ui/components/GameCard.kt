@@ -84,61 +84,50 @@ fun GameCard(
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
 
-                Rating(game.rating, game.id)
+                Spacer(Modifier.weight(1f))
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    SharedTransitionText(
+                        key = "${game.id} rating",
+                        text = game.rating,
+                        iconRes = Res.drawable.ic_rating,
+                        textAlign = TextAlign.Center
+                    )
                     SharedTransitionText(
                         key = "${game.id} numberOfPlayers",
                         iconRes = Res.drawable.ic_players,
                         text = game.numberOfPlayers,
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    SharedTransitionText(
-                        key = "${game.id} playingTime",
-                        iconRes = Res.drawable.ic_clock,
-                        text = game.playingTime,
-                        style = MaterialTheme.typography.bodySmall
                     )
                 }
+
+                SharedTransitionText(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    key = "${game.id} playingTime",
+                    iconRes = Res.drawable.ic_clock,
+                    text = game.playingTime,
+                )
             }
         }
     }
 }
 
-@Composable
-private fun Rating(rating: String, id: Int) {
-    Row {
-        Spacer(Modifier.weight(1f))
-        SharedTransitionText(
-            key = "$id rating",
-            text = rating,
-            iconRes = Res.drawable.ic_rating,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-/**
- * Extracted function for shared text elements to reduce redundancy.
- */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionText(
     key: String,
     text: String,
-    style: TextStyle,
+    modifier: Modifier = Modifier,
+    style: TextStyle = MaterialTheme.typography.bodyMedium,
     textAlign: TextAlign? = null,
     iconRes: DrawableResource? = null,
 ) {
     with(LocalScreenTransitionScope.current) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.sharedBounds(
+            modifier = modifier.sharedBounds(
                 resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
                 sharedContentState = rememberSharedContentState(key),
                 renderInOverlayDuringTransition = false,
