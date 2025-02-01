@@ -24,15 +24,6 @@ abstract class BaseViewModel<ScreenViewState, Intent : ScreenIntent> : ViewModel
 
     private val navigationManager by inject<NavigationManager>()
 
-    protected fun updateOrSetSuccess(update: (ScreenViewState) -> ScreenViewState) {
-        _viewState.update { currentState ->
-            when (currentState) {
-                is BaseViewState.Success<*> -> BaseViewState.Success(update(currentState.data as ScreenViewState))
-                else -> BaseViewState.Success(update(defaultViewState))
-            }
-        }
-    }
-
     fun onScreenIntent(intent: Intent) {
         viewModelScope.launch {
             handleScreenIntent(intent)
@@ -42,6 +33,15 @@ abstract class BaseViewModel<ScreenViewState, Intent : ScreenIntent> : ViewModel
     open fun onScreenDisplayed() {}
 
     abstract suspend fun handleScreenIntent(intent: Intent)
+
+    protected fun updateOrSetSuccess(update: (ScreenViewState) -> ScreenViewState) {
+        _viewState.update { currentState ->
+            when (currentState) {
+                is BaseViewState.Success<*> -> BaseViewState.Success(update(currentState.data as ScreenViewState))
+                else -> BaseViewState.Success(update(defaultViewState))
+            }
+        }
+    }
 
     protected fun setError(
         throwable: Throwable,

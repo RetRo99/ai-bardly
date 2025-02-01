@@ -1,5 +1,11 @@
 package com.ai.bardly.util
 
+import ai_bardly.composeapp.generated.resources.Res
+import ai_bardly.composeapp.generated.resources.days_ago
+import ai_bardly.composeapp.generated.resources.hours_ago
+import ai_bardly.composeapp.generated.resources.just_now
+import ai_bardly.composeapp.generated.resources.minutes_ago
+import ai_bardly.composeapp.generated.resources.weeks_ago
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -18,6 +24,12 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.resources.stringResource
 import kotlin.reflect.KType
 
 @Composable
@@ -39,6 +51,38 @@ val LocalScreenAnimationScope = compositionLocalOf<AnimatedVisibilityScope> {
 @OptIn(ExperimentalSharedTransitionApi::class)
 val LocalScreenTransitionScope = compositionLocalOf<SharedTransitionScope> {
     error("No SharedTransitionScope provided")
+}
+
+@Composable
+fun LocalDateTime.timeAgo(): String {
+    val now = Clock.System.now()
+    val duration = now - this.toInstant(TimeZone.currentSystemDefault())
+
+
+    return when {
+        duration.inWholeDays > 7 -> pluralStringResource(
+            Res.plurals.weeks_ago,
+            (duration.inWholeDays / 7).toInt(), duration.inWholeDays / 7
+        )
+
+        duration.inWholeDays > 0 -> pluralStringResource(
+            Res.plurals.days_ago,
+            duration.inWholeDays.toInt(), duration.inWholeDays
+        )
+
+        duration.inWholeHours > 0 -> pluralStringResource(
+            Res.plurals.hours_ago,
+            duration.inWholeHours.toInt(), duration.inWholeHours
+        )
+
+        duration.inWholeMinutes > 0 -> pluralStringResource(
+            Res.plurals.minutes_ago,
+            duration.inWholeMinutes.toInt(), duration.inWholeMinutes
+        )
+
+        else -> stringResource(Res.string.just_now)
+    }
+
 }
 
 inline fun <reified T : Any> NavGraphBuilder.baseComposable(

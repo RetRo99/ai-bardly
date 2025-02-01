@@ -8,7 +8,7 @@ class GetRecentChatsUseCase(
     private val gamesRepository: GamesRepository
 ) {
 
-    suspend fun invoke(): Result<List<RecentMessageDomainModel>> {
+    suspend operator fun invoke(): Result<List<RecentMessageDomainModel>> {
         return runCatching {
             val recentMessages = chatsRepository.getLatestMessagesPerGame().getOrThrow()
             val gameIds = recentMessages.map { it.gameId }.distinct()

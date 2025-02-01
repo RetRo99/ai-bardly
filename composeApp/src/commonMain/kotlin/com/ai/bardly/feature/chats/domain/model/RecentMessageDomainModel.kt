@@ -6,5 +6,5 @@ data class RecentMessageDomainModel(
     val gameId: Int,
     val gameTitle: String,
     val timestamp: LocalDateTime,
-    val thumbnail: String?,
+    val thumbnail: String,
 )

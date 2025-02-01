@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
+import com.ai.bardly.feature.chats.ui.model.toUiModel
+import com.ai.bardly.navigation.GeneralDestination
 import kotlinx.coroutines.launch
 
 class ChatListViewModel(
@@ -15,14 +17,26 @@ class ChatListViewModel(
 
     override suspend fun handleScreenIntent(intent: ChatListIntent) {
         when (intent) {
-            is ChatListIntent.RecentChatClicked -> {
-            }
+            is ChatListIntent.RecentChatClicked -> navigateTo(
+                GeneralDestination.ChatDetails(
+                    gameId = intent.gameId,
+                    gameTitle = intent.gameTitle
+                )
+            )
         }
     }
 
     override fun onScreenDisplayed() {
         viewModelScope.launch {
-
+            getRecentChatsUseCase()
+                .onSuccess { recentChats ->
+                    updateOrSetSuccess {
+                        it.copy(recentChats = recentChats.toUiModel())
+                    }
+                }
+                .onFailure {
+                    setError(it)
+                }
         }
     }
 }
