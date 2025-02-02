@@ -8,15 +8,8 @@ class AnalyticsManager(
     private val firebaseCrashlytics: FirebaseCrashlytics,
 ) : Analytics {
 
-    override fun log(event: AnalyticsEvent, params: Map<String, String>) {
-        firebaseAnalytics.logEvent(event.name, params)
-    }
-
-    override fun log(event: AnalyticsEvent, key: String, value: String) {
-        val params = mapOf(
-            key to value,
-        )
-        firebaseAnalytics.logEvent(event.name, params)
+    override fun log(event: AnalyticsEvent) {
+        firebaseAnalytics.logEvent(event.name, event.params)
     }
 
     override fun logException(throwable: Throwable, message: String?) {

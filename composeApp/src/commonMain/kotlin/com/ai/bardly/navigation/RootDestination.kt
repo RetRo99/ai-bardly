@@ -27,10 +27,11 @@ sealed class RootDestination(
         icon = Res.drawable.ic_home,
     ) {
         override fun logScreenOpen() {
-            val params = mapOf(
-                "screen_name" to "home",
+            analytics.log(
+                AnalyticsEvent.ScreenOpen(
+                    screenName = "home",
+                )
             )
-            analytics.log(AnalyticsEvent.SCREEN_OPEN, params)
         }
     }
 
@@ -40,10 +41,11 @@ sealed class RootDestination(
         icon = Res.drawable.ic_games,
     ) {
         override fun logScreenOpen() {
-            val params = mapOf(
-                "screen_name" to "games",
+            analytics.log(
+                AnalyticsEvent.ScreenOpen(
+                    screenName = "games_list",
+                )
             )
-            analytics.log(AnalyticsEvent.SCREEN_OPEN, params)
         }
     }
 
@@ -53,10 +55,11 @@ sealed class RootDestination(
         icon = Res.drawable.ic_chats,
     ) {
         override fun logScreenOpen() {
-            val params = mapOf(
-                "screen_name" to "chats",
+            analytics.log(
+                AnalyticsEvent.ScreenOpen(
+                    screenName = "chat_list",
+                )
             )
-            analytics.log(AnalyticsEvent.SCREEN_OPEN, params)
         }
     }
 

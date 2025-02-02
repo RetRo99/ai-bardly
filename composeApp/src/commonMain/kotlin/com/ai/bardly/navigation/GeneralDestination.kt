@@ -1,6 +1,7 @@
 package com.ai.bardly.navigation
 
 import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.analytics.AnalyticsParam
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import kotlinx.serialization.Serializable
 
@@ -13,11 +14,12 @@ sealed class GeneralDestination : ScreenViewAnalytics() {
     ) : GeneralDestination() {
 
         override fun logScreenOpen() {
-            val params = mapOf(
-                "screen_name" to "game_details",
-                "game_title" to game.title
+            analytics.log(
+                AnalyticsEvent.ScreenOpen(
+                    screenName = "game_details",
+                    AnalyticsParam.GameTitle to game.title,
+                )
             )
-            analytics.log(AnalyticsEvent.SCREEN_OPEN, params)
         }
     }
 
@@ -28,11 +30,12 @@ sealed class GeneralDestination : ScreenViewAnalytics() {
     ) : GeneralDestination() {
 
         override fun logScreenOpen() {
-            val params = mapOf(
-                "screen_name" to "chat",
-                "game_title" to gameTitle
+            analytics.log(
+                AnalyticsEvent.ScreenOpen(
+                    screenName = "chat_details",
+                    AnalyticsParam.GameTitle to gameTitle,
+                )
             )
-            analytics.log(AnalyticsEvent.SCREEN_OPEN, params)
         }
     }
 
