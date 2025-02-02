@@ -146,7 +146,7 @@ private fun RecentGamesSection(
     Column {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = "Recent games",
+            text = "Recent chats",
             style = MaterialTheme.typography.headlineLarge,
             color = Color.Black
         )

@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,11 +45,19 @@ private fun ChatsListContent(
 ) {
     LazyColumn {
         stickyHeader {
-            Text(
-                modifier = Modifier.padding(16.dp),
-                text = "Recent Games",
-                style = MaterialTheme.typography.headlineLarge,
-            )
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                color = MaterialTheme.colorScheme.background,
+                shadowElevation = 4.dp, // Adjust elevation as needed
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(16.dp),
+                    text = "Recent Games",
+                    style = MaterialTheme.typography.headlineLarge,
+                )
+            }
         }
         items(viewState.recentChats.size) { index ->
             val recentChat = viewState.recentChats[index]
