@@ -28,6 +28,11 @@ sealed class AnalyticsEvent(
         params = emptyMap(),
     )
 
+    data object RecentGameChatClicked : AnalyticsEvent(
+        name = "recent_game_chat_clicked",
+        params = emptyMap(),
+    )
+
     data object RecentChatClicked : AnalyticsEvent(
         name = "recent_chat_clicked",
         params = emptyMap(),

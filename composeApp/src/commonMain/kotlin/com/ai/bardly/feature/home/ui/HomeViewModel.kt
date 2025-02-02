@@ -30,11 +30,12 @@ class HomeViewModel(
     }
 
     private fun openChat(gameTitle: String, gameId: Int) {
-        analytics.log(AnalyticsEvent.RecentGameClicked)
+        analytics.log(AnalyticsEvent.RecentGameChatClicked)
         navigateTo(GeneralDestination.ChatDetails(gameTitle, gameId))
     }
 
     private fun openGameDetails(game: GameUiModel) {
+        analytics.log(AnalyticsEvent.RecentGameClicked)
         navigateTo(GeneralDestination.GameDetail(game))
     }
 
