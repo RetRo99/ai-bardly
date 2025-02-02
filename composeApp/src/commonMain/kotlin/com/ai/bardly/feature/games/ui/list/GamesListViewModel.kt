@@ -37,7 +37,6 @@ class GamesListViewModel(
 
     override suspend fun handleScreenIntent(intent: GamesListIntent) {
         when (intent) {
-            is GamesListIntent.NavigateBack -> navigateBack()
             is GamesListIntent.GameClicked -> onGameClicked(intent.game)
             is GamesListIntent.OpenChatClicked -> onOpenChatClicked(intent.gameTitle, intent.gameId)
             is GamesListIntent.SearchQueryChanged -> onSearchQueryChanged(intent.query)
