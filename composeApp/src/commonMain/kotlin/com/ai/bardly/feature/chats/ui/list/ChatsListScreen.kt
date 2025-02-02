@@ -1,5 +1,7 @@
 package com.ai.bardly.feature.chats.ui.list
 
+import ai_bardly.composeapp.generated.resources.Res
+import ai_bardly.composeapp.generated.resources.chat_lists_recent_chats
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +27,7 @@ import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.chats.ui.model.RecentMessageUiModel
 import com.ai.bardly.feature.games.ui.components.GameImage
 import com.ai.bardly.util.timeAgo
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChatsListScreen(
@@ -54,7 +57,7 @@ private fun ChatsListContent(
                 Text(
                     modifier = Modifier
                         .padding(16.dp),
-                    text = "Recent Games",
+                    text = stringResource(Res.string.chat_lists_recent_chats),
                     style = MaterialTheme.typography.headlineLarge,
                 )
             }

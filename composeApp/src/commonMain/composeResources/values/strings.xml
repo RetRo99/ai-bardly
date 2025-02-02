@@ -7,6 +7,16 @@
     <string name="game_complexity">Complexity</string>
     <string name="game_age_recommendation">Age</string>
     <string name="amount_of_players">Players</string>
+    <string name="chat_lists_recent_chats">Recent chats</string>
+    <string name="home_recent_games">Recent games</string>
+    <string name="home_whats_new">What's new</string>
+    <string name="home_greeting_title">Good to see ya' back!</string>
+    <string name="home_greeting_subtitle">On what quest are we taking on today?</string>
+    <string name="home_explore_now">Explore now!</string>
+    <string name="home_new_game_available">New game available!</string>
+    <string name="games_list_search_games">Search games...</string>
+    <string name="chat_details_message_hint">Ask Bardly...</string>
+    <string name="general_search">Search</string>
     <string name="just_now">Just now</string>
     <plurals name="minutes_ago">
         <item quantity="one">%1$d minute ago</item>

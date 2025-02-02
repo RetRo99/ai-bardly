@@ -2,6 +2,7 @@ package com.ai.bardly.base
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,6 +55,8 @@ fun ErrorScreen(error: BaseViewState.Error) {
 @Composable
 fun LoadingScreen() {
     Box(Modifier.fillMaxSize()) {
-        Text("Loading", modifier = Modifier.align(Alignment.Center))
+        CircularProgressIndicator(
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }

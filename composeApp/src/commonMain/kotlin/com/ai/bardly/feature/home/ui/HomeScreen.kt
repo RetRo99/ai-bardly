@@ -1,5 +1,12 @@
 package com.ai.bardly.feature.home.ui
 
+import ai_bardly.composeapp.generated.resources.Res
+import ai_bardly.composeapp.generated.resources.home_explore_now
+import ai_bardly.composeapp.generated.resources.home_greeting_subtitle
+import ai_bardly.composeapp.generated.resources.home_greeting_title
+import ai_bardly.composeapp.generated.resources.home_new_game_available
+import ai_bardly.composeapp.generated.resources.home_recent_games
+import ai_bardly.composeapp.generated.resources.home_whats_new
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +33,7 @@ import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.games.ui.components.GamesLazyGrid
 import com.ai.bardly.feature.games.ui.model.GameUiModel
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen(
@@ -80,11 +88,11 @@ fun GreetingSection() {
         ) {
             Column {
                 Text(
-                    text = "Good to see ya' back!",
+                    text = stringResource(Res.string.home_greeting_title),
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = "On what quest are we taking on today?",
+                    text = stringResource(Res.string.home_greeting_subtitle),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -99,7 +107,7 @@ private fun WhatsNewSection() {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = "What's new",
+            text = stringResource(Res.string.home_whats_new),
             style = MaterialTheme.typography.headlineLarge,
         )
         Card(
@@ -124,11 +132,11 @@ private fun WhatsNewSection() {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "*new game available*",
+                        text = stringResource(Res.string.home_new_game_available),
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                     )
                     Text(
-                        text = "Explore now!",
+                        text = stringResource(Res.string.home_explore_now),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -146,7 +154,7 @@ private fun RecentGamesSection(
     Column {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = "Recent chats",
+            text = stringResource(Res.string.home_recent_games),
             style = MaterialTheme.typography.headlineLarge,
             color = Color.Black
         )

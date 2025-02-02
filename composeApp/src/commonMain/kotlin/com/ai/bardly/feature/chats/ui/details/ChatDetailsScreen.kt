@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.chats.ui.details
 
 import ai_bardly.composeapp.generated.resources.Res
+import ai_bardly.composeapp.generated.resources.chat_details_message_hint
 import ai_bardly.composeapp.generated.resources.ic_send
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -69,6 +70,7 @@ import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChatDetailsScreen(
@@ -125,7 +127,7 @@ private fun ChatDetails(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { intentDispatcher(ChatDetailsIntent.NavigateBack) }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                 }
                 Box(
                     modifier = Modifier
@@ -277,7 +279,7 @@ fun MessageInputField(
                     ) {
                         if (state.text.isEmpty()) {
                             Text(
-                                text = "Ask Bardly...",
+                                text = stringResource(Res.string.chat_details_message_hint),
                                 style = TextStyle(
                                     fontSize = 16.sp,
                                     color = Color.Gray // Placeholder color

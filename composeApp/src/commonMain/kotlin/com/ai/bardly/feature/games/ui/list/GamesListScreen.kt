@@ -1,5 +1,7 @@
 package com.ai.bardly.feature.games.ui.list
 
+import ai_bardly.composeapp.generated.resources.Res
+import ai_bardly.composeapp.generated.resources.games_list_search_games
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.animateDpAsState
@@ -47,6 +49,7 @@ import com.ai.bardly.feature.games.ui.list.GamesListIntent.OpenChatClicked
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -138,7 +141,7 @@ private fun GamesList(
         ) {
             Icon(
                 imageVector = if (isSearchActive) Icons.Default.Close else Icons.Default.Search,
-                contentDescription = if (isSearchActive) "Close search" else "Search"
+                contentDescription = null
             )
         }
     }
@@ -175,11 +178,11 @@ fun SearchScreenState(
                     focusManager.clearFocus()
                 }
             ),
-            placeholder = { Text("Search games...") },
+            placeholder = { Text(stringResource(Res.string.games_list_search_games)) },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
+                    contentDescription = null
                 )
             },
             colors = TextFieldDefaults.colors(
