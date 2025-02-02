@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.chats.ui.details
 
 import androidx.lifecycle.viewModelScope
+import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
@@ -55,6 +56,7 @@ class ChatsDetailsViewModel(
             messageText = messageText,
             id = gameId,
         )
+        analytics.log(AnalyticsEvent.QuestionAsked(gameTitle))
         chatsRepository
             .getAnswerFor(message.toDomainModel())
             .onSuccess { answer ->

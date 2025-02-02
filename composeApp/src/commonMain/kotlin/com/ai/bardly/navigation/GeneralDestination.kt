@@ -17,7 +17,7 @@ sealed class GeneralDestination : ScreenViewAnalytics() {
             analytics.log(
                 AnalyticsEvent.ScreenOpen(
                     screenName = "game_details",
-                    AnalyticsParam.GameTitle to game.title,
+                    additionalParams = mapOf(AnalyticsParam.GameTitle to game.title),
                 )
             )
         }
@@ -33,7 +33,7 @@ sealed class GeneralDestination : ScreenViewAnalytics() {
             analytics.log(
                 AnalyticsEvent.ScreenOpen(
                     screenName = "chat_details",
-                    AnalyticsParam.GameTitle to gameTitle,
+                    additionalParams = mapOf(AnalyticsParam.GameTitle to gameTitle),
                 )
             )
         }

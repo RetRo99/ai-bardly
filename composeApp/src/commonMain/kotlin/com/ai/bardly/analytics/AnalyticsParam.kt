@@ -1,9 +1,6 @@
 package com.ai.bardly.analytics
 
-sealed class AnalyticsParam<T>(val key: String) {
-    data object GameTitle : AnalyticsParam<String>("game_title")
-}
-
-fun Array<out Pair<AnalyticsParam<*>, Any>>.toParamsMap(): Map<String, String> {
-    return associate { (param, value) -> param.key to value.toString() }
+sealed class AnalyticsParam(val analyticKey: String) {
+    data object GameTitle : AnalyticsParam("game_title")
+    data object ScreenName : AnalyticsParam("screen_name")
 }

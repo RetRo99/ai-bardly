@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.home.ui
 
 import androidx.lifecycle.viewModelScope
+import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
@@ -29,6 +30,7 @@ class HomeViewModel(
     }
 
     private fun openChat(gameTitle: String, gameId: Int) {
+        analytics.log(AnalyticsEvent.RecentGameClicked)
         navigateTo(GeneralDestination.ChatDetails(gameTitle, gameId))
     }
 

@@ -9,7 +9,10 @@ class AnalyticsManager(
 ) : Analytics {
 
     override fun log(event: AnalyticsEvent) {
-        firebaseAnalytics.logEvent(event.name, event.params)
+        firebaseAnalytics.logEvent(
+            event.name,
+            event.params.map { it.key.analyticKey to it.value }.toMap()
+        )
     }
 
     override fun logException(throwable: Throwable, message: String?) {
