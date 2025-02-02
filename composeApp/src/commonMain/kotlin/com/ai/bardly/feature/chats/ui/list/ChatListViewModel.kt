@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.chats.ui.list
 
 import androidx.lifecycle.viewModelScope
+import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
@@ -17,13 +18,18 @@ class ChatListViewModel(
 
     override suspend fun handleScreenIntent(intent: ChatListIntent) {
         when (intent) {
-            is ChatListIntent.RecentChatClicked -> navigateTo(
-                GeneralDestination.ChatDetails(
-                    gameId = intent.gameId,
-                    gameTitle = intent.gameTitle
-                )
-            )
+            is ChatListIntent.RecentChatClicked -> onRecentChatClicked(intent)
         }
+    }
+
+    private fun onRecentChatClicked(intent: ChatListIntent.RecentChatClicked) {
+        analytics.log(AnalyticsEvent.RecentChatClicked)
+        navigateTo(
+            GeneralDestination.ChatDetails(
+                gameId = intent.gameId,
+                gameTitle = intent.gameTitle
+            )
+        )
     }
 
     override fun onScreenDisplayed() {

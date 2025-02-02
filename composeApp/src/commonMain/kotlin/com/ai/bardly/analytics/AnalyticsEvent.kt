@@ -27,4 +27,9 @@ sealed class AnalyticsEvent(
         name = "recent_game_clicked",
         params = emptyMap(),
     )
+
+    data object RecentChatClicked : AnalyticsEvent(
+        name = "recent_chat_clicked",
+        params = emptyMap(),
+    )
 }
