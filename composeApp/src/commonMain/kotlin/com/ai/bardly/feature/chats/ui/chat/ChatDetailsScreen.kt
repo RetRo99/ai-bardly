@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.chats.ui.details
+package com.ai.bardly.feature.chats.ui.chat
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.chat_details_message_hint
@@ -73,14 +73,14 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ChatDetailsScreen(
+fun ChatScreen(
     gameTitle: String,
     gameId: Int,
 ) {
-    BaseScreen<ChatsDetailsViewModel, ChatDetailsViewState, ChatDetailsIntent>(
+    BaseScreen<ChatsDetailsViewModel, ChatViewState, ChatScreenIntent>(
         parameters = arrayOf(gameTitle, gameId)
     ) { viewState, intentDispatcher ->
-        ChatDetailsScreenContent(
+        ChatScreenContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,
         )
@@ -88,14 +88,14 @@ fun ChatDetailsScreen(
 }
 
 @Composable
-private fun ChatDetailsScreenContent(
-    viewState: ChatDetailsViewState,
-    intentDispatcher: IntentDispatcher<ChatDetailsIntent>,
+private fun ChatScreenContent(
+    viewState: ChatViewState,
+    intentDispatcher: IntentDispatcher<ChatScreenIntent>,
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        ChatDetails(
+        Chat(
             title = viewState.title,
             id = viewState.gameId,
             messages = viewState.messages,
@@ -107,12 +107,12 @@ private fun ChatDetailsScreenContent(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-private fun ChatDetails(
+private fun Chat(
     title: String,
     id: Int,
     messages: List<MessageUiModel>,
     isResponding: Boolean,
-    intentDispatcher: IntentDispatcher<ChatDetailsIntent>,
+    intentDispatcher: IntentDispatcher<ChatScreenIntent>,
 ) {
     Box(
         modifier = Modifier
@@ -126,7 +126,7 @@ private fun ChatDetails(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { intentDispatcher(ChatDetailsIntent.NavigateBack) }) {
+                IconButton(onClick = { intentDispatcher(ChatScreenIntent.NavigateBack) }) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                 }
                 Box(
@@ -168,7 +168,7 @@ private fun ChatDetails(
                     MessageBubble(
                         message = message,
                         onAnimationEnded = {
-                            intentDispatcher(ChatDetailsIntent.MessageAnimationDone(it))
+                            intentDispatcher(ChatScreenIntent.MessageAnimationDone(it))
                         },
                     )
                 }
@@ -177,7 +177,7 @@ private fun ChatDetails(
             MessageInputField(
                 modifier = Modifier.padding(16.dp),
                 onMessageSendClicked = {
-                    intentDispatcher(ChatDetailsIntent.SendMessage(it))
+                    intentDispatcher(ChatScreenIntent.SendMessage(it))
                 }
             )
         }

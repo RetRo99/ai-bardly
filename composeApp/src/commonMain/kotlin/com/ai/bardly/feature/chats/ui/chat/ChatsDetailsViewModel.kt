@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.chats.ui.details
+package com.ai.bardly.feature.chats.ui.chat
 
 import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.AnalyticsEvent
@@ -15,20 +15,20 @@ class ChatsDetailsViewModel(
     private val gameTitle: String,
     private val gameId: Int,
     private val chatsRepository: ChatsRepository,
-) : BaseViewModel<ChatDetailsViewState, ChatDetailsIntent>() {
+) : BaseViewModel<ChatViewState, ChatScreenIntent>() {
 
-    override val defaultViewState = ChatDetailsViewState(
+    override val defaultViewState = ChatViewState(
         title = gameTitle,
         gameId = gameId,
         messages = emptyList(),
         isResponding = false
     )
 
-    override suspend fun handleScreenIntent(intent: ChatDetailsIntent) {
+    override suspend fun handleScreenIntent(intent: ChatScreenIntent) {
         when (intent) {
-            ChatDetailsIntent.NavigateBack -> navigateBack()
-            is ChatDetailsIntent.MessageAnimationDone -> onMessageAnimationEnded(intent.message)
-            is ChatDetailsIntent.SendMessage -> onMessageSendClicked(intent.messageText)
+            ChatScreenIntent.NavigateBack -> navigateBack()
+            is ChatScreenIntent.MessageAnimationDone -> onMessageAnimationEnded(intent.message)
+            is ChatScreenIntent.SendMessage -> onMessageSendClicked(intent.messageText)
         }
     }
 

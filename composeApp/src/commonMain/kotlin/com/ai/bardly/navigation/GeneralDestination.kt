@@ -12,7 +12,7 @@ sealed class GeneralDestination {
     ) : GeneralDestination()
 
     @Serializable
-    data class ChatDetails(
+    data class Chat(
         val gameTitle: String,
         val gameId: Int,
     ) : GeneralDestination()

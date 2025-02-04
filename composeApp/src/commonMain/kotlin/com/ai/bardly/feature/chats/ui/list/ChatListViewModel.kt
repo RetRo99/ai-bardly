@@ -31,7 +31,7 @@ class ChatListViewModel(
             )
         )
         navigateTo(
-            GeneralDestination.ChatDetails(
+            GeneralDestination.Chat(
                 gameId = intent.gameId,
                 gameTitle = intent.gameTitle
             )

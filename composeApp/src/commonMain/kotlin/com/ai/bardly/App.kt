@@ -32,14 +32,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import bardlyLightColors
-import com.ai.bardly.feature.chats.ui.details.ChatDetailsScreen
+import com.ai.bardly.feature.chats.ui.chat.ChatScreen
 import com.ai.bardly.feature.chats.ui.list.ChatsListScreen
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.home.ui.HomeScreen
 import com.ai.bardly.navigation.GeneralDestination
-import com.ai.bardly.navigation.GeneralDestination.ChatDetails
+import com.ai.bardly.navigation.GeneralDestination.Chat
 import com.ai.bardly.navigation.GeneralDestination.GameDetail
 import com.ai.bardly.navigation.NavigationManager
 import com.ai.bardly.navigation.RootDestination
@@ -116,10 +116,10 @@ fun App() {
                             baseComposable<RootDestination.ChatsList> {
                                 ChatsListScreen()
                             }
-                            baseComposable<ChatDetails> { backStackEntry ->
-                                val gameTitle = backStackEntry.toRoute<ChatDetails>().gameTitle
-                                val gameId = backStackEntry.toRoute<ChatDetails>().gameId
-                                ChatDetailsScreen(
+                            baseComposable<Chat> { backStackEntry ->
+                                val gameTitle = backStackEntry.toRoute<Chat>().gameTitle
+                                val gameId = backStackEntry.toRoute<Chat>().gameId
+                                ChatScreen(
                                     gameTitle = gameTitle,
                                     gameId = gameId,
                                 )

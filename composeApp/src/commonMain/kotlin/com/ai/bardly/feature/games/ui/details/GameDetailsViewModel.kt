@@ -25,7 +25,7 @@ class GameDetailsViewModel(
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
             GameDetailsIntent.OpenChatClicked -> navigateTo(
-                GeneralDestination.ChatDetails(
+                GeneralDestination.Chat(
                     game.title,
                     game.id
                 )

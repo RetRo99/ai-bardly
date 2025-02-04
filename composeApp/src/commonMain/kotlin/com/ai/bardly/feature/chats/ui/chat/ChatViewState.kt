@@ -1,8 +1,8 @@
-package com.ai.bardly.feature.chats.ui.details
+package com.ai.bardly.feature.chats.ui.chat
 
 import com.ai.bardly.feature.chats.ui.model.MessageUiModel
 
-data class ChatDetailsViewState(
+data class ChatViewState(
     val title: String,
     val gameId: Int,
     val messages: List<MessageUiModel>,

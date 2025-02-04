@@ -37,7 +37,7 @@ class HomeViewModel(
                 origin = AnalyticsEventOrigin.Home,
             )
         )
-        navigateTo(GeneralDestination.ChatDetails(gameTitle, gameId))
+        navigateTo(GeneralDestination.Chat(gameTitle, gameId))
     }
 
     private fun openGameDetails(game: GameUiModel) {
