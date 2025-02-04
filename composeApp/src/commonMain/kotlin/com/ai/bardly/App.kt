@@ -70,7 +70,6 @@ fun App() {
                             navController.navigate(destination)
                         }
                     }
-                    destination.logScreenOpen()
                 }
             }
 
