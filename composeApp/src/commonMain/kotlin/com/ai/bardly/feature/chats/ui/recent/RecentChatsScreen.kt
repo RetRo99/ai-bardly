@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.chats.ui.list
+package com.ai.bardly.feature.chats.ui.recent
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.chat_lists_recent_chats
@@ -32,7 +32,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun ChatsListScreen(
 ) {
-    BaseScreen<ChatListViewModel, ChatListViewState, ChatListIntent> { viewState, intentDispatcher ->
+    BaseScreen<RecentChatsViewModel, RecentChatsViewState, RecentChatsIntent> { viewState, intentDispatcher ->
         ChatsListContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,
@@ -43,8 +43,8 @@ fun ChatsListScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ChatsListContent(
-    viewState: ChatListViewState,
-    intentDispatcher: IntentDispatcher<ChatListIntent>,
+    viewState: RecentChatsViewState,
+    intentDispatcher: IntentDispatcher<RecentChatsIntent>,
 ) {
     LazyColumn {
         stickyHeader {
@@ -68,7 +68,7 @@ private fun ChatsListContent(
                 chat = recentChat,
                 recentChatClicked = {
                     intentDispatcher(
-                        ChatListIntent.RecentChatClicked(
+                        RecentChatsIntent.RecentChatClicked(
                             recentChat.gameTitle,
                             gameId = recentChat.gameId
                         )

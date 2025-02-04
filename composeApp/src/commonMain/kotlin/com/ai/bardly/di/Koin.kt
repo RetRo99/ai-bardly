@@ -16,7 +16,7 @@ import com.ai.bardly.feature.chats.data.remote.NetworkChatsRemoteDataSource
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.chat.ChatsDetailsViewModel
-import com.ai.bardly.feature.chats.ui.list.ChatListViewModel
+import com.ai.bardly.feature.chats.ui.recent.RecentChatsViewModel
 import com.ai.bardly.feature.games.data.GamesDataRepository
 import com.ai.bardly.feature.games.data.local.GamesLocalDataSource
 import com.ai.bardly.feature.games.data.local.RoomGamesLocalDataSource
@@ -82,7 +82,7 @@ val networkingModule = module {
 val viewModelModule = module {
     factoryOf(::HomeViewModel)
     factoryOf(::GamesListViewModel)
-    factoryOf(::ChatListViewModel)
+    factoryOf(::RecentChatsViewModel)
     factoryOf(::GameDetailsViewModel)
     factoryOf(::ChatsDetailsViewModel)
 }

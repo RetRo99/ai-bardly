@@ -58,7 +58,7 @@ sealed class RootDestination(
         override fun logScreenOpen() {
             analytics.log(
                 AnalyticsEvent.ScreenOpen(
-                    origin = AnalyticsEventOrigin.RecentChatList
+                    origin = AnalyticsEventOrigin.RecentChats
                 )
             )
         }

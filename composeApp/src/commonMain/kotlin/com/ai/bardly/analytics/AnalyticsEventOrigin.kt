@@ -5,5 +5,5 @@ sealed class AnalyticsEventOrigin(val analyticKey: String) {
     data object Chat : AnalyticsEventOrigin("chat_details")
     data object GameDetails : AnalyticsEventOrigin("game_details")
     data object GameList : AnalyticsEventOrigin("game_list")
-    data object RecentChatList : AnalyticsEventOrigin("recent_chat_list")
+    data object RecentChats : AnalyticsEventOrigin("recent_chats")
 }

@@ -33,7 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.chat.ChatScreen
-import com.ai.bardly.feature.chats.ui.list.ChatsListScreen
+import com.ai.bardly.feature.chats.ui.recent.ChatsListScreen
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
 import com.ai.bardly.feature.games.ui.model.GameUiModel

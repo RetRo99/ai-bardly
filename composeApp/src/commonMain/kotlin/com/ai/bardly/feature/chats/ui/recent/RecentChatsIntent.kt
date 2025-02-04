@@ -1,10 +1,10 @@
-package com.ai.bardly.feature.chats.ui.list
+package com.ai.bardly.feature.chats.ui.recent
 
 import com.ai.bardly.base.ScreenIntent
 
-sealed interface ChatListIntent : ScreenIntent {
+sealed interface RecentChatsIntent : ScreenIntent {
     data class RecentChatClicked(
         val gameTitle: String,
         val gameId: Int,
-    ) : ChatListIntent
+    ) : RecentChatsIntent
 }

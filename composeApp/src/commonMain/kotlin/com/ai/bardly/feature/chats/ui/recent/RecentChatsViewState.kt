@@ -1,7 +1,7 @@
-package com.ai.bardly.feature.chats.ui.list
+package com.ai.bardly.feature.chats.ui.recent
 
 import com.ai.bardly.feature.chats.ui.model.RecentMessageUiModel
 
-data class ChatListViewState(
+data class RecentChatsViewState(
     val recentChats: List<RecentMessageUiModel> = emptyList(),
 )
