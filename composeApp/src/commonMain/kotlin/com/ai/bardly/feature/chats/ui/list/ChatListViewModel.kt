@@ -2,6 +2,7 @@ package com.ai.bardly.feature.chats.ui.list
 
 import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.analytics.AnalyticsEventOrigin
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
@@ -23,7 +24,12 @@ class ChatListViewModel(
     }
 
     private fun onRecentChatClicked(intent: ChatListIntent.RecentChatClicked) {
-        analytics.log(AnalyticsEvent.RecentChatClicked)
+        analytics.log(
+            AnalyticsEvent.OpenChat(
+                gameTitle = intent.gameTitle,
+                origin = AnalyticsEventOrigin.RecentChatList,
+            )
+        )
         navigateTo(
             GeneralDestination.ChatDetails(
                 gameId = intent.gameId,

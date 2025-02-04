@@ -11,7 +11,7 @@ class AnalyticsManager(
     override fun log(event: AnalyticsEvent) {
         firebaseAnalytics.logEvent(
             event.name,
-            event.params.map { it.key.analyticKey to it.value }.toMap()
+            event.paramsMap
         )
     }
 

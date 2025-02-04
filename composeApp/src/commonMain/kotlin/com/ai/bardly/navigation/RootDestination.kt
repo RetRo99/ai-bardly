@@ -8,6 +8,7 @@ import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
 import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.analytics.AnalyticsEventOrigin
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
@@ -29,7 +30,7 @@ sealed class RootDestination(
         override fun logScreenOpen() {
             analytics.log(
                 AnalyticsEvent.ScreenOpen(
-                    screenName = "home",
+                    origin = AnalyticsEventOrigin.Home
                 )
             )
         }
@@ -43,7 +44,7 @@ sealed class RootDestination(
         override fun logScreenOpen() {
             analytics.log(
                 AnalyticsEvent.ScreenOpen(
-                    screenName = "games_list",
+                    origin = AnalyticsEventOrigin.GameList
                 )
             )
         }
@@ -57,7 +58,7 @@ sealed class RootDestination(
         override fun logScreenOpen() {
             analytics.log(
                 AnalyticsEvent.ScreenOpen(
-                    screenName = "chat_list",
+                    origin = AnalyticsEventOrigin.RecentChatList
                 )
             )
         }

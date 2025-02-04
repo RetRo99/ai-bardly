@@ -2,39 +2,50 @@ package com.ai.bardly.analytics
 
 sealed class AnalyticsEvent(
     val name: String,
-    val params: Map<AnalyticsParam, String>,
+    open val origin: AnalyticsEventOrigin,
+    private val params: Map<AnalyticsEventParam, String>,
 ) {
+    val paramsMap: Map<String, String>
+        get() = (params + mapOf(AnalyticsEventParam.ScreenName to origin.analyticKey)).map { it.key.analyticKey to it.value }
+            .toMap()
+
     data class ScreenOpen(
-        val screenName: String,
-        val additionalParams: Map<AnalyticsParam, String> = emptyMap(),
+        override val origin: AnalyticsEventOrigin,
     ) : AnalyticsEvent(
         name = "screen_open",
-        params = mapOf(
-            AnalyticsParam.ScreenName to screenName,
-        ) + additionalParams,
+        origin = origin,
+        params = emptyMap(),
     )
 
     data class QuestionAsked(
         val gameTitle: String,
     ) : AnalyticsEvent(
         name = "question_asked",
+        origin = AnalyticsEventOrigin.Chat,
         params = mapOf(
-            AnalyticsParam.GameTitle to gameTitle,
+            AnalyticsEventParam.GameTitle to gameTitle,
         ),
     )
 
-    data object RecentGameClicked : AnalyticsEvent(
-        name = "recent_game_clicked",
-        params = emptyMap(),
+    data class OpenGameDetails(
+        val gameTitle: String,
+        override val origin: AnalyticsEventOrigin,
+    ) : AnalyticsEvent(
+        name = "open_game_details",
+        origin = origin,
+        params = mapOf(
+            AnalyticsEventParam.GameTitle to gameTitle,
+        ),
     )
 
-    data object RecentGameChatClicked : AnalyticsEvent(
-        name = "recent_game_chat_clicked",
-        params = emptyMap(),
-    )
-
-    data object RecentChatClicked : AnalyticsEvent(
-        name = "recent_chat_clicked",
-        params = emptyMap(),
+    data class OpenChat(
+        val gameTitle: String,
+        override val origin: AnalyticsEventOrigin,
+    ) : AnalyticsEvent(
+        name = "open_chat",
+        origin = origin,
+        params = mapOf(
+            AnalyticsEventParam.GameTitle to gameTitle,
+        ),
     )
 }

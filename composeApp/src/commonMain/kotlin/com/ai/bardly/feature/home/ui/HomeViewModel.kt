@@ -2,6 +2,7 @@ package com.ai.bardly.feature.home.ui
 
 import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.analytics.AnalyticsEventOrigin
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
@@ -30,12 +31,22 @@ class HomeViewModel(
     }
 
     private fun openChat(gameTitle: String, gameId: Int) {
-        analytics.log(AnalyticsEvent.RecentGameChatClicked)
+        analytics.log(
+            AnalyticsEvent.OpenChat(
+                gameTitle = gameTitle,
+                origin = AnalyticsEventOrigin.Home,
+            )
+        )
         navigateTo(GeneralDestination.ChatDetails(gameTitle, gameId))
     }
 
     private fun openGameDetails(game: GameUiModel) {
-        analytics.log(AnalyticsEvent.RecentGameClicked)
+        analytics.log(
+            AnalyticsEvent.OpenGameDetails(
+                gameTitle = game.title,
+                origin = AnalyticsEventOrigin.Home,
+            )
+        )
         navigateTo(GeneralDestination.GameDetail(game))
     }
 
