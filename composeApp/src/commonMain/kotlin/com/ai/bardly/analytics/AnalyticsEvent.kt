@@ -17,13 +17,15 @@ sealed class AnalyticsEvent(
         params = emptyMap(),
     )
 
-    data class QuestionAsked(
+    data class QuestionsAsked(
         val gameTitle: String,
+        val questionsAskedInSession: Int,
     ) : AnalyticsEvent(
         name = "question_asked",
         origin = AnalyticsEventOrigin.Chat,
         params = mapOf(
             AnalyticsEventParam.GameTitle to gameTitle,
+            AnalyticsEventParam.QuestionsAsked to questionsAskedInSession.toString(),
         ),
     )
 

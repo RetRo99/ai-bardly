@@ -17,6 +17,8 @@ class ChatsDetailsViewModel(
     private val chatsRepository: ChatsRepository,
 ) : BaseViewModel<ChatViewState, ChatScreenIntent>() {
 
+    private var questionsAskedInSession = 0
+
     override val defaultViewState = ChatViewState(
         title = gameTitle,
         gameId = gameId,
@@ -56,7 +58,6 @@ class ChatsDetailsViewModel(
             messageText = messageText,
             id = gameId,
         )
-        analytics.log(AnalyticsEvent.QuestionAsked(gameTitle))
         chatsRepository
             .getAnswerFor(message.toDomainModel())
             .onSuccess { answer ->
@@ -102,5 +103,9 @@ class ChatsDetailsViewModel(
                 isResponding = message.isUserMessage,
             )
         }
+    }
+
+    override fun onCleared() {
+        analytics.log(AnalyticsEvent.QuestionsAsked(gameTitle, questionsAskedInSession))
     }
 }
