@@ -3,6 +3,8 @@ package com.ai.bardly.feature.games.ui.list
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.analytics.AnalyticsEventOrigin
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
@@ -37,18 +39,31 @@ class GamesListViewModel(
 
     override suspend fun handleScreenIntent(intent: GamesListIntent) {
         when (intent) {
-            is GamesListIntent.GameClicked -> onGameClicked(intent.game)
+            is GamesListIntent.GameClicked -> openGameDetails(intent.game)
             is GamesListIntent.OpenChatClicked -> onOpenChatClicked(intent.gameTitle, intent.gameId)
             is GamesListIntent.SearchQueryChanged -> onSearchQueryChanged(intent.query)
             is GamesListIntent.SearchStateChanged -> onSearchStateChanged(intent.isActive)
         }
     }
 
-    private fun onGameClicked(game: GameUiModel) {
+    private fun openGameDetails(game: GameUiModel) {
+        analytics.log(
+            AnalyticsEvent.OpenGameDetails(
+                gameTitle = game.title,
+                origin = getEventOrigin(),
+            )
+        )
         navigateTo(GeneralDestination.GameDetail(game))
     }
 
+
     private fun onOpenChatClicked(gameTitle: String, gameId: Int) {
+        analytics.log(
+            AnalyticsEvent.OpenChat(
+                gameTitle = gameTitle,
+                origin = getEventOrigin(),
+            )
+        )
         navigateTo(GeneralDestination.Chat(gameTitle, gameId))
     }
 
@@ -109,6 +124,14 @@ class GamesListViewModel(
                 .cachedIn(viewModelScope)
                 .toUiModels()
                 .let(onResult)
+        }
+    }
+
+    private fun getEventOrigin(): AnalyticsEventOrigin {
+        return if (currentViewState().isSearchActive) {
+            AnalyticsEventOrigin.GameSearch
+        } else {
+            AnalyticsEventOrigin.GameList
         }
     }
 }

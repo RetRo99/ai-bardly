@@ -30,6 +30,10 @@ abstract class BaseViewModel<ScreenViewState, Intent : ScreenIntent> : ViewModel
         }
     }
 
+    fun currentViewState(): ScreenViewState {
+        return (viewState.value as? BaseViewState.Success<ScreenViewState>).data ?: defaultViewState
+    }
+
     open fun onScreenDisplayed() {}
 
     abstract suspend fun handleScreenIntent(intent: Intent)
