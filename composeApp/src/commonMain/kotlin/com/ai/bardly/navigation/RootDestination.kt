@@ -51,7 +51,7 @@ sealed class RootDestination(
     }
 
     @Serializable
-    data object ChatsList : RootDestination(
+    data object RecentChats : RootDestination(
         title = Res.string.chats,
         icon = Res.drawable.ic_chats,
     ) {
@@ -65,6 +65,6 @@ sealed class RootDestination(
     }
 
     companion object {
-        val entries: List<RootDestination> = listOf(Home, GamesList, ChatsList)
+        val entries: List<RootDestination> = listOf(Home, GamesList, RecentChats)
     }
 }

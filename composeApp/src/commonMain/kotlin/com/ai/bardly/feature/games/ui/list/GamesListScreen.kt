@@ -3,7 +3,6 @@ package com.ai.bardly.feature.games.ui.list
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.games_list_search_games
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
@@ -51,7 +50,6 @@ import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun GamesListScreen() {
     BaseScreen<GamesListViewModel, GamesListViewState, GamesListIntent> { viewState, intentDispatcher ->
@@ -63,7 +61,6 @@ fun GamesListScreen() {
     }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun GamesScreenContent(
     viewState: GamesListViewState,
@@ -78,7 +75,6 @@ private fun GamesScreenContent(
     )
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun GamesList(
     games: Flow<PagingData<GameUiModel>>,

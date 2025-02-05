@@ -113,7 +113,7 @@ fun App() {
                                 GamesListScreen(
                                 )
                             }
-                            baseComposable<RootDestination.ChatsList> {
+                            baseComposable<RootDestination.RecentChats> {
                                 ChatsListScreen()
                             }
                             baseComposable<Chat> { backStackEntry ->

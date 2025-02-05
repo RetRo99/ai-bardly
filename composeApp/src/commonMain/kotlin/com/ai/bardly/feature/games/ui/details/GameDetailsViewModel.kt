@@ -1,6 +1,8 @@
 package com.ai.bardly.feature.games.ui.details
 
 import androidx.lifecycle.viewModelScope
+import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.analytics.AnalyticsEventOrigin
 import com.ai.bardly.base.BaseViewModel
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
@@ -24,13 +26,23 @@ class GameDetailsViewModel(
     override suspend fun handleScreenIntent(intent: GameDetailsIntent) {
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
-            GameDetailsIntent.OpenChatClicked -> navigateTo(
-                GeneralDestination.Chat(
-                    game.title,
-                    game.id
-                )
-            )
+            GameDetailsIntent.OpenChatClicked -> openChat()
         }
+    }
+
+    private fun openChat() {
+        analytics.log(
+            AnalyticsEvent.OpenChat(
+                gameTitle = game.title,
+                origin = AnalyticsEventOrigin.GameDetails,
+            )
+        )
+        navigateTo(
+            GeneralDestination.Chat(
+                game.title,
+                game.id
+            )
+        )
     }
 
     private fun updateGameOpen(gameId: Int) {

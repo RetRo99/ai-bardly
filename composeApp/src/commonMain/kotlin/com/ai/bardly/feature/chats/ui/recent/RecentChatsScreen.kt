@@ -33,7 +33,7 @@ import org.jetbrains.compose.resources.stringResource
 fun ChatsListScreen(
 ) {
     BaseScreen<RecentChatsViewModel, RecentChatsViewState, RecentChatsIntent> { viewState, intentDispatcher ->
-        ChatsListContent(
+        RecentChatsContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,
         )
@@ -42,7 +42,7 @@ fun ChatsListScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ChatsListContent(
+private fun RecentChatsContent(
     viewState: RecentChatsViewState,
     intentDispatcher: IntentDispatcher<RecentChatsIntent>,
 ) {
