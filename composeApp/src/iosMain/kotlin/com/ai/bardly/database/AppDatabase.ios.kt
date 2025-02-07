@@ -2,6 +2,7 @@ package com.ai.bardly.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.cinterop.ExperimentalForeignApi
 import org.koin.core.annotation.Single
 import platform.Foundation.NSDocumentDirectory
@@ -15,6 +16,7 @@ actual class PlatformDataBaseHelper {
         return Room.databaseBuilder<AppDatabase>(
             name = dbFilePath,
         ).fallbackToDestructiveMigration(true)
+            .setDriver(BundledSQLiteDriver())
     }
 }
 
