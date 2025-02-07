@@ -10,10 +10,13 @@ import com.ai.bardly.feature.chats.ui.model.MessageUiModel
 import com.ai.bardly.feature.chats.ui.model.toDomainModel
 import com.ai.bardly.feature.chats.ui.model.toUiModel
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.InjectedParam
 
+@KoinViewModel
 class ChatsDetailsViewModel(
-    private val gameTitle: String,
-    private val gameId: Int,
+    @InjectedParam private val gameTitle: String,
+    @InjectedParam private val gameId: Int,
     private val chatsRepository: ChatsRepository,
 ) : BaseViewModel<ChatViewState, ChatScreenIntent>() {
 

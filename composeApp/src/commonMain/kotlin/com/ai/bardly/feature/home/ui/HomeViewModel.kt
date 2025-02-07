@@ -10,7 +10,9 @@ import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.games.ui.model.toUiModel
 import com.ai.bardly.navigation.GeneralDestination
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class HomeViewModel(
     private val gamesRepository: GamesRepository,
 ) : BaseViewModel<HomeViewState, HomeIntent>() {

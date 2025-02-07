@@ -6,7 +6,9 @@ import com.ai.bardly.feature.games.data.remote.model.GamesListDto
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.paging.BardlyPagingSource
 import com.ai.bardly.paging.PagingResult
+import org.koin.core.annotation.Single
 
+@Single(binds = [GamesRemoteDataSource::class])
 class NetworkGamesRemoteDataSource(
     private val networkClient: NetworkClient,
 ) : GamesRemoteDataSource {

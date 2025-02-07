@@ -9,7 +9,9 @@ import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.model.toUiModel
 import com.ai.bardly.navigation.GeneralDestination
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class RecentChatsViewModel(
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
 ) : BaseViewModel<RecentChatsViewState, RecentChatsIntent>() {

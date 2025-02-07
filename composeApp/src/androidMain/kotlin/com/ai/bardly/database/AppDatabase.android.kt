@@ -1,16 +1,19 @@
 package com.ai.bardly.database
 
+import android.content.Context
 import androidx.room.Room
-import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.module
+import androidx.room.RoomDatabase
+import org.koin.core.annotation.Single
 
-actual fun getDatabaseModule() = module {
-    single<AppDatabase> {
-        val dbFile = androidContext().getDatabasePath("bardly.db")
-        Room.databaseBuilder<AppDatabase>(
-            context = androidContext(),
+@Single
+actual class PlatformDataBaseHelper(
+    private val context: Context,
+) {
+    actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+        val dbFile = context.getDatabasePath("bardly.db")
+        return Room.databaseBuilder<AppDatabase>(
+            context = context,
             name = dbFile.absolutePath
         ).fallbackToDestructiveMigration(true)
-            .build()
     }
 }

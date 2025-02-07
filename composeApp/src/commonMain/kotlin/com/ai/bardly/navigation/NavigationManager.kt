@@ -3,7 +3,9 @@ package com.ai.bardly.navigation
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import org.koin.core.annotation.Single
 
+@Single
 class NavigationManager {
 
     private val _destinations = MutableSharedFlow<GeneralDestination>(

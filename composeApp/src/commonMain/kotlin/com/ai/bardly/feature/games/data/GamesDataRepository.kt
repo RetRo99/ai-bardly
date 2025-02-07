@@ -14,7 +14,9 @@ import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.BardlyRemoteMediator
 import com.ai.bardly.util.now
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.annotation.Single
 
+@Single(binds = [GamesRepository::class])
 class GamesDataRepository(
     private val remoteSource: GamesRemoteDataSource,
     private val localSource: GamesLocalDataSource,

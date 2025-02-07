@@ -2,7 +2,9 @@ package com.ai.bardly.feature.chats.domain
 
 import com.ai.bardly.feature.chats.domain.model.RecentMessageDomainModel
 import com.ai.bardly.feature.games.domain.GamesRepository
+import org.koin.core.annotation.Single
 
+@Single
 class GetRecentChatsUseCase(
     private val chatsRepository: ChatsRepository,
     private val gamesRepository: GamesRepository

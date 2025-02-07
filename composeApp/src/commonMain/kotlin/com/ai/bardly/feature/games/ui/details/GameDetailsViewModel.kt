@@ -9,9 +9,12 @@ import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.navigation.GeneralDestination
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.InjectedParam
 
+@KoinViewModel
 class GameDetailsViewModel(
-    private val game: GameUiModel,
+    @InjectedParam private val game: GameUiModel,
     private val gamesRepository: GamesRepository,
 ) : BaseViewModel<GameDetailsViewState, GameDetailsIntent>() {
 

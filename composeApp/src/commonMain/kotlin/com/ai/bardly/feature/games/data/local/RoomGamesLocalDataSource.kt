@@ -5,7 +5,9 @@ import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.feature.games.data.local.model.GameEntity
 import com.ai.bardly.feature.games.data.local.model.GameMetadataEntity
 import kotlinx.datetime.LocalDateTime
+import org.koin.core.annotation.Single
 
+@Single(binds = [GamesLocalDataSource::class])
 class RoomGamesLocalDataSource(
     private val gamesDao: GamesDao,
     private val daoExecutor: DaoExecutor,

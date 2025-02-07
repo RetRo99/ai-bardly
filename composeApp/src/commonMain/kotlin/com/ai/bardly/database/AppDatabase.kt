@@ -10,7 +10,6 @@ import com.ai.bardly.feature.chats.data.local.model.MessageEntity
 import com.ai.bardly.feature.games.data.local.GamesDao
 import com.ai.bardly.feature.games.data.local.model.GameEntity
 import com.ai.bardly.feature.games.data.local.model.GameMetadataEntity
-import org.koin.core.module.Module
 
 @Database(
     entities = [
@@ -33,4 +32,6 @@ expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase
 }
 
-expect fun getDatabaseModule(): Module
+expect class PlatformDataBaseHelper {
+    fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase>
+}

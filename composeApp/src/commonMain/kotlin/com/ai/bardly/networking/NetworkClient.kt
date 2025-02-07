@@ -18,8 +18,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import org.koin.core.annotation.Single
 
-open class NetworkClient(
+@Single
+class NetworkClient(
     @PublishedApi
     internal val httpClient: HttpClient,
 ) {

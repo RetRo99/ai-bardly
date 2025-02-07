@@ -5,7 +5,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import org.koin.core.annotation.Single
 
+@Single
 class DaoExecutor(
     val analytics: Analytics,
 ) {

@@ -2,7 +2,9 @@ package com.ai.bardly.feature.chats.data.local
 
 import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.feature.chats.data.local.model.MessageEntity
+import org.koin.core.annotation.Single
 
+@Single(binds = [ChatsLocalDataSource::class])
 class RoomChatsLocalDataSource(
     private val dao: MessagesDao,
     private val daoExecutor: DaoExecutor,

@@ -6,33 +6,14 @@ import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
 import com.ai.bardly.database.AppDatabase
-import com.ai.bardly.database.DaoExecutor
-import com.ai.bardly.database.getDatabaseModule
-import com.ai.bardly.feature.chats.data.ChatsDataRepository
-import com.ai.bardly.feature.chats.data.local.ChatsLocalDataSource
-import com.ai.bardly.feature.chats.data.local.RoomChatsLocalDataSource
-import com.ai.bardly.feature.chats.data.remote.ChatsRemoteDataSource
-import com.ai.bardly.feature.chats.data.remote.NetworkChatsRemoteDataSource
-import com.ai.bardly.feature.chats.domain.ChatsRepository
-import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
-import com.ai.bardly.feature.chats.ui.chat.ChatsDetailsViewModel
-import com.ai.bardly.feature.chats.ui.recent.RecentChatsViewModel
-import com.ai.bardly.feature.games.data.GamesDataRepository
-import com.ai.bardly.feature.games.data.local.GamesLocalDataSource
-import com.ai.bardly.feature.games.data.local.RoomGamesLocalDataSource
-import com.ai.bardly.feature.games.data.remote.GamesRemoteDataSource
-import com.ai.bardly.feature.games.data.remote.NetworkGamesRemoteDataSource
-import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.feature.games.ui.details.GameDetailsViewModel
-import com.ai.bardly.feature.games.ui.list.GamesListViewModel
-import com.ai.bardly.feature.home.ui.HomeViewModel
-import com.ai.bardly.navigation.NavigationManager
-import com.ai.bardly.networking.NetworkClient
+import com.ai.bardly.database.PlatformDataBaseHelper
 import com.ai.bardly.networking.getHttpEngine
 import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
 import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import dev.gitlive.firebase.analytics.analytics
+import dev.gitlive.firebase.crashlytics.FirebaseCrashlytics
 import dev.gitlive.firebase.crashlytics.crashlytics
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
@@ -41,92 +22,89 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 import org.koin.core.context.startKoin
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.KoinAppDeclaration
-import org.koin.dsl.module
 
-val gamesDataModule = module {
-    single<GamesLocalDataSource> { RoomGamesLocalDataSource(get(), get()) }
-    single<GamesRemoteDataSource> { NetworkGamesRemoteDataSource(get()) }
-    single<GamesRepository> { GamesDataRepository(get(), get()) }
-    single { get<AppDatabase>().getGamesDao() }
+@Module
+class DatabaseModule {
+    @Single
+    fun provideAppDatabase(dataBaseHelper: PlatformDataBaseHelper): AppDatabase =
+        dataBaseHelper.getDatabaseBuilder().build()
+
+    @Single
+    fun provideGamesDao(appDatabase: AppDatabase) = appDatabase.getGamesDao()
+
+    @Single
+    fun provideMessagesDao(appDatabase: AppDatabase) = appDatabase.getMessagesDao()
 }
 
-val chatsDataModule = module {
-    single<ChatsRemoteDataSource> { NetworkChatsRemoteDataSource(get()) }
-    single<ChatsLocalDataSource> { RoomChatsLocalDataSource(get(), get()) }
-    single<ChatsRepository> { ChatsDataRepository(get(), get()) }
-    single { get<AppDatabase>().getMessagesDao() }
-    single { GetRecentChatsUseCase(get(), get()) }
+@Module
+class BuildConfigModule {
+    @Single
+    fun provideBuildConfig(): BuildConfig = getBuildConfig()
 }
 
-val networkingModule = module {
-    single {
+@Module
+class NetworkingModule {
+    @Single
+    fun provideHttpClientEngineFactory(): HttpClientEngineFactory<*> = getHttpEngine()
+
+    @Single
+    fun provideHttpClient(
+        httpFactory: HttpClientEngineFactory<*>,
+        analytics: Analytics
+    ): HttpClient {
         val json = Json { ignoreUnknownKeys = true }
-        HttpClient(get<HttpClientEngineFactory<*>>()) {
+        return HttpClient(httpFactory) {
             install(ContentNegotiation) {
                 json(json, contentType = ContentType.Application.Json)
             }
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { cause, request ->
-                    get<Analytics>().logException(cause, request.url.toString())
+                    analytics.logException(cause, request.url.toString())
                 }
             }
         }
     }
-    single<HttpClientEngineFactory<*>> { getHttpEngine() }
-    single { NetworkClient(get()) }
 }
 
-val viewModelModule = module {
-    factoryOf(::HomeViewModel)
-    factoryOf(::GamesListViewModel)
-    factoryOf(::RecentChatsViewModel)
-    factoryOf(::GameDetailsViewModel)
-    factoryOf(::ChatsDetailsViewModel)
+@Module
+class AnalyticsModule {
+    @Single
+    fun provideFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics
+
+    @Single
+    fun provideCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
+
+    @Single
+    fun provideAnalytics(
+        firebaseAnalytics: FirebaseAnalytics,
+        firebaseCrashlytics: FirebaseCrashlytics,
+        buildConfig: BuildConfig, // TODO extract param
+    ): Analytics = if (buildConfig.isDebug) DebugAnalyticsManager() else AnalyticsManager(
+        firebaseAnalytics,
+        firebaseCrashlytics
+    )
 }
 
-val buildConfigModule = module {
-    single<BuildConfig> { getBuildConfig() }
-}
-
-val navigationModule = module {
-    single { NavigationManager() }
-}
-val analyticsModule = module {
-    single { Firebase.analytics }
-    single { Firebase.crashlytics }
-    single<Analytics> {
-        if (get<BuildConfig>().isDebug) DebugAnalyticsManager() else AnalyticsManager(
-            get(),
-            get()
-        )
-    }
-}
-
-val daoModule = module {
-    single { DaoExecutor(get()) }
-}
+@Module(includes = [DatabaseModule::class, NetworkingModule::class, AnalyticsModule::class, BuildConfigModule::class])
+@ComponentScan("com.ai.bardly")
+class ApplicationModule
 
 fun initKoin(
-    appDeclaration: KoinAppDeclaration = {}
+    appModule: org.koin.core.module.Module,
+    appDeclaration: KoinAppDeclaration? = null
 ) {
     // TODO move somewhere else
     GoogleAuthProvider.create(GoogleAuthCredentials(serverId = "202431209061-0ku3miec01ehdhkp84jcpmp6lfbpefeq.apps.googleusercontent.com"))
 
     startKoin {
-        appDeclaration()
-        modules(
-            gamesDataModule,
-            viewModelModule,
-            analyticsModule,
-            buildConfigModule,
-            navigationModule,
-            networkingModule,
-            chatsDataModule,
-            getDatabaseModule(),
-            daoModule,
-        )
+        if (appDeclaration != null) {
+            appDeclaration()
+        }
+        modules(appModule)
     }
 }

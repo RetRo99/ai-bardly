@@ -10,7 +10,9 @@ import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import org.koin.core.annotation.Single
 
+@Single(binds = [ChatsRepository::class])
 class ChatsDataRepository(
     private val remoteChatsDataSource: ChatsRemoteDataSource,
     private val localChatsDataSource: ChatsLocalDataSource,

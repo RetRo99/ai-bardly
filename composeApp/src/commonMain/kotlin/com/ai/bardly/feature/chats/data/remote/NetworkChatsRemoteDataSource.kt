@@ -6,7 +6,9 @@ import com.ai.bardly.feature.chats.data.remote.model.toRequest
 import com.ai.bardly.feature.chats.domain.model.MessageType
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.util.now
+import org.koin.core.annotation.Single
 
+@Single(binds = [ChatsRemoteDataSource::class])
 class NetworkChatsRemoteDataSource(
     private val networkClient: NetworkClient,
 ) : ChatsRemoteDataSource {
