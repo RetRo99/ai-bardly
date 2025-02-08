@@ -24,6 +24,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
+import org.koin.core.annotation.Named
 import org.koin.core.annotation.Single
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -80,11 +81,15 @@ class AnalyticsModule {
     fun provideCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
 
     @Single
+    @Named("isDebug")
+    fun provideIsDebug(buildConfig: BuildConfig): Boolean = buildConfig.isDebug
+
+    @Single
     fun provideAnalytics(
         firebaseAnalytics: FirebaseAnalytics,
         firebaseCrashlytics: FirebaseCrashlytics,
-        buildConfig: BuildConfig, // TODO extract param
-    ): Analytics = if (buildConfig.isDebug) DebugAnalyticsManager() else AnalyticsManager(
+        @Named("isDebug") isDebug: Boolean,
+    ): Analytics = if (isDebug) DebugAnalyticsManager() else AnalyticsManager(
         firebaseAnalytics,
         firebaseCrashlytics
     )
