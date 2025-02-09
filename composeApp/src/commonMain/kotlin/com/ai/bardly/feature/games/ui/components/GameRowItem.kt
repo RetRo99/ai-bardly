@@ -8,11 +8,13 @@ import ai_bardly.composeapp.generated.resources.ic_rating
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -41,7 +43,7 @@ fun GameRowItem(
     ) {
         Row(
             modifier = modifier
-                .fillMaxSize()
+                .height(IntrinsicSize.Min)
                 .clickable { onClick(game) }
                 .padding(12.dp)
         ) {
@@ -79,9 +81,10 @@ private fun GameAttributesRow(
     numberOfPlayers: String,
     playingTime: String,
     rating: String,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         SharedTransitionText(
@@ -107,15 +110,16 @@ private fun GameAttributesRow(
 private fun TitleAndChatRow(
     gameId: Int,
     gameTitle: String,
-    onChatClick: (String, Int) -> Unit
+    onChatClick: (String, Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Row {
+    Row(modifier = modifier) {
         SharedTransitionText(
             key = "$gameId title",
             text = gameTitle,
-            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+            modifier = Modifier.weight(1f)
         )
-        Spacer(Modifier.weight(1f))
         Icon(
             painter = painterResource(Res.drawable.ic_chat),
             contentDescription = null,

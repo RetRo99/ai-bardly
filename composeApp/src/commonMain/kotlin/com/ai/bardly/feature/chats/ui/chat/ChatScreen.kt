@@ -13,8 +13,10 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +39,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -57,6 +60,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -77,7 +83,7 @@ fun ChatScreen(
     gameTitle: String,
     gameId: Int,
 ) {
-    BaseScreen<ChatsDetailsViewModel, ChatViewState, ChatScreenIntent>(
+    BaseScreen<ChatViewModel, ChatViewState, ChatScreenIntent>(
         parameters = arrayOf(gameTitle, gameId)
     ) { viewState, intentDispatcher ->
         ChatScreenContent(
@@ -184,6 +190,7 @@ private fun Chat(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.MessageBubble(
     message: MessageUiModel,
@@ -230,11 +237,21 @@ private fun LazyItemScope.MessageBubble(
                 }
             }
             richTextState.setMarkdown(animatedText)
-            RichText(
-                state = richTextState,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                color = Color.White
-            )
+            val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
+            SelectionContainer {
+                RichText(
+                    state = richTextState,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                        .combinedClickable(
+                            onClick = {}, // You can add click handling if needed
+                            onLongClick = {
+                                clipboardManager.setText(AnnotatedString(message.text))
+                            }
+                        ),
+                    color = Color.White
+                )
+            }
         }
     }
 }

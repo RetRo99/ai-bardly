@@ -14,7 +14,7 @@ import org.koin.android.annotation.KoinViewModel
 import org.koin.core.annotation.InjectedParam
 
 @KoinViewModel
-class ChatsDetailsViewModel(
+class ChatViewModel(
     @InjectedParam private val gameTitle: String,
     @InjectedParam private val gameId: Int,
     private val chatsRepository: ChatsRepository,

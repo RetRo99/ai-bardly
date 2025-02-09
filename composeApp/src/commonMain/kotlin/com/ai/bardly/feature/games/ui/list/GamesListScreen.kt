@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -45,7 +44,6 @@ import app.cash.paging.compose.itemKey
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.games.ui.components.GamesLazyColumn
-import com.ai.bardly.feature.games.ui.components.GamesLazyGrid
 import com.ai.bardly.feature.games.ui.list.GamesListIntent.OpenChatClicked
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.util.keyboardAsState
@@ -154,7 +152,7 @@ fun SearchScreenState(
 ) {
     val focusRequester = remember { FocusRequester() }
     val searchResults = results.collectAsLazyPagingItems()
-    val searchState = rememberLazyGridState()
+    val searchState = rememberLazyListState()
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
@@ -191,8 +189,8 @@ fun SearchScreenState(
             shape = RoundedCornerShape(28.dp)
         )
 
-        GamesLazyGrid(
-            gridState = searchState,
+        GamesLazyColumn(
+            state = searchState,
             itemCount = { searchResults.itemCount },
             getItem = searchResults::get,
             getKey = searchResults.itemKey { it.id },
