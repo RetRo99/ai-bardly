@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -43,6 +44,7 @@ import app.cash.paging.compose.collectAsLazyPagingItems
 import app.cash.paging.compose.itemKey
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.games.ui.components.GamesLazyColumn
 import com.ai.bardly.feature.games.ui.components.GamesLazyGrid
 import com.ai.bardly.feature.games.ui.list.GamesListIntent.OpenChatClicked
 import com.ai.bardly.feature.games.ui.model.GameUiModel
@@ -101,9 +103,9 @@ private fun GamesList(
                     focusManager.clearFocus()
                 }
                 val games = games.collectAsLazyPagingItems()
-                val gamesState = rememberLazyGridState()
-                GamesLazyGrid(
-                    gridState = gamesState,
+                val gamesState = rememberLazyListState()
+                GamesLazyColumn(
+                    state = gamesState,
                     itemCount = { games.itemCount },
                     getItem = games::get,
                     getKey = games.itemKey { it.id },
