@@ -87,7 +87,7 @@ private fun MainContent(component: MainComponent) {
                         LocalScreenAnimationScope provides this@ChildStack,
                     ) {
                         when (val child = it.instance) {
-                            is MainComponent.MainChild.GameList -> GamesListScreen()
+                            is MainComponent.MainChild.GameList -> GamesListScreen(child.component)
                             is MainComponent.MainChild.Home -> HomeScreen()
                             is MainComponent.MainChild.RecentChats -> RecentChatsScreen()
                         }

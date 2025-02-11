@@ -1,15 +1,16 @@
 package com.ai.bardly.feature.games.ui.list
 
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseViewModel
+import com.ai.bardly.base.BaseComponent
+import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.games.ui.model.toUiModels
 import com.ai.bardly.navigation.GeneralDestination
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -23,12 +24,14 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
-class GamesListViewModel(
+interface GamesListComponent : BaseComponent<GamesListViewState, GamesListIntent>
+
+
+class DefaultGamesListComponent(
+    componentContext: ComponentContext,
     private val gamesRepository: GamesRepository
-) : BaseViewModel<GamesListViewState, GamesListIntent>() {
+) : BaseComponentImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
 
     override val defaultViewState = GamesListViewState()
 
@@ -97,7 +100,7 @@ class GamesListViewModel(
                 searchGames(query)
             }
             .flowOn(Dispatchers.IO)
-            .launchIn(viewModelScope)
+            .launchIn(scope)
     }
 
     private fun loadInitialGames(query: String? = null) {
@@ -120,10 +123,10 @@ class GamesListViewModel(
         query: String?,
         onResult: (Flow<PagingData<GameUiModel>>) -> Unit
     ) {
-        viewModelScope.launch {
+        scope.launch {
             gamesRepository
                 .getGames(query)
-                .cachedIn(viewModelScope)
+                .cachedIn(scope)
                 .toUiModels()
                 .let(onResult)
         }

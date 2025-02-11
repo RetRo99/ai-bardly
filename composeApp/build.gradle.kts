@@ -71,6 +71,7 @@ kotlin {
             api(libs.gitlive.firebase.kotlin.analytics)
             implementation(libs.koin.annotation)
             implementation(libs.bundles.decompose)
+            implementation(libs.essenty.coroutines)
         }
         configurations.all {
             resolutionStrategy.eachDependency {

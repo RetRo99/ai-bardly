@@ -7,20 +7,25 @@ import ai_bardly.composeapp.generated.resources.home
 import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
+import com.ai.bardly.feature.games.domain.GamesRepository
+import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
+import com.ai.bardly.feature.games.ui.list.GamesListComponent
 import com.ai.bardly.navigation.ApplicationComponent.ApplicationChild
 import com.ai.bardly.navigation.MainComponent.MainChild
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushToFront
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 interface RootComponent<T : Any> : BackHandlerOwner {
     val childStack: Value<ChildStack<*, T>>
@@ -84,13 +89,6 @@ class DefaultHomeComponent(
     componentContext: ComponentContext,
 ) : HomeComponent, ComponentContext by componentContext
 
-interface GamesListComponent
-
-class DefaultGamesListComponent(
-    componentContext: ComponentContext,
-) : GamesListComponent, ComponentContext by componentContext
-
-
 interface MainComponent : RootComponent<MainChild> {
 
     fun navigate(config: MainConfig)
@@ -124,7 +122,8 @@ interface MainComponent : RootComponent<MainChild> {
 
 class DefaultMainComponent(
     componentContext: ComponentContext,
-) : MainComponent, ComponentContext by componentContext {
+) : MainComponent, ComponentContext by componentContext, KoinComponent {
+    val gamesRepository by inject<GamesRepository>()
     private val navigation = StackNavigation<MainComponent.MainConfig>()
 
     override val childStack = childStack(
@@ -140,7 +139,7 @@ class DefaultMainComponent(
     }
 
     override fun navigate(config: MainComponent.MainConfig) {
-        navigation.bringToFront(config)
+        navigation.pushToFront(config)
     }
 
     private fun childFactory(
@@ -149,7 +148,8 @@ class DefaultMainComponent(
     ): MainChild = when (screenConfig) {
         MainComponent.MainConfig.GameList -> MainChild.GameList(
             DefaultGamesListComponent(
-                componentContext
+                componentContext,
+                gamesRepository
             )
         )
 

@@ -51,8 +51,10 @@ import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun GamesListScreen() {
-    BaseScreen<GamesListViewModel, GamesListViewState, GamesListIntent> { viewState, intentDispatcher ->
+fun GamesListScreen(
+    component: GamesListComponent
+) {
+    BaseScreen(component) { viewState, intentDispatcher ->
         GamesScreenContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,
