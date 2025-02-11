@@ -5,7 +5,7 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.crashlytics.crashlytics
 import dev.gitlive.firebase.initialize
 
-fun MainViewController() = ComposeUIViewController { App() }
+fun MainViewController() = ComposeUIViewController { App(rootComponent) }
 
 fun initFirebase() {
     Firebase.initialize()

@@ -64,13 +64,13 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
-            implementation(libs.navigation.compose)
             implementation(libs.paging.compose.common)
             implementation(libs.androidx.room.paging)
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
             implementation(libs.koin.annotation)
+            implementation(libs.bundles.decompose)
         }
         configurations.all {
             resolutionStrategy.eachDependency {

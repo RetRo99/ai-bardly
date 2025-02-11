@@ -15,124 +15,81 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import bardlyLightColors
-import com.ai.bardly.feature.chats.ui.chat.ChatScreen
-import com.ai.bardly.feature.chats.ui.recent.ChatsListScreen
-import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
+import com.ai.bardly.feature.chats.ui.recent.RecentChatsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
-import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.home.ui.HomeScreen
-import com.ai.bardly.navigation.GeneralDestination
-import com.ai.bardly.navigation.GeneralDestination.Chat
-import com.ai.bardly.navigation.GeneralDestination.GameDetail
-import com.ai.bardly.navigation.NavigationManager
-import com.ai.bardly.navigation.RootDestination
+import com.ai.bardly.navigation.ApplicationComponent
+import com.ai.bardly.navigation.MainComponent
+import com.ai.bardly.util.LocalScreenAnimationScope
 import com.ai.bardly.util.LocalScreenTransitionScope
-import com.ai.bardly.util.baseComposable
-import com.ai.bardly.util.serializableNavType
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
 
-@OptIn(ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalDecomposeApi::class)
 @Composable
-fun App() {
+fun App(
+    applicationComponent: ApplicationComponent,
+) {
+
     MaterialTheme(
         colorScheme = bardlyLightColors
     ) {
-        Surface {
-            val navController: NavHostController = rememberNavController()
-            val navigationManager = koinInject<NavigationManager>()
-            LaunchedEffect(Unit) {
-                navigationManager.destinations.collect { destination ->
-                    when (destination) {
-                        is GeneralDestination.Back -> {
-                            navController.navigateUp()
-                        }
-
-                        else -> {
-                            navController.navigate(destination)
-                        }
-                    }
+        ChildStack(
+            stack = applicationComponent.childStack,
+        ) {
+            when (val child = it.instance) {
+                is ApplicationComponent.ApplicationChild.Main -> {
+                    MainContent(child.component)
                 }
             }
+        }
+    }
+}
 
-            var bottomBarVisible by remember { mutableStateOf(true) }
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-            bottomBarVisible = RootDestination.entries.any { destination ->
-                currentDestination?.hierarchy?.any {
-                    it.hasRoute(
-                        destination::class.qualifiedName.orEmpty(),
-                        arguments = null
-                    )
-                } == true
-            }
-
-            Scaffold(
-                bottomBar = {
-                    AnimatedVisibility(
-                        bottomBarVisible,
-                        enter = slideInVertically(initialOffsetY = { it }),
-                        exit = slideOutVertically(targetOffsetY = { it })
-                    ) {
-                        BottomBar(navController)
-                    }
-                }
-            ) { innerPadding ->
-                SharedTransitionLayout(
-                    modifier = Modifier.padding(innerPadding),
+@OptIn(ExperimentalDecomposeApi::class, ExperimentalSharedTransitionApi::class)
+@Composable
+private fun MainContent(component: MainComponent) {
+    Surface {
+        Scaffold(
+            bottomBar = {
+                AnimatedVisibility(
+                    true,
+                    enter = slideInVertically(initialOffsetY = { it }),
+                    exit = slideOutVertically(targetOffsetY = { it })
                 ) {
+                    val stack by component.childStack.subscribeAsState()
+                    BottomBar(
+                        currentlyActiveChild = stack.active.instance,
+                        onNavigationClick = { destination ->
+                            component.navigate(destination)
+                        }
+                    )
+                }
+            }
+        ) { innerPadding ->
+            ChildStack(
+                modifier = Modifier.padding(innerPadding),
+                stack = component.childStack,
+            ) {
+                SharedTransitionLayout {
                     CompositionLocalProvider(
                         LocalScreenTransitionScope provides this,
+                        LocalScreenAnimationScope provides this@ChildStack,
                     ) {
-                        NavHost(
-                            navController = navController,
-                            startDestination = RootDestination.Home,
-                        ) {
-                            baseComposable<RootDestination.Home> {
-                                HomeScreen()
-                            }
-                            baseComposable<RootDestination.GamesList> {
-                                GamesListScreen(
-                                )
-                            }
-                            baseComposable<RootDestination.RecentChats> {
-                                ChatsListScreen()
-                            }
-                            baseComposable<Chat> { backStackEntry ->
-                                val gameTitle = backStackEntry.toRoute<Chat>().gameTitle
-                                val gameId = backStackEntry.toRoute<Chat>().gameId
-                                ChatScreen(
-                                    gameTitle = gameTitle,
-                                    gameId = gameId,
-                                )
-                            }
-
-                            baseComposable<GameDetail>(
-                                typeMap = serializableNavType<GameUiModel>()
-                            ) { backStackEntry ->
-                                val game = backStackEntry.toRoute<GameDetail>().game
-                                GameDetailsScreen(
-                                    game = game,
-                                )
-                            }
+                        when (val child = it.instance) {
+                            is MainComponent.MainChild.GameList -> GamesListScreen()
+                            is MainComponent.MainChild.Home -> HomeScreen()
+                            is MainComponent.MainChild.RecentChats -> RecentChatsScreen()
                         }
                     }
                 }
@@ -142,7 +99,10 @@ fun App() {
 }
 
 @Composable
-fun BottomBar(navController: NavHostController) {
+private fun BottomBar(
+    currentlyActiveChild: MainComponent.MainChild,
+    onNavigationClick: (MainComponent.MainConfig) -> Unit
+) {
     val outlineColor = MaterialTheme.colorScheme.outline
     NavigationBar(
         modifier = Modifier.drawBehind {
@@ -157,16 +117,12 @@ fun BottomBar(navController: NavHostController) {
         tonalElevation = 8.dp,
         containerColor = MaterialTheme.colorScheme.background,
     ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-        RootDestination.entries.forEach { destination ->
-            val isSelected = currentDestination?.hierarchy?.any {
-                it.hasRoute(
-                    destination::class.qualifiedName.orEmpty(),
-                    arguments = null
-                )
-            } == true
-
+        MainComponent.MainConfig.entries.forEach { destination ->
+            val isSelected = when (currentlyActiveChild) {
+                is MainComponent.MainChild.Home -> destination == MainComponent.MainConfig.Home
+                is MainComponent.MainChild.GameList -> destination == MainComponent.MainConfig.GameList
+                is MainComponent.MainChild.RecentChats -> destination == MainComponent.MainConfig.RecentChats
+            }
             NavigationBarItem(
                 icon = {
                     Icon(
@@ -184,14 +140,7 @@ fun BottomBar(navController: NavHostController) {
                 selected = false, // Always false otherwise there is overlay
                 onClick = {
                     if (!isSelected) {
-                        navController.navigate(destination) {
-                            destination.logScreenOpen()
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        onNavigationClick(destination)
                     }
                 }
             )

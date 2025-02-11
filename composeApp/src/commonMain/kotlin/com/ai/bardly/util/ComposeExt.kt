@@ -6,31 +6,23 @@ import ai_bardly.composeapp.generated.resources.hours_ago
 import ai_bardly.composeapp.generated.resources.just_now
 import ai_bardly.composeapp.generated.resources.minutes_ago
 import ai_bardly.composeapp.generated.resources.weeks_ago
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
-import androidx.navigation.compose.composable
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
-import kotlin.reflect.KType
 
 @Composable
 fun Int.toDp(): Dp {
@@ -83,21 +75,4 @@ fun LocalDateTime.timeAgo(): String {
         else -> stringResource(Res.string.just_now)
     }
 
-}
-
-inline fun <reified T : Any> NavGraphBuilder.baseComposable(
-    typeMap: Map<KType, NavType<*>> = emptyMap(),
-    deepLinks: List<NavDeepLink> = emptyList(),
-    noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
-) {
-    composable<T>(
-        typeMap = typeMap,
-        deepLinks = deepLinks,
-    ) {
-        CompositionLocalProvider(
-            LocalScreenAnimationScope provides this@composable,
-        ) {
-            content(it)
-        }
-    }
 }
