@@ -7,6 +7,9 @@ import ai_bardly.composeapp.generated.resources.home
 import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
+import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
+import com.ai.bardly.feature.chats.ui.recent.DefaultRecentChatsComponent
+import com.ai.bardly.feature.chats.ui.recent.RecentChatsComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
 import com.ai.bardly.feature.games.ui.list.GamesListComponent
@@ -79,12 +82,6 @@ class DefaultRootComponent(
     }
 }
 
-interface RecentChatsComponent
-
-class DefaultRecentChatsComponent(
-    componentContext: ComponentContext,
-) : RecentChatsComponent, ComponentContext by componentContext
-
 interface MainComponent : RootComponent<MainChild> {
 
     fun navigate(config: MainConfig)
@@ -120,6 +117,7 @@ class DefaultMainComponent(
     componentContext: ComponentContext,
 ) : MainComponent, ComponentContext by componentContext, KoinComponent {
     val gamesRepository by inject<GamesRepository>()
+    val recentChatUseCase by inject<GetRecentChatsUseCase>()
     private val navigation = StackNavigation<MainComponent.MainConfig>()
 
     override val childStack = childStack(
@@ -158,7 +156,8 @@ class DefaultMainComponent(
 
         MainComponent.MainConfig.RecentChats -> MainChild.RecentChats(
             DefaultRecentChatsComponent(
-                componentContext
+                componentContext,
+                recentChatUseCase,
             )
         )
     }

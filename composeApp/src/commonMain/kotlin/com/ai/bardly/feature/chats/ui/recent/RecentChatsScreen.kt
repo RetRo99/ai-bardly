@@ -30,9 +30,8 @@ import com.ai.bardly.util.timeAgo
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RecentChatsScreen(
-) {
-    BaseScreen<RecentChatsViewModel, RecentChatsViewState, RecentChatsIntent> { viewState, intentDispatcher ->
+fun RecentChatsScreen(component: RecentChatsComponent) {
+    BaseScreen(component) { viewState, intentDispatcher ->
         RecentChatsContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,

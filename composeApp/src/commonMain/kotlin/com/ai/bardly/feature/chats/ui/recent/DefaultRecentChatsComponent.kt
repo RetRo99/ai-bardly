@@ -1,20 +1,20 @@
 package com.ai.bardly.feature.chats.ui.recent
 
-import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseViewModel
+import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.model.toUiModel
 import com.ai.bardly.navigation.GeneralDestination
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
-class RecentChatsViewModel(
+class DefaultRecentChatsComponent(
+    componentContext: ComponentContext,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
-) : BaseViewModel<RecentChatsViewState, RecentChatsIntent>() {
+) : BaseComponentImpl<RecentChatsViewState, RecentChatsIntent>(componentContext),
+    RecentChatsComponent {
     override val defaultViewState = RecentChatsViewState()
 
     override val initialState = BaseViewState.Success(defaultViewState)
@@ -40,8 +40,8 @@ class RecentChatsViewModel(
         )
     }
 
-    override fun onScreenDisplayed() {
-        viewModelScope.launch {
+    override fun onResume() {
+        scope.launch {
             getRecentChatsUseCase()
                 .onSuccess { recentChats ->
                     updateOrSetSuccess {
