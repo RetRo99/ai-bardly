@@ -25,8 +25,8 @@ import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.recent.RecentChatsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
 import com.ai.bardly.feature.home.ui.HomeScreen
-import com.ai.bardly.navigation.ApplicationComponent
-import com.ai.bardly.navigation.MainComponent
+import com.ai.bardly.navigation.root.application.ApplicationComponent
+import com.ai.bardly.navigation.root.main.MainComponent
 import com.ai.bardly.util.LocalScreenAnimationScope
 import com.ai.bardly.util.LocalScreenTransitionScope
 import com.arkivanov.decompose.ExperimentalDecomposeApi
