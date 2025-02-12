@@ -1,27 +1,26 @@
 package com.ai.bardly.feature.home.ui
 
-import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseViewModel
+import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.games.ui.model.toUiModel
 import com.ai.bardly.navigation.GeneralDestination
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
-class HomeViewModel(
+class DefaultHomeComponent(
+    componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
-) : BaseViewModel<HomeViewState, HomeIntent>() {
+) : BaseComponentImpl<HomeViewState, HomeIntent>(componentContext), HomeComponent {
 
     override val defaultViewState = HomeViewState()
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    override fun onScreenDisplayed() {
+    override fun onResume() {
         loadRecentGames()
     }
 
@@ -53,7 +52,7 @@ class HomeViewModel(
     }
 
     private fun loadRecentGames() {
-        viewModelScope.launch {
+        scope.launch {
             gamesRepository.getRecentlyOpenGames()
                 .onSuccess { games ->
                     updateOrSetSuccess {

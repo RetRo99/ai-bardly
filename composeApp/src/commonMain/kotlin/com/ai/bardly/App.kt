@@ -88,7 +88,7 @@ private fun MainContent(component: MainComponent) {
                     ) {
                         when (val child = it.instance) {
                             is MainComponent.MainChild.GameList -> GamesListScreen(child.component)
-                            is MainComponent.MainChild.Home -> HomeScreen()
+                            is MainComponent.MainChild.Home -> HomeScreen(child.component)
                             is MainComponent.MainChild.RecentChats -> RecentChatsScreen()
                         }
                     }

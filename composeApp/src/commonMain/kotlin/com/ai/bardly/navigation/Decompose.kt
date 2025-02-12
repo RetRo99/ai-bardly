@@ -10,6 +10,8 @@ import ai_bardly.composeapp.generated.resources.ic_home
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
 import com.ai.bardly.feature.games.ui.list.GamesListComponent
+import com.ai.bardly.feature.home.ui.DefaultHomeComponent
+import com.ai.bardly.feature.home.ui.HomeComponent
 import com.ai.bardly.navigation.ApplicationComponent.ApplicationChild
 import com.ai.bardly.navigation.MainComponent.MainChild
 import com.arkivanov.decompose.ComponentContext
@@ -83,12 +85,6 @@ class DefaultRecentChatsComponent(
     componentContext: ComponentContext,
 ) : RecentChatsComponent, ComponentContext by componentContext
 
-interface HomeComponent
-
-class DefaultHomeComponent(
-    componentContext: ComponentContext,
-) : HomeComponent, ComponentContext by componentContext
-
 interface MainComponent : RootComponent<MainChild> {
 
     fun navigate(config: MainConfig)
@@ -149,13 +145,14 @@ class DefaultMainComponent(
         MainComponent.MainConfig.GameList -> MainChild.GameList(
             DefaultGamesListComponent(
                 componentContext,
-                gamesRepository
+                gamesRepository,
             )
         )
 
         MainComponent.MainConfig.Home -> MainChild.Home(
             DefaultHomeComponent(
-                componentContext
+                componentContext,
+                gamesRepository,
             )
         )
 
