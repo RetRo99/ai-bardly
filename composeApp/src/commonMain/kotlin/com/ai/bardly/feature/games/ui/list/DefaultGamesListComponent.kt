@@ -4,7 +4,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseComponent
 import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
@@ -24,9 +23,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-interface GamesListComponent : BaseComponent<GamesListViewState, GamesListIntent>
-
 
 class DefaultGamesListComponent(
     componentContext: ComponentContext,

@@ -9,6 +9,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
+import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -78,14 +79,15 @@ abstract class BaseViewModel<ScreenViewState, Intent : ScreenIntent> : ViewModel
     }
 }
 
-interface BaseComponent<ScreenViewState, Intent : ScreenIntent> {
+interface BaseComponent<ScreenViewState, Intent : ScreenIntent> : KoinComponent {
     val viewState: Value<BaseViewState<ScreenViewState>>
     fun onScreenIntent(intent: Intent)
     fun currentViewState(): ScreenViewState
 }
 
 abstract class BaseComponentImpl<ScreenViewState, Intent : ScreenIntent>(componentContext: ComponentContext) :
-    KoinComponent, BaseComponent<ScreenViewState, Intent>, ComponentContext by componentContext {
+    BaseComponent<ScreenViewState, Intent>, ComponentContext by componentContext,
+    Lifecycle.Callbacks {
     protected val scope = coroutineScope(Dispatchers.Main + SupervisorJob())
 
     protected open val initialState: BaseViewState<ScreenViewState> = BaseViewState.Loading
@@ -98,6 +100,9 @@ abstract class BaseComponentImpl<ScreenViewState, Intent : ScreenIntent>(compone
 
     private val navigationManager by inject<NavigationManager>()
 
+    init {
+        lifecycle.subscribe(this)
+    }
     final override fun onScreenIntent(intent: Intent) {
         scope.launch {
             handleScreenIntent(intent)
