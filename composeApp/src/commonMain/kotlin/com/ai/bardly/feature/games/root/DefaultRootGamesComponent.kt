@@ -1,10 +1,10 @@
-package com.ai.bardly.feature.home.root
+package com.ai.bardly.feature.games.root
 
 import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.details.DefaultGameDetailsComponent
-import com.ai.bardly.feature.home.ui.DefaultHomeComponent
+import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -12,17 +12,17 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 
-class DefaultRootHomeComponent(
+class DefaultRootGamesComponent(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
-) : BaseComponentImpl<RootHomeViewState, RootHomeIntent>(componentContext), RootHomeComponent {
+) : BaseComponentImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesComponent {
 
-    private val navigation = StackNavigation<RootHomeComponent.HomeConfig>()
+    private val navigation = StackNavigation<RootGamesComponent.GamesConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = RootHomeComponent.HomeConfig.serializer(),
-        initialStack = { listOf(RootHomeComponent.HomeConfig.Home) },
+        serializer = RootGamesComponent.GamesConfig.serializer(),
+        initialStack = { listOf(RootGamesComponent.GamesConfig.GamesList) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -31,30 +31,30 @@ class DefaultRootHomeComponent(
         navigation.pop()
     }
 
-    override val defaultViewState = RootHomeViewState
+    override val defaultViewState = RootGamesViewState
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    override suspend fun handleScreenIntent(intent: RootHomeIntent) {
+    override suspend fun handleScreenIntent(intent: RootGamesIntent) {
         // TODO
     }
 
     @OptIn(DelicateDecomposeApi::class)
     private fun childFactory(
-        screenConfig: RootHomeComponent.HomeConfig,
+        screenConfig: RootGamesComponent.GamesConfig,
         componentContext: ComponentContext
-    ): RootHomeComponent.HomeChild = when (screenConfig) {
-        RootHomeComponent.HomeConfig.Home -> RootHomeComponent.HomeChild.Home(
-            DefaultHomeComponent(
+    ): RootGamesComponent.GamesChild = when (screenConfig) {
+        RootGamesComponent.GamesConfig.GamesList -> RootGamesComponent.GamesChild.GamesList(
+            DefaultGamesListComponent(
                 componentContext,
                 gamesRepository,
                 // TODO navigate to chat
                 { title, Id -> },
-                { game -> navigation.push(RootHomeComponent.HomeConfig.GameDetails(game)) }
+                { game -> navigation.push(RootGamesComponent.GamesConfig.GameDetails(game)) }
             )
         )
 
-        is RootHomeComponent.HomeConfig.GameDetails -> RootHomeComponent.HomeChild.GameDetails(
+        is RootGamesComponent.GamesConfig.GameDetails -> RootGamesComponent.GamesChild.GameDetails(
             DefaultGameDetailsComponent(
                 componentContext,
                 screenConfig.game,

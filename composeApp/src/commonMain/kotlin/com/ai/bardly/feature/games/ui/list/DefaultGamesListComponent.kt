@@ -8,7 +8,6 @@ import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.games.ui.model.toUiModels
-import com.ai.bardly.navigation.GeneralDestination
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -26,7 +25,9 @@ import kotlinx.coroutines.launch
 
 class DefaultGamesListComponent(
     componentContext: ComponentContext,
-    private val gamesRepository: GamesRepository
+    private val gamesRepository: GamesRepository,
+    val openChatReal: (String, Int) -> Unit,
+    val openGameDetailsReal: (GameUiModel) -> Unit,
 ) : BaseComponentImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
 
     override val defaultViewState = GamesListViewState()
@@ -54,7 +55,7 @@ class DefaultGamesListComponent(
                 origin = getEventOrigin(),
             )
         )
-        navigateTo(GeneralDestination.GameDetail(game))
+        openGameDetailsReal(game)
     }
 
 
@@ -65,7 +66,7 @@ class DefaultGamesListComponent(
                 origin = getEventOrigin(),
             )
         )
-        navigateTo(GeneralDestination.Chat(gameTitle, gameId))
+        openChatReal(gameTitle, gameId)
     }
 
     private fun onSearchQueryChanged(query: String) {

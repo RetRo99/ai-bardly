@@ -23,8 +23,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.recent.RecentChatsScreen
-import com.ai.bardly.feature.games.ui.list.GamesListScreen
-import com.ai.bardly.feature.home.ui.RootHomeScreen
+import com.ai.bardly.feature.games.root.RootGamesScreen
+import com.ai.bardly.feature.home.root.RootHomeScreen
 import com.ai.bardly.navigation.root.application.ApplicationComponent
 import com.ai.bardly.navigation.root.main.MainComponent
 import com.ai.bardly.util.LocalScreenAnimationScope
@@ -87,7 +87,7 @@ private fun MainContent(component: MainComponent) {
                         LocalScreenAnimationScope provides this@ChildStack,
                     ) {
                         when (val child = it.instance) {
-                            is MainComponent.MainChild.GameList -> GamesListScreen(child.component)
+                            is MainComponent.MainChild.GameList -> RootGamesScreen(child.component)
                             is MainComponent.MainChild.Home -> RootHomeScreen(child.component)
                             is MainComponent.MainChild.RecentChats -> RecentChatsScreen(child.component)
                         }

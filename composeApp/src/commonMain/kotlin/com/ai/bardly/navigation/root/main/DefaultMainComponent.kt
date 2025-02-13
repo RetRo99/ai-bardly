@@ -3,7 +3,7 @@ package com.ai.bardly.navigation.root.main
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.recent.DefaultRecentChatsComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
+import com.ai.bardly.feature.games.root.DefaultRootGamesComponent
 import com.ai.bardly.feature.home.root.DefaultRootHomeComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -41,7 +41,7 @@ class DefaultMainComponent(
         componentContext: ComponentContext
     ): MainComponent.MainChild = when (screenConfig) {
         MainComponent.MainConfig.GameList -> MainComponent.MainChild.GameList(
-            DefaultGamesListComponent(
+            DefaultRootGamesComponent(
                 componentContext,
                 gamesRepository,
             )
