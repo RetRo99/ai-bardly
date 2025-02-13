@@ -80,12 +80,9 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChatScreen(
-    gameTitle: String,
-    gameId: Int,
+    component: ChatComponent,
 ) {
-    BaseScreen<ChatViewModel, ChatViewState, ChatScreenIntent>(
-        parameters = arrayOf(gameTitle, gameId)
-    ) { viewState, intentDispatcher ->
+    BaseScreen(component) { viewState, intentDispatcher ->
         ChatScreenContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,

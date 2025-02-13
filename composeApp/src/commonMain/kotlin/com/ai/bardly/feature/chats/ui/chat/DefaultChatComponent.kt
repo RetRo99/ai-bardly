@@ -1,22 +1,23 @@
 package com.ai.bardly.feature.chats.ui.chat
 
-import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.AnalyticsEvent
-import com.ai.bardly.base.BaseViewModel
+import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.model.MessageType
 import com.ai.bardly.feature.chats.ui.model.MessageUiModel
 import com.ai.bardly.feature.chats.ui.model.toDomainModel
 import com.ai.bardly.feature.chats.ui.model.toUiModel
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 
-class ChatViewModel(
+class DefaultChatComponent(
+    componentContext: ComponentContext,
     private val gameTitle: String,
     private val gameId: Int,
     private val chatsRepository: ChatsRepository,
     val navigateBack: () -> Unit,
-) : BaseViewModel<ChatViewState, ChatScreenIntent>() {
+) : BaseComponentImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatComponent {
 
     private var questionsAskedInSession = 0
 
@@ -38,7 +39,7 @@ class ChatViewModel(
     override val initialState = BaseViewState.Success(defaultViewState)
 
     init {
-        viewModelScope.launch {
+        scope.launch {
             chatsRepository
                 .getMessages(gameId)
                 .onSuccess { messages ->
@@ -106,7 +107,7 @@ class ChatViewModel(
         }
     }
 
-    override fun onCleared() {
+    override fun onDestroy() {
         analytics.log(AnalyticsEvent.QuestionsAsked(gameTitle, questionsAskedInSession))
     }
 }

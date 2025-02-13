@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.games.root
 
 import com.ai.bardly.base.BaseComponent
+import com.ai.bardly.feature.chats.ui.chat.ChatComponent
 import com.ai.bardly.feature.games.ui.details.GameDetailsComponent
 import com.ai.bardly.feature.games.ui.list.GamesListComponent
 import com.ai.bardly.feature.games.ui.model.GameUiModel
@@ -13,6 +14,7 @@ interface RootGamesComponent : BaseComponent<RootGamesViewState, RootGamesIntent
     sealed interface GamesChild {
         data class GamesList(val component: GamesListComponent) : GamesChild
         data class GameDetails(val component: GameDetailsComponent) : GamesChild
+        data class ChatDetails(val component: ChatComponent) : GamesChild
     }
 
     @Serializable
@@ -22,5 +24,8 @@ interface RootGamesComponent : BaseComponent<RootGamesViewState, RootGamesIntent
 
         @Serializable
         data class GameDetails(val game: GameUiModel) : GamesConfig
+
+        @Serializable
+        data class Chat(val title: String, val id: Int) : GamesConfig
     }
 }

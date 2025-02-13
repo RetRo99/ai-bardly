@@ -2,6 +2,8 @@ package com.ai.bardly.feature.games.root
 
 import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.feature.chats.domain.ChatsRepository
+import com.ai.bardly.feature.chats.ui.chat.DefaultChatComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.details.DefaultGameDetailsComponent
 import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
@@ -11,11 +13,14 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import org.koin.core.component.inject
 
 class DefaultRootGamesComponent(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
 ) : BaseComponentImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesComponent {
+
+    val chatRepository by inject<ChatsRepository>()
 
     private val navigation = StackNavigation<RootGamesComponent.GamesConfig>()
 
@@ -48,8 +53,7 @@ class DefaultRootGamesComponent(
             DefaultGamesListComponent(
                 componentContext,
                 gamesRepository,
-                // TODO navigate to chat
-                { title, Id -> },
+                { title, id -> navigation.push(RootGamesComponent.GamesConfig.Chat(title, id)) },
                 { game -> navigation.push(RootGamesComponent.GamesConfig.GameDetails(game)) }
             )
         )
@@ -59,11 +63,19 @@ class DefaultRootGamesComponent(
                 componentContext,
                 screenConfig.game,
                 gamesRepository,
-                // TODO navigate to chat
-                { title, Id -> },
+                { title, id -> navigation.push(RootGamesComponent.GamesConfig.Chat(title, id)) },
                 ::onBackClicked,
             )
         )
 
+        is RootGamesComponent.GamesConfig.Chat -> RootGamesComponent.GamesChild.ChatDetails(
+            DefaultChatComponent(
+                componentContext,
+                screenConfig.title,
+                screenConfig.id,
+                chatRepository,
+                ::onBackClicked,
+            )
+        )
     }
 }
