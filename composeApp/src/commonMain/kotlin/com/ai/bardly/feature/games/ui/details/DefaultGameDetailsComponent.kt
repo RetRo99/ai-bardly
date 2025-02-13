@@ -1,22 +1,21 @@
 package com.ai.bardly.feature.games.ui.details
 
-import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseViewModel
+import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.navigation.GeneralDestination
+import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
-import org.koin.core.annotation.InjectedParam
 
-@KoinViewModel
-class GameDetailsViewModel(
-    @InjectedParam private val game: GameUiModel,
+class DefaultGameDetailsComponent(
+    componentContext: ComponentContext,
+    private val game: GameUiModel,
     private val gamesRepository: GamesRepository,
-) : BaseViewModel<GameDetailsViewState, GameDetailsIntent>() {
+) : BaseComponentImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
+    GameDetailsComponent {
 
     override val defaultViewState = GameDetailsViewState(game)
 
@@ -49,7 +48,7 @@ class GameDetailsViewModel(
     }
 
     private fun updateGameOpen(gameId: Int) {
-        viewModelScope.launch {
+        scope.launch {
             gamesRepository.updateGameOpenDate(gameId)
         }
     }

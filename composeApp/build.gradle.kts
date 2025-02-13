@@ -64,7 +64,6 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
-            implementation(libs.paging.compose.common)
             implementation(libs.androidx.room.paging)
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
@@ -73,14 +72,14 @@ kotlin {
             implementation(libs.bundles.decompose)
             implementation(libs.essenty.coroutines)
         }
-        configurations.all {
-            resolutionStrategy.eachDependency {
-                if (requested.group == "androidx.paging" && requested.name == "paging-compose") {
-                    useVersion("3.3.5")
-                    because("Enforce specific paging-compose version")
-                }
-            }
-        }
+//        configurations.all {
+//            resolutionStrategy.eachDependency {
+//                if (requested.group == "androidx.paging" && requested.name == "paging-compose") {
+//                    useVersion("3.3.5")
+//                    because("Enforce specific paging-compose version")
+//                }
+//            }
+//        }
     }
 }
 

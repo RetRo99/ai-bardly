@@ -1,8 +1,10 @@
 package com.ai.bardly.base
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -49,7 +51,7 @@ inline fun <ScreenViewState, Intent : ScreenIntent> BaseScreen(
 ) {
     val viewState by component.viewState.subscribeAsState()
 
-    Box(Modifier.fillMaxSize()) {
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         when (val state = viewState) {
             is BaseViewState.Success -> content(
                 state.data,

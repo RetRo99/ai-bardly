@@ -39,13 +39,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
-import app.cash.paging.compose.collectAsLazyPagingItems
-import app.cash.paging.compose.itemKey
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.games.ui.components.GamesLazyColumn
 import com.ai.bardly.feature.games.ui.list.GamesListIntent.OpenChatClicked
 import com.ai.bardly.feature.games.ui.model.GameUiModel
+import com.ai.bardly.paging.collectAsLazyPagingItems
 import com.ai.bardly.util.keyboardAsState
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
@@ -108,7 +107,7 @@ private fun GamesList(
                     state = gamesState,
                     itemCount = { games.itemCount },
                     getItem = games::get,
-                    getKey = games.itemKey { it.id },
+                    getKey = { games.peek(it)?.id ?: it },
                     onGameClicked = { game ->
                         focusManager.clearFocus()
                         intentDispatcher(GamesListIntent.GameClicked(game))
@@ -195,7 +194,7 @@ fun SearchScreenState(
             state = searchState,
             itemCount = { searchResults.itemCount },
             getItem = searchResults::get,
-            getKey = searchResults.itemKey { it.id },
+            getKey = { searchResults.peek(it)?.id ?: it },
             onGameClicked = { game ->
                 focusManager.clearFocus()
                 intentDispatcher(GamesListIntent.GameClicked(game))

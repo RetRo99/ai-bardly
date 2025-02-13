@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 
-class DefaultRootComponent(
+class DefaultApplicationComponent(
     componentContext: ComponentContext,
 ) : ApplicationComponent, ComponentContext by componentContext, BackHandlerOwner {
 

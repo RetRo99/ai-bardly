@@ -7,13 +7,14 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.games.ui.model.toUiModel
-import com.ai.bardly.navigation.GeneralDestination
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 
 class DefaultHomeComponent(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
+    val openChatReal: (String, Int) -> Unit,
+    val openGameDetailsReal: (GameUiModel) -> Unit,
 ) : BaseComponentImpl<HomeViewState, HomeIntent>(componentContext), HomeComponent {
 
     override val defaultViewState = HomeViewState()
@@ -38,7 +39,8 @@ class DefaultHomeComponent(
                 origin = AnalyticsEventOrigin.Home,
             )
         )
-        navigateTo(GeneralDestination.Chat(gameTitle, gameId))
+        openChatReal(gameTitle, gameId)
+//        navigateTo(GeneralDestination.Chat(gameTitle, gameId))
     }
 
     private fun openGameDetails(game: GameUiModel) {
@@ -48,7 +50,8 @@ class DefaultHomeComponent(
                 origin = AnalyticsEventOrigin.Home,
             )
         )
-        navigateTo(GeneralDestination.GameDetail(game))
+        openGameDetailsReal(game)
+//        navigateTo(GeneralDestination.GameDetail(game))
     }
 
     private fun loadRecentGames() {

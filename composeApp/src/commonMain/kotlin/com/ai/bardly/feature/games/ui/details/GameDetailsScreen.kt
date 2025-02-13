@@ -54,11 +54,9 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun GameDetailsScreen(
-    game: GameUiModel,
+    component: GameDetailsComponent,
 ) {
-    BaseScreen<GameDetailsViewModel, GameDetailsViewState, GameDetailsIntent>(
-        parameters = arrayOf(game)
-    ) { viewState, intentDispatcher ->
+    BaseScreen(component) { viewState, intentDispatcher ->
         GamesScreenContent(
             game = viewState.game,
             intentDispatcher = intentDispatcher,
