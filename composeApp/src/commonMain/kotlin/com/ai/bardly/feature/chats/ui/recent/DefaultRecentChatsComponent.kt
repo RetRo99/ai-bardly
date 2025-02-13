@@ -6,13 +6,13 @@ import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.model.toUiModel
-import com.ai.bardly.navigation.GeneralDestination
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 
 class DefaultRecentChatsComponent(
     componentContext: ComponentContext,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
+    private val navigateToChat: (Int, String) -> Unit,
 ) : BaseComponentImpl<RecentChatsViewState, RecentChatsIntent>(componentContext),
     RecentChatsComponent {
     override val defaultViewState = RecentChatsViewState()
@@ -32,12 +32,7 @@ class DefaultRecentChatsComponent(
                 origin = AnalyticsEventOrigin.RecentChats,
             )
         )
-        navigateTo(
-            GeneralDestination.Chat(
-                gameId = intent.gameId,
-                gameTitle = intent.gameTitle
-            )
-        )
+        navigateToChat(intent.gameId, intent.gameTitle)
     }
 
     override fun onResume() {

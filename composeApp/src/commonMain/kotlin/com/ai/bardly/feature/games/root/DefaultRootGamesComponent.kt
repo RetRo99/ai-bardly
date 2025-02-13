@@ -58,7 +58,10 @@ class DefaultRootGamesComponent(
             DefaultGameDetailsComponent(
                 componentContext,
                 screenConfig.game,
-                gamesRepository
+                gamesRepository,
+                // TODO navigate to chat
+                { title, Id -> },
+                ::onBackClicked,
             )
         )
 

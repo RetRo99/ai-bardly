@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 class DefaultHomeComponent(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
-    val openChatReal: (String, Int) -> Unit,
-    val openGameDetailsReal: (GameUiModel) -> Unit,
+    val navigateToChat: (String, Int) -> Unit,
+    val navigateToGameDetails: (GameUiModel) -> Unit,
 ) : BaseComponentImpl<HomeViewState, HomeIntent>(componentContext), HomeComponent {
 
     override val defaultViewState = HomeViewState()
@@ -39,8 +39,7 @@ class DefaultHomeComponent(
                 origin = AnalyticsEventOrigin.Home,
             )
         )
-        openChatReal(gameTitle, gameId)
-//        navigateTo(GeneralDestination.Chat(gameTitle, gameId))
+        navigateToChat(gameTitle, gameId)
     }
 
     private fun openGameDetails(game: GameUiModel) {
@@ -50,8 +49,7 @@ class DefaultHomeComponent(
                 origin = AnalyticsEventOrigin.Home,
             )
         )
-        openGameDetailsReal(game)
-//        navigateTo(GeneralDestination.GameDetail(game))
+        navigateToGameDetails(game)
     }
 
     private fun loadRecentGames() {

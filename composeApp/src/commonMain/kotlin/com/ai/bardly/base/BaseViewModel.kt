@@ -3,8 +3,6 @@ package com.ai.bardly.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.navigation.GeneralDestination
-import com.ai.bardly.navigation.NavigationManager
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
@@ -29,8 +27,6 @@ abstract class BaseViewModel<ScreenViewState, Intent : ScreenIntent> : ViewModel
     val viewState: StateFlow<BaseViewState<ScreenViewState>> by lazy { _viewState.asStateFlow() }
 
     protected val analytics by inject<Analytics>()
-
-    private val navigationManager by inject<NavigationManager>()
 
     fun onScreenIntent(intent: Intent) {
         viewModelScope.launch {
@@ -69,14 +65,6 @@ abstract class BaseViewModel<ScreenViewState, Intent : ScreenIntent> : ViewModel
             BaseViewState.Loading
         }
     }
-
-    protected fun navigateTo(destination: GeneralDestination) {
-        navigationManager.navigate(destination)
-    }
-
-    protected fun navigateBack() {
-        navigationManager.navigate(GeneralDestination.Back)
-    }
 }
 
 interface BaseComponent<ScreenViewState, Intent : ScreenIntent> : KoinComponent {
@@ -98,11 +86,10 @@ abstract class BaseComponentImpl<ScreenViewState, Intent : ScreenIntent>(compone
 
     protected val analytics by inject<Analytics>()
 
-    private val navigationManager by inject<NavigationManager>()
-
     init {
         lifecycle.subscribe(this)
     }
+
     final override fun onScreenIntent(intent: Intent) {
         scope.launch {
             handleScreenIntent(intent)
@@ -137,13 +124,5 @@ abstract class BaseComponentImpl<ScreenViewState, Intent : ScreenIntent>(compone
         _viewState.update {
             BaseViewState.Loading
         }
-    }
-
-    protected fun navigateTo(destination: GeneralDestination) {
-        navigationManager.navigate(destination)
-    }
-
-    protected fun navigateBack() {
-        navigationManager.navigate(GeneralDestination.Back)
     }
 }

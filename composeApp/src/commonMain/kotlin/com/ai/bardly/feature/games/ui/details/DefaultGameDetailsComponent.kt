@@ -6,7 +6,6 @@ import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
-import com.ai.bardly.navigation.GeneralDestination
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 
@@ -14,6 +13,8 @@ class DefaultGameDetailsComponent(
     componentContext: ComponentContext,
     private val game: GameUiModel,
     private val gamesRepository: GamesRepository,
+    private val navigateToChat: (String, Int) -> Unit,
+    private val navigateBack: () -> Unit,
 ) : BaseComponentImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsComponent {
 
@@ -39,12 +40,7 @@ class DefaultGameDetailsComponent(
                 origin = AnalyticsEventOrigin.GameDetails,
             )
         )
-        navigateTo(
-            GeneralDestination.Chat(
-                game.title,
-                game.id
-            )
-        )
+        navigateToChat(game.title, game.id)
     }
 
     private fun updateGameOpen(gameId: Int) {

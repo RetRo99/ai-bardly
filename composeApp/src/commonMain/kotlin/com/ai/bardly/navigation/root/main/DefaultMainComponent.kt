@@ -58,6 +58,8 @@ class DefaultMainComponent(
             DefaultRecentChatsComponent(
                 componentContext,
                 recentChatUseCase,
+                // TODO navigate to chat
+                { title, Id -> },
             )
         )
     }

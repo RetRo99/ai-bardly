@@ -26,8 +26,8 @@ import kotlinx.coroutines.launch
 class DefaultGamesListComponent(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
-    val openChatReal: (String, Int) -> Unit,
-    val openGameDetailsReal: (GameUiModel) -> Unit,
+    val navigateToChat: (String, Int) -> Unit,
+    val navigateToGameDetails: (GameUiModel) -> Unit,
 ) : BaseComponentImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
 
     override val defaultViewState = GamesListViewState()
@@ -55,7 +55,7 @@ class DefaultGamesListComponent(
                 origin = getEventOrigin(),
             )
         )
-        openGameDetailsReal(game)
+        navigateToGameDetails(game)
     }
 
 
@@ -66,7 +66,7 @@ class DefaultGamesListComponent(
                 origin = getEventOrigin(),
             )
         )
-        openChatReal(gameTitle, gameId)
+        navigateToChat(gameTitle, gameId)
     }
 
     private fun onSearchQueryChanged(query: String) {
