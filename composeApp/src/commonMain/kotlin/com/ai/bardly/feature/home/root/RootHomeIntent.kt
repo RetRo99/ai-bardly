@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.home.ui.root
+package com.ai.bardly.feature.home.root
 
 import com.ai.bardly.base.ScreenIntent
 

@@ -38,7 +38,7 @@ import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.games.ui.components.GamesLazyGrid
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.games.ui.model.GameUiModel
-import com.ai.bardly.feature.home.ui.root.RootHomeComponent
+import com.ai.bardly.feature.home.root.RootHomeComponent
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.PredictiveBackParams
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.StackAnimation

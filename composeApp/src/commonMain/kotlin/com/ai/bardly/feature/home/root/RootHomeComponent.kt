@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.home.ui.root
+package com.ai.bardly.feature.home.root
 
 import com.ai.bardly.base.BaseComponent
 import com.ai.bardly.feature.games.ui.details.GameDetailsComponent

@@ -9,7 +9,7 @@ import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
 import com.ai.bardly.feature.chats.ui.recent.RecentChatsComponent
 import com.ai.bardly.feature.games.ui.list.GamesListComponent
-import com.ai.bardly.feature.home.ui.root.RootHomeComponent
+import com.ai.bardly.feature.home.root.RootHomeComponent
 import com.ai.bardly.navigation.root.RootComponent
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable

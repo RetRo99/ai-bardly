@@ -4,7 +4,7 @@ import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.recent.DefaultRecentChatsComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
-import com.ai.bardly.feature.home.ui.root.DefaultRootHomeComponent
+import com.ai.bardly.feature.home.root.DefaultRootHomeComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
