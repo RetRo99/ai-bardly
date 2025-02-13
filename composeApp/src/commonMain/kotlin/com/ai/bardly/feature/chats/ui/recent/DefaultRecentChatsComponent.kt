@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class DefaultRecentChatsComponent(
     componentContext: ComponentContext,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
-    private val navigateToChat: (Int, String) -> Unit,
+    private val navigateToChat: (String, Int) -> Unit,
 ) : BaseComponentImpl<RecentChatsViewState, RecentChatsIntent>(componentContext),
     RecentChatsComponent {
     override val defaultViewState = RecentChatsViewState()
@@ -32,7 +32,7 @@ class DefaultRecentChatsComponent(
                 origin = AnalyticsEventOrigin.RecentChats,
             )
         )
-        navigateToChat(intent.gameId, intent.gameTitle)
+        navigateToChat(intent.gameTitle, intent.gameId)
     }
 
     override fun onResume() {

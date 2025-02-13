@@ -1,7 +1,7 @@
 package com.ai.bardly.navigation.root.main
 
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
-import com.ai.bardly.feature.chats.ui.recent.DefaultRecentChatsComponent
+import com.ai.bardly.feature.chats.ui.root.DefaultRootRecentComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.root.DefaultRootGamesComponent
 import com.ai.bardly.feature.home.root.DefaultRootHomeComponent
@@ -55,11 +55,8 @@ class DefaultMainComponent(
         )
 
         MainComponent.MainConfig.RecentChats -> MainComponent.MainChild.RecentChats(
-            DefaultRecentChatsComponent(
+            DefaultRootRecentComponent(
                 componentContext,
-                recentChatUseCase,
-                // TODO navigate to chat
-                { title, Id -> },
             )
         )
     }

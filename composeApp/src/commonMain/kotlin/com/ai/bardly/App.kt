@@ -22,7 +22,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import bardlyLightColors
-import com.ai.bardly.feature.chats.ui.recent.RecentChatsScreen
+import com.ai.bardly.feature.chats.ui.root.RootRecentScreen
 import com.ai.bardly.feature.games.root.RootGamesScreen
 import com.ai.bardly.feature.home.root.RootHomeScreen
 import com.ai.bardly.navigation.root.application.ApplicationComponent
@@ -89,7 +89,7 @@ private fun MainContent(component: MainComponent) {
                         when (val child = it.instance) {
                             is MainComponent.MainChild.GameList -> RootGamesScreen(child.component)
                             is MainComponent.MainChild.Home -> RootHomeScreen(child.component)
-                            is MainComponent.MainChild.RecentChats -> RecentChatsScreen(child.component)
+                            is MainComponent.MainChild.RecentChats -> RootRecentScreen(child.component)
                         }
                     }
                 }
