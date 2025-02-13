@@ -50,7 +50,7 @@ import com.arkivanov.essenty.backhandler.BackHandler
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun RootHome(
+fun RootHomeScreen(
     component: RootHomeComponent,
 ) {
     ChildStack(

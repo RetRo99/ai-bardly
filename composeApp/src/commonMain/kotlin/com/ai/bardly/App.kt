@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.recent.RecentChatsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
-import com.ai.bardly.feature.home.ui.RootHome
+import com.ai.bardly.feature.home.ui.RootHomeScreen
 import com.ai.bardly.navigation.root.application.ApplicationComponent
 import com.ai.bardly.navigation.root.main.MainComponent
 import com.ai.bardly.util.LocalScreenAnimationScope
@@ -88,7 +88,7 @@ private fun MainContent(component: MainComponent) {
                     ) {
                         when (val child = it.instance) {
                             is MainComponent.MainChild.GameList -> GamesListScreen(child.component)
-                            is MainComponent.MainChild.Home -> RootHome(child.component)
+                            is MainComponent.MainChild.Home -> RootHomeScreen(child.component)
                             is MainComponent.MainChild.RecentChats -> RecentChatsScreen(child.component)
                         }
                     }

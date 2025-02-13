@@ -16,7 +16,10 @@ interface RootHomeComponent : BaseComponent<RootHomeViewState, RootHomeIntent>,
 
     @Serializable
     sealed interface HomeConfig {
+        @Serializable
         data object Home : HomeConfig
+
+        @Serializable
         data class GameDetails(val game: GameUiModel) : HomeConfig
     }
 }
