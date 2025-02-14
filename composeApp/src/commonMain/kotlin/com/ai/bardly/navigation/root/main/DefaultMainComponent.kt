@@ -9,7 +9,6 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.pushToFront
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -24,7 +23,6 @@ class DefaultMainComponent(
         source = navigation,
         serializer = MainComponent.MainConfig.serializer(),
         initialStack = { listOf(MainComponent.MainConfig.Home) },
-        handleBackButton = true,
         childFactory = ::childFactory,
     )
 
@@ -33,7 +31,7 @@ class DefaultMainComponent(
     }
 
     override fun navigate(config: MainComponent.MainConfig) {
-        navigation.pushToFront(config)
+        navigation.switchTab(config)
     }
 
     private fun childFactory(

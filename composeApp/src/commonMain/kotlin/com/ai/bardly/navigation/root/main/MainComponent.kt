@@ -26,23 +26,36 @@ interface MainComponent : RootComponent<MainComponent.MainChild> {
     }
 
     @Serializable
-    enum class MainConfig(
+    sealed class MainConfig(
         @Contextual
         val title: StringResource,
         @Contextual
         val icon: DrawableResource,
     ) {
-        GameList(
+        @Serializable
+        data object GameList : MainConfig(
             title = Res.string.games,
             icon = Res.drawable.ic_games,
-        ),
-        Home(
+        )
+
+        @Serializable
+        data object Home : MainConfig(
             title = Res.string.home,
             icon = Res.drawable.ic_home,
-        ),
-        RecentChats(
+        )
+
+        @Serializable
+        data object RecentChats : MainConfig(
             title = Res.string.chats,
             icon = Res.drawable.ic_chats,
-        ),
+        )
+    }
+
+    companion object {
+        val rootItems = listOf(
+            MainConfig.GameList,
+            MainConfig.Home,
+            MainConfig.RecentChats,
+        )
     }
 }

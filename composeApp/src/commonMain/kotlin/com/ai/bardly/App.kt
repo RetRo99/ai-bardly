@@ -49,7 +49,7 @@ fun App(
         ) {
             when (val child = it.instance) {
                 is ApplicationComponent.ApplicationChild.Main -> {
-                    MainContent(child.component)
+                    MainScreen(child.component)
                 }
             }
         }
@@ -58,7 +58,7 @@ fun App(
 
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
-private fun MainContent(component: MainComponent) {
+private fun MainScreen(component: MainComponent) {
     Surface {
         Scaffold(
             bottomBar = {
@@ -117,7 +117,7 @@ private fun BottomBar(
         tonalElevation = 8.dp,
         containerColor = MaterialTheme.colorScheme.background,
     ) {
-        MainComponent.MainConfig.entries.forEach { destination ->
+        MainComponent.rootItems.forEach { destination ->
             val isSelected = when (currentlyActiveChild) {
                 is MainComponent.MainChild.Home -> destination == MainComponent.MainConfig.Home
                 is MainComponent.MainChild.GameList -> destination == MainComponent.MainConfig.GameList
