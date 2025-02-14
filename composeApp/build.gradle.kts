@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -14,7 +13,6 @@ plugins {
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -71,6 +69,7 @@ kotlin {
             implementation(libs.koin.annotation)
             implementation(libs.bundles.decompose)
             implementation(libs.essenty.coroutines)
+            implementation(libs.bundles.kotlinInject)
         }
 //        configurations.all {
 //            resolutionStrategy.eachDependency {
@@ -126,6 +125,8 @@ android {
 dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     ksp(libs.androidx.room.compiler)
+    kspCommonMainMetadata(libs.kotlinInject.compiler)
+    kspCommonMainMetadata(libs.kotlinInject.anvil.compiler)
     add("kspCommonMainMetadata", libs.koin.ksp.compiler)
     add("kspAndroid", libs.koin.ksp.compiler)
     add("kspIosX64", libs.koin.ksp.compiler)
