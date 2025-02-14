@@ -9,7 +9,6 @@ interface RootComponent<T : Any> : BackHandlerOwner {
     val childStack: Value<ChildStack<*, T>>
     fun onBackClicked()
 
-
     fun <C : Any> StackNavigator<C>.switchTab(configuration: C, onComplete: () -> Unit = {}) {
         navigate(
             transformer = { stack ->
@@ -23,5 +22,4 @@ interface RootComponent<T : Any> : BackHandlerOwner {
             onComplete = { _, _ -> onComplete() },
         )
     }
-
 }
