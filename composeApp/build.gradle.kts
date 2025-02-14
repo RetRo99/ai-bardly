@@ -125,8 +125,8 @@ android {
 dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     ksp(libs.androidx.room.compiler)
-    kspCommonMainMetadata(libs.kotlinInject.compiler)
-    kspCommonMainMetadata(libs.kotlinInject.anvil.compiler)
+    ksp(libs.kotlinInject.compiler)
+    ksp(libs.kotlinInject.anvil.compiler)
     add("kspCommonMainMetadata", libs.koin.ksp.compiler)
     add("kspAndroid", libs.koin.ksp.compiler)
     add("kspIosX64", libs.koin.ksp.compiler)
