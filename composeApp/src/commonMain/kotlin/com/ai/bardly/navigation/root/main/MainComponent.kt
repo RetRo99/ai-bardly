@@ -52,7 +52,7 @@ interface MainComponent : RootComponent<MainComponent.MainChild> {
     }
 
     companion object {
-        val rootItems = listOf(
+        val rootItems: List<MainConfig> = listOf(
             MainConfig.GameList,
             MainConfig.Home,
             MainConfig.RecentChats,
