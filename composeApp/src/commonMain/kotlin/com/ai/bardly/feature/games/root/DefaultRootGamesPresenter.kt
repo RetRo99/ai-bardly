@@ -15,6 +15,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
@@ -25,7 +26,7 @@ typealias RootGamesPresenterFactory = (
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = RootGamesPresenter::class)
 class DefaultRootGamesPresenter(
-    componentContext: ComponentContext,
+    @Assisted componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
     private val chatRepository: ChatsRepository,
     private val analytics: Analytics,

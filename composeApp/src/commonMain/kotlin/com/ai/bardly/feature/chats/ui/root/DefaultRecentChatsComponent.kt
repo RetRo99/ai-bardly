@@ -14,6 +14,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
@@ -24,7 +25,7 @@ internal typealias RootRecentPresenterFactory = (
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = RootRecentPresenter::class)
 class DefaultRootRecentPresenter(
-    componentContext: ComponentContext,
+    @Assisted componentContext: ComponentContext,
     private val recentChatUseCase: GetRecentChatsUseCase,
     private val chatRepository: ChatsRepository,
     private val analytics: Analytics,
