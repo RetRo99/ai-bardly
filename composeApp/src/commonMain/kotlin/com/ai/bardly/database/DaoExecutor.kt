@@ -5,9 +5,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import org.koin.kcore.annotation.Single
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Single
+@Inject
+@SingleIn(AppScope::class)
 class DaoExecutor(
     val analytics: Analytics,
 ) {
