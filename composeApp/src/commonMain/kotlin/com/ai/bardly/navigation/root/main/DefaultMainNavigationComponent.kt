@@ -13,19 +13,19 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 
-class DefaultMainComponent(
+class DefaultMainNavigationComponent(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val analytics: Analytics,
     private val chatsRepository: ChatsRepository,
-) : MainComponent, ComponentContext by componentContext {
-    private val navigation = StackNavigation<MainComponent.MainConfig>()
+) : MainNavigationComponent, ComponentContext by componentContext {
+    private val navigation = StackNavigation<MainNavigationComponent.MainConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = MainComponent.MainConfig.serializer(),
-        initialStack = { listOf(MainComponent.MainConfig.Home) },
+        serializer = MainNavigationComponent.MainConfig.serializer(),
+        initialStack = { listOf(MainNavigationComponent.MainConfig.Home) },
         childFactory = ::childFactory,
     )
 
@@ -33,15 +33,15 @@ class DefaultMainComponent(
         navigation.pop()
     }
 
-    override fun navigate(config: MainComponent.MainConfig) {
+    override fun navigate(config: MainNavigationComponent.MainConfig) {
         navigation.switchTab(config)
     }
 
     private fun childFactory(
-        screenConfig: MainComponent.MainConfig,
+        screenConfig: MainNavigationComponent.MainConfig,
         componentContext: ComponentContext
-    ): MainComponent.MainChild = when (screenConfig) {
-        MainComponent.MainConfig.GameList -> MainComponent.MainChild.GameList(
+    ): MainNavigationComponent.MainChild = when (screenConfig) {
+        MainNavigationComponent.MainConfig.GameList -> MainNavigationComponent.MainChild.GameList(
             DefaultRootGamesComponent(
                 componentContext,
                 gamesRepository,
@@ -50,7 +50,7 @@ class DefaultMainComponent(
             )
         )
 
-        MainComponent.MainConfig.Home -> MainComponent.MainChild.Home(
+        MainNavigationComponent.MainConfig.Home -> MainNavigationComponent.MainChild.Home(
             DefaultRootHomeComponent(
                 componentContext,
                 gamesRepository,
@@ -59,7 +59,7 @@ class DefaultMainComponent(
             )
         )
 
-        MainComponent.MainConfig.RecentChats -> MainComponent.MainChild.RecentChats(
+        MainNavigationComponent.MainConfig.RecentChats -> MainNavigationComponent.MainChild.RecentChats(
             DefaultRootRecentComponent(
                 componentContext,
                 recentChatUseCase = getRecentChatsUseCase,

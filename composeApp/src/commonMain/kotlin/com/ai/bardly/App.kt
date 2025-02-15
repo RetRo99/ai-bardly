@@ -23,7 +23,7 @@ import com.ai.bardly.feature.chats.ui.root.RootRecentScreen
 import com.ai.bardly.feature.games.root.RootGamesScreen
 import com.ai.bardly.feature.home.root.RootHomeScreen
 import com.ai.bardly.navigation.root.application.DecomposeRoot
-import com.ai.bardly.navigation.root.main.MainComponent
+import com.ai.bardly.navigation.root.main.MainNavigationComponent
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
@@ -59,7 +59,7 @@ fun App(
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-private fun MainScreen(component: MainComponent) {
+private fun MainScreen(component: MainNavigationComponent) {
     Surface {
         Scaffold(
             bottomBar = {
@@ -84,9 +84,9 @@ private fun MainScreen(component: MainComponent) {
                 animation = stackAnimation(fade()),
             ) {
                 when (val child = it.instance) {
-                    is MainComponent.MainChild.GameList -> RootGamesScreen(child.component)
-                    is MainComponent.MainChild.Home -> RootHomeScreen(child.component)
-                    is MainComponent.MainChild.RecentChats -> RootRecentScreen(child.component)
+                    is MainNavigationComponent.MainChild.GameList -> RootGamesScreen(child.component)
+                    is MainNavigationComponent.MainChild.Home -> RootHomeScreen(child.component)
+                    is MainNavigationComponent.MainChild.RecentChats -> RootRecentScreen(child.component)
                 }
             }
         }
@@ -95,8 +95,8 @@ private fun MainScreen(component: MainComponent) {
 
 @Composable
 private fun BottomBar(
-    currentlyActiveChild: MainComponent.MainChild,
-    onNavigationClick: (MainComponent.MainConfig) -> Unit
+    currentlyActiveChild: MainNavigationComponent.MainChild,
+    onNavigationClick: (MainNavigationComponent.MainConfig) -> Unit
 ) {
     val outlineColor = MaterialTheme.colorScheme.outline
     NavigationBar(
@@ -112,11 +112,11 @@ private fun BottomBar(
         tonalElevation = 8.dp,
         containerColor = MaterialTheme.colorScheme.background,
     ) {
-        MainComponent.rootItems.forEach { destination ->
+        MainNavigationComponent.rootItems.forEach { destination ->
             val isSelected = when (currentlyActiveChild) {
-                is MainComponent.MainChild.Home -> destination == MainComponent.MainConfig.Home
-                is MainComponent.MainChild.GameList -> destination == MainComponent.MainConfig.GameList
-                is MainComponent.MainChild.RecentChats -> destination == MainComponent.MainConfig.RecentChats
+                is MainNavigationComponent.MainChild.Home -> destination == MainNavigationComponent.MainConfig.Home
+                is MainNavigationComponent.MainChild.GameList -> destination == MainNavigationComponent.MainConfig.GameList
+                is MainNavigationComponent.MainChild.RecentChats -> destination == MainNavigationComponent.MainConfig.RecentChats
             }
             NavigationBarItem(
                 icon = {

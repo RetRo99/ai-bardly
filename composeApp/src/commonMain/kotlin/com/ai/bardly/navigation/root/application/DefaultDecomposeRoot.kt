@@ -5,7 +5,7 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.navigation.root.main.DefaultMainComponent
+import com.ai.bardly.navigation.root.main.DefaultMainNavigationComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -45,7 +45,7 @@ class DefaultDecomposeRoot(
         componentContext: ComponentContext
     ): DecomposeRoot.ApplicationChild = when (screenConfig) {
         DecomposeRoot.RootConfig.Main -> DecomposeRoot.ApplicationChild.Main(
-            DefaultMainComponent(
+            DefaultMainNavigationComponent(
                 componentContext,
                 gamesRepository = gamesRepository,
                 getRecentChatsUseCase = getRecentChatsUseCase,
