@@ -4,7 +4,7 @@ import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
-import com.ai.bardly.feature.chats.ui.root.DefaultRootRecentComponent
+import com.ai.bardly.feature.chats.ui.root.DefaultRootRecentPresenter
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.root.DefaultRootGamesPresenter
 import com.ai.bardly.feature.home.root.DefaultRootHomePresenter
@@ -70,7 +70,7 @@ class DefaultMainPresenter(
         )
 
         MainPresenter.MainConfig.RecentChats -> MainPresenter.MainChild.RecentChats(
-            DefaultRootRecentComponent(
+            DefaultRootRecentPresenter(
                 componentContext,
                 recentChatUseCase = getRecentChatsUseCase,
                 chatRepository = chatsRepository,

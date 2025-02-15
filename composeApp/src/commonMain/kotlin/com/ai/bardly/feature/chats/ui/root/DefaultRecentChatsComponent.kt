@@ -14,20 +14,20 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 
-class DefaultRootRecentComponent(
+class DefaultRootRecentPresenter(
     componentContext: ComponentContext,
     private val recentChatUseCase: GetRecentChatsUseCase,
     private val chatRepository: ChatsRepository,
     private val analytics: Analytics,
 ) : BaseComponentImpl<RootRecentViewState, RootRecentIntent>(componentContext),
-    RootRecentComponent {
+    RootRecentPresenter {
 
-    private val navigation = StackNavigation<RootRecentComponent.RootRecentConfig>()
+    private val navigation = StackNavigation<RootRecentPresenter.RootRecentConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = RootRecentComponent.RootRecentConfig.serializer(),
-        initialStack = { listOf(RootRecentComponent.RootRecentConfig.RecentChats) },
+        serializer = RootRecentPresenter.RootRecentConfig.serializer(),
+        initialStack = { listOf(RootRecentPresenter.RootRecentConfig.RecentChats) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -46,16 +46,16 @@ class DefaultRootRecentComponent(
 
     @OptIn(DelicateDecomposeApi::class)
     private fun childFactory(
-        screenConfig: RootRecentComponent.RootRecentConfig,
+        screenConfig: RootRecentPresenter.RootRecentConfig,
         componentContext: ComponentContext
-    ): RootRecentComponent.RootRecentChild = when (screenConfig) {
-        RootRecentComponent.RootRecentConfig.RecentChats -> RootRecentComponent.RootRecentChild.RecentChats(
+    ): RootRecentPresenter.RootRecentChild = when (screenConfig) {
+        RootRecentPresenter.RootRecentConfig.RecentChats -> RootRecentPresenter.RootRecentChild.RecentChats(
             DefaultRecentChatsComponent(
                 componentContext,
                 recentChatUseCase,
                 { title, id ->
                     navigation.push(
-                        RootRecentComponent.RootRecentConfig.Chat(
+                        RootRecentPresenter.RootRecentConfig.Chat(
                             title,
                             id
                         )
@@ -65,7 +65,7 @@ class DefaultRootRecentComponent(
             )
         )
 
-        is RootRecentComponent.RootRecentConfig.Chat -> RootRecentComponent.RootRecentChild.Chat(
+        is RootRecentPresenter.RootRecentConfig.Chat -> RootRecentPresenter.RootRecentChild.Chat(
             DefaultChatComponent(
                 componentContext,
                 screenConfig.title,

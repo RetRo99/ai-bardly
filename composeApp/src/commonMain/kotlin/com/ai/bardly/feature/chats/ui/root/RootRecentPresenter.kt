@@ -6,8 +6,8 @@ import com.ai.bardly.feature.chats.ui.recent.RecentChatsComponent
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
-interface RootRecentComponent : BaseComponent<RootRecentViewState, RootRecentIntent>,
-    RootDecomposeComponent<RootRecentComponent.RootRecentChild, RootRecentComponent.RootRecentConfig> {
+interface RootRecentPresenter : BaseComponent<RootRecentViewState, RootRecentIntent>,
+    RootDecomposeComponent<RootRecentPresenter.RootRecentChild, RootRecentPresenter.RootRecentConfig> {
 
     sealed interface RootRecentChild {
         data class Chat(val component: ChatComponent) : RootRecentChild

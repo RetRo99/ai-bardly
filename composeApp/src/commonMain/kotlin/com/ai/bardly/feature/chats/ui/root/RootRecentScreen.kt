@@ -7,14 +7,14 @@ import com.ai.bardly.navigation.RootChildStack
 
 @Composable
 fun RootRecentScreen(
-    component: RootRecentComponent,
+    component: RootRecentPresenter,
 ) {
     RootChildStack(
         component
     ) { child ->
         when (val screen = child.instance) {
-            is RootRecentComponent.RootRecentChild.RecentChats -> RecentChatsScreen(screen.component)
-            is RootRecentComponent.RootRecentChild.Chat -> ChatScreen(screen.component)
+            is RootRecentPresenter.RootRecentChild.RecentChats -> RecentChatsScreen(screen.component)
+            is RootRecentPresenter.RootRecentChild.Chat -> ChatScreen(screen.component)
         }
     }
 }

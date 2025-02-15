@@ -7,7 +7,7 @@ import ai_bardly.composeapp.generated.resources.home
 import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
-import com.ai.bardly.feature.chats.ui.root.RootRecentComponent
+import com.ai.bardly.feature.chats.ui.root.RootRecentPresenter
 import com.ai.bardly.feature.games.root.RootGamesPresenter
 import com.ai.bardly.feature.home.root.RootHomePresnter
 import com.ai.bardly.navigation.root.RootDecomposeComponent
@@ -21,7 +21,7 @@ interface MainPresenter :
 
     fun navigate(config: MainConfig)
     sealed interface MainChild {
-        data class RecentChats(val component: RootRecentComponent) : MainChild
+        data class RecentChats(val component: RootRecentPresenter) : MainChild
         data class Home(val component: RootHomePresnter) : MainChild
         data class GameList(val component: RootGamesPresenter) : MainChild
     }
