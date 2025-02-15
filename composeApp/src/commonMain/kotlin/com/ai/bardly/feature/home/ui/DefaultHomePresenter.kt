@@ -13,20 +13,20 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 
-typealias HomeFactory = (
+typealias HomePresenterFactory = (
     ComponentContext,
     navigateToChat: (String, Int) -> Unit,
     navigateToGameDetails: (GameUiModel) -> Unit,
-) -> DefaultHomeComponent
+) -> DefaultHomePresenter
 
 @Inject
-class DefaultHomeComponent(
+class DefaultHomePresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
     private val gamesRepository: GamesRepository,
     val analytics: Analytics,
-) : BasePresenterImpl<HomeViewState, HomeIntent>(componentContext), HomeComponent {
+) : BasePresenterImpl<HomeViewState, HomeIntent>(componentContext), HomePresenter {
 
     override val defaultViewState = HomeViewState()
 

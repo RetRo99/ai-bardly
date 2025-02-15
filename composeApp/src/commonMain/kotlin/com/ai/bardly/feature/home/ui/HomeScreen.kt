@@ -37,7 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen(
-    component: HomeComponent,
+    component: HomePresenter,
 ) {
     BaseScreen(component) { viewState, intentDispatcher ->
         HomeScreenContent(
