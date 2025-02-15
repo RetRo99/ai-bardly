@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.games.root
 
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
@@ -14,7 +15,15 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
+typealias RootGamesPresenterFactory = (
+    ComponentContext,
+) -> DefaultRootGamesPresenter
+
+@Inject
+@ContributesBinding(ActivityScope::class, boundType = RootGamesPresenter::class)
 class DefaultRootGamesPresenter(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,

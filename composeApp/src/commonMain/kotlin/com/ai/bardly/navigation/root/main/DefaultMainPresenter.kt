@@ -6,8 +6,8 @@ import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.root.DefaultRootRecentPresenter
 import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.feature.games.root.DefaultRootGamesPresenter
-import com.ai.bardly.feature.home.root.DefaultRootHomePresenter
+import com.ai.bardly.feature.games.root.RootGamesPresenterFactory
+import com.ai.bardly.feature.home.root.RootHomePresenterFactory
 import com.ai.bardly.navigation.switchTab
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -25,6 +25,8 @@ internal typealias MainPresenterFactory = (
 @ContributesBinding(ActivityScope::class, boundType = MainPresenter::class)
 class DefaultMainPresenter(
     @Assisted componentContext: ComponentContext,
+    private val rootGamesFactory: RootGamesPresenterFactory,
+    private val rootHomeFactory: RootHomePresenterFactory,
     private val gamesRepository: GamesRepository,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val analytics: Analytics,
@@ -52,21 +54,11 @@ class DefaultMainPresenter(
         componentContext: ComponentContext
     ): MainPresenter.MainChild = when (screenConfig) {
         MainPresenter.MainConfig.GameList -> MainPresenter.MainChild.GameList(
-            DefaultRootGamesPresenter(
-                componentContext,
-                gamesRepository,
-                chatRepository = chatsRepository,
-                analytics = analytics,
-            )
+            rootGamesFactory(componentContext)
         )
 
         MainPresenter.MainConfig.Home -> MainPresenter.MainChild.Home(
-            DefaultRootHomePresenter(
-                componentContext,
-                gamesRepository,
-                chatsRepository = chatsRepository,
-                analytics = analytics,
-            )
+            rootHomeFactory(componentContext)
         )
 
         MainPresenter.MainConfig.RecentChats -> MainPresenter.MainChild.RecentChats(

@@ -14,9 +14,16 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
 
+internal typealias RootHomePresenterFactory = (
+    ComponentContext,
+) -> DefaultRootHomePresenter
+
+@Inject
 class DefaultRootHomePresenter(
-    componentContext: ComponentContext,
+    @Assisted componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
     private val chatsRepository: ChatsRepository,
     private val analytics: Analytics,
