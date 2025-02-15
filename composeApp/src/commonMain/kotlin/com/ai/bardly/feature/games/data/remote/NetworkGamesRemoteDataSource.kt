@@ -6,9 +6,14 @@ import com.ai.bardly.feature.games.data.remote.model.GamesListDto
 import com.ai.bardly.networking.NetworkClient
 import com.ai.bardly.paging.BardlyPagingSource
 import com.ai.bardly.paging.PagingResult
-import org.koin.core.annotation.Single
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Single(binds = [GamesRemoteDataSource::class])
+@Inject
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
 class NetworkGamesRemoteDataSource(
     private val networkClient: NetworkClient,
 ) : GamesRemoteDataSource {
