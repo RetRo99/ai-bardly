@@ -10,7 +10,7 @@ import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 
-class DefaultGameDetailsComponent(
+class DefaultGameDetailsPresenter(
     componentContext: ComponentContext,
     private val game: GameUiModel,
     private val gamesRepository: GamesRepository,
@@ -18,7 +18,7 @@ class DefaultGameDetailsComponent(
     private val navigateBack: () -> Unit,
     private val analytics: Analytics,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
-    GameDetailsComponent {
+    GameDetailsPresenter {
 
     override val defaultViewState = GameDetailsViewState(game)
 

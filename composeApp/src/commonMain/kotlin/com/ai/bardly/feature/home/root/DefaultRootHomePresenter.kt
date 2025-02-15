@@ -7,7 +7,7 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.ui.chat.DefaultChatComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.feature.games.ui.details.DefaultGameDetailsComponent
+import com.ai.bardly.feature.games.ui.details.DefaultGameDetailsPresenter
 import com.ai.bardly.feature.home.ui.HomePresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
@@ -69,7 +69,7 @@ class DefaultRootHomePresenter(
         )
 
         is RootHomePresnter.HomeConfig.GameDetails -> RootHomePresnter.HomeChild.GameDetails(
-            DefaultGameDetailsComponent(
+            DefaultGameDetailsPresenter(
                 componentContext,
                 screenConfig.game,
                 gamesRepository,

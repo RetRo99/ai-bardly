@@ -2,7 +2,7 @@ package com.ai.bardly.feature.games.root
 
 import com.ai.bardly.base.BasePresenter
 import com.ai.bardly.feature.chats.ui.chat.ChatComponent
-import com.ai.bardly.feature.games.ui.details.GameDetailsComponent
+import com.ai.bardly.feature.games.ui.details.GameDetailsPresenter
 import com.ai.bardly.feature.games.ui.list.GamesListComponent
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.navigation.root.RootDecomposeComponent
@@ -13,7 +13,7 @@ interface RootGamesPresenter : BasePresenter<RootGamesViewState, RootGamesIntent
 
     sealed interface GamesChild {
         data class GamesList(val component: GamesListComponent) : GamesChild
-        data class GameDetails(val component: GameDetailsComponent) : GamesChild
+        data class GameDetails(val component: GameDetailsPresenter) : GamesChild
         data class ChatDetails(val component: ChatComponent) : GamesChild
     }
 
