@@ -9,13 +9,23 @@ import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
 
+typealias GameDetailsPresenterFactory = (
+    ComponentContext,
+    game: GameUiModel,
+    navigateToChat: (String, Int) -> Unit,
+    onBack: () -> Unit,
+) -> GameDetailsPresenter
+
+@Inject
 class DefaultGameDetailsPresenter(
-    componentContext: ComponentContext,
-    private val game: GameUiModel,
+    @Assisted componentContext: ComponentContext,
+    @Assisted private val game: GameUiModel,
+    @Assisted private val navigateToChat: (String, Int) -> Unit,
+    @Assisted private val navigateBack: () -> Unit,
     private val gamesRepository: GamesRepository,
-    private val navigateToChat: (String, Int) -> Unit,
-    private val navigateBack: () -> Unit,
     private val analytics: Analytics,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {

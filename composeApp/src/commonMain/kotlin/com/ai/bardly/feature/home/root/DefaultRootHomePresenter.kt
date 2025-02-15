@@ -7,7 +7,7 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.ui.chat.DefaultChatComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.feature.games.ui.details.DefaultGameDetailsPresenter
+import com.ai.bardly.feature.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.home.ui.HomePresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
@@ -28,6 +28,7 @@ internal typealias RootHomePresenterFactory = (
 class DefaultRootHomePresenter(
     @Assisted componentContext: ComponentContext,
     private val homePresenterFactory: HomePresenterFactory,
+    private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
     private val gamesRepository: GamesRepository,
     private val chatsRepository: ChatsRepository,
     private val analytics: Analytics,
@@ -69,13 +70,11 @@ class DefaultRootHomePresenter(
         )
 
         is RootHomePresnter.HomeConfig.GameDetails -> RootHomePresnter.HomeChild.GameDetails(
-            DefaultGameDetailsPresenter(
+            gameDetailsPresenterFactory(
                 componentContext,
                 screenConfig.game,
-                gamesRepository,
                 { title, id -> navigation.push(RootHomePresnter.HomeConfig.Chat(title, id)) },
                 ::onBackClicked,
-                analytics,
             )
         )
 
