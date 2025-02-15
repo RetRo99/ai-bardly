@@ -6,6 +6,8 @@ import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.buildconfig.getBuildConfig
+import com.ai.bardly.database.AppDatabase
+import com.ai.bardly.database.PlatformDataBaseHelper
 import com.ai.bardly.networking.getHttpEngine
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
@@ -31,6 +33,21 @@ abstract class AppComponent(
     @get:Provides val application: Application,
 ) : ActivityComponent.Factory {
     abstract val activityComponentFactory: ActivityComponent.Factory
+
+    // region Database TODO: Move to a separate module
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideAppDatabase(dataBaseHelper: PlatformDataBaseHelper): AppDatabase =
+        dataBaseHelper.getDatabaseBuilder().build()
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideGamesDao(appDatabase: AppDatabase) = appDatabase.getGamesDao()
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideMessagesDao(appDatabase: AppDatabase) = appDatabase.getMessagesDao()
+    // endregion
 
     // region BuildConfig TODO: Move to a separate module
     @Provides
