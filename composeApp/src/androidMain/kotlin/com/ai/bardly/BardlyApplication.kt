@@ -9,6 +9,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.ksp.generated.module
 
 class BardlyApplication : Application() {
+    private lateinit var component: AppComponent
 
     override fun onCreate() {
         super.onCreate()
