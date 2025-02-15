@@ -1,14 +1,11 @@
 package com.ai.bardly.feature.games.root
 
-import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.ui.chat.ChatPresenterFactory
-import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.details.GameDetailsPresenterFactory
-import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
+import com.ai.bardly.feature.games.ui.list.GamesListComponentFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -29,9 +26,7 @@ class DefaultRootGamesPresenter(
     @Assisted componentContext: ComponentContext,
     private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
     private val chatPresenterFactory: ChatPresenterFactory,
-    private val gamesRepository: GamesRepository,
-    private val chatRepository: ChatsRepository,
-    private val analytics: Analytics,
+    private val gamesListComponentFactory: GamesListComponentFactory,
 ) : BasePresenterImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesPresenter {
 
     private val navigation = StackNavigation<RootGamesPresenter.GamesConfig>()
@@ -62,12 +57,10 @@ class DefaultRootGamesPresenter(
         componentContext: ComponentContext
     ): RootGamesPresenter.GamesChild = when (screenConfig) {
         RootGamesPresenter.GamesConfig.GamesList -> RootGamesPresenter.GamesChild.GamesList(
-            DefaultGamesListComponent(
+            gamesListComponentFactory(
                 componentContext,
-                gamesRepository,
                 { title, id -> navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id)) },
                 { game -> navigation.push(RootGamesPresenter.GamesConfig.GameDetails(game)) },
-                analytics
             )
         )
 

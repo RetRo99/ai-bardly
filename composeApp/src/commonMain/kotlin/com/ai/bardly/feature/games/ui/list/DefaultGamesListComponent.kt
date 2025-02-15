@@ -5,6 +5,7 @@ import androidx.paging.cachedIn
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
+import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
@@ -23,13 +24,24 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
+typealias GamesListComponentFactory = (
+    ComponentContext,
+    navigateToChat: (String, Int) -> Unit,
+    navigateToGameDetails: (GameUiModel) -> Unit,
+) -> DefaultGamesListComponent
+
+@Inject
+@ContributesBinding(ActivityScope::class, boundType = GamesListComponent::class)
 class DefaultGamesListComponent(
-    componentContext: ComponentContext,
+    @Assisted componentContext: ComponentContext,
+    @Assisted val navigateToChat: (String, Int) -> Unit,
+    @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
     private val gamesRepository: GamesRepository,
-    val navigateToChat: (String, Int) -> Unit,
-    val navigateToGameDetails: (GameUiModel) -> Unit,
-    val analytics: Analytics,
+    private val analytics: Analytics,
 ) : BasePresenterImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
 
     override val defaultViewState = GamesListViewState()
