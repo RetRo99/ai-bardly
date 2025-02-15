@@ -165,7 +165,7 @@ fun GameImage(
             modifier = modifier
                 .sharedBounds(
                     sharedContentState = rememberSharedContentState(
-                        key = "$gameId∑ thumbnail",
+                        key = "$gameId thumbnail",
                     ),
                     animatedVisibilityScope = LocalScreenAnimationScope.current,
                     renderInOverlayDuringTransition = false,
