@@ -1,5 +1,6 @@
 package com.ai.bardly.feature.chats.ui.chat
 
+import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
@@ -16,7 +17,8 @@ class DefaultChatComponent(
     private val gameTitle: String,
     private val gameId: Int,
     private val chatsRepository: ChatsRepository,
-    val navigateBack: () -> Unit,
+    private val navigateBack: () -> Unit,
+    private val analytics: Analytics,
 ) : BaseComponentImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatComponent {
 
     private var questionsAskedInSession = 0
