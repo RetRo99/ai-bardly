@@ -19,13 +19,13 @@ class DefaultMainPresenter(
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val analytics: Analytics,
     private val chatsRepository: ChatsRepository,
-) : MainNavigationComponent, ComponentContext by componentContext {
-    private val navigation = StackNavigation<MainNavigationComponent.MainConfig>()
+) : MainPresenter, ComponentContext by componentContext {
+    private val navigation = StackNavigation<MainPresenter.MainConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = MainNavigationComponent.MainConfig.serializer(),
-        initialStack = { listOf(MainNavigationComponent.MainConfig.Home) },
+        serializer = MainPresenter.MainConfig.serializer(),
+        initialStack = { listOf(MainPresenter.MainConfig.Home) },
         childFactory = ::childFactory,
     )
 
@@ -33,15 +33,15 @@ class DefaultMainPresenter(
         navigation.pop()
     }
 
-    override fun navigate(config: MainNavigationComponent.MainConfig) {
+    override fun navigate(config: MainPresenter.MainConfig) {
         navigation.switchTab(config)
     }
 
     private fun childFactory(
-        screenConfig: MainNavigationComponent.MainConfig,
+        screenConfig: MainPresenter.MainConfig,
         componentContext: ComponentContext
-    ): MainNavigationComponent.MainChild = when (screenConfig) {
-        MainNavigationComponent.MainConfig.GameList -> MainNavigationComponent.MainChild.GameList(
+    ): MainPresenter.MainChild = when (screenConfig) {
+        MainPresenter.MainConfig.GameList -> MainPresenter.MainChild.GameList(
             DefaultRootGamesComponent(
                 componentContext,
                 gamesRepository,
@@ -50,7 +50,7 @@ class DefaultMainPresenter(
             )
         )
 
-        MainNavigationComponent.MainConfig.Home -> MainNavigationComponent.MainChild.Home(
+        MainPresenter.MainConfig.Home -> MainPresenter.MainChild.Home(
             DefaultRootHomeComponent(
                 componentContext,
                 gamesRepository,
@@ -59,7 +59,7 @@ class DefaultMainPresenter(
             )
         )
 
-        MainNavigationComponent.MainConfig.RecentChats -> MainNavigationComponent.MainChild.RecentChats(
+        MainPresenter.MainConfig.RecentChats -> MainPresenter.MainChild.RecentChats(
             DefaultRootRecentComponent(
                 componentContext,
                 recentChatUseCase = getRecentChatsUseCase,
