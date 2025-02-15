@@ -1,5 +1,6 @@
 package com.ai.bardly.feature.games.root
 
+import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
@@ -13,14 +14,13 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
-import org.koin.core.component.inject
 
 class DefaultRootGamesComponent(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
+    private val chatRepository: ChatsRepository,
+    private val analytics: Analytics,
 ) : BaseComponentImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesComponent {
-
-    val chatRepository by inject<ChatsRepository>()
 
     private val navigation = StackNavigation<RootGamesComponent.GamesConfig>()
 
@@ -75,6 +75,7 @@ class DefaultRootGamesComponent(
                 screenConfig.id,
                 chatRepository,
                 ::onBackClicked,
+                analytics,
             )
         )
     }
