@@ -3,6 +3,7 @@ package com.ai.bardly.feature.home.ui
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
+import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
@@ -12,6 +13,7 @@ import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias HomePresenterFactory = (
     ComponentContext,
@@ -20,6 +22,7 @@ typealias HomePresenterFactory = (
 ) -> DefaultHomePresenter
 
 @Inject
+@ContributesBinding(ActivityScope::class, boundType = HomePresenter::class)
 class DefaultHomePresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val navigateToChat: (String, Int) -> Unit,

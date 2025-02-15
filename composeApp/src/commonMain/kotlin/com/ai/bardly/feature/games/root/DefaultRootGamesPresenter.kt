@@ -7,7 +7,7 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.ui.chat.DefaultChatComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.feature.games.ui.details.DefaultGameDetailsPresenter
+import com.ai.bardly.feature.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
@@ -27,6 +27,7 @@ typealias RootGamesPresenterFactory = (
 @ContributesBinding(ActivityScope::class, boundType = RootGamesPresenter::class)
 class DefaultRootGamesPresenter(
     @Assisted componentContext: ComponentContext,
+    private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
     private val gamesRepository: GamesRepository,
     private val chatRepository: ChatsRepository,
     private val analytics: Analytics,
@@ -70,13 +71,11 @@ class DefaultRootGamesPresenter(
         )
 
         is RootGamesPresenter.GamesConfig.GameDetails -> RootGamesPresenter.GamesChild.GameDetails(
-            DefaultGameDetailsPresenter(
+            gameDetailsPresenterFactory(
                 componentContext,
                 screenConfig.game,
-                gamesRepository,
                 { title, id -> navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id)) },
                 ::onBackClicked,
-                analytics,
             )
         )
 

@@ -3,6 +3,7 @@ package com.ai.bardly.feature.games.ui.details
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
+import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
@@ -11,15 +12,17 @@ import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias GameDetailsPresenterFactory = (
-    ComponentContext,
+    componentContext: ComponentContext,
     game: GameUiModel,
     navigateToChat: (String, Int) -> Unit,
-    onBack: () -> Unit,
-) -> GameDetailsPresenter
+    navigateBack: () -> Unit,
+) -> DefaultGameDetailsPresenter
 
 @Inject
+@ContributesBinding(ActivityScope::class, boundType = GameDetailsPresenter::class)
 class DefaultGameDetailsPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val game: GameUiModel,
