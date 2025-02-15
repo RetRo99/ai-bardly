@@ -5,6 +5,7 @@ import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
 import com.ai.bardly.buildconfig.BuildConfig
+import com.ai.bardly.buildconfig.getBuildConfig
 import com.ai.bardly.networking.getHttpEngine
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
@@ -31,6 +32,17 @@ abstract class AppComponent(
 ) : ActivityComponent.Factory {
     abstract val activityComponentFactory: ActivityComponent.Factory
 
+    // region BuildConfig TODO: Move to a separate module
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideBuildConfig(): BuildConfig = getBuildConfig()
+
+    @Provides
+    @SingleIn(AppScope::class)
+    @Named("isDebug")
+    fun provideIsDebug(buildConfig: BuildConfig): Boolean = buildConfig.isDebug
+    // endregion
+
     // region Analytics TODO: Move to a separate module
     @Provides
     @SingleIn(AppScope::class)
@@ -39,11 +51,6 @@ abstract class AppComponent(
     @Provides
     @SingleIn(AppScope::class)
     fun provideCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
-
-    @Provides
-    @SingleIn(AppScope::class)
-    @Named("isDebug")
-    fun provideIsDebug(buildConfig: BuildConfig): Boolean = buildConfig.isDebug
 
     @Provides
     @SingleIn(AppScope::class)
