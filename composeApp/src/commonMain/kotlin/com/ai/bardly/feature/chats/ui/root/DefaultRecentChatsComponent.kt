@@ -14,6 +14,10 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 
+internal typealias RootRecentPresenterFactory = (
+    ComponentContext,
+) -> DefaultRootRecentPresenter
+
 class DefaultRootRecentPresenter(
     componentContext: ComponentContext,
     private val recentChatUseCase: GetRecentChatsUseCase,
