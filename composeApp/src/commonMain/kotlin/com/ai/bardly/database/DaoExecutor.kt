@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import org.koin.core.annotation.Single
+import org.koin.kcore.annotation.Single
 
 @Single
 class DaoExecutor(
