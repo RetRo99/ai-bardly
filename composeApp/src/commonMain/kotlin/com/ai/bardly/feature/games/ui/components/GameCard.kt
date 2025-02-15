@@ -91,15 +91,15 @@ fun GameCard(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SharedTransitionText(
+                        key = "${game.id} numberOfPlayers",
+                        iconRes = Res.drawable.ic_players,
+                        text = game.numberOfPlayers,
+                    )
+                    SharedTransitionText(
                         key = "${game.id} rating",
                         text = game.rating,
                         iconRes = Res.drawable.ic_rating,
                         textAlign = TextAlign.Center
-                    )
-                    SharedTransitionText(
-                        key = "${game.id} numberOfPlayers",
-                        iconRes = Res.drawable.ic_players,
-                        text = game.numberOfPlayers,
                     )
                 }
 
