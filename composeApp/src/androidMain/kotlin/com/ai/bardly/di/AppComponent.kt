@@ -2,7 +2,15 @@ package com.ai.bardly.di
 
 import android.app.Application
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.analytics.AnalyticsManager
+import com.ai.bardly.analytics.DebugAnalyticsManager
+import com.ai.bardly.buildconfig.BuildConfig
 import com.ai.bardly.networking.getHttpEngine
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
+import dev.gitlive.firebase.analytics.analytics
+import dev.gitlive.firebase.crashlytics.FirebaseCrashlytics
+import dev.gitlive.firebase.crashlytics.crashlytics
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
@@ -14,6 +22,7 @@ import me.tatarka.inject.annotations.Provides
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.MergeComponent
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
+import javax.inject.Named
 
 @MergeComponent(AppScope::class)
 @SingleIn(AppScope::class)
@@ -21,6 +30,33 @@ abstract class AppComponent(
     @get:Provides val application: Application,
 ) : ActivityComponent.Factory {
     abstract val activityComponentFactory: ActivityComponent.Factory
+
+    // region Analytics TODO: Move to a separate module
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideFirebaseAnalytics(): FirebaseAnalytics = Firebase.analytics
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideCrashlytics(): FirebaseCrashlytics = Firebase.crashlytics
+
+    @Provides
+    @SingleIn(AppScope::class)
+    @Named("isDebug")
+    fun provideIsDebug(buildConfig: BuildConfig): Boolean = buildConfig.isDebug
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideAnalytics(
+        firebaseAnalytics: FirebaseAnalytics,
+        firebaseCrashlytics: FirebaseCrashlytics,
+        @Named("isDebug") isDebug: Boolean,
+    ): Analytics = if (isDebug) DebugAnalyticsManager() else AnalyticsManager(
+        firebaseAnalytics,
+        firebaseCrashlytics
+    )
+
+    //endregion
 
     // region Networking TODO: Move to a separate module
     @Provides
