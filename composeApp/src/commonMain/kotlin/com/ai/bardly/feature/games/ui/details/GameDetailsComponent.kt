@@ -1,5 +1,5 @@
 package com.ai.bardly.feature.games.ui.details
 
-import com.ai.bardly.base.BaseComponent
+import com.ai.bardly.base.BasePresenter
 
-interface GameDetailsComponent : BaseComponent<GameDetailsViewState, GameDetailsIntent>
+interface GameDetailsComponent : BasePresenter<GameDetailsViewState, GameDetailsIntent>

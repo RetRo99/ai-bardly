@@ -10,14 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-interface BaseComponent<ScreenViewState, Intent : ScreenIntent> {
+interface BasePresenter<ScreenViewState, Intent : ScreenIntent> {
     val viewState: Value<BaseViewState<ScreenViewState>>
     fun onScreenIntent(intent: Intent)
     fun currentViewState(): ScreenViewState
 }
 
 abstract class BasePresenterImpl<ScreenViewState, Intent : ScreenIntent>(componentContext: ComponentContext) :
-    BaseComponent<ScreenViewState, Intent>, ComponentContext by componentContext,
+    BasePresenter<ScreenViewState, Intent>, ComponentContext by componentContext,
     Lifecycle.Callbacks {
     protected val scope = coroutineScope(Dispatchers.Main + SupervisorJob())
 

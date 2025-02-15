@@ -1,5 +1,5 @@
 package com.ai.bardly.feature.chats.ui.recent
 
-import com.ai.bardly.base.BaseComponent
+import com.ai.bardly.base.BasePresenter
 
-interface RecentChatsComponent : BaseComponent<RecentChatsViewState, RecentChatsIntent>
+interface RecentChatsComponent : BasePresenter<RecentChatsViewState, RecentChatsIntent>

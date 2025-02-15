@@ -1,5 +1,5 @@
 package com.ai.bardly.feature.home.ui
 
-import com.ai.bardly.base.BaseComponent
+import com.ai.bardly.base.BasePresenter
 
-interface HomeComponent : BaseComponent<HomeViewState, HomeIntent>
+interface HomeComponent : BasePresenter<HomeViewState, HomeIntent>

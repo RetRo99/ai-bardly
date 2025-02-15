@@ -14,7 +14,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 
 @Composable
 inline fun <ScreenViewState, Intent : ScreenIntent> BaseScreen(
-    component: BaseComponent<ScreenViewState, Intent>,
+    component: BasePresenter<ScreenViewState, Intent>,
     noinline loadingContent: @Composable () -> Unit = { LoadingScreen() },
     noinline errorContent: @Composable (BaseViewState.Error) -> Unit = { ErrorScreen(it) },
     noinline content: @Composable (ScreenViewState, IntentDispatcher<Intent>) -> Unit

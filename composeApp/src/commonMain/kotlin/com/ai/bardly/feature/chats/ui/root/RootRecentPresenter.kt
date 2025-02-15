@@ -1,12 +1,12 @@
 package com.ai.bardly.feature.chats.ui.root
 
-import com.ai.bardly.base.BaseComponent
+import com.ai.bardly.base.BasePresenter
 import com.ai.bardly.feature.chats.ui.chat.ChatComponent
 import com.ai.bardly.feature.chats.ui.recent.RecentChatsComponent
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
-interface RootRecentPresenter : BaseComponent<RootRecentViewState, RootRecentIntent>,
+interface RootRecentPresenter : BasePresenter<RootRecentViewState, RootRecentIntent>,
     RootDecomposeComponent<RootRecentPresenter.RootRecentChild, RootRecentPresenter.RootRecentConfig> {
 
     sealed interface RootRecentChild {

@@ -1,5 +1,5 @@
 package com.ai.bardly.feature.chats.ui.chat
 
-import com.ai.bardly.base.BaseComponent
+import com.ai.bardly.base.BasePresenter
 
-interface ChatComponent : BaseComponent<ChatViewState, ChatScreenIntent>
+interface ChatComponent : BasePresenter<ChatViewState, ChatScreenIntent>
