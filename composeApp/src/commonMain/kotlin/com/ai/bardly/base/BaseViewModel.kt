@@ -16,7 +16,7 @@ interface BaseComponent<ScreenViewState, Intent : ScreenIntent> {
     fun currentViewState(): ScreenViewState
 }
 
-abstract class BaseComponentImpl<ScreenViewState, Intent : ScreenIntent>(componentContext: ComponentContext) :
+abstract class BasePresenterImpl<ScreenViewState, Intent : ScreenIntent>(componentContext: ComponentContext) :
     BaseComponent<ScreenViewState, Intent>, ComponentContext by componentContext,
     Lifecycle.Callbacks {
     protected val scope = coroutineScope(Dispatchers.Main + SupervisorJob())

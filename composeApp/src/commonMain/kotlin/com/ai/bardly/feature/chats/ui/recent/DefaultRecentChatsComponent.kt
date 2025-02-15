@@ -3,7 +3,7 @@ package com.ai.bardly.feature.chats.ui.recent
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseComponentImpl
+import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.model.toUiModel
@@ -15,7 +15,7 @@ class DefaultRecentChatsComponent(
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val navigateToChat: (String, Int) -> Unit,
     private val analytics: Analytics,
-) : BaseComponentImpl<RecentChatsViewState, RecentChatsIntent>(componentContext),
+) : BasePresenterImpl<RecentChatsViewState, RecentChatsIntent>(componentContext),
     RecentChatsComponent {
     override val defaultViewState = RecentChatsViewState()
 

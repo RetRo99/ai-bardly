@@ -3,7 +3,7 @@ package com.ai.bardly.feature.games.ui.details
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseComponentImpl
+import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
@@ -17,7 +17,7 @@ class DefaultGameDetailsComponent(
     private val navigateToChat: (String, Int) -> Unit,
     private val navigateBack: () -> Unit,
     private val analytics: Analytics,
-) : BaseComponentImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
+) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsComponent {
 
     override val defaultViewState = GameDetailsViewState(game)

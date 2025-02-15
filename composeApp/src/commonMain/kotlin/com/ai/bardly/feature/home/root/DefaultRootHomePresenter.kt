@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.home.root
 
 import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.base.BaseComponentImpl
+import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.ui.chat.DefaultChatComponent
@@ -20,7 +20,7 @@ class DefaultRootHomePresenter(
     private val gamesRepository: GamesRepository,
     private val chatsRepository: ChatsRepository,
     private val analytics: Analytics,
-) : BaseComponentImpl<RootHomeViewState, RootHomeIntent>(componentContext), RootHomePresnter {
+) : BasePresenterImpl<RootHomeViewState, RootHomeIntent>(componentContext), RootHomePresnter {
 
     private val navigation = StackNavigation<RootHomePresnter.HomeConfig>()
 

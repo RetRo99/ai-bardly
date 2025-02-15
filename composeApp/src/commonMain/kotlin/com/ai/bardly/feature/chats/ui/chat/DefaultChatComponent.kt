@@ -2,7 +2,7 @@ package com.ai.bardly.feature.chats.ui.chat
 
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
-import com.ai.bardly.base.BaseComponentImpl
+import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.model.MessageType
@@ -19,7 +19,7 @@ class DefaultChatComponent(
     private val chatsRepository: ChatsRepository,
     private val navigateBack: () -> Unit,
     private val analytics: Analytics,
-) : BaseComponentImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatComponent {
+) : BasePresenterImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatComponent {
 
     private var questionsAskedInSession = 0
 

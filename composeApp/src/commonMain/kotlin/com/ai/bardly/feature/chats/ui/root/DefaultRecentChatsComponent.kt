@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.chats.ui.root
 
 import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.base.BaseComponentImpl
+import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
@@ -19,7 +19,7 @@ class DefaultRootRecentPresenter(
     private val recentChatUseCase: GetRecentChatsUseCase,
     private val chatRepository: ChatsRepository,
     private val analytics: Analytics,
-) : BaseComponentImpl<RootRecentViewState, RootRecentIntent>(componentContext),
+) : BasePresenterImpl<RootRecentViewState, RootRecentIntent>(componentContext),
     RootRecentPresenter {
 
     private val navigation = StackNavigation<RootRecentPresenter.RootRecentConfig>()

@@ -3,7 +3,7 @@ package com.ai.bardly.feature.home.ui
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseComponentImpl
+import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
@@ -17,7 +17,7 @@ class DefaultHomeComponent(
     val navigateToChat: (String, Int) -> Unit,
     val navigateToGameDetails: (GameUiModel) -> Unit,
     val analytics: Analytics,
-) : BaseComponentImpl<HomeViewState, HomeIntent>(componentContext), HomeComponent {
+) : BasePresenterImpl<HomeViewState, HomeIntent>(componentContext), HomeComponent {
 
     override val defaultViewState = HomeViewState()
 

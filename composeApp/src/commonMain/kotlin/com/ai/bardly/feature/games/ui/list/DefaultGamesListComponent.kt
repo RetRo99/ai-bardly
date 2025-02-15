@@ -5,7 +5,7 @@ import androidx.paging.cachedIn
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BaseComponentImpl
+import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.games.ui.model.toUiModels
@@ -30,7 +30,7 @@ class DefaultGamesListComponent(
     val navigateToChat: (String, Int) -> Unit,
     val navigateToGameDetails: (GameUiModel) -> Unit,
     val analytics: Analytics,
-) : BaseComponentImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
+) : BasePresenterImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
 
     override val defaultViewState = GamesListViewState()
 
