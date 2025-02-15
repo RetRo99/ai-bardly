@@ -31,6 +31,8 @@ import com.ai.bardly.util.LocalScreenAnimationScope
 import com.ai.bardly.util.LocalScreenTransitionScope
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
+import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import me.tatarka.inject.annotations.Inject
 import org.jetbrains.compose.resources.painterResource
@@ -84,6 +86,7 @@ private fun MainScreen(component: MainComponent) {
             ChildStack(
                 modifier = Modifier.padding(innerPadding),
                 stack = component.childStack,
+                animation = stackAnimation(fade()),
             ) {
                 SharedTransitionLayout {
                     CompositionLocalProvider(
