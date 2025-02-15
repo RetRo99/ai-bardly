@@ -2,6 +2,7 @@ package com.ai.bardly.feature.chats.ui.chat
 
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
+import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
@@ -11,13 +12,25 @@ import com.ai.bardly.feature.chats.ui.model.toDomainModel
 import com.ai.bardly.feature.chats.ui.model.toUiModel
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
+typealias ChatPresenterFactory = (
+    ComponentContext,
+    gameTitle: String,
+    gameId: Int,
+    navigateBack: () -> Unit,
+) -> DefaultChatPresenter
+
+@Inject
+@ContributesBinding(ActivityScope::class, boundType = ChatPresenter::class)
 class DefaultChatPresenter(
-    componentContext: ComponentContext,
-    private val gameTitle: String,
-    private val gameId: Int,
+    @Assisted componentContext: ComponentContext,
+    @Assisted private val gameTitle: String,
+    @Assisted private val gameId: Int,
+    @Assisted private val navigateBack: () -> Unit,
     private val chatsRepository: ChatsRepository,
-    private val navigateBack: () -> Unit,
     private val analytics: Analytics,
 ) : BasePresenterImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatPresenter {
 

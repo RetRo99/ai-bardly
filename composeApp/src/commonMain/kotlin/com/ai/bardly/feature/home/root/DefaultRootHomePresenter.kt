@@ -1,12 +1,9 @@
 package com.ai.bardly.feature.home.root
 
-import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.feature.chats.domain.ChatsRepository
-import com.ai.bardly.feature.chats.ui.chat.DefaultChatPresenter
-import com.ai.bardly.feature.games.domain.GamesRepository
+import com.ai.bardly.feature.chats.ui.chat.ChatPresenterFactory
 import com.ai.bardly.feature.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.home.ui.HomePresenterFactory
 import com.arkivanov.decompose.ComponentContext
@@ -29,9 +26,7 @@ class DefaultRootHomePresenter(
     @Assisted componentContext: ComponentContext,
     private val homePresenterFactory: HomePresenterFactory,
     private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
-    private val gamesRepository: GamesRepository,
-    private val chatsRepository: ChatsRepository,
-    private val analytics: Analytics,
+    private val chatPresenterFactory: ChatPresenterFactory,
 ) : BasePresenterImpl<RootHomeViewState, RootHomeIntent>(componentContext), RootHomePresnter {
 
     private val navigation = StackNavigation<RootHomePresnter.HomeConfig>()
@@ -79,13 +74,11 @@ class DefaultRootHomePresenter(
         )
 
         is RootHomePresnter.HomeConfig.Chat -> RootHomePresnter.HomeChild.Chat(
-            DefaultChatPresenter(
+            chatPresenterFactory(
                 componentContext,
                 screenConfig.title,
                 screenConfig.id,
-                chatsRepository,
                 ::onBackClicked,
-                analytics,
             )
         )
     }

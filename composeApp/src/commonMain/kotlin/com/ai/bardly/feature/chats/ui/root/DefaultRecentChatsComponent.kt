@@ -4,9 +4,8 @@ import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
-import com.ai.bardly.feature.chats.ui.chat.DefaultChatPresenter
+import com.ai.bardly.feature.chats.ui.chat.ChatPresenterFactory
 import com.ai.bardly.feature.chats.ui.recent.DefaultRecentChatsComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
@@ -27,7 +26,7 @@ internal typealias RootRecentPresenterFactory = (
 class DefaultRootRecentPresenter(
     @Assisted componentContext: ComponentContext,
     private val recentChatUseCase: GetRecentChatsUseCase,
-    private val chatRepository: ChatsRepository,
+    private val chatPresenterFactory: ChatPresenterFactory,
     private val analytics: Analytics,
 ) : BasePresenterImpl<RootRecentViewState, RootRecentIntent>(componentContext),
     RootRecentPresenter {
@@ -76,13 +75,11 @@ class DefaultRootRecentPresenter(
         )
 
         is RootRecentPresenter.RootRecentConfig.Chat -> RootRecentPresenter.RootRecentChild.Chat(
-            DefaultChatPresenter(
+            chatPresenterFactory(
                 componentContext,
                 screenConfig.title,
                 screenConfig.id,
-                chatRepository,
                 ::onBackClicked,
-                analytics
             )
         )
     }

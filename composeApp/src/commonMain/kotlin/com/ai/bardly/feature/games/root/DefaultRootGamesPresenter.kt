@@ -5,7 +5,7 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
-import com.ai.bardly.feature.chats.ui.chat.DefaultChatPresenter
+import com.ai.bardly.feature.chats.ui.chat.ChatPresenterFactory
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.games.ui.list.DefaultGamesListComponent
@@ -28,6 +28,7 @@ typealias RootGamesPresenterFactory = (
 class DefaultRootGamesPresenter(
     @Assisted componentContext: ComponentContext,
     private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
+    private val chatPresenterFactory: ChatPresenterFactory,
     private val gamesRepository: GamesRepository,
     private val chatRepository: ChatsRepository,
     private val analytics: Analytics,
@@ -80,13 +81,11 @@ class DefaultRootGamesPresenter(
         )
 
         is RootGamesPresenter.GamesConfig.Chat -> RootGamesPresenter.GamesChild.ChatDetails(
-            DefaultChatPresenter(
+            chatPresenterFactory(
                 componentContext,
                 screenConfig.title,
                 screenConfig.id,
-                chatRepository,
                 ::onBackClicked,
-                analytics,
             )
         )
     }
