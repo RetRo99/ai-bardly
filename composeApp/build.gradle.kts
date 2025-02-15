@@ -35,7 +35,6 @@ kotlin {
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.koin.android)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -60,13 +59,10 @@ kotlin {
             implementation(libs.kmpauth.uihelper)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose.viewmodel)
             implementation(libs.androidx.room.paging)
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
-            implementation(libs.koin.annotation)
             implementation(libs.bundles.decompose)
             implementation(libs.essenty.coroutines)
             implementation(libs.bundles.kotlinInject)
@@ -127,11 +123,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     ksp(libs.kotlinInject.compiler)
     ksp(libs.kotlinInject.anvil.compiler)
-    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
-    add("kspAndroid", libs.koin.ksp.compiler)
-    add("kspIosX64", libs.koin.ksp.compiler)
-    add("kspIosArm64", libs.koin.ksp.compiler)
-    add("kspIosSimulatorArm64", libs.koin.ksp.compiler)
 }
 
 ksp {
