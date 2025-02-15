@@ -10,9 +10,14 @@ import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.model.MessageDomainModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import org.koin.core.annotation.Single
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Single(binds = [ChatsRepository::class])
+@Inject
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
 class ChatsDataRepository(
     private val remoteChatsDataSource: ChatsRemoteDataSource,
     private val localChatsDataSource: ChatsLocalDataSource,
