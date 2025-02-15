@@ -54,7 +54,8 @@ class DefaultRootHomeComponent(
                 componentContext,
                 gamesRepository,
                 { title, id -> navigation.push(RootHomeComponent.HomeConfig.Chat(title, id)) },
-                { game -> navigation.push(RootHomeComponent.HomeConfig.GameDetails(game)) }
+                { game -> navigation.push(RootHomeComponent.HomeConfig.GameDetails(game)) },
+                analytics,
             )
         )
 
