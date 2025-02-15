@@ -14,9 +14,14 @@ import com.ai.bardly.feature.games.domain.model.GameDomainModel
 import com.ai.bardly.paging.BardlyRemoteMediator
 import com.ai.bardly.util.now
 import kotlinx.coroutines.flow.Flow
-import org.koin.core.annotation.Single
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Single(binds = [GamesRepository::class])
+@Inject
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
 class GamesDataRepository(
     private val remoteSource: GamesRemoteDataSource,
     private val localSource: GamesLocalDataSource,
