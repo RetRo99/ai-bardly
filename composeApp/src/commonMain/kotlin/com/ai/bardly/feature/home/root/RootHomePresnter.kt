@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.home.root
 
 import com.ai.bardly.base.BasePresenter
-import com.ai.bardly.feature.chats.ui.chat.ChatComponent
+import com.ai.bardly.feature.chats.ui.chat.ChatPresenter
 import com.ai.bardly.feature.games.ui.details.GameDetailsPresenter
 import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.home.ui.HomePresenter
@@ -13,7 +13,7 @@ interface RootHomePresnter : BasePresenter<RootHomeViewState, RootHomeIntent>,
     sealed interface HomeChild {
         data class Home(val component: HomePresenter) : HomeChild
         data class GameDetails(val component: GameDetailsPresenter) : HomeChild
-        data class Chat(val component: ChatComponent) : HomeChild
+        data class Chat(val component: ChatPresenter) : HomeChild
     }
 
     @Serializable

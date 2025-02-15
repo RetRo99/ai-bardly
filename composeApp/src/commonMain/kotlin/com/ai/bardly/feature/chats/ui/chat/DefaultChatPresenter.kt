@@ -12,14 +12,14 @@ import com.ai.bardly.feature.chats.ui.model.toUiModel
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 
-class DefaultChatComponent(
+class DefaultChatPresenter(
     componentContext: ComponentContext,
     private val gameTitle: String,
     private val gameId: Int,
     private val chatsRepository: ChatsRepository,
     private val navigateBack: () -> Unit,
     private val analytics: Analytics,
-) : BasePresenterImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatComponent {
+) : BasePresenterImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatPresenter {
 
     private var questionsAskedInSession = 0
 

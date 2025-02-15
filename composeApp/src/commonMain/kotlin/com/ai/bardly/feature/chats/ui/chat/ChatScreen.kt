@@ -80,7 +80,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChatScreen(
-    component: ChatComponent,
+    component: ChatPresenter,
 ) {
     BaseScreen(component) { viewState, intentDispatcher ->
         ChatScreenContent(

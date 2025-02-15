@@ -5,7 +5,7 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
-import com.ai.bardly.feature.chats.ui.chat.DefaultChatComponent
+import com.ai.bardly.feature.chats.ui.chat.DefaultChatPresenter
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.home.ui.HomePresenterFactory
@@ -79,7 +79,7 @@ class DefaultRootHomePresenter(
         )
 
         is RootHomePresnter.HomeConfig.Chat -> RootHomePresnter.HomeChild.Chat(
-            DefaultChatComponent(
+            DefaultChatPresenter(
                 componentContext,
                 screenConfig.title,
                 screenConfig.id,

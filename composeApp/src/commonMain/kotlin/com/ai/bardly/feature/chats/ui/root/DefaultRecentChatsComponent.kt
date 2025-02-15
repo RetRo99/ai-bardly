@@ -6,7 +6,7 @@ import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
-import com.ai.bardly.feature.chats.ui.chat.DefaultChatComponent
+import com.ai.bardly.feature.chats.ui.chat.DefaultChatPresenter
 import com.ai.bardly.feature.chats.ui.recent.DefaultRecentChatsComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
@@ -76,7 +76,7 @@ class DefaultRootRecentPresenter(
         )
 
         is RootRecentPresenter.RootRecentConfig.Chat -> RootRecentPresenter.RootRecentChild.Chat(
-            DefaultChatComponent(
+            DefaultChatPresenter(
                 componentContext,
                 screenConfig.title,
                 screenConfig.id,
