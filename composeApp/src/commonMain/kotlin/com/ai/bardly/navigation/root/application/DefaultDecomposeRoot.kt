@@ -7,16 +7,16 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 
-class DefaultApplicationComponent(
+class DefaultDecomposeRoot(
     componentContext: ComponentContext,
-) : ApplicationComponent, ComponentContext by componentContext, BackHandlerOwner {
+) : DecomposeRoot, ComponentContext by componentContext, BackHandlerOwner {
 
-    private val navigation = StackNavigation<ApplicationComponent.RootConfig>()
+    private val navigation = StackNavigation<DecomposeRoot.RootConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = ApplicationComponent.RootConfig.serializer(),
-        initialStack = { listOf(ApplicationComponent.RootConfig.Main) },
+        serializer = DecomposeRoot.RootConfig.serializer(),
+        initialStack = { listOf(DecomposeRoot.RootConfig.Main) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -26,10 +26,10 @@ class DefaultApplicationComponent(
     }
 
     private fun childFactory(
-        screenConfig: ApplicationComponent.RootConfig,
+        screenConfig: DecomposeRoot.RootConfig,
         componentContext: ComponentContext
-    ): ApplicationComponent.ApplicationChild = when (screenConfig) {
-        ApplicationComponent.RootConfig.Main -> ApplicationComponent.ApplicationChild.Main(
+    ): DecomposeRoot.ApplicationChild = when (screenConfig) {
+        DecomposeRoot.RootConfig.Main -> DecomposeRoot.ApplicationChild.Main(
             DefaultMainComponent(
                 componentContext
             )

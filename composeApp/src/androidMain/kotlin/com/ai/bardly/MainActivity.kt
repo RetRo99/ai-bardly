@@ -8,16 +8,17 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.LaunchedEffect
-import com.ai.bardly.navigation.root.application.DefaultApplicationComponent
-import com.arkivanov.decompose.defaultComponentContext
+import com.ai.bardly.di.ActivityComponent
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.initialize
 
 class MainActivity : ComponentActivity() {
+    private lateinit var component: ActivityComponent
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component = ActivityComponent.create(this)
         super.onCreate(savedInstanceState)
         Firebase.initialize(this)
-        val rootComponent = DefaultApplicationComponent(defaultComponentContext())
         setContent {
             LaunchedEffect(isSystemInDarkTheme()) {
                 enableEdgeToEdge(
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     )
                 )
             }
-            App(rootComponent)
+            component.app()
         }
     }
 }
