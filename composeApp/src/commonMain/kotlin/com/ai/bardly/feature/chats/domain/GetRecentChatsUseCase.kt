@@ -4,12 +4,10 @@ import com.ai.bardly.feature.chats.domain.model.RecentMessageDomainModel
 import com.ai.bardly.feature.games.domain.GamesRepository
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
-import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 @Inject
 @SingleIn(AppScope::class)
-@ContributesBinding(AppScope::class)
 class GetRecentChatsUseCase(
     private val chatsRepository: ChatsRepository,
     private val gamesRepository: GamesRepository
