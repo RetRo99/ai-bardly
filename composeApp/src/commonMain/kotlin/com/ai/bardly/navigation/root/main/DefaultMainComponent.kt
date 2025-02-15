@@ -5,6 +5,7 @@ import com.ai.bardly.feature.chats.ui.root.DefaultRootRecentComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.root.DefaultRootGamesComponent
 import com.ai.bardly.feature.home.root.DefaultRootHomeComponent
+import com.ai.bardly.navigation.switchTab
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack

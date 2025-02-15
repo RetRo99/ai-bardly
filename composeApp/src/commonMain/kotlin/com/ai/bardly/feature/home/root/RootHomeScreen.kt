@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.ai.bardly.feature.chats.ui.chat.ChatScreen
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.home.ui.HomeScreen
-import com.ai.bardly.navigation.root.RootChildStack
+import com.ai.bardly.navigation.RootChildStack
 
 @Composable
 fun RootHomeScreen(

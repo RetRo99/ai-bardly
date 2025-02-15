@@ -3,7 +3,7 @@ package com.ai.bardly.feature.chats.ui.root
 import androidx.compose.runtime.Composable
 import com.ai.bardly.feature.chats.ui.chat.ChatScreen
 import com.ai.bardly.feature.chats.ui.recent.RecentChatsScreen
-import com.ai.bardly.navigation.root.RootChildStack
+import com.ai.bardly.navigation.RootChildStack
 
 @Composable
 fun RootRecentScreen(
