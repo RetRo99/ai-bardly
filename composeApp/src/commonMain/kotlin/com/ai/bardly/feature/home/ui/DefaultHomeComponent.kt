@@ -10,12 +10,21 @@ import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.feature.games.ui.model.toUiModel
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
 
+typealias HomeFactory = (
+    ComponentContext,
+    navigateToChat: (String, Int) -> Unit,
+    navigateToGameDetails: (GameUiModel) -> Unit,
+) -> DefaultHomeComponent
+
+@Inject
 class DefaultHomeComponent(
-    componentContext: ComponentContext,
+    @Assisted componentContext: ComponentContext,
+    @Assisted private val navigateToChat: (String, Int) -> Unit,
+    @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
     private val gamesRepository: GamesRepository,
-    val navigateToChat: (String, Int) -> Unit,
-    val navigateToGameDetails: (GameUiModel) -> Unit,
     val analytics: Analytics,
 ) : BasePresenterImpl<HomeViewState, HomeIntent>(componentContext), HomeComponent {
 
