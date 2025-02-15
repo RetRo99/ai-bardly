@@ -13,7 +13,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 @ContributesSubcomponent(ActivityScope::class)
 @SingleIn(ActivityScope::class)
-interface ActivityComponent {
+interface ActivityDiComponent {
     @Provides
     fun provideComponentContext(
         activity: ComponentActivity

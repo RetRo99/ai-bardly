@@ -33,7 +33,7 @@ import javax.inject.Named
 abstract class AppComponent(
     @get:Provides val application: Application,
 ) : ActivityComponent.Factory {
-    abstract val activityComponentFactory: ActivityComponent.Factory
+    abstract val activityDiComponentFactory: ActivityComponent.Factory
 
     @Provides
     @SingleIn(AppScope::class)

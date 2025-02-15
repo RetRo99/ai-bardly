@@ -22,7 +22,7 @@ import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.root.RootRecentScreen
 import com.ai.bardly.feature.games.root.RootGamesScreen
 import com.ai.bardly.feature.home.root.RootHomeScreen
-import com.ai.bardly.navigation.root.application.DecomposeRoot
+import com.ai.bardly.navigation.root.application.RootPresenter
 import com.ai.bardly.navigation.root.main.MainNavigationComponent
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
@@ -39,7 +39,7 @@ typealias App = @Composable () -> Unit
 @Inject
 @Composable
 fun App(
-    applicationComponent: DecomposeRoot,
+    applicationComponent: RootPresenter,
 ) {
 
     MaterialTheme(
@@ -49,7 +49,7 @@ fun App(
             stack = applicationComponent.childStack,
         ) {
             when (val child = it.instance) {
-                is DecomposeRoot.ApplicationChild.Main -> {
+                is RootPresenter.ApplicationChild.Main -> {
                     MainScreen(child.component)
                 }
             }

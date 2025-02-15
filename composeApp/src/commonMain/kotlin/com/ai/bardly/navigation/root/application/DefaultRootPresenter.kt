@@ -17,21 +17,21 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 @Inject
 @SingleIn(ActivityScope::class)
-@ContributesBinding(ActivityScope::class, boundType = DecomposeRoot::class)
-class DefaultDecomposeRoot(
+@ContributesBinding(ActivityScope::class, boundType = RootPresenter::class)
+class DefaultRootPresenter(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val analytics: Analytics,
     private val chatsRepository: ChatsRepository,
-) : DecomposeRoot, ComponentContext by componentContext, BackHandlerOwner {
+) : RootPresenter, ComponentContext by componentContext, BackHandlerOwner {
 
-    private val navigation = StackNavigation<DecomposeRoot.RootConfig>()
+    private val navigation = StackNavigation<RootPresenter.RootConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = DecomposeRoot.RootConfig.serializer(),
-        initialStack = { listOf(DecomposeRoot.RootConfig.Main) },
+        serializer = RootPresenter.RootConfig.serializer(),
+        initialStack = { listOf(RootPresenter.RootConfig.Main) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -41,10 +41,10 @@ class DefaultDecomposeRoot(
     }
 
     private fun childFactory(
-        screenConfig: DecomposeRoot.RootConfig,
+        screenConfig: RootPresenter.RootConfig,
         componentContext: ComponentContext
-    ): DecomposeRoot.ApplicationChild = when (screenConfig) {
-        DecomposeRoot.RootConfig.Main -> DecomposeRoot.ApplicationChild.Main(
+    ): RootPresenter.ApplicationChild = when (screenConfig) {
+        RootPresenter.RootConfig.Main -> RootPresenter.ApplicationChild.Main(
             DefaultMainNavigationComponent(
                 componentContext,
                 gamesRepository = gamesRepository,

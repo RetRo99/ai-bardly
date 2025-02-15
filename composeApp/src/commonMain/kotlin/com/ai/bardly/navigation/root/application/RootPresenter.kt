@@ -4,7 +4,7 @@ import com.ai.bardly.navigation.root.RootComponent
 import com.ai.bardly.navigation.root.main.MainNavigationComponent
 import kotlinx.serialization.Serializable
 
-interface DecomposeRoot : RootComponent<DecomposeRoot.ApplicationChild, DecomposeRoot.RootConfig> {
+interface RootPresenter : RootComponent<RootPresenter.ApplicationChild, RootPresenter.RootConfig> {
     sealed interface ApplicationChild {
         data class Main(val component: MainNavigationComponent) : ApplicationChild
     }
