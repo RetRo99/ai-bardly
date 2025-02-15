@@ -32,8 +32,8 @@ import javax.inject.Named
 @SingleIn(AppScope::class)
 abstract class AppComponent(
     @get:Provides val application: Application,
-) : ActivityComponent.Factory {
-    abstract val activityDiComponentFactory: ActivityComponent.Factory
+) : ActivityDiComponent.Factory {
+    abstract val activityDiComponentFactory: ActivityDiComponent.Factory
 
     @Provides
     @SingleIn(AppScope::class)

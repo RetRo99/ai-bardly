@@ -23,16 +23,16 @@ interface ActivityDiComponent {
     interface Factory {
         fun createComponent(
             activity: ComponentActivity
-        ): ActivityComponent
+        ): ActivityDiComponent
     }
 
     val app: App
 
     companion object {
-        fun create(activity: ComponentActivity): ActivityComponent =
+        fun create(activity: ComponentActivity): ActivityDiComponent =
             (activity.application as BardlyApplication)
                 .getApplicationComponent()
-                .activityComponentFactory
+                .activityDiComponentFactory
                 .createComponent(activity)
     }
 }

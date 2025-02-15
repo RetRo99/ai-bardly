@@ -10,7 +10,6 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
@@ -24,7 +23,7 @@ class DefaultRootPresenter(
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val analytics: Analytics,
     private val chatsRepository: ChatsRepository,
-) : RootPresenter, ComponentContext by componentContext, BackHandlerOwner {
+) : RootPresenter, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<RootPresenter.RootConfig>()
 
