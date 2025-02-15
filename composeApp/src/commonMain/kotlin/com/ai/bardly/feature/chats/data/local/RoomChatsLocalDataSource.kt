@@ -2,9 +2,14 @@ package com.ai.bardly.feature.chats.data.local
 
 import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.feature.chats.data.local.model.MessageEntity
-import org.koin.core.annotation.Single
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Single(binds = [ChatsLocalDataSource::class])
+@Inject
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
 class RoomChatsLocalDataSource(
     private val dao: MessagesDao,
     private val daoExecutor: DaoExecutor,
