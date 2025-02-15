@@ -5,9 +5,6 @@ import androidx.paging.LoadType
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.ai.bardly.analytics.Analytics
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 @OptIn(ExperimentalPagingApi::class)
 class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
@@ -17,9 +14,7 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
     private val remoteToLocal: (List<RemoteItem>) -> List<LocalItem>,
     private val clearLocal: suspend () -> Unit = { },
     private val shouldRefresh: () -> Boolean = { true }
-) : RemoteMediator<Int, LocalItem>(), KoinComponent {
-
-    private val analytics by inject<Analytics>()
+) : RemoteMediator<Int, LocalItem>() {
 
     private var currentPage = 1
 
@@ -60,9 +55,7 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
                 }
             }
 
-            val remoteResult = remoteSource.load(loadParams)
-
-            when (remoteResult) {
+            when (val remoteResult = remoteSource.load(loadParams)) {
                 is PagingSource.LoadResult.Page -> {
                     if (loadType == LoadType.REFRESH) {
                         clearLocal()
@@ -75,9 +68,7 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
                 }
 
                 is PagingSource.LoadResult.Error -> {
-                    val localResult = localSource.load(loadParams)
-
-                    when (localResult) {
+                    when (val localResult = localSource.load(loadParams)) {
                         is PagingSource.LoadResult.Page -> {
                             MediatorResult.Success(
                                 endOfPaginationReached = localResult.data.isEmpty()
@@ -99,7 +90,6 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
                 }
             }
         } catch (e: Exception) {
-            analytics.logException(e, "Failed remote mediator load")
             MediatorResult.Error(e)
         }
     }
