@@ -30,7 +30,7 @@ class DefaultMainPresenter(
     override val childStack = childStack(
         source = navigation,
         serializer = MainPresenter.MainConfig.serializer(),
-        initialStack = { listOf(MainPresenter.MainConfig.GameList) },
+        initialConfiguration = MainPresenter.MainConfig.Home,
         childFactory = ::childFactory,
     )
 

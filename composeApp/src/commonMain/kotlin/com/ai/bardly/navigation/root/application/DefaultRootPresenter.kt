@@ -23,7 +23,7 @@ class DefaultRootPresenter(
     override val childStack = childStack(
         source = navigation,
         serializer = RootPresenter.RootConfig.serializer(),
-        initialStack = { listOf(RootPresenter.RootConfig.Main) },
+        initialConfiguration = RootPresenter.RootConfig.Main,
         handleBackButton = true,
         childFactory = ::childFactory,
     )
