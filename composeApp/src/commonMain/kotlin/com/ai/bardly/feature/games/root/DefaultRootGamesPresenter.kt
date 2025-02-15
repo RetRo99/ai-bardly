@@ -15,19 +15,19 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 
-class DefaultRootGamesComponent(
+class DefaultRootGamesPresenter(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
     private val chatRepository: ChatsRepository,
     private val analytics: Analytics,
-) : BaseComponentImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesComponent {
+) : BaseComponentImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesPresenter {
 
-    private val navigation = StackNavigation<RootGamesComponent.GamesConfig>()
+    private val navigation = StackNavigation<RootGamesPresenter.GamesConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = RootGamesComponent.GamesConfig.serializer(),
-        initialStack = { listOf(RootGamesComponent.GamesConfig.GamesList) },
+        serializer = RootGamesPresenter.GamesConfig.serializer(),
+        initialStack = { listOf(RootGamesPresenter.GamesConfig.GamesList) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -46,31 +46,31 @@ class DefaultRootGamesComponent(
 
     @OptIn(DelicateDecomposeApi::class)
     private fun childFactory(
-        screenConfig: RootGamesComponent.GamesConfig,
+        screenConfig: RootGamesPresenter.GamesConfig,
         componentContext: ComponentContext
-    ): RootGamesComponent.GamesChild = when (screenConfig) {
-        RootGamesComponent.GamesConfig.GamesList -> RootGamesComponent.GamesChild.GamesList(
+    ): RootGamesPresenter.GamesChild = when (screenConfig) {
+        RootGamesPresenter.GamesConfig.GamesList -> RootGamesPresenter.GamesChild.GamesList(
             DefaultGamesListComponent(
                 componentContext,
                 gamesRepository,
-                { title, id -> navigation.push(RootGamesComponent.GamesConfig.Chat(title, id)) },
-                { game -> navigation.push(RootGamesComponent.GamesConfig.GameDetails(game)) },
+                { title, id -> navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id)) },
+                { game -> navigation.push(RootGamesPresenter.GamesConfig.GameDetails(game)) },
                 analytics
             )
         )
 
-        is RootGamesComponent.GamesConfig.GameDetails -> RootGamesComponent.GamesChild.GameDetails(
+        is RootGamesPresenter.GamesConfig.GameDetails -> RootGamesPresenter.GamesChild.GameDetails(
             DefaultGameDetailsComponent(
                 componentContext,
                 screenConfig.game,
                 gamesRepository,
-                { title, id -> navigation.push(RootGamesComponent.GamesConfig.Chat(title, id)) },
+                { title, id -> navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id)) },
                 ::onBackClicked,
                 analytics,
             )
         )
 
-        is RootGamesComponent.GamesConfig.Chat -> RootGamesComponent.GamesChild.ChatDetails(
+        is RootGamesPresenter.GamesConfig.Chat -> RootGamesPresenter.GamesChild.ChatDetails(
             DefaultChatComponent(
                 componentContext,
                 screenConfig.title,

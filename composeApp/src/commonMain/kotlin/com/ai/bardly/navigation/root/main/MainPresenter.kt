@@ -8,7 +8,7 @@ import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
 import com.ai.bardly.feature.chats.ui.root.RootRecentComponent
-import com.ai.bardly.feature.games.root.RootGamesComponent
+import com.ai.bardly.feature.games.root.RootGamesPresenter
 import com.ai.bardly.feature.home.root.RootHomeComponent
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Contextual
@@ -23,7 +23,7 @@ interface MainPresenter :
     sealed interface MainChild {
         data class RecentChats(val component: RootRecentComponent) : MainChild
         data class Home(val component: RootHomeComponent) : MainChild
-        data class GameList(val component: RootGamesComponent) : MainChild
+        data class GameList(val component: RootGamesPresenter) : MainChild
     }
 
     @Serializable

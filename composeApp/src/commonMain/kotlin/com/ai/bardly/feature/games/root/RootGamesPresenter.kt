@@ -8,8 +8,8 @@ import com.ai.bardly.feature.games.ui.model.GameUiModel
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
-interface RootGamesComponent : BaseComponent<RootGamesViewState, RootGamesIntent>,
-    RootDecomposeComponent<RootGamesComponent.GamesChild, RootGamesComponent.GamesConfig> {
+interface RootGamesPresenter : BaseComponent<RootGamesViewState, RootGamesIntent>,
+    RootDecomposeComponent<RootGamesPresenter.GamesChild, RootGamesPresenter.GamesConfig> {
 
     sealed interface GamesChild {
         data class GamesList(val component: GamesListComponent) : GamesChild
