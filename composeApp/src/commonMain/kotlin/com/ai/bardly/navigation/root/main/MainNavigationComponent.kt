@@ -10,14 +10,14 @@ import ai_bardly.composeapp.generated.resources.ic_home
 import com.ai.bardly.feature.chats.ui.root.RootRecentComponent
 import com.ai.bardly.feature.games.root.RootGamesComponent
 import com.ai.bardly.feature.home.root.RootHomeComponent
-import com.ai.bardly.navigation.root.RootComponent
+import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
 interface MainNavigationComponent :
-    RootComponent<MainNavigationComponent.MainChild, MainNavigationComponent.MainConfig> {
+    RootDecomposeComponent<MainNavigationComponent.MainChild, MainNavigationComponent.MainConfig> {
 
     fun navigate(config: MainConfig)
     sealed interface MainChild {

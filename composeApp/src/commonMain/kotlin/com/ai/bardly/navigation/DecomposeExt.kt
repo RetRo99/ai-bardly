@@ -6,7 +6,7 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import com.ai.bardly.navigation.root.RootComponent
+import com.ai.bardly.navigation.root.RootDecomposeComponent
 import com.ai.bardly.util.LocalScreenAnimationScope
 import com.ai.bardly.util.LocalScreenTransitionScope
 import com.arkivanov.decompose.Child
@@ -23,7 +23,7 @@ import com.arkivanov.decompose.router.stack.StackNavigator
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun <RootChild : Any, Config : Any> RootChildStack(
-    root: RootComponent<RootChild, Config>,
+    root: RootDecomposeComponent<RootChild, Config>,
     modifier: Modifier = Modifier,
     content: @Composable AnimatedVisibilityScope.(child: Child.Created<Config, RootChild>) -> Unit,
 ) {

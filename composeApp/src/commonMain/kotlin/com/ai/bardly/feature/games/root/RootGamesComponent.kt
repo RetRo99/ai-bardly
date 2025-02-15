@@ -5,11 +5,11 @@ import com.ai.bardly.feature.chats.ui.chat.ChatComponent
 import com.ai.bardly.feature.games.ui.details.GameDetailsComponent
 import com.ai.bardly.feature.games.ui.list.GamesListComponent
 import com.ai.bardly.feature.games.ui.model.GameUiModel
-import com.ai.bardly.navigation.root.RootComponent
+import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface RootGamesComponent : BaseComponent<RootGamesViewState, RootGamesIntent>,
-    RootComponent<RootGamesComponent.GamesChild, RootGamesComponent.GamesConfig> {
+    RootDecomposeComponent<RootGamesComponent.GamesChild, RootGamesComponent.GamesConfig> {
 
     sealed interface GamesChild {
         data class GamesList(val component: GamesListComponent) : GamesChild
