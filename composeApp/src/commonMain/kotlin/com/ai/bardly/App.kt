@@ -1,8 +1,6 @@
 package com.ai.bardly
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
@@ -14,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -27,8 +24,6 @@ import com.ai.bardly.feature.games.root.RootGamesScreen
 import com.ai.bardly.feature.home.root.RootHomeScreen
 import com.ai.bardly.navigation.root.application.DecomposeRoot
 import com.ai.bardly.navigation.root.main.MainComponent
-import com.ai.bardly.util.LocalScreenAnimationScope
-import com.ai.bardly.util.LocalScreenTransitionScope
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
@@ -62,7 +57,7 @@ fun App(
     }
 }
 
-@OptIn(ExperimentalDecomposeApi::class, ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalDecomposeApi::class)
 @Composable
 private fun MainScreen(component: MainComponent) {
     Surface {
@@ -88,17 +83,10 @@ private fun MainScreen(component: MainComponent) {
                 stack = component.childStack,
                 animation = stackAnimation(fade()),
             ) {
-                SharedTransitionLayout {
-                    CompositionLocalProvider(
-                        LocalScreenTransitionScope provides this,
-                        LocalScreenAnimationScope provides this@ChildStack,
-                    ) {
-                        when (val child = it.instance) {
-                            is MainComponent.MainChild.GameList -> RootGamesScreen(child.component)
-                            is MainComponent.MainChild.Home -> RootHomeScreen(child.component)
-                            is MainComponent.MainChild.RecentChats -> RootRecentScreen(child.component)
-                        }
-                    }
+                when (val child = it.instance) {
+                    is MainComponent.MainChild.GameList -> RootGamesScreen(child.component)
+                    is MainComponent.MainChild.Home -> RootHomeScreen(child.component)
+                    is MainComponent.MainChild.RecentChats -> RootRecentScreen(child.component)
                 }
             }
         }

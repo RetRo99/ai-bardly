@@ -7,7 +7,7 @@ import com.ai.bardly.navigation.root.RootComponent
 import kotlinx.serialization.Serializable
 
 interface RootRecentComponent : BaseComponent<RootRecentViewState, RootRecentIntent>,
-    RootComponent<RootRecentComponent.RootRecentChild> {
+    RootComponent<RootRecentComponent.RootRecentChild, RootRecentComponent.RootRecentConfig> {
 
     sealed interface RootRecentChild {
         data class Chat(val component: ChatComponent) : RootRecentChild

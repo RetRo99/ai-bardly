@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
-interface MainComponent : RootComponent<MainComponent.MainChild> {
+interface MainComponent : RootComponent<MainComponent.MainChild, MainComponent.MainConfig> {
 
     fun navigate(config: MainConfig)
     sealed interface MainChild {

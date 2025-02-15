@@ -5,8 +5,8 @@ import com.arkivanov.decompose.router.stack.StackNavigator
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
 
-interface RootComponent<T : Any> : BackHandlerOwner {
-    val childStack: Value<ChildStack<*, T>>
+interface RootComponent<Child : Any, Config : Any> : BackHandlerOwner {
+    val childStack: Value<ChildStack<Config, Child>>
     fun onBackClicked()
 
     fun <C : Any> StackNavigator<C>.switchTab(configuration: C, onComplete: () -> Unit = {}) {
