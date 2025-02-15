@@ -7,7 +7,7 @@ import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.root.DefaultRootRecentComponent
 import com.ai.bardly.feature.games.domain.GamesRepository
 import com.ai.bardly.feature.games.root.DefaultRootGamesPresenter
-import com.ai.bardly.feature.home.root.DefaultRootHomeComponent
+import com.ai.bardly.feature.home.root.DefaultRootHomePresenter
 import com.ai.bardly.navigation.switchTab
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -61,7 +61,7 @@ class DefaultMainPresenter(
         )
 
         MainPresenter.MainConfig.Home -> MainPresenter.MainChild.Home(
-            DefaultRootHomeComponent(
+            DefaultRootHomePresenter(
                 componentContext,
                 gamesRepository,
                 chatsRepository = chatsRepository,

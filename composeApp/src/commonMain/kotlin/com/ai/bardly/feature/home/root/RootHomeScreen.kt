@@ -8,15 +8,15 @@ import com.ai.bardly.navigation.RootChildStack
 
 @Composable
 fun RootHomeScreen(
-    component: RootHomeComponent,
+    component: RootHomePresnter,
 ) {
     RootChildStack(
         root = component,
     ) { child ->
         when (val screen = child.instance) {
-            is RootHomeComponent.HomeChild.Home -> HomeScreen(screen.component)
-            is RootHomeComponent.HomeChild.GameDetails -> GameDetailsScreen(screen.component)
-            is RootHomeComponent.HomeChild.Chat -> ChatScreen(screen.component)
+            is RootHomePresnter.HomeChild.Home -> HomeScreen(screen.component)
+            is RootHomePresnter.HomeChild.GameDetails -> GameDetailsScreen(screen.component)
+            is RootHomePresnter.HomeChild.Chat -> ChatScreen(screen.component)
         }
     }
 }

@@ -8,8 +8,8 @@ import com.ai.bardly.feature.home.ui.HomeComponent
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
-interface RootHomeComponent : BaseComponent<RootHomeViewState, RootHomeIntent>,
-    RootDecomposeComponent<RootHomeComponent.HomeChild, RootHomeComponent.HomeConfig> {
+interface RootHomePresnter : BaseComponent<RootHomeViewState, RootHomeIntent>,
+    RootDecomposeComponent<RootHomePresnter.HomeChild, RootHomePresnter.HomeConfig> {
     sealed interface HomeChild {
         data class Home(val component: HomeComponent) : HomeChild
         data class GameDetails(val component: GameDetailsComponent) : HomeChild
