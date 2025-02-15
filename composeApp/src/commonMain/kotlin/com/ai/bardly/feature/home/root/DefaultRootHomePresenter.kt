@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.home.root
 
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
@@ -16,12 +17,14 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 internal typealias RootHomePresenterFactory = (
     ComponentContext,
 ) -> DefaultRootHomePresenter
 
 @Inject
+@ContributesBinding(ActivityScope::class, boundType = RootHomePresnter::class)
 class DefaultRootHomePresenter(
     @Assisted componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
