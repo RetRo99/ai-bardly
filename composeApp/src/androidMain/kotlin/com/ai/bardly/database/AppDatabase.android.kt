@@ -3,9 +3,12 @@ package com.ai.bardly.database
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.koin.core.annotation.Single
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Single
+@Inject
+@SingleIn(AppScope::class)
 actual class PlatformDataBaseHelper(
     private val context: Context,
 ) {
