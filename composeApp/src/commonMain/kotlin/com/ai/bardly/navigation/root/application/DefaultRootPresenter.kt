@@ -5,7 +5,7 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.navigation.root.main.DefaultMainNavigationComponent
+import com.ai.bardly.navigation.root.main.DefaultMainPresenter
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -44,7 +44,7 @@ class DefaultRootPresenter(
         componentContext: ComponentContext
     ): RootPresenter.ApplicationChild = when (screenConfig) {
         RootPresenter.RootConfig.Main -> RootPresenter.ApplicationChild.Main(
-            DefaultMainNavigationComponent(
+            DefaultMainPresenter(
                 componentContext,
                 gamesRepository = gamesRepository,
                 getRecentChatsUseCase = getRecentChatsUseCase,

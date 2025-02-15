@@ -13,7 +13,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 
-class DefaultMainNavigationComponent(
+class DefaultMainPresenter(
     componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
