@@ -1,6 +1,7 @@
 package com.ai.bardly.navigation.root.main
 
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.chats.domain.ChatsRepository
 import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.chats.ui.root.DefaultRootRecentComponent
@@ -12,9 +13,18 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
+internal typealias MainPresenterFactory = (
+    ComponentContext,
+) -> DefaultMainPresenter
+
+@Inject
+@ContributesBinding(ActivityScope::class, boundType = MainPresenter::class)
 class DefaultMainPresenter(
-    componentContext: ComponentContext,
+    @Assisted componentContext: ComponentContext,
     private val gamesRepository: GamesRepository,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val analytics: Analytics,

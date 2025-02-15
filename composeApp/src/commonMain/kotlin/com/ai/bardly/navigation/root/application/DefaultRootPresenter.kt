@@ -1,11 +1,7 @@
 package com.ai.bardly.navigation.root.application
 
-import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.chats.domain.ChatsRepository
-import com.ai.bardly.feature.chats.domain.GetRecentChatsUseCase
-import com.ai.bardly.feature.games.domain.GamesRepository
-import com.ai.bardly.navigation.root.main.DefaultMainPresenter
+import com.ai.bardly.navigation.root.main.MainPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -19,10 +15,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 @ContributesBinding(ActivityScope::class, boundType = RootPresenter::class)
 class DefaultRootPresenter(
     componentContext: ComponentContext,
-    private val gamesRepository: GamesRepository,
-    private val getRecentChatsUseCase: GetRecentChatsUseCase,
-    private val analytics: Analytics,
-    private val chatsRepository: ChatsRepository,
+    private val mainPresenterFactory: MainPresenterFactory,
 ) : RootPresenter, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<RootPresenter.RootConfig>()
@@ -44,12 +37,8 @@ class DefaultRootPresenter(
         componentContext: ComponentContext
     ): RootPresenter.ApplicationChild = when (screenConfig) {
         RootPresenter.RootConfig.Main -> RootPresenter.ApplicationChild.Main(
-            DefaultMainPresenter(
-                componentContext,
-                gamesRepository = gamesRepository,
-                getRecentChatsUseCase = getRecentChatsUseCase,
-                analytics = analytics,
-                chatsRepository = chatsRepository
+            mainPresenterFactory(
+                componentContext
             )
         )
     }
