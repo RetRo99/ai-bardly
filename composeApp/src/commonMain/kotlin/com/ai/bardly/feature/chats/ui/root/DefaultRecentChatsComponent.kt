@@ -1,5 +1,6 @@
 package com.ai.bardly.feature.chats.ui.root
 
+import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.base.BaseComponentImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.chats.domain.ChatsRepository
@@ -12,15 +13,14 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
-import org.koin.core.component.inject
 
 class DefaultRootRecentComponent(
     componentContext: ComponentContext,
+    private val recentChatUseCase: GetRecentChatsUseCase,
+    private val chatRepository: ChatsRepository,
+    private val analytics: Analytics,
 ) : BaseComponentImpl<RootRecentViewState, RootRecentIntent>(componentContext),
     RootRecentComponent {
-
-    val chatRepository by inject<ChatsRepository>()
-    val recentChatUseCase by inject<GetRecentChatsUseCase>()
 
     private val navigation = StackNavigation<RootRecentComponent.RootRecentConfig>()
 
@@ -61,6 +61,7 @@ class DefaultRootRecentComponent(
                         )
                     )
                 },
+                analytics
             )
         )
 
@@ -71,6 +72,7 @@ class DefaultRootRecentComponent(
                 screenConfig.id,
                 chatRepository,
                 ::onBackClicked,
+                analytics
             )
         )
     }
