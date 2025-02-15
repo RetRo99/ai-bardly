@@ -3,7 +3,7 @@ package com.ai.bardly.feature.chats.ui.root
 import androidx.compose.runtime.Composable
 import com.ai.bardly.feature.chats.ui.chat.ChatScreen
 import com.ai.bardly.feature.chats.ui.recent.RecentChatsScreen
-import com.ai.bardly.util.backAnimation
+import com.ai.bardly.util.iOsBackAnimation
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 
@@ -14,7 +14,7 @@ fun RootRecentScreen(
 ) {
     ChildStack(
         component.childStack,
-        animation = backAnimation(
+        animation = iOsBackAnimation(
             backHandler = component.backHandler,
             onBack = component::onBackClicked,
         )

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.ai.bardly.feature.chats.ui.chat.ChatScreen
 import com.ai.bardly.feature.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.games.ui.list.GamesListScreen
-import com.ai.bardly.util.backAnimation
+import com.ai.bardly.util.iOsBackAnimation
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 
@@ -15,7 +15,7 @@ fun RootGamesScreen(
 ) {
     ChildStack(
         component.childStack,
-        animation = backAnimation(
+        animation = iOsBackAnimation(
             backHandler = component.backHandler,
             onBack = component::onBackClicked,
         )

@@ -16,7 +16,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.isFront
 import com.arkivanov.essenty.backhandler.BackHandler
 
 @OptIn(ExperimentalDecomposeApi::class)
-fun <C : Any, T : Any> backAnimation(
+fun <C : Any, T : Any> iOsBackAnimation(
     backHandler: BackHandler,
     onBack: () -> Unit,
 ): StackAnimation<C, T> =
