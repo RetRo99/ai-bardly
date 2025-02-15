@@ -1,6 +1,7 @@
 package com.ai.bardly.di
 
 import android.app.Application
+import android.content.Context
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
@@ -33,6 +34,11 @@ abstract class AppComponent(
     @get:Provides val application: Application,
 ) : ActivityComponent.Factory {
     abstract val activityComponentFactory: ActivityComponent.Factory
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideContext(application: Application): Context =
+        application
 
     // region Database TODO: Move to a separate module
     @Provides
