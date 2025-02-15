@@ -5,9 +5,14 @@ import com.ai.bardly.database.DaoExecutor
 import com.ai.bardly.feature.games.data.local.model.GameEntity
 import com.ai.bardly.feature.games.data.local.model.GameMetadataEntity
 import kotlinx.datetime.LocalDateTime
-import org.koin.core.annotation.Single
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Single(binds = [GamesLocalDataSource::class])
+@Inject
+@SingleIn(AppScope::class)
+@ContributesBinding(AppScope::class)
 class RoomGamesLocalDataSource(
     private val gamesDao: GamesDao,
     private val daoExecutor: DaoExecutor,
