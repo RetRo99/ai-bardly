@@ -25,20 +25,24 @@ import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.root.RootRecentScreen
 import com.ai.bardly.feature.games.root.RootGamesScreen
 import com.ai.bardly.feature.home.root.RootHomeScreen
-import com.ai.bardly.navigation.root.application.ApplicationComponent
+import com.ai.bardly.navigation.root.application.DecomposeRoot
 import com.ai.bardly.navigation.root.main.MainComponent
 import com.ai.bardly.util.LocalScreenAnimationScope
 import com.ai.bardly.util.LocalScreenTransitionScope
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import me.tatarka.inject.annotations.Inject
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+typealias App = @Composable () -> Unit
+
 @OptIn(ExperimentalDecomposeApi::class)
+@Inject
 @Composable
 fun App(
-    applicationComponent: ApplicationComponent,
+    applicationComponent: DecomposeRoot,
 ) {
 
     MaterialTheme(
@@ -48,7 +52,7 @@ fun App(
             stack = applicationComponent.childStack,
         ) {
             when (val child = it.instance) {
-                is ApplicationComponent.ApplicationChild.Main -> {
+                is DecomposeRoot.ApplicationChild.Main -> {
                     MainScreen(child.component)
                 }
             }
