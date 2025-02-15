@@ -2,11 +2,9 @@ package com.ai.bardly
 
 import android.app.Application
 import com.ai.bardly.di.AppComponent
-import com.ai.bardly.di.ApplicationModule
 import com.ai.bardly.di.create
-import com.ai.bardly.di.initKoin
-import org.koin.android.ext.koin.androidContext
-import org.koin.ksp.generated.module
+import com.mmk.kmpauth.google.GoogleAuthCredentials
+import com.mmk.kmpauth.google.GoogleAuthProvider
 
 class BardlyApplication : Application() {
     private lateinit var component: AppComponent
@@ -14,9 +12,8 @@ class BardlyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         component = AppComponent::class.create(this)
-        initKoin(ApplicationModule().module) {
-            androidContext(this@BardlyApplication)
-        }
+        // TODO move somewhere else, do this on ios
+        GoogleAuthProvider.create(GoogleAuthCredentials(serverId = "202431209061-0ku3miec01ehdhkp84jcpmp6lfbpefeq.apps.googleusercontent.com"))
     }
 
     fun getApplicationComponent() = component
