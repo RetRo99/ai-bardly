@@ -2,6 +2,7 @@ package com.ai.bardly.feature.games.ui.list
 
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
 import com.ai.bardly.base.BaseComponentImpl
@@ -28,6 +29,7 @@ class DefaultGamesListComponent(
     private val gamesRepository: GamesRepository,
     val navigateToChat: (String, Int) -> Unit,
     val navigateToGameDetails: (GameUiModel) -> Unit,
+    val analytics: Analytics,
 ) : BaseComponentImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
 
     override val defaultViewState = GamesListViewState()

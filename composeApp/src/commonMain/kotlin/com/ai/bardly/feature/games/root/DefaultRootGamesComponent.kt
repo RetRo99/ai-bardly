@@ -54,7 +54,8 @@ class DefaultRootGamesComponent(
                 componentContext,
                 gamesRepository,
                 { title, id -> navigation.push(RootGamesComponent.GamesConfig.Chat(title, id)) },
-                { game -> navigation.push(RootGamesComponent.GamesConfig.GameDetails(game)) }
+                { game -> navigation.push(RootGamesComponent.GamesConfig.GameDetails(game)) },
+                analytics
             )
         )
 
