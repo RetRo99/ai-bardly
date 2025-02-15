@@ -65,6 +65,7 @@ class DefaultRootGamesComponent(
                 gamesRepository,
                 { title, id -> navigation.push(RootGamesComponent.GamesConfig.Chat(title, id)) },
                 ::onBackClicked,
+                analytics,
             )
         )
 

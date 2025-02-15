@@ -1,5 +1,6 @@
 package com.ai.bardly.feature.games.ui.details
 
+import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
 import com.ai.bardly.base.BaseComponentImpl
@@ -15,6 +16,7 @@ class DefaultGameDetailsComponent(
     private val gamesRepository: GamesRepository,
     private val navigateToChat: (String, Int) -> Unit,
     private val navigateBack: () -> Unit,
+    private val analytics: Analytics,
 ) : BaseComponentImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsComponent {
 
