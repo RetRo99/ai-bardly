@@ -1,18 +1,21 @@
-package com.ai.bardly.database
+package com.ai.bardly.database.di
 
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import me.tatarka.inject.annotations.Inject
+import com.ai.bardly.database.AppDatabase
+import me.tatarka.inject.annotations.Provides
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesTo
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
-@Inject
+@ContributesTo(AppScope::class)
 @SingleIn(AppScope::class)
-actual class PlatformDataBaseHelper(
-    private val context: Context,
-) {
-    actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+interface AndroidDatabaseComponent {
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideAppDatabase(context: Context): RoomDatabase.Builder<AppDatabase> {
         val dbFile = context.getDatabasePath("bardly.db")
         return Room.databaseBuilder<AppDatabase>(
             context = context,

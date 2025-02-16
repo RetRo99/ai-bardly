@@ -1,9 +1,6 @@
 package com.ai.bardly.database.di
 
-import androidx.room.RoomDatabase
 import com.ai.bardly.database.AppDatabase
-import me.tatarka.inject.annotations.Component
-import me.tatarka.inject.annotations.KmpComponentCreate
 import me.tatarka.inject.annotations.Provides
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesTo
@@ -11,15 +8,13 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 @ContributesTo(AppScope::class)
 @SingleIn(AppScope::class)
-@Component
-interface DatabaseComponent {
+interface DaoComponent {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideAppDatabase(builder: RoomDatabase.Builder<AppDatabase>): AppDatabase {
-        return builder.build()
-    }
-}
+    fun provideGamesDao(appDatabase: AppDatabase) = appDatabase.getGamesDao()
 
-@KmpComponentCreate
-expect fun createDatabaseComponent(): DatabaseComponent
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideMessagesDao(appDatabase: AppDatabase) = appDatabase.getMessagesDao()
+}

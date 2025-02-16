@@ -31,7 +31,3 @@ abstract class AppDatabase : RoomDatabase() {
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase
 }
-
-expect class PlatformDataBaseHelper {
-    fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase>
-}
