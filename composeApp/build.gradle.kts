@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.konan.target.Family
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -17,6 +19,15 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+    targets
+        .filterIsInstance<KotlinNativeTarget>()
+        .filter { it.konanTarget.family == Family.IOS }
+        .forEach {
+            it.binaries.framework {
+                export(libs.decompose)
+                export(libs.essenty.lifecycle)
+            }
+        }
 
     listOf(
         iosX64(),
