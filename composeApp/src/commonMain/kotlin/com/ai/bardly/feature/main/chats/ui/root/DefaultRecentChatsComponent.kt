@@ -1,0 +1,86 @@
+package com.ai.bardly.feature.main.chats.ui.root
+
+import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.annotations.ActivityScope
+import com.ai.bardly.base.BasePresenterImpl
+import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.feature.main.chats.domain.GetRecentChatsUseCase
+import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenterFactory
+import com.ai.bardly.feature.main.chats.ui.recent.DefaultRecentChatsComponent
+import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.DelicateDecomposeApi
+import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.push
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+
+internal typealias RootRecentPresenterFactory = (
+    ComponentContext,
+) -> DefaultRootRecentPresenter
+
+@Inject
+@ContributesBinding(ActivityScope::class, boundType = RootRecentPresenter::class)
+class DefaultRootRecentPresenter(
+    @Assisted componentContext: ComponentContext,
+    private val recentChatUseCase: GetRecentChatsUseCase,
+    private val chatPresenterFactory: ChatPresenterFactory,
+    private val analytics: Analytics,
+) : BasePresenterImpl<RootRecentViewState, RootRecentIntent>(componentContext),
+    RootRecentPresenter {
+
+    private val navigation = StackNavigation<RootRecentPresenter.RootRecentConfig>()
+
+    override val childStack = childStack(
+        source = navigation,
+        serializer = RootRecentPresenter.RootRecentConfig.serializer(),
+        initialStack = { listOf(RootRecentPresenter.RootRecentConfig.RecentChats) },
+        handleBackButton = true,
+        childFactory = ::childFactory,
+    )
+
+    override fun onBackClicked() {
+        navigation.pop()
+    }
+
+    override val defaultViewState = RootRecentViewState
+
+    override val initialState = BaseViewState.Success(defaultViewState)
+
+    override suspend fun handleScreenIntent(intent: RootRecentIntent) {
+        // TODO
+    }
+
+    @OptIn(DelicateDecomposeApi::class)
+    private fun childFactory(
+        screenConfig: RootRecentPresenter.RootRecentConfig,
+        componentContext: ComponentContext
+    ): RootRecentPresenter.RootRecentChild = when (screenConfig) {
+        RootRecentPresenter.RootRecentConfig.RecentChats -> RootRecentPresenter.RootRecentChild.RecentChats(
+            DefaultRecentChatsComponent(
+                componentContext,
+                recentChatUseCase,
+                { title, id ->
+                    navigation.push(
+                        RootRecentPresenter.RootRecentConfig.Chat(
+                            title,
+                            id
+                        )
+                    )
+                },
+                analytics
+            )
+        )
+
+        is RootRecentPresenter.RootRecentConfig.Chat -> RootRecentPresenter.RootRecentChild.Chat(
+            chatPresenterFactory(
+                componentContext,
+                screenConfig.title,
+                screenConfig.id,
+                ::onBackClicked,
+            )
+        )
+    }
+}

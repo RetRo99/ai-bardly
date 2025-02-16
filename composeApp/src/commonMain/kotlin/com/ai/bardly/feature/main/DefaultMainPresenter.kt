@@ -1,9 +1,9 @@
 package com.ai.bardly.feature.main
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.chats.ui.root.RootRecentPresenterFactory
-import com.ai.bardly.feature.games.root.RootGamesPresenterFactory
-import com.ai.bardly.feature.home.root.RootHomePresenterFactory
+import com.ai.bardly.feature.main.chats.ui.root.RootRecentPresenterFactory
+import com.ai.bardly.feature.main.games.root.RootGamesPresenterFactory
+import com.ai.bardly.feature.main.home.root.RootHomePresenterFactory
 import com.ai.bardly.navigation.switchTab
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation

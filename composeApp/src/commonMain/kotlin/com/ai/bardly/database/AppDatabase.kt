@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
-import com.ai.bardly.feature.chats.data.local.MessagesDao
-import com.ai.bardly.feature.chats.data.local.model.MessageEntity
-import com.ai.bardly.feature.games.data.local.GamesDao
-import com.ai.bardly.feature.games.data.local.model.GameEntity
-import com.ai.bardly.feature.games.data.local.model.GameMetadataEntity
+import com.ai.bardly.feature.main.chats.data.local.MessagesDao
+import com.ai.bardly.feature.main.chats.data.local.model.MessageEntity
+import com.ai.bardly.feature.main.games.data.local.GamesDao
+import com.ai.bardly.feature.main.games.data.local.model.GameEntity
+import com.ai.bardly.feature.main.games.data.local.model.GameMetadataEntity
 
 @Database(
     entities = [
