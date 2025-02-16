@@ -1,21 +1,34 @@
 package com.ai.bardly
 
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.uikit.OnFocusBehavior
 import androidx.compose.ui.window.ComposeUIViewController
-import com.ai.bardly.navigation.root.application.DefaultRootPresenter
-import com.arkivanov.decompose.DefaultComponentContext
-import com.arkivanov.essenty.lifecycle.ApplicationLifecycle
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.PredictiveBackGestureOverlay
+import com.arkivanov.essenty.backhandler.BackDispatcher
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.crashlytics.crashlytics
 import dev.gitlive.firebase.initialize
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
+import platform.UIKit.UIViewController
 
-fun MainViewController() = ComposeUIViewController {
-    val applicationComponent = remember {
-        DefaultRootPresenter(DefaultComponentContext(ApplicationLifecycle()))
+typealias HomeViewController = (backDispatcher: BackDispatcher) -> UIViewController
+
+@OptIn(ExperimentalDecomposeApi::class)
+@Inject
+fun HomeViewController(app: App, @Assisted backDispatcher: BackDispatcher): UIViewController {
+    return ComposeUIViewController(configure = { onFocusBehavior = OnFocusBehavior.DoNothing }) {
+        PredictiveBackGestureOverlay(
+            backDispatcher = backDispatcher,
+            backIcon = null,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            app()
+        }
     }
-    App(applicationComponent)
 }
-
 fun initFirebase() {
     Firebase.initialize()
     Firebase.crashlytics.setCrashlyticsCollectionEnabled(true)
