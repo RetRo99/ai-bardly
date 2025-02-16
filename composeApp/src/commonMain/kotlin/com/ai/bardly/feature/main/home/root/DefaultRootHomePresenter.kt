@@ -5,6 +5,7 @@ import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenterFactory
 import com.ai.bardly.feature.main.games.ui.details.GameDetailsPresenterFactory
+import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.ai.bardly.feature.main.home.ui.HomePresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
@@ -39,19 +40,28 @@ class DefaultRootHomePresenter(
         childFactory = ::childFactory,
     )
 
-    override fun onBackClicked() {
-        navigation.pop()
-    }
-
     override val defaultViewState = RootHomeViewState
 
     override val initialState = BaseViewState.Success(defaultViewState)
+
+    override fun onBackClicked() {
+        navigation.pop()
+    }
 
     override suspend fun handleScreenIntent(intent: RootHomeIntent) {
         // TODO
     }
 
     @OptIn(DelicateDecomposeApi::class)
+    private fun openChat(title: String, id: Int) {
+        navigation.push(RootHomePresnter.HomeConfig.Chat(title, id))
+    }
+
+    @OptIn(DelicateDecomposeApi::class)
+    private fun openGameDetails(game: GameUiModel) {
+        navigation.push(RootHomePresnter.HomeConfig.GameDetails(game))
+    }
+
     private fun childFactory(
         screenConfig: RootHomePresnter.HomeConfig,
         componentContext: ComponentContext
@@ -59,8 +69,8 @@ class DefaultRootHomePresenter(
         RootHomePresnter.HomeConfig.Home -> RootHomePresnter.HomeChild.Home(
             homePresenterFactory(
                 componentContext,
-                { title, id -> navigation.push(RootHomePresnter.HomeConfig.Chat(title, id)) },
-                { game -> navigation.push(RootHomePresnter.HomeConfig.GameDetails(game)) },
+                ::openChat,
+                ::openGameDetails,
             )
         )
 
@@ -68,7 +78,7 @@ class DefaultRootHomePresenter(
             gameDetailsPresenterFactory(
                 componentContext,
                 screenConfig.game,
-                { title, id -> navigation.push(RootHomePresnter.HomeConfig.Chat(title, id)) },
+                ::openChat,
                 ::onBackClicked,
             )
         )
