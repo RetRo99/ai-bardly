@@ -6,6 +6,7 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenterFactory
 import com.ai.bardly.feature.main.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.main.games.ui.list.GamesListComponentFactory
+import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -39,19 +40,28 @@ class DefaultRootGamesPresenter(
         childFactory = ::childFactory,
     )
 
+    override val defaultViewState = RootGamesViewState
+
+    override val initialState = BaseViewState.Success(defaultViewState)
+
     override fun onBackClicked() {
         navigation.pop()
     }
 
-    override val defaultViewState = RootGamesViewState
+    @OptIn(DelicateDecomposeApi::class)
+    private fun openChat(title: String, id: Int) {
+        navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id))
+    }
 
-    override val initialState = BaseViewState.Success(defaultViewState)
+    @OptIn(DelicateDecomposeApi::class)
+    private fun openGameDetails(game: GameUiModel) {
+        navigation.push(RootGamesPresenter.GamesConfig.GameDetails(game))
+    }
 
     override suspend fun handleScreenIntent(intent: RootGamesIntent) {
         // TODO
     }
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun childFactory(
         screenConfig: RootGamesPresenter.GamesConfig,
         componentContext: ComponentContext
@@ -59,8 +69,8 @@ class DefaultRootGamesPresenter(
         RootGamesPresenter.GamesConfig.GamesList -> RootGamesPresenter.GamesChild.GamesList(
             gamesListComponentFactory(
                 componentContext,
-                { title, id -> navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id)) },
-                { game -> navigation.push(RootGamesPresenter.GamesConfig.GameDetails(game)) },
+                ::openChat,
+                ::openGameDetails,
             )
         )
 
@@ -68,7 +78,7 @@ class DefaultRootGamesPresenter(
             gameDetailsPresenterFactory(
                 componentContext,
                 screenConfig.game,
-                { title, id -> navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id)) },
+                ::openChat,
                 ::onBackClicked,
             )
         )
