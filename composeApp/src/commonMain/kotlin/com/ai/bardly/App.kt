@@ -23,6 +23,7 @@ import com.ai.bardly.feature.main.MainPresenter
 import com.ai.bardly.feature.main.chats.root.RootRecentScreen
 import com.ai.bardly.feature.main.games.root.RootGamesScreen
 import com.ai.bardly.feature.main.home.root.RootHomeScreen
+import com.ai.bardly.feature.onboarding.RootOnboardingScreen
 import com.ai.bardly.navigation.root.application.RootPresenter
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
@@ -49,9 +50,8 @@ fun App(
             stack = applicationComponent.childStack,
         ) {
             when (val child = it.instance) {
-                is RootPresenter.ApplicationChild.Main -> {
-                    MainScreen(child.component)
-                }
+                is RootPresenter.RootChild.Main -> MainScreen(child.component)
+                is RootPresenter.RootChild.Onboarding -> RootOnboardingScreen(child.component)
             }
         }
     }
@@ -59,7 +59,7 @@ fun App(
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-private fun MainScreen(component: MainPresenter) {
+fun MainScreen(component: MainPresenter) {
     Surface {
         Scaffold(
             bottomBar = {

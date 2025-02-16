@@ -2,6 +2,7 @@ package com.ai.bardly.navigation.root.application
 
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.main.MainPresenterFactory
+import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -16,6 +17,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 class DefaultRootPresenter(
     componentContext: ComponentContext,
     private val mainPresenterFactory: MainPresenterFactory,
+    private val onboardingPresenterFactory: OnboardingPresenterFactory,
 ) : RootPresenter, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<RootPresenter.RootConfig>()
@@ -35,9 +37,15 @@ class DefaultRootPresenter(
     private fun childFactory(
         screenConfig: RootPresenter.RootConfig,
         componentContext: ComponentContext
-    ): RootPresenter.ApplicationChild = when (screenConfig) {
-        RootPresenter.RootConfig.Main -> RootPresenter.ApplicationChild.Main(
+    ): RootPresenter.RootChild = when (screenConfig) {
+        RootPresenter.RootConfig.Main -> RootPresenter.RootChild.Main(
             mainPresenterFactory(
+                componentContext
+            )
+        )
+
+        RootPresenter.RootConfig.Onboarding -> RootPresenter.RootChild.Onboarding(
+            onboardingPresenterFactory(
                 componentContext
             )
         )
