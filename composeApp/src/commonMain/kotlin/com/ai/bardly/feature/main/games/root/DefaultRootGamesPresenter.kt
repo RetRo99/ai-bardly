@@ -8,11 +8,10 @@ import com.ai.bardly.feature.main.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.main.games.ui.list.GamesListComponentFactory
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -48,14 +47,12 @@ class DefaultRootGamesPresenter(
         navigation.pop()
     }
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun openChat(title: String, id: Int) {
-        navigation.push(RootGamesPresenter.GamesConfig.Chat(title, id))
+        navigation.pushNew(RootGamesPresenter.GamesConfig.Chat(title, id))
     }
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun openGameDetails(game: GameUiModel) {
-        navigation.push(RootGamesPresenter.GamesConfig.GameDetails(game))
+        navigation.pushNew(RootGamesPresenter.GamesConfig.GameDetails(game))
     }
 
     override suspend fun handleScreenIntent(intent: RootGamesIntent) {

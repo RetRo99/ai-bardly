@@ -8,11 +8,10 @@ import com.ai.bardly.feature.main.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenterFactory
 import com.ai.bardly.feature.main.chats.ui.recent.DefaultRecentChatsComponent
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -45,9 +44,8 @@ class DefaultRootRecentPresenter(
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun openChat(title: String, id: Int) {
-        navigation.push(RootRecentPresenter.RootRecentConfig.Chat(title, id))
+        navigation.pushNew(RootRecentPresenter.RootRecentConfig.Chat(title, id))
     }
 
     override fun onBackClicked() {

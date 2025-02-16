@@ -8,11 +8,10 @@ import com.ai.bardly.feature.main.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.ai.bardly.feature.main.home.ui.HomePresenterFactory
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -52,14 +51,12 @@ class DefaultRootHomePresenter(
         // TODO
     }
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun openChat(title: String, id: Int) {
-        navigation.push(RootHomePresnter.HomeConfig.Chat(title, id))
+        navigation.pushNew(RootHomePresnter.HomeConfig.Chat(title, id))
     }
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun openGameDetails(game: GameUiModel) {
-        navigation.push(RootHomePresnter.HomeConfig.GameDetails(game))
+        navigation.pushNew(RootHomePresnter.HomeConfig.GameDetails(game))
     }
 
     private fun childFactory(

@@ -4,11 +4,10 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
@@ -36,9 +35,8 @@ class DefaultRootPresenter(
         navigation.pop()
     }
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun openMain() {
-        navigation.push(RootPresenter.RootConfig.Main)
+        navigation.pushNew(RootPresenter.RootConfig.Main)
     }
 
     private fun childFactory(
