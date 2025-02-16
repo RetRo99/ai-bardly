@@ -1,4 +1,4 @@
-package com.ai.bardly.navigation.root.main
+package com.ai.bardly.feature.main
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.chats

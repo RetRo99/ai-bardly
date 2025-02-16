@@ -1,4 +1,4 @@
-package com.ai.bardly.navigation.root.main
+package com.ai.bardly.feature.main
 
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.chats.ui.root.RootRecentPresenterFactory

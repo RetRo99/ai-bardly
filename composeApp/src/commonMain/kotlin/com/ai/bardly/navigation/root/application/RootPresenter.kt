@@ -1,7 +1,7 @@
 package com.ai.bardly.navigation.root.application
 
+import com.ai.bardly.feature.main.MainPresenter
 import com.ai.bardly.navigation.root.RootDecomposeComponent
-import com.ai.bardly.navigation.root.main.MainPresenter
 import kotlinx.serialization.Serializable
 
 interface RootPresenter :

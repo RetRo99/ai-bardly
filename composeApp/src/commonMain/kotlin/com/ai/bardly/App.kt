@@ -22,8 +22,8 @@ import bardlyLightColors
 import com.ai.bardly.feature.chats.ui.root.RootRecentScreen
 import com.ai.bardly.feature.games.root.RootGamesScreen
 import com.ai.bardly.feature.home.root.RootHomeScreen
+import com.ai.bardly.feature.main.MainPresenter
 import com.ai.bardly.navigation.root.application.RootPresenter
-import com.ai.bardly.navigation.root.main.MainPresenter
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade

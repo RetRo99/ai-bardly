@@ -1,7 +1,7 @@
 package com.ai.bardly.navigation.root.application
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.navigation.root.main.MainPresenterFactory
+import com.ai.bardly.feature.main.MainPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
