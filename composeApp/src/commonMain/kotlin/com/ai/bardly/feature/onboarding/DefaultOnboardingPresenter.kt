@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.onboarding
 
 import com.ai.bardly.annotations.ActivityScope
+import com.ai.bardly.feature.onboarding.welcome.ui.WelcomePresenterFactory
 import com.ai.bardly.navigation.switchTab
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -12,13 +13,15 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 internal typealias OnboardingPresenterFactory = (
     ComponentContext,
+    openMain: () -> Unit,
 ) -> DefaultOnboardingPresenter
 
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = OnboardingPresenter::class)
 class DefaultOnboardingPresenter(
     @Assisted componentContext: ComponentContext,
-//    @Assisted welcomePresenterFactory: WelcomePresenterFactory,
+    @Assisted private val openMain: () -> Unit,
+    private val welcomePresenterFactory: WelcomePresenterFactory,
 ) : OnboardingPresenter, ComponentContext by componentContext {
     private val navigation = StackNavigation<OnboardingPresenter.OnboardingConfig>()
 
@@ -41,9 +44,11 @@ class DefaultOnboardingPresenter(
         screenConfig: OnboardingPresenter.OnboardingConfig,
         componentContext: ComponentContext
     ): OnboardingPresenter.OnboardingChild = when (screenConfig) {
-        OnboardingPresenter.OnboardingConfig.Welcome -> TODO()
-//            OnboardingPresenter.OnboardingChild.Welcome(
-//            welcomePresenterFactory(componentContext)
-//        )
+        OnboardingPresenter.OnboardingConfig.Welcome -> OnboardingPresenter.OnboardingChild.Welcome(
+            welcomePresenterFactory(
+                componentContext,
+                openMain
+            )
+        )
     }
 }

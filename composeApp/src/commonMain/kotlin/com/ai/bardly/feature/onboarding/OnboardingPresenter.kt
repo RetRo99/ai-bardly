@@ -1,6 +1,6 @@
 package com.ai.bardly.feature.onboarding
 
-import com.ai.bardly.feature.main.chats.root.RootRecentPresenter
+import com.ai.bardly.feature.onboarding.welcome.ui.WelcomePresenter
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
@@ -10,7 +10,7 @@ interface OnboardingPresenter :
     fun navigate(config: OnboardingConfig)
 
     sealed interface OnboardingChild {
-        data class Welcome(val component: RootRecentPresenter) : OnboardingChild
+        data class Welcome(val component: WelcomePresenter) : OnboardingChild
     }
 
     @Serializable

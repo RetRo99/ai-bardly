@@ -28,7 +28,7 @@ class DefaultHomePresenter(
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
     private val gamesRepository: GamesRepository,
-    val analytics: Analytics,
+    private val analytics: Analytics,
 ) : BasePresenterImpl<HomeViewState, HomeIntent>(componentContext), HomePresenter {
 
     override val defaultViewState = HomeViewState()
