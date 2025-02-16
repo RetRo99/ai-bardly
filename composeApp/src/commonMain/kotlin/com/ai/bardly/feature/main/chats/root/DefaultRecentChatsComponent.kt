@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.chats.ui.root
+package com.ai.bardly.feature.main.chats.root
 
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope

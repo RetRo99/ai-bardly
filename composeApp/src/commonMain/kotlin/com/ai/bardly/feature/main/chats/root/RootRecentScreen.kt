@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.chats.ui.root
+package com.ai.bardly.feature.main.chats.root
 
 import androidx.compose.runtime.Composable
 import com.ai.bardly.feature.main.chats.ui.chat.ChatScreen

@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.chats.ui.root
+package com.ai.bardly.feature.main.chats.root
 
 import com.ai.bardly.base.BasePresenter
 import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenter

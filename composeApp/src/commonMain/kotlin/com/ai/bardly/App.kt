@@ -20,7 +20,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import bardlyLightColors
 import com.ai.bardly.feature.main.MainPresenter
-import com.ai.bardly.feature.main.chats.ui.root.RootRecentScreen
+import com.ai.bardly.feature.main.chats.root.RootRecentScreen
 import com.ai.bardly.feature.main.games.root.RootGamesScreen
 import com.ai.bardly.feature.main.home.root.RootHomeScreen
 import com.ai.bardly.navigation.root.application.RootPresenter

@@ -7,7 +7,7 @@ import ai_bardly.composeapp.generated.resources.home
 import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
-import com.ai.bardly.feature.main.chats.ui.root.RootRecentPresenter
+import com.ai.bardly.feature.main.chats.root.RootRecentPresenter
 import com.ai.bardly.feature.main.games.root.RootGamesPresenter
 import com.ai.bardly.feature.main.home.root.RootHomePresnter
 import com.ai.bardly.navigation.root.RootDecomposeComponent
