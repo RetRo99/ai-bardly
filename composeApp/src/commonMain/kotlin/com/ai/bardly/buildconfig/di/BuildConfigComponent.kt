@@ -11,6 +11,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 @ContributesTo(AppScope::class)
 interface BuildConfigComponent {
 
+    // TODO create a new component for ios/android
     @Provides
     @SingleIn(AppScope::class)
     fun provideBuildConfig(): BuildConfig = getBuildConfig()
