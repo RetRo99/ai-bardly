@@ -41,19 +41,23 @@ class DefaultRootRecentPresenter(
         childFactory = ::childFactory,
     )
 
-    override fun onBackClicked() {
-        navigation.pop()
-    }
-
     override val defaultViewState = RootRecentViewState
 
     override val initialState = BaseViewState.Success(defaultViewState)
+
+    @OptIn(DelicateDecomposeApi::class)
+    private fun openChat(title: String, id: Int) {
+        navigation.push(RootRecentPresenter.RootRecentConfig.Chat(title, id))
+    }
+
+    override fun onBackClicked() {
+        navigation.pop()
+    }
 
     override suspend fun handleScreenIntent(intent: RootRecentIntent) {
         // TODO
     }
 
-    @OptIn(DelicateDecomposeApi::class)
     private fun childFactory(
         screenConfig: RootRecentPresenter.RootRecentConfig,
         componentContext: ComponentContext
@@ -62,14 +66,7 @@ class DefaultRootRecentPresenter(
             DefaultRecentChatsComponent(
                 componentContext,
                 recentChatUseCase,
-                { title, id ->
-                    navigation.push(
-                        RootRecentPresenter.RootRecentConfig.Chat(
-                            title,
-                            id
-                        )
-                    )
-                },
+                ::openChat,
                 analytics
             )
         )
