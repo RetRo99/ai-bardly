@@ -4,11 +4,12 @@ import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   private lazy var appComponent = IosApplicationComponent.companion.create()
+  private var stateKeeper = StateKeeperDispatcherKt.StateKeeperDispatcher(savedState: nil)
 
   public lazy var presenterComponent: IosViewPresenterComponent = appComponent.componentFactory.createComponent(
     componentContext:  DefaultComponentContext(
                                   lifecycle: ApplicationLifecycle(),
-                                  stateKeeper: nil,
+                                  stateKeeper: stateKeeper,
                                   instanceKeeper: nil,
                                   backHandler: appComponent.backDispatcher
                               )
@@ -31,5 +32,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
       return false
     }
 
+    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
+        appComponent.stateKeeperSaveState(coder, stateKeeper.save())
+        return true
+    }
+
+    func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
+        stateKeeper = appComponent.stateKeeperRestoreState(coder)
+        return true
+    }
 
 }

@@ -23,11 +23,15 @@ interface NetworkingComponent {
 
     @Provides
     @SingleIn(AppScope::class)
+    fun provideJson() = Json { ignoreUnknownKeys = true }
+
+    @Provides
+    @SingleIn(AppScope::class)
     fun provideHttpClient(
         httpFactory: HttpClientEngineFactory<*>,
-        analytics: Analytics
+        analytics: Analytics,
+        json: Json,
     ): HttpClient {
-        val json = Json { ignoreUnknownKeys = true }
         return HttpClient(httpFactory) {
             install(ContentNegotiation) {
                 json(json, contentType = ContentType.Application.Json)

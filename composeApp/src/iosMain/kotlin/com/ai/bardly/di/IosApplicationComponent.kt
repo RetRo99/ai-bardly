@@ -1,5 +1,7 @@
 package com.ai.bardly.di
 
+import com.ai.bardly.state.stateKeeperRestoreState
+import com.ai.bardly.state.stateKeeperSaveState
 import com.arkivanov.essenty.backhandler.BackDispatcher
 import me.tatarka.inject.annotations.Provides
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -13,6 +15,8 @@ import kotlin.reflect.KClass
 abstract class IosApplicationComponent : IosViewPresenterComponent.Factory {
     abstract val componentFactory: IosViewPresenterComponent.Factory
     abstract val backDispatcher: BackDispatcher
+    abstract val stateKeeperSaveState: stateKeeperSaveState
+    abstract val stateKeeperRestoreState: stateKeeperRestoreState
 
     @Provides
     @SingleIn(AppScope::class)

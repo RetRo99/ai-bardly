@@ -29,6 +29,7 @@ kotlin {
             export(libs.decompose)
             export(libs.essenty.lifecycle)
             export(libs.essenty.backhandler)
+            export(libs.essenty.stateKeeper)
         }
     }
     compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
@@ -44,6 +45,7 @@ kotlin {
         }
         commonMain.dependencies {
             api(libs.essenty.lifecycle)
+            api(libs.essenty.stateKeeper)
             api(libs.essenty.backhandler)
             implementation(compose.runtime)
             implementation(compose.foundation)
