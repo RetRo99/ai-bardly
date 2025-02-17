@@ -7,7 +7,7 @@ struct iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     init() {
-        MainViewControllerKt.doInitFirebase()
+        RootViewControllerKt.doInitFirebase()
     }
 
     // TODO missing
