@@ -3,8 +3,12 @@ import SwiftUI
 import ComposeApp
 
 struct ComposeView: UIViewControllerRepresentable {
+  @UIApplicationDelegateAdaptor(AppDelegate.self)
+  var appDelegate: AppDelegate
+        let backDispatcher = BackDispatcherKt.BackDispatcher()
+
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+       appDelegate.presenterComponent.uiViewController(backDispatcher)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

@@ -7,7 +7,6 @@ struct iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     init() {
-        KoinKt.doInitKoin(appModule: ApplicationModule().module, appDeclaration: nil)
         MainViewControllerKt.doInitFirebase()
     }
 

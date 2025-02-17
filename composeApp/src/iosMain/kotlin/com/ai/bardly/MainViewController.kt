@@ -29,6 +29,7 @@ fun HomeViewController(app: App, @Assisted backDispatcher: BackDispatcher): UIVi
         }
     }
 }
+
 fun initFirebase() {
     Firebase.initialize()
     Firebase.crashlytics.setCrashlyticsCollectionEnabled(true)
