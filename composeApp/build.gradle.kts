@@ -1,6 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.konan.target.Family
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -19,15 +17,6 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    targets
-        .filterIsInstance<KotlinNativeTarget>()
-        .filter { it.konanTarget.family == Family.IOS }
-        .forEach {
-            it.binaries.framework {
-                export(libs.decompose)
-                export(libs.essenty.lifecycle)
-            }
-        }
 
     listOf(
         iosX64(),
@@ -37,9 +26,12 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            freeCompilerArgs += "-Xexpect-actual-classes"
+            export(libs.decompose)
+            export(libs.essenty.lifecycle)
+            export(libs.essenty.backhandler)
         }
     }
+    compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
 
     sourceSets {
         androidMain.dependencies {
@@ -51,6 +43,8 @@ kotlin {
             implementation(libs.ktor.client.darwin)
         }
         commonMain.dependencies {
+            api(libs.essenty.lifecycle)
+            api(libs.essenty.backhandler)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -74,7 +68,7 @@ kotlin {
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
-            implementation(libs.bundles.decompose)
+            api(libs.bundles.decompose)
             implementation(libs.essenty.coroutines)
             implementation(libs.bundles.kotlinInject)
         }
@@ -132,8 +126,12 @@ android {
 dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     ksp(libs.androidx.room.compiler)
-    ksp(libs.kotlinInject.compiler)
-    ksp(libs.kotlinInject.anvil.compiler)
+    add("kspAndroid", libs.kotlinInject.compiler)
+    add("kspAndroid", libs.kotlinInject.anvil.compiler)
+    add("kspIosArm64", libs.kotlinInject.compiler)
+    add("kspIosArm64", libs.kotlinInject.anvil.compiler)
+    add("kspIosSimulatorArm64", libs.kotlinInject.compiler)
+    add("kspIosSimulatorArm64", libs.kotlinInject.anvil.compiler)
 }
 
 ksp {
