@@ -12,12 +12,6 @@ import com.ai.bardly.util.LocalScreenTransitionScope
 import com.arkivanov.decompose.Child
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
-import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.PredictiveBackParams
-import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.plus
-import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.scale
-import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
-import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.materialPredictiveBackAnimatable
 import com.arkivanov.decompose.router.stack.StackNavigator
 
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalSharedTransitionApi::class)
@@ -28,17 +22,12 @@ fun <RootChild : Any, Config : Any> RootChildStack(
     content: @Composable AnimatedVisibilityScope.(child: Child.Created<Config, RootChild>) -> Unit,
 ) {
     SharedTransitionLayout {
-        ChildStack(stack = root.childStack, modifier = modifier,
-            animation = stackAnimation(
-                animator = fade() + scale(),
-                predictiveBackParams = {
-                    PredictiveBackParams(
-                        backHandler = root.backHandler,
-                        onBack = root::onBackClicked,
-                        animatable = ::materialPredictiveBackAnimatable,
-                    )
-                }
-            )
+        ChildStack(
+            stack = root.childStack, modifier = modifier,
+            animation = backAnimation(
+                backHandler = root.backHandler,
+                onBack = root::onBackClicked,
+            ),
         ) {
             CompositionLocalProvider(
                 LocalScreenTransitionScope provides this@SharedTransitionLayout,

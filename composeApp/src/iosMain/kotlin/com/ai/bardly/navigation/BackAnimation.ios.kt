@@ -1,4 +1,4 @@
-package com.ai.bardly.util
+package com.ai.bardly.navigation
 
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
@@ -16,7 +16,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.isFront
 import com.arkivanov.essenty.backhandler.BackHandler
 
 @OptIn(ExperimentalDecomposeApi::class)
-fun <C : Any, T : Any> iOsBackAnimation(
+actual fun <C : Any, T : Any> backAnimation(
     backHandler: BackHandler,
     onBack: () -> Unit,
 ): StackAnimation<C, T> =
