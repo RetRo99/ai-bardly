@@ -1,6 +1,6 @@
 package com.ai.bardly.di
 
-import com.ai.bardly.HomeViewController
+import com.ai.bardly.RootViewController
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.navigation.root.application.RootPresenter
 import com.arkivanov.decompose.ComponentContext
@@ -13,7 +13,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 interface IosViewPresenterComponent {
     val rootPresenter: RootPresenter
 
-    val uiViewController: HomeViewController
+    val uiViewController: RootViewController
 
     @ContributesSubcomponent.Factory(AppScope::class)
     interface Factory {

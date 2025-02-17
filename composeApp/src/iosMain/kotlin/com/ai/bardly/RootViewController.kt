@@ -14,11 +14,11 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import platform.UIKit.UIViewController
 
-typealias HomeViewController = (backDispatcher: BackDispatcher) -> UIViewController
+typealias RootViewController = (backDispatcher: BackDispatcher) -> UIViewController
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Inject
-fun HomeViewController(app: App, @Assisted backDispatcher: BackDispatcher): UIViewController {
+fun RootViewController(app: App, @Assisted backDispatcher: BackDispatcher): UIViewController {
     return ComposeUIViewController(configure = { onFocusBehavior = OnFocusBehavior.DoNothing }) {
         PredictiveBackGestureOverlay(
             backDispatcher = backDispatcher,
