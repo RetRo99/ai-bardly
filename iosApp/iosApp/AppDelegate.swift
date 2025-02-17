@@ -6,7 +6,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   private lazy var appComponent = IosApplicationComponent.companion.create()
 
   public lazy var presenterComponent: IosViewPresenterComponent = appComponent.componentFactory.createComponent(
-    componentContext: DefaultComponentContext(lifecycle: ApplicationLifecycle())
+    componentContext:  DefaultComponentContext(
+                                  lifecycle: ApplicationLifecycle(),
+                                  stateKeeper: nil,
+                                  instanceKeeper: nil,
+                                  backHandler: appComponent.backDispatcher
+                              )
   )
 
     func application(

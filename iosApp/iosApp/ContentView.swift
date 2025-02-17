@@ -5,10 +5,9 @@ import ComposeApp
 struct ComposeView: UIViewControllerRepresentable {
   @UIApplicationDelegateAdaptor(AppDelegate.self)
   var appDelegate: AppDelegate
-        let backDispatcher = BackDispatcherKt.BackDispatcher()
 
     func makeUIViewController(context: Context) -> UIViewController {
-       appDelegate.presenterComponent.rootViewController(backDispatcher)
+       appDelegate.presenterComponent.rootViewController()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -17,6 +16,6 @@ struct ComposeView: UIViewControllerRepresentable {
 struct ContentView: View {
     var body: some View {
         ComposeView()
-                .ignoresSafeArea()
+                .ignoresSafeArea(.all)
     }
 }
