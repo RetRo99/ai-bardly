@@ -21,20 +21,20 @@ internal typealias RootHomePresenterFactory = (
 ) -> DefaultRootHomePresenter
 
 @Inject
-@ContributesBinding(ActivityScope::class, boundType = RootHomePresnter::class)
+@ContributesBinding(ActivityScope::class, boundType = RootHomePresenter::class)
 class DefaultRootHomePresenter(
     @Assisted componentContext: ComponentContext,
     private val homePresenterFactory: HomePresenterFactory,
     private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
     private val chatPresenterFactory: ChatPresenterFactory,
-) : BasePresenterImpl<RootHomeViewState, RootHomeIntent>(componentContext), RootHomePresnter {
+) : BasePresenterImpl<RootHomeViewState, RootHomeIntent>(componentContext), RootHomePresenter {
 
-    private val navigation = StackNavigation<RootHomePresnter.HomeConfig>()
+    private val navigation = StackNavigation<RootHomePresenter.HomeConfig>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = RootHomePresnter.HomeConfig.serializer(),
-        initialStack = { listOf(RootHomePresnter.HomeConfig.Home) },
+        serializer = RootHomePresenter.HomeConfig.serializer(),
+        initialStack = { listOf(RootHomePresenter.HomeConfig.Home) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -52,18 +52,18 @@ class DefaultRootHomePresenter(
     }
 
     private fun openChat(title: String, id: Int) {
-        navigation.pushNew(RootHomePresnter.HomeConfig.Chat(title, id))
+        navigation.pushNew(RootHomePresenter.HomeConfig.Chat(title, id))
     }
 
     private fun openGameDetails(game: GameUiModel) {
-        navigation.pushNew(RootHomePresnter.HomeConfig.GameDetails(game))
+        navigation.pushNew(RootHomePresenter.HomeConfig.GameDetails(game))
     }
 
     private fun childFactory(
-        screenConfig: RootHomePresnter.HomeConfig,
+        screenConfig: RootHomePresenter.HomeConfig,
         componentContext: ComponentContext
-    ): RootHomePresnter.HomeChild = when (screenConfig) {
-        RootHomePresnter.HomeConfig.Home -> RootHomePresnter.HomeChild.Home(
+    ): RootHomePresenter.HomeChild = when (screenConfig) {
+        RootHomePresenter.HomeConfig.Home -> RootHomePresenter.HomeChild.Home(
             homePresenterFactory(
                 componentContext,
                 ::openChat,
@@ -71,7 +71,7 @@ class DefaultRootHomePresenter(
             )
         )
 
-        is RootHomePresnter.HomeConfig.GameDetails -> RootHomePresnter.HomeChild.GameDetails(
+        is RootHomePresenter.HomeConfig.GameDetails -> RootHomePresenter.HomeChild.GameDetails(
             gameDetailsPresenterFactory(
                 componentContext,
                 screenConfig.game,
@@ -80,7 +80,7 @@ class DefaultRootHomePresenter(
             )
         )
 
-        is RootHomePresnter.HomeConfig.Chat -> RootHomePresnter.HomeChild.Chat(
+        is RootHomePresenter.HomeConfig.Chat -> RootHomePresenter.HomeChild.Chat(
             chatPresenterFactory(
                 componentContext,
                 screenConfig.title,
