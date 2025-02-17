@@ -3,12 +3,10 @@ package com.ai.bardly.navigation
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.ai.bardly.navigation.root.RootDecomposeComponent
-import com.ai.bardly.util.LocalScreenAnimationScope
-import com.ai.bardly.util.LocalScreenTransitionScope
 import com.arkivanov.decompose.Child
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
@@ -29,10 +27,7 @@ fun <RootChild : Any, Config : Any> RootChildStack(
                 onBack = root::onBackClicked,
             ),
         ) {
-            CompositionLocalProvider(
-                LocalScreenTransitionScope provides this@SharedTransitionLayout,
-                LocalScreenAnimationScope provides this@ChildStack,
-            ) {
+            ScreenAnimationProvider(this) {
                 content(it)
             }
         }
@@ -53,3 +48,10 @@ fun <C : Any> StackNavigator<C>.switchTab(configuration: C, onComplete: () -> Un
         onComplete = { _, _ -> onComplete() },
     )
 }
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+expect fun SharedTransitionScope.ScreenAnimationProvider(
+    animateVisibilityScope: AnimatedVisibilityScope,
+    content: @Composable SharedTransitionScope.() -> Unit
+)
