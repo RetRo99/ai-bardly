@@ -4,7 +4,6 @@ import com.ai.bardly.HomeViewController
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.navigation.root.application.RootPresenter
 import com.arkivanov.decompose.ComponentContext
-import platform.UIKit.UIViewController
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesSubcomponent
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
@@ -20,7 +19,6 @@ interface IosViewPresenterComponent {
     interface Factory {
         fun createComponent(
             componentContext: ComponentContext,
-            uiViewControllerProvider: () -> UIViewController,
         ): IosViewPresenterComponent
     }
 }
