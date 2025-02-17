@@ -8,7 +8,7 @@ struct ComposeView: UIViewControllerRepresentable {
         let backDispatcher = BackDispatcherKt.BackDispatcher()
 
     func makeUIViewController(context: Context) -> UIViewController {
-       appDelegate.presenterComponent.uiViewController(backDispatcher)
+       appDelegate.presenterComponent.rootViewController(backDispatcher)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
