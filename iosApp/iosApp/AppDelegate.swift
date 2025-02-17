@@ -3,22 +3,11 @@ import ComposeApp
 import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  public let lifecycle = LifecycleRegistryKt.LifecycleRegistry()
-
   private lazy var appComponent = IosApplicationComponent.companion.create()
 
   public lazy var presenterComponent: IosViewPresenterComponent = appComponent.componentFactory.createComponent(
-    componentContext: DefaultComponentContext(lifecycle: lifecycle)
+    componentContext: DefaultComponentContext(lifecycle: ApplicationLifecycle())
   )
-
-    public override init() {
-      super.init()
-      LifecycleRegistryExtKt.create(lifecycle)
-    }
-
-    deinit {
-      LifecycleRegistryExtKt.destroy(lifecycle)
-    }
 
     func application(
       _ app: UIApplication,
