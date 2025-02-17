@@ -9,12 +9,17 @@ import ai_bardly.composeapp.generated.resources.weeks_ago
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.SharedTransitionScope.ResizeMode.Companion.ScaleToBounds
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import kotlinx.datetime.Clock
@@ -36,13 +41,39 @@ fun keyboardAsState(): State<Boolean> {
     return rememberUpdatedState(isImeVisible)
 }
 
-val LocalScreenAnimationScope = compositionLocalOf<AnimatedVisibilityScope> {
-    error("No AnimatedVisibilityScope provided")
+val LocalScreenAnimationScope = compositionLocalOf<AnimatedVisibilityScope?> {
+    null
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
-val LocalScreenTransitionScope = compositionLocalOf<SharedTransitionScope> {
-    error("No SharedTransitionScope provided")
+val LocalScreenTransitionScope = compositionLocalOf<SharedTransitionScope?> {
+    null
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+fun Modifier.sharedScreenBounds(
+    key: Any,
+    renderInOverlayDuringTransition: Boolean = false,
+    resizeMode: SharedTransitionScope.ResizeMode = ScaleToBounds(ContentScale.FillWidth, Center)
+): Modifier = composed {
+    val transitionScope = LocalScreenTransitionScope.current
+    val animationScope = LocalScreenAnimationScope.current
+
+    if (transitionScope == null || animationScope == null) {
+        return@composed this
+    }
+
+    with(transitionScope) {
+        val sharedContentState = rememberSharedContentState(
+            key = key,
+        )
+        this@composed.sharedBounds(
+            sharedContentState = sharedContentState,
+            renderInOverlayDuringTransition = renderInOverlayDuringTransition,
+            animatedVisibilityScope = animationScope,
+            resizeMode = resizeMode,
+        )
+    }
 }
 
 @Composable

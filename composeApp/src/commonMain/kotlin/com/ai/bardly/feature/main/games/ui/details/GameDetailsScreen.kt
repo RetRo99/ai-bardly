@@ -44,8 +44,7 @@ import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.main.games.ui.components.GameImage
 import com.ai.bardly.feature.main.games.ui.components.SharedTransitionText
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
-import com.ai.bardly.util.LocalScreenAnimationScope
-import com.ai.bardly.util.LocalScreenTransitionScope
+import com.ai.bardly.util.sharedScreenBounds
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import org.jetbrains.compose.resources.StringResource
@@ -237,52 +236,38 @@ private fun GameInformationCards(
         Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        with(LocalScreenTransitionScope.current) {
-            GameInfoCard(
-                modifier = Modifier.sharedBounds(
-                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                    sharedContentState = rememberSharedContentState(
-                        key = "${game.id} numberOfPlayers",
-                    ),
-                    animatedVisibilityScope = LocalScreenAnimationScope.current
-                ),
-                label = Res.string.amount_of_players,
-                value = game.numberOfPlayers
-            )
-            GameInfoCard(
-                modifier = Modifier.sharedBounds(
-                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                    sharedContentState = rememberSharedContentState(
-                        key = "${game.id} playingTime",
-                    ),
-                    animatedVisibilityScope = LocalScreenAnimationScope.current
-                ),
-                label = Res.string.game_length,
-                value = game.playingTime
-            )
-            GameInfoCard(
-                modifier = Modifier.sharedBounds(
-                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                    sharedContentState = rememberSharedContentState(
-                        key = "${game.id} ageRange",
-                    ),
-                    animatedVisibilityScope = LocalScreenAnimationScope.current
-                ),
-                label = Res.string.game_age_recommendation,
-                value = game.ageRange
-            )
-            GameInfoCard(
-                modifier = Modifier.sharedBounds(
-                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                    sharedContentState = rememberSharedContentState(
-                        key = "${game.id} complexity",
-                    ),
-                    animatedVisibilityScope = LocalScreenAnimationScope.current
-                ),
-                label = Res.string.game_complexity,
-                value = "${game.complexity}/5"
-            )
-        }
+        GameInfoCard(
+            modifier = Modifier.sharedScreenBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                key = "${game.id} numberOfPlayers",
+            ),
+            label = Res.string.amount_of_players,
+            value = game.numberOfPlayers
+        )
+        GameInfoCard(
+            modifier = Modifier.sharedScreenBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                key = "${game.id} playingTime",
+            ),
+            label = Res.string.game_length,
+            value = game.playingTime
+        )
+        GameInfoCard(
+            modifier = Modifier.sharedScreenBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                key = "${game.id} ageRange",
+            ),
+            label = Res.string.game_age_recommendation,
+            value = game.ageRange
+        )
+        GameInfoCard(
+            modifier = Modifier.sharedScreenBounds(
+                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                key = "${game.id} complexity",
+            ),
+            label = Res.string.game_complexity,
+            value = "${game.complexity}/5"
+        )
     }
 }
 

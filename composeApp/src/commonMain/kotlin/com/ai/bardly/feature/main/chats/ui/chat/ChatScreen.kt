@@ -70,8 +70,7 @@ import androidx.compose.ui.unit.sp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.main.chats.ui.model.MessageUiModel
-import com.ai.bardly.util.LocalScreenAnimationScope
-import com.ai.bardly.util.LocalScreenTransitionScope
+import com.ai.bardly.util.sharedScreenBounds
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
 import kotlinx.coroutines.delay
@@ -138,20 +137,15 @@ private fun Chat(
                         .padding(end = 48.dp),  // Compensate for IconButton width
                     contentAlignment = Alignment.Center
                 ) {
-                    with(LocalScreenTransitionScope.current) {
-                        Text(
-                            text = title,
-                            modifier = Modifier.padding(8.dp).sharedBounds(
-                                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                                sharedContentState = rememberSharedContentState(
-                                    key = "$id title",
-                                ),
-                                animatedVisibilityScope = LocalScreenAnimationScope.current
-                            ),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp
-                        )
-                    }
+                    Text(
+                        text = title,
+                        modifier = Modifier.padding(8.dp).sharedScreenBounds(
+                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                            key = "$id title",
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
                 }
             }
             LazyColumn(

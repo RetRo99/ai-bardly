@@ -32,8 +32,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.ai.bardly.ui.CoilImage
-import com.ai.bardly.util.LocalScreenAnimationScope
-import com.ai.bardly.util.LocalScreenTransitionScope
+import com.ai.bardly.util.sharedScreenBounds
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -45,71 +44,68 @@ fun GameCard(
     onChatClick: (String, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    with(LocalScreenTransitionScope.current) {
-        Card(
-            modifier = modifier
-                .sharedBounds(
-                    sharedContentState = rememberSharedContentState(game.id),
-                    renderInOverlayDuringTransition = false,
-                    animatedVisibilityScope = LocalScreenAnimationScope.current
-                )
-                .padding(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            shape = RoundedCornerShape(16.dp),
+    Card(
+        modifier = modifier
+            .sharedScreenBounds(
+                key = game.id,
+                renderInOverlayDuringTransition = false,
+            )
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(16.dp),
+    ) {
+        Column(
+            modifier = Modifier.clickable { onClick(game) }.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Column(
-                modifier = Modifier.clickable { onClick(game) }.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Row {
-                    GameImage(
-                        imageUrl = game.thumbnail,
-                        gameId = game.id,
-                        size = 80.dp
-                    )
-                    Spacer(Modifier.weight(1f))
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_chat),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clickable { onChatClick(game.title, game.id) }
-                            .padding(end = 4.dp),
-                    )
-                }
-
-
-                SharedTransitionText(
-                    key = "${game.id} title",
-                    text = game.title,
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+            Row {
+                GameImage(
+                    imageUrl = game.thumbnail,
+                    gameId = game.id,
+                    size = 80.dp
                 )
-
                 Spacer(Modifier.weight(1f))
-
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    SharedTransitionText(
-                        key = "${game.id} numberOfPlayers",
-                        iconRes = Res.drawable.ic_players,
-                        text = game.numberOfPlayers,
-                    )
-                    SharedTransitionText(
-                        key = "${game.id} rating",
-                        text = game.rating,
-                        iconRes = Res.drawable.ic_rating,
-                        textAlign = TextAlign.Center
-                    )
-                }
-
-                SharedTransitionText(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    key = "${game.id} playingTime",
-                    iconRes = Res.drawable.ic_clock,
-                    text = game.playingTime,
+                Icon(
+                    painter = painterResource(Res.drawable.ic_chat),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clickable { onChatClick(game.title, game.id) }
+                        .padding(end = 4.dp),
                 )
             }
+
+
+            SharedTransitionText(
+                key = "${game.id} title",
+                text = game.title,
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+            )
+
+            Spacer(Modifier.weight(1f))
+
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                SharedTransitionText(
+                    key = "${game.id} numberOfPlayers",
+                    iconRes = Res.drawable.ic_players,
+                    text = game.numberOfPlayers,
+                )
+                SharedTransitionText(
+                    key = "${game.id} rating",
+                    text = game.rating,
+                    iconRes = Res.drawable.ic_rating,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            SharedTransitionText(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                key = "${game.id} playingTime",
+                iconRes = Res.drawable.ic_clock,
+                text = game.playingTime,
+            )
         }
     }
 }
@@ -124,31 +120,28 @@ fun SharedTransitionText(
     textAlign: TextAlign? = null,
     iconRes: DrawableResource? = null,
 ) {
-    with(LocalScreenTransitionScope.current) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.sharedBounds(
-                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                sharedContentState = rememberSharedContentState(key),
-                renderInOverlayDuringTransition = false,
-                animatedVisibilityScope = LocalScreenAnimationScope.current
-            )
-        ) {
-            iconRes?.let {
-                Icon(
-                    painter = painterResource(it),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(end = 4.dp),
-                )
-            }
-
-            Text(
-                text = text,
-                style = style,
-                textAlign = textAlign
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.sharedScreenBounds(
+            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+            key = key,
+            renderInOverlayDuringTransition = false,
+        )
+    ) {
+        iconRes?.let {
+            Icon(
+                painter = painterResource(it),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = 4.dp),
             )
         }
+
+        Text(
+            text = text,
+            style = style,
+            textAlign = textAlign
+        )
     }
 }
 
@@ -160,24 +153,19 @@ fun GameImage(
     size: Dp,
     modifier: Modifier = Modifier,
 ) {
-    with(LocalScreenTransitionScope.current) {
-        Card(
-            modifier = modifier
-                .sharedBounds(
-                    sharedContentState = rememberSharedContentState(
-                        key = "$gameId thumbnail",
-                    ),
-                    animatedVisibilityScope = LocalScreenAnimationScope.current,
-                    renderInOverlayDuringTransition = false,
-                ),
-            shape = RoundedCornerShape(8.dp),
-        ) {
-            CoilImage(
-                data = imageUrl,
-                cacheKey = imageUrl,
-                modifier = Modifier.size(size),
-                contentScale = ContentScale.FillBounds
-            )
-        }
+    Card(
+        modifier = modifier
+            .sharedScreenBounds(
+                key = "$gameId thumbnail",
+                renderInOverlayDuringTransition = false,
+            ),
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        CoilImage(
+            data = imageUrl,
+            cacheKey = imageUrl,
+            modifier = Modifier.size(size),
+            contentScale = ContentScale.FillBounds
+        )
     }
 }
