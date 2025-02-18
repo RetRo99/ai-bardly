@@ -1,9 +1,9 @@
 package com.ai.bardly.di
 
 import androidx.activity.ComponentActivity
-import com.ai.bardly.App
 import com.ai.bardly.BardlyApplication
 import com.ai.bardly.annotations.ActivityScope
+import com.ai.bardly.app.App
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.defaultComponentContext
 import me.tatarka.inject.annotations.Provides

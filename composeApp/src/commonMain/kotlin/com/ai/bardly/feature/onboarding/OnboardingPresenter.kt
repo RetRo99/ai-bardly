@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.onboarding
 
+import com.ai.bardly.decompose.RootDecomposeComponent
 import com.ai.bardly.feature.onboarding.welcome.ui.WelcomePresenter
-import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface OnboardingPresenter :

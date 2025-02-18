@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.login
 
+import com.ai.bardly.decompose.RootDecomposeComponent
 import com.ai.bardly.feature.login.ui.SignInPresenter
-import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface LoginPresenter :

@@ -1,4 +1,4 @@
-package com.ai.bardly.navigation
+package com.ai.bardly.decompose
 
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween

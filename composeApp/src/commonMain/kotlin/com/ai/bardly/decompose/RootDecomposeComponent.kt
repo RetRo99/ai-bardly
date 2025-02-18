@@ -1,4 +1,4 @@
-package com.ai.bardly.navigation.root
+package com.ai.bardly.decompose
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value

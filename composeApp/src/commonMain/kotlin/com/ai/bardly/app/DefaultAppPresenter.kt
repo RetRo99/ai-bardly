@@ -1,12 +1,9 @@
-package com.ai.bardly.navigation.root.application
+package com.ai.bardly.app
 
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.login.LoginPresenterFactory
 import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
-import com.ai.bardly.navigation.root.application.AppPresenter.Child.Login
-import com.ai.bardly.navigation.root.application.AppPresenter.Child.Main
-import com.ai.bardly.navigation.root.application.AppPresenter.Child.Onboarding
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -48,20 +45,20 @@ class DefaultAppPresenter(
         screenConfig: AppPresenter.Config,
         componentContext: ComponentContext
     ): AppPresenter.Child = when (screenConfig) {
-        AppPresenter.Config.Main -> Main(
+        AppPresenter.Config.Main -> AppPresenter.Child.Main(
             mainPresenterFactory(
                 componentContext,
             )
         )
 
-        AppPresenter.Config.Onboarding -> Onboarding(
+        AppPresenter.Config.Onboarding -> AppPresenter.Child.Onboarding(
             onboardingPresenterFactory(
                 componentContext,
                 ::openMain,
             )
         )
 
-        AppPresenter.Config.Login -> Login(
+        AppPresenter.Config.Login -> AppPresenter.Child.Login(
             loginPresenterFactory(
                 componentContext,
                 ::openMain,

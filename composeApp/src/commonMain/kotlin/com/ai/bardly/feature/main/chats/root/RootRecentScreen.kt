@@ -1,9 +1,9 @@
 package com.ai.bardly.feature.main.chats.root
 
 import androidx.compose.runtime.Composable
+import com.ai.bardly.decompose.RootChildStack
 import com.ai.bardly.feature.main.chats.ui.chat.ChatScreen
 import com.ai.bardly.feature.main.chats.ui.recent.RecentChatsScreen
-import com.ai.bardly.navigation.RootChildStack
 
 @Composable
 fun RootRecentScreen(

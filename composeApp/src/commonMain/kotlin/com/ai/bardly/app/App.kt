@@ -1,4 +1,4 @@
-package com.ai.bardly
+package com.ai.bardly.app
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -6,7 +6,6 @@ import bardlyLightColors
 import com.ai.bardly.feature.login.LoginScreen
 import com.ai.bardly.feature.main.MainScreen
 import com.ai.bardly.feature.onboarding.RootOnboardingScreen
-import com.ai.bardly.navigation.root.application.AppPresenter
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import me.tatarka.inject.annotations.Inject

@@ -7,10 +7,10 @@ import ai_bardly.composeapp.generated.resources.home
 import ai_bardly.composeapp.generated.resources.ic_chats
 import ai_bardly.composeapp.generated.resources.ic_games
 import ai_bardly.composeapp.generated.resources.ic_home
+import com.ai.bardly.decompose.RootDecomposeComponent
 import com.ai.bardly.feature.main.chats.root.RootRecentPresenter
 import com.ai.bardly.feature.main.games.root.RootGamesPresenter
 import com.ai.bardly.feature.main.home.root.RootHomePresenter
-import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
