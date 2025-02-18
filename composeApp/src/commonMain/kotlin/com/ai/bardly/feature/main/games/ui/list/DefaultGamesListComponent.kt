@@ -12,6 +12,7 @@ import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.ai.bardly.feature.main.games.ui.model.toUiModels
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -102,6 +103,7 @@ class DefaultGamesListComponent(
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun subscribeToSearchQuery() {
         searchFlow
             .filterNotNull()

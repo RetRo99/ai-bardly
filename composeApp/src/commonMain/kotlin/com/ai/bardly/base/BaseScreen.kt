@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 
 @Composable
-inline fun <ScreenViewState, Intent : ScreenIntent> BaseScreen(
+fun <ScreenViewState, Intent : ScreenIntent> BaseScreen(
     component: BasePresenter<ScreenViewState, Intent>,
-    noinline loadingContent: @Composable () -> Unit = { LoadingScreen() },
-    noinline errorContent: @Composable (BaseViewState.Error) -> Unit = { ErrorScreen(it) },
-    noinline content: @Composable (ScreenViewState, IntentDispatcher<Intent>) -> Unit
+    loadingContent: @Composable () -> Unit = { LoadingScreen() },
+    errorContent: @Composable (BaseViewState.Error) -> Unit = { ErrorScreen(it) },
+    content: @Composable (ScreenViewState, IntentDispatcher<Intent>) -> Unit
 ) {
     val viewState by component.viewState.subscribeAsState()
 

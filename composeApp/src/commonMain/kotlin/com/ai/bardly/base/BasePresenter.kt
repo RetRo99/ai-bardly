@@ -44,6 +44,7 @@ abstract class BasePresenterImpl<ScreenViewState, Intent : ScreenIntent>(compone
 
     abstract suspend fun handleScreenIntent(intent: Intent)
 
+    @Suppress("UNCHECKED_CAST")
     protected fun updateOrSetSuccess(update: (ScreenViewState) -> ScreenViewState) {
         _viewState.update { currentState ->
             when (currentState) {
