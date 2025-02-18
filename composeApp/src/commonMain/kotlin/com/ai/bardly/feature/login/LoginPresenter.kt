@@ -1,5 +1,6 @@
 package com.ai.bardly.feature.login
 
+import com.ai.bardly.feature.login.ui.SignInPresenter
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
@@ -9,7 +10,7 @@ interface LoginPresenter :
     fun navigate(config: Config)
 
     sealed interface Child {
-        data object SignIn : Child
+        data class SignIn(val component: SignInPresenter) : Child
     }
 
     @Serializable

@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.login
 
 import com.ai.bardly.annotations.ActivityScope
+import com.ai.bardly.feature.login.ui.SignInPresenterFactory
 import com.ai.bardly.navigation.switchTab
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -20,6 +21,7 @@ internal typealias LoginPresenterFactory = (
 class DefaultLoginPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val openMain: () -> Unit,
+    private val signInPresenterFactory: SignInPresenterFactory,
 ) : LoginPresenter, ComponentContext by componentContext {
     private val navigation = StackNavigation<LoginPresenter.Config>()
 
@@ -42,8 +44,8 @@ class DefaultLoginPresenter(
         screenConfig: LoginPresenter.Config,
         componentContext: ComponentContext
     ): LoginPresenter.Child = when (screenConfig) {
-        LoginPresenter.Config.SignIn -> LoginPresenter.Child.SignIn
-//            rootGamesFactory(componentContext)
-//        )
+        LoginPresenter.Config.SignIn -> LoginPresenter.Child.SignIn(
+            signInPresenterFactory(componentContext)
+        )
     }
 }
