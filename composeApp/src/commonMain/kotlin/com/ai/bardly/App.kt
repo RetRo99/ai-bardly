@@ -6,7 +6,7 @@ import bardlyLightColors
 import com.ai.bardly.feature.login.LoginScreen
 import com.ai.bardly.feature.main.MainScreen
 import com.ai.bardly.feature.onboarding.RootOnboardingScreen
-import com.ai.bardly.navigation.root.application.RootPresenter
+import com.ai.bardly.navigation.root.application.AppPresenter
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import me.tatarka.inject.annotations.Inject
@@ -17,7 +17,7 @@ typealias App = @Composable () -> Unit
 @Inject
 @Composable
 fun App(
-    applicationComponent: RootPresenter,
+    applicationComponent: AppPresenter,
 ) {
 
     MaterialTheme(
@@ -27,9 +27,9 @@ fun App(
             stack = applicationComponent.childStack,
         ) {
             when (val child = it.instance) {
-                is RootPresenter.Child.Main -> MainScreen(child.component)
-                is RootPresenter.Child.Onboarding -> RootOnboardingScreen(child.component)
-                is RootPresenter.Child.Login -> LoginScreen(child.component)
+                is AppPresenter.Child.Main -> MainScreen(child.component)
+                is AppPresenter.Child.Onboarding -> RootOnboardingScreen(child.component)
+                is AppPresenter.Child.Login -> LoginScreen(child.component)
             }
         }
     }

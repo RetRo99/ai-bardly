@@ -6,8 +6,8 @@ import com.ai.bardly.feature.onboarding.OnboardingPresenter
 import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
-interface RootPresenter :
-    RootDecomposeComponent<RootPresenter.Child, RootPresenter.Config> {
+interface AppPresenter :
+    RootDecomposeComponent<AppPresenter.Child, AppPresenter.Config> {
 
     sealed interface Child {
         data class Main(val component: MainPresenter) : Child
