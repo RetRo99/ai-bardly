@@ -1,8 +1,12 @@
 package com.ai.bardly.navigation.root.application
 
 import com.ai.bardly.annotations.ActivityScope
+import com.ai.bardly.feature.login.LoginPresenterFactory
 import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
+import com.ai.bardly.navigation.root.application.RootPresenter.RootChild.Login
+import com.ai.bardly.navigation.root.application.RootPresenter.RootChild.Main
+import com.ai.bardly.navigation.root.application.RootPresenter.RootChild.Onboarding
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -19,6 +23,7 @@ class DefaultRootPresenter(
     componentContext: ComponentContext,
     private val mainPresenterFactory: MainPresenterFactory,
     private val onboardingPresenterFactory: OnboardingPresenterFactory,
+    private val loginPresenterFactory: LoginPresenterFactory,
 ) : RootPresenter, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<RootPresenter.RootConfig>()
@@ -43,16 +48,23 @@ class DefaultRootPresenter(
         screenConfig: RootPresenter.RootConfig,
         componentContext: ComponentContext
     ): RootPresenter.RootChild = when (screenConfig) {
-        RootPresenter.RootConfig.Main -> RootPresenter.RootChild.Main(
+        RootPresenter.RootConfig.Main -> Main(
             mainPresenterFactory(
-                componentContext
+                componentContext,
             )
         )
 
-        RootPresenter.RootConfig.Onboarding -> RootPresenter.RootChild.Onboarding(
+        RootPresenter.RootConfig.Onboarding -> Onboarding(
             onboardingPresenterFactory(
                 componentContext,
-                ::openMain
+                ::openMain,
+            )
+        )
+
+        RootPresenter.RootConfig.Login -> Login(
+            loginPresenterFactory(
+                componentContext,
+                ::openMain,
             )
         )
     }

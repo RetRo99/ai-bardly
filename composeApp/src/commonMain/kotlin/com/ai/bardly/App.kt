@@ -3,6 +3,7 @@ package com.ai.bardly
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import bardlyLightColors
+import com.ai.bardly.feature.login.LoginScreen
 import com.ai.bardly.feature.main.MainScreen
 import com.ai.bardly.feature.onboarding.RootOnboardingScreen
 import com.ai.bardly.navigation.root.application.RootPresenter
@@ -28,6 +29,7 @@ fun App(
             when (val child = it.instance) {
                 is RootPresenter.RootChild.Main -> MainScreen(child.component)
                 is RootPresenter.RootChild.Onboarding -> RootOnboardingScreen(child.component)
+                is RootPresenter.RootChild.Login -> LoginScreen(child.component)
             }
         }
     }
