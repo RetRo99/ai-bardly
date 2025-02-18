@@ -29,12 +29,12 @@ class DefaultRootGamesPresenter(
     private val gamesListComponentFactory: GamesListComponentFactory,
 ) : BasePresenterImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesPresenter {
 
-    private val navigation = StackNavigation<RootGamesPresenter.GamesConfig>()
+    private val navigation = StackNavigation<RootGamesPresenter.Config>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = RootGamesPresenter.GamesConfig.serializer(),
-        initialStack = { listOf(RootGamesPresenter.GamesConfig.GamesList) },
+        serializer = RootGamesPresenter.Config.serializer(),
+        initialStack = { listOf(RootGamesPresenter.Config.GamesList) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -48,11 +48,11 @@ class DefaultRootGamesPresenter(
     }
 
     private fun openChat(title: String, id: Int) {
-        navigation.pushNew(RootGamesPresenter.GamesConfig.Chat(title, id))
+        navigation.pushNew(RootGamesPresenter.Config.Chat(title, id))
     }
 
     private fun openGameDetails(game: GameUiModel) {
-        navigation.pushNew(RootGamesPresenter.GamesConfig.GameDetails(game))
+        navigation.pushNew(RootGamesPresenter.Config.GameDetails(game))
     }
 
     override suspend fun handleScreenIntent(intent: RootGamesIntent) {
@@ -60,10 +60,10 @@ class DefaultRootGamesPresenter(
     }
 
     private fun childFactory(
-        screenConfig: RootGamesPresenter.GamesConfig,
+        screenConfig: RootGamesPresenter.Config,
         componentContext: ComponentContext
-    ): RootGamesPresenter.GamesChild = when (screenConfig) {
-        RootGamesPresenter.GamesConfig.GamesList -> RootGamesPresenter.GamesChild.GamesList(
+    ): RootGamesPresenter.Child = when (screenConfig) {
+        RootGamesPresenter.Config.GamesList -> RootGamesPresenter.Child.GamesList(
             gamesListComponentFactory(
                 componentContext,
                 ::openChat,
@@ -71,7 +71,7 @@ class DefaultRootGamesPresenter(
             )
         )
 
-        is RootGamesPresenter.GamesConfig.GameDetails -> RootGamesPresenter.GamesChild.GameDetails(
+        is RootGamesPresenter.Config.GameDetails -> RootGamesPresenter.Child.GameDetails(
             gameDetailsPresenterFactory(
                 componentContext,
                 screenConfig.game,
@@ -80,7 +80,7 @@ class DefaultRootGamesPresenter(
             )
         )
 
-        is RootGamesPresenter.GamesConfig.Chat -> RootGamesPresenter.GamesChild.ChatDetails(
+        is RootGamesPresenter.Config.Chat -> RootGamesPresenter.Child.ChatDetails(
             chatPresenterFactory(
                 componentContext,
                 screenConfig.title,
