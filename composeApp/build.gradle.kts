@@ -58,7 +58,6 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kermit)
-            implementation(libs.richeditor.compose)
             implementation(libs.androidx.room.runtime)
             implementation(libs.datetime)
             implementation(libs.kmpauth.google)
@@ -73,6 +72,7 @@ kotlin {
             api(libs.bundles.decompose)
             implementation(libs.essenty.coroutines)
             implementation(libs.bundles.kotlinInject)
+            implementation(libs.markdown)
         }
 //        configurations.all {
 //            resolutionStrategy.eachDependency {

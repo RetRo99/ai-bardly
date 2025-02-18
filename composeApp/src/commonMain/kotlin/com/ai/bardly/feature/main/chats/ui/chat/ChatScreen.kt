@@ -71,8 +71,8 @@ import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.main.chats.ui.model.MessageUiModel
 import com.ai.bardly.util.sharedScreenBounds
-import com.mohamedrejeb.richeditor.model.rememberRichTextState
-import com.mohamedrejeb.richeditor.ui.material3.RichText
+import com.mikepenz.markdown.m3.Markdown
+import com.mikepenz.markdown.m3.markdownColor
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -213,7 +213,6 @@ private fun LazyItemScope.MessageBubble(
                 .background(color, shape = shape)
                 .animateItem(),
         ) {
-            val richTextState = rememberRichTextState()
             var animatedText by remember(message) {
                 mutableStateOf(if (message.animateText) "" else message.text)
             }
@@ -227,12 +226,14 @@ private fun LazyItemScope.MessageBubble(
                     onAnimationEnded(message)
                 }
             }
-            richTextState.setMarkdown(animatedText)
             val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
             SelectionContainer {
-                RichText(
-                    state = richTextState,
+                Markdown(
+                    content = animatedText,
+                    colors = markdownColor(
+                        text = Color.White,
+                    ),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                         .combinedClickable(
                             onClick = {}, // You can add click handling if needed
@@ -240,7 +241,6 @@ private fun LazyItemScope.MessageBubble(
                                 clipboardManager.setText(AnnotatedString(message.text))
                             }
                         ),
-                    color = Color.White
                 )
             }
         }

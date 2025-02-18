@@ -45,8 +45,7 @@ import com.ai.bardly.feature.main.games.ui.components.GameImage
 import com.ai.bardly.feature.main.games.ui.components.SharedTransitionText
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.ai.bardly.util.sharedScreenBounds
-import com.mohamedrejeb.richeditor.model.rememberRichTextState
-import com.mohamedrejeb.richeditor.ui.material3.RichText
+import com.mikepenz.markdown.m3.Markdown
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -273,12 +272,8 @@ private fun GameInformationCards(
 
 @Composable
 private fun Description(description: String) {
-    val richTextState = rememberRichTextState()
-    richTextState.setMarkdown(description)
-
-    RichText(
-        state = richTextState,
-        fontSize = 14.sp
+    Markdown(
+        content = description,
     )
 }
 
