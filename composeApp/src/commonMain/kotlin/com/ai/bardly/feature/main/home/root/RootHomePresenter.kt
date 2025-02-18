@@ -9,22 +9,22 @@ import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface RootHomePresenter : BasePresenter<RootHomeViewState, RootHomeIntent>,
-    RootDecomposeComponent<RootHomePresenter.HomeChild, RootHomePresenter.HomeConfig> {
-    sealed interface HomeChild {
-        data class Home(val component: HomePresenter) : HomeChild
-        data class GameDetails(val component: GameDetailsPresenter) : HomeChild
-        data class Chat(val component: ChatPresenter) : HomeChild
+    RootDecomposeComponent<RootHomePresenter.Child, RootHomePresenter.Config> {
+    sealed interface Child {
+        data class Home(val component: HomePresenter) : Child
+        data class GameDetails(val component: GameDetailsPresenter) : Child
+        data class Chat(val component: ChatPresenter) : Child
     }
 
     @Serializable
-    sealed interface HomeConfig {
+    sealed interface Config {
         @Serializable
-        data object Home : HomeConfig
+        data object Home : Config
 
         @Serializable
-        data class GameDetails(val game: GameUiModel) : HomeConfig
+        data class GameDetails(val game: GameUiModel) : Config
 
         @Serializable
-        data class Chat(val title: String, val id: Int) : HomeConfig
+        data class Chat(val title: String, val id: Int) : Config
     }
 }

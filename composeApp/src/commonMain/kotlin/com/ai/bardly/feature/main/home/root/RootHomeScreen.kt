@@ -14,9 +14,9 @@ fun RootHomeScreen(
         root = component,
     ) { child ->
         when (val screen = child.instance) {
-            is RootHomePresenter.HomeChild.Home -> HomeScreen(screen.component)
-            is RootHomePresenter.HomeChild.GameDetails -> GameDetailsScreen(screen.component)
-            is RootHomePresenter.HomeChild.Chat -> ChatScreen(screen.component)
+            is RootHomePresenter.Child.Home -> HomeScreen(screen.component)
+            is RootHomePresenter.Child.GameDetails -> GameDetailsScreen(screen.component)
+            is RootHomePresenter.Child.Chat -> ChatScreen(screen.component)
         }
     }
 }
