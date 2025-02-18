@@ -25,12 +25,12 @@ class DefaultMainPresenter(
     private val rootHomeFactory: RootHomePresenterFactory,
     private val rootRecentFactory: RootRecentPresenterFactory,
 ) : MainPresenter, ComponentContext by componentContext {
-    private val navigation = StackNavigation<MainPresenter.MainConfig>()
+    private val navigation = StackNavigation<MainPresenter.Config>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = MainPresenter.MainConfig.serializer(),
-        initialConfiguration = MainPresenter.MainConfig.Home,
+        serializer = MainPresenter.Config.serializer(),
+        initialConfiguration = MainPresenter.Config.Home,
         childFactory = ::childFactory,
     )
 
@@ -38,23 +38,23 @@ class DefaultMainPresenter(
         navigation.pop()
     }
 
-    override fun navigate(config: MainPresenter.MainConfig) {
+    override fun navigate(config: MainPresenter.Config) {
         navigation.switchTab(config)
     }
 
     private fun childFactory(
-        screenConfig: MainPresenter.MainConfig,
+        screenConfig: MainPresenter.Config,
         componentContext: ComponentContext
-    ): MainPresenter.MainChild = when (screenConfig) {
-        MainPresenter.MainConfig.GameList -> MainPresenter.MainChild.GameList(
+    ): MainPresenter.Child = when (screenConfig) {
+        MainPresenter.Config.GameList -> MainPresenter.Child.GameList(
             rootGamesFactory(componentContext)
         )
 
-        MainPresenter.MainConfig.Home -> MainPresenter.MainChild.Home(
+        MainPresenter.Config.Home -> MainPresenter.Child.Home(
             rootHomeFactory(componentContext)
         )
 
-        MainPresenter.MainConfig.RecentChats -> MainPresenter.MainChild.RecentChats(
+        MainPresenter.Config.RecentChats -> MainPresenter.Child.RecentChats(
             rootRecentFactory(
                 componentContext,
             )

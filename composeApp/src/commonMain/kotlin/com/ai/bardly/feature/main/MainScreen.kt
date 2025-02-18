@@ -56,9 +56,9 @@ fun MainScreen(component: MainPresenter) {
                 animation = stackAnimation(fade()),
             ) {
                 when (val child = it.instance) {
-                    is MainPresenter.MainChild.GameList -> RootGamesScreen(child.component)
-                    is MainPresenter.MainChild.Home -> RootHomeScreen(child.component)
-                    is MainPresenter.MainChild.RecentChats -> RootRecentScreen(child.component)
+                    is MainPresenter.Child.GameList -> RootGamesScreen(child.component)
+                    is MainPresenter.Child.Home -> RootHomeScreen(child.component)
+                    is MainPresenter.Child.RecentChats -> RootRecentScreen(child.component)
                 }
             }
         }
@@ -67,8 +67,8 @@ fun MainScreen(component: MainPresenter) {
 
 @Composable
 private fun BottomBar(
-    currentlyActiveChild: MainPresenter.MainChild,
-    onNavigationClick: (MainPresenter.MainConfig) -> Unit
+    currentlyActiveChild: MainPresenter.Child,
+    onNavigationClick: (MainPresenter.Config) -> Unit
 ) {
     val outlineColor = MaterialTheme.colorScheme.outline
     NavigationBar(
@@ -86,9 +86,9 @@ private fun BottomBar(
     ) {
         MainPresenter.rootItems.forEach { destination ->
             val isSelected = when (currentlyActiveChild) {
-                is MainPresenter.MainChild.Home -> destination == MainPresenter.MainConfig.Home
-                is MainPresenter.MainChild.GameList -> destination == MainPresenter.MainConfig.GameList
-                is MainPresenter.MainChild.RecentChats -> destination == MainPresenter.MainConfig.RecentChats
+                is MainPresenter.Child.Home -> destination == MainPresenter.Config.Home
+                is MainPresenter.Child.GameList -> destination == MainPresenter.Config.GameList
+                is MainPresenter.Child.RecentChats -> destination == MainPresenter.Config.RecentChats
             }
             NavigationBarItem(
                 icon = {
