@@ -27,9 +27,9 @@ fun App(
             stack = applicationComponent.childStack,
         ) {
             when (val child = it.instance) {
-                is RootPresenter.RootChild.Main -> MainScreen(child.component)
-                is RootPresenter.RootChild.Onboarding -> RootOnboardingScreen(child.component)
-                is RootPresenter.RootChild.Login -> LoginScreen(child.component)
+                is RootPresenter.Child.Main -> MainScreen(child.component)
+                is RootPresenter.Child.Onboarding -> RootOnboardingScreen(child.component)
+                is RootPresenter.Child.Login -> LoginScreen(child.component)
             }
         }
     }

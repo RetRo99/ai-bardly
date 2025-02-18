@@ -4,9 +4,9 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.login.LoginPresenterFactory
 import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
-import com.ai.bardly.navigation.root.application.RootPresenter.RootChild.Login
-import com.ai.bardly.navigation.root.application.RootPresenter.RootChild.Main
-import com.ai.bardly.navigation.root.application.RootPresenter.RootChild.Onboarding
+import com.ai.bardly.navigation.root.application.RootPresenter.Child.Login
+import com.ai.bardly.navigation.root.application.RootPresenter.Child.Main
+import com.ai.bardly.navigation.root.application.RootPresenter.Child.Onboarding
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -26,12 +26,12 @@ class DefaultRootPresenter(
     private val loginPresenterFactory: LoginPresenterFactory,
 ) : RootPresenter, ComponentContext by componentContext {
 
-    private val navigation = StackNavigation<RootPresenter.RootConfig>()
+    private val navigation = StackNavigation<RootPresenter.Config>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = RootPresenter.RootConfig.serializer(),
-        initialConfiguration = RootPresenter.RootConfig.Main,
+        serializer = RootPresenter.Config.serializer(),
+        initialConfiguration = RootPresenter.Config.Main,
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -41,27 +41,27 @@ class DefaultRootPresenter(
     }
 
     private fun openMain() {
-        navigation.pushNew(RootPresenter.RootConfig.Main)
+        navigation.pushNew(RootPresenter.Config.Main)
     }
 
     private fun childFactory(
-        screenConfig: RootPresenter.RootConfig,
+        screenConfig: RootPresenter.Config,
         componentContext: ComponentContext
-    ): RootPresenter.RootChild = when (screenConfig) {
-        RootPresenter.RootConfig.Main -> Main(
+    ): RootPresenter.Child = when (screenConfig) {
+        RootPresenter.Config.Main -> Main(
             mainPresenterFactory(
                 componentContext,
             )
         )
 
-        RootPresenter.RootConfig.Onboarding -> Onboarding(
+        RootPresenter.Config.Onboarding -> Onboarding(
             onboardingPresenterFactory(
                 componentContext,
                 ::openMain,
             )
         )
 
-        RootPresenter.RootConfig.Login -> Login(
+        RootPresenter.Config.Login -> Login(
             loginPresenterFactory(
                 componentContext,
                 ::openMain,

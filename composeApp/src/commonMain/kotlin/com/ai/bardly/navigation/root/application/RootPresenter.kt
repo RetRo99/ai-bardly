@@ -7,23 +7,23 @@ import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface RootPresenter :
-    RootDecomposeComponent<RootPresenter.RootChild, RootPresenter.RootConfig> {
+    RootDecomposeComponent<RootPresenter.Child, RootPresenter.Config> {
 
-    sealed interface RootChild {
-        data class Main(val component: MainPresenter) : RootChild
-        data class Onboarding(val component: OnboardingPresenter) : RootChild
-        data class Login(val component: LoginPresenter) : RootChild
+    sealed interface Child {
+        data class Main(val component: MainPresenter) : Child
+        data class Onboarding(val component: OnboardingPresenter) : Child
+        data class Login(val component: LoginPresenter) : Child
     }
 
     @Serializable
-    sealed class RootConfig {
+    sealed class Config {
         @Serializable
-        data object Main : RootConfig()
+        data object Main : Config()
 
         @Serializable
-        data object Onboarding : RootConfig()
+        data object Onboarding : Config()
 
         @Serializable
-        data object Login : RootConfig()
+        data object Login : Config()
     }
 }
