@@ -7,19 +7,19 @@ import com.ai.bardly.navigation.root.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface RootRecentPresenter : BasePresenter<RootRecentViewState, RootRecentIntent>,
-    RootDecomposeComponent<RootRecentPresenter.RootRecentChild, RootRecentPresenter.RootRecentConfig> {
+    RootDecomposeComponent<RootRecentPresenter.Child, RootRecentPresenter.Config> {
 
-    sealed interface RootRecentChild {
-        data class Chat(val component: ChatPresenter) : RootRecentChild
-        data class RecentChats(val component: RecentChatsComponent) : RootRecentChild
+    sealed interface Child {
+        data class Chat(val component: ChatPresenter) : Child
+        data class RecentChats(val component: RecentChatsComponent) : Child
     }
 
     @Serializable
-    sealed interface RootRecentConfig {
+    sealed interface Config {
         @Serializable
-        data object RecentChats : RootRecentConfig
+        data object RecentChats : Config
 
         @Serializable
-        data class Chat(val title: String, val id: Int) : RootRecentConfig
+        data class Chat(val title: String, val id: Int) : Config
     }
 }

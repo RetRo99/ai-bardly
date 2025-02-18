@@ -13,8 +13,8 @@ fun RootRecentScreen(
         component
     ) { child ->
         when (val screen = child.instance) {
-            is RootRecentPresenter.RootRecentChild.RecentChats -> RecentChatsScreen(screen.component)
-            is RootRecentPresenter.RootRecentChild.Chat -> ChatScreen(screen.component)
+            is RootRecentPresenter.Child.RecentChats -> RecentChatsScreen(screen.component)
+            is RootRecentPresenter.Child.Chat -> ChatScreen(screen.component)
         }
     }
 }

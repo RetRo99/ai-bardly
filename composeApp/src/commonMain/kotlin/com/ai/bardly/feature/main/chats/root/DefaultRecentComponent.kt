@@ -30,12 +30,12 @@ class DefaultRootRecentPresenter(
 ) : BasePresenterImpl<RootRecentViewState, RootRecentIntent>(componentContext),
     RootRecentPresenter {
 
-    private val navigation = StackNavigation<RootRecentPresenter.RootRecentConfig>()
+    private val navigation = StackNavigation<RootRecentPresenter.Config>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = RootRecentPresenter.RootRecentConfig.serializer(),
-        initialStack = { listOf(RootRecentPresenter.RootRecentConfig.RecentChats) },
+        serializer = RootRecentPresenter.Config.serializer(),
+        initialStack = { listOf(RootRecentPresenter.Config.RecentChats) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -45,7 +45,7 @@ class DefaultRootRecentPresenter(
     override val initialState = BaseViewState.Success(defaultViewState)
 
     private fun openChat(title: String, id: Int) {
-        navigation.pushNew(RootRecentPresenter.RootRecentConfig.Chat(title, id))
+        navigation.pushNew(RootRecentPresenter.Config.Chat(title, id))
     }
 
     override fun onBackClicked() {
@@ -57,10 +57,10 @@ class DefaultRootRecentPresenter(
     }
 
     private fun childFactory(
-        screenConfig: RootRecentPresenter.RootRecentConfig,
+        screenConfig: RootRecentPresenter.Config,
         componentContext: ComponentContext
-    ): RootRecentPresenter.RootRecentChild = when (screenConfig) {
-        RootRecentPresenter.RootRecentConfig.RecentChats -> RootRecentPresenter.RootRecentChild.RecentChats(
+    ): RootRecentPresenter.Child = when (screenConfig) {
+        RootRecentPresenter.Config.RecentChats -> RootRecentPresenter.Child.RecentChats(
             DefaultRecentChatsComponent(
                 componentContext,
                 recentChatUseCase,
@@ -69,7 +69,7 @@ class DefaultRootRecentPresenter(
             )
         )
 
-        is RootRecentPresenter.RootRecentConfig.Chat -> RootRecentPresenter.RootRecentChild.Chat(
+        is RootRecentPresenter.Config.Chat -> RootRecentPresenter.Child.Chat(
             chatPresenterFactory(
                 componentContext,
                 screenConfig.title,
