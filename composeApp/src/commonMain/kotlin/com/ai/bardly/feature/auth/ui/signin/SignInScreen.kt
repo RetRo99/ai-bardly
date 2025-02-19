@@ -4,10 +4,12 @@ import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_visibility
 import ai_bardly.composeapp.generated.resources.ic_visibility_off
 import ai_bardly.composeapp.generated.resources.login_email
+import ai_bardly.composeapp.generated.resources.login_no_matching_user
 import ai_bardly.composeapp.generated.resources.login_or_with
 import ai_bardly.composeapp.generated.resources.login_password
 import ai_bardly.composeapp.generated.resources.login_sign_in
 import ai_bardly.composeapp.generated.resources.login_sign_in_title
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -95,6 +97,9 @@ private fun SignInScreenContent(
             },
         )
 
+        AnimatedVisibility(viewState.showNoMatchingUserError) {
+            NoMatchingUserRow()
+        }
         SignInButton(
             enabled = viewState.emailField.value.isNotBlank() && viewState.passwordField.value.isNotBlank(),
             onSignInClick = {
@@ -119,6 +124,21 @@ private fun SignInScreenContent(
     }
 }
 
+@Composable
+private fun NoMatchingUserRow() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),  // Add some space below the row
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(Res.string.login_no_matching_user),
+            color = MaterialTheme.colorScheme.error
+        )
+    }
+}
 @Composable
 private fun SignInTitle() {
     Text(

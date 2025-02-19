@@ -87,17 +87,7 @@ class DefaultSignInPresenter(
         email: LoginInputField.Email,
         password: LoginInputField.Password
     ) {
-        when {
-            email.isValid && password.isValid -> signInWithEmail(email.value, password.value)
-            else -> {
-                updateOrSetSuccess {
-                    it.copy(
-                        emailField = it.emailField.copy(showErrorIfNeeded = true),
-                        passwordField = it.passwordField.copy(showErrorIfNeeded = true)
-                    )
-                }
-            }
-        }
+        signInWithEmail(email.value, password.value)
     }
 
     private fun signInWithEmail(email: String, password: String) {
@@ -107,7 +97,11 @@ class DefaultSignInPresenter(
                     it
                 }
                 .onFailure {
-                    it
+                    updateOrSetSuccess {
+                        it.copy(
+                            showNoMatchingUserError = true,
+                        )
+                    }
                 }
         }
     }

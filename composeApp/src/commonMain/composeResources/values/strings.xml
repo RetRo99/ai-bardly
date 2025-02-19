@@ -22,6 +22,7 @@
     <string name="login_sign_in">Sign in</string>
     <string name="login_sign_up">Sign up</string>
     <string name="login_or_with">Or with</string>
+    <string name="login_no_matching_user">No matching user found.</string>
     <string name="chat_details_message_hint">Ask Bardly...</string>
     <string name="general_search">Search</string>
     <string name="just_now">Just now</string>
