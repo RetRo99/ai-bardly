@@ -41,7 +41,7 @@ class DefaultGameDetailsPresenter(
         updateGameOpen(game.id)
     }
 
-    override suspend fun handleScreenIntent(intent: GameDetailsIntent) {
+    override fun handleScreenIntent(intent: GameDetailsIntent) {
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
             GameDetailsIntent.OpenChatClicked -> openChat()

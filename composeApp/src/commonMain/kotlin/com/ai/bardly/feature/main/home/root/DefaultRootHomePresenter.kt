@@ -47,7 +47,7 @@ class DefaultRootHomePresenter(
         navigation.pop()
     }
 
-    override suspend fun handleScreenIntent(intent: RootHomeIntent) {
+    override fun handleScreenIntent(intent: RootHomeIntent) {
         // TODO
     }
 

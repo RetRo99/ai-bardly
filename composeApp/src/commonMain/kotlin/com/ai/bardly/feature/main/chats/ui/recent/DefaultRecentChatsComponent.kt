@@ -21,7 +21,7 @@ class DefaultRecentChatsComponent(
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    override suspend fun handleScreenIntent(intent: RecentChatsIntent) {
+    override fun handleScreenIntent(intent: RecentChatsIntent) {
         when (intent) {
             is RecentChatsIntent.RecentChatClicked -> onRecentChatClicked(intent)
         }

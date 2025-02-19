@@ -54,7 +54,7 @@ class DefaultGamesListComponent(
         subscribeToSearchQuery()
     }
 
-    override suspend fun handleScreenIntent(intent: GamesListIntent) {
+    override fun handleScreenIntent(intent: GamesListIntent) {
         when (intent) {
             is GamesListIntent.GameClicked -> openGameDetails(intent.game)
             is GamesListIntent.OpenChatClicked -> onOpenChatClicked(intent.gameTitle, intent.gameId)

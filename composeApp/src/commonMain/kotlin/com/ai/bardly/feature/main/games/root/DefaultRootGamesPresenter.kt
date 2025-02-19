@@ -55,7 +55,7 @@ class DefaultRootGamesPresenter(
         navigation.pushNew(RootGamesPresenter.Config.GameDetails(game))
     }
 
-    override suspend fun handleScreenIntent(intent: RootGamesIntent) {
+    override fun handleScreenIntent(intent: RootGamesIntent) {
         // TODO
     }
 

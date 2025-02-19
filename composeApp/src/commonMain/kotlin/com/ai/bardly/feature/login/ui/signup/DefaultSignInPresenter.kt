@@ -28,7 +28,7 @@ class DefaultSignInPresenter(
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    override suspend fun handleScreenIntent(intent: SignInIntent) {
+    override fun handleScreenIntent(intent: SignInIntent) {
         when (intent) {
             is SignInIntent.EmailInputChange -> updateEmailInput(intent.email)
 

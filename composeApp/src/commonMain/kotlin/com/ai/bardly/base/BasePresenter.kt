@@ -8,7 +8,6 @@ import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
 interface BasePresenter<ScreenViewState, Intent : ScreenIntent> {
     val viewState: Value<BaseViewState<ScreenViewState>>
@@ -32,9 +31,7 @@ abstract class BasePresenterImpl<ScreenViewState, Intent : ScreenIntent>(compone
     }
 
     final override fun onScreenIntent(intent: Intent) {
-        scope.launch {
-            handleScreenIntent(intent)
-        }
+        handleScreenIntent(intent)
     }
 
     final override fun currentViewState(): ScreenViewState {
@@ -42,7 +39,7 @@ abstract class BasePresenterImpl<ScreenViewState, Intent : ScreenIntent>(compone
             ?: defaultViewState
     }
 
-    abstract suspend fun handleScreenIntent(intent: Intent)
+    abstract fun handleScreenIntent(intent: Intent)
 
     @Suppress("UNCHECKED_CAST")
     protected fun updateOrSetSuccess(update: (ScreenViewState) -> ScreenViewState) {

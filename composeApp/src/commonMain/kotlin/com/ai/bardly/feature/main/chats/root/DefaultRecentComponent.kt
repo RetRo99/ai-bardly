@@ -52,7 +52,7 @@ class DefaultRootRecentPresenter(
         navigation.pop()
     }
 
-    override suspend fun handleScreenIntent(intent: RootRecentIntent) {
+    override fun handleScreenIntent(intent: RootRecentIntent) {
         // TODO
     }
 

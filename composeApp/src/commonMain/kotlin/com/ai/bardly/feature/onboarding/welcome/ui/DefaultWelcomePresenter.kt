@@ -24,7 +24,7 @@ class DefaultWelcomePresenter(
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    override suspend fun handleScreenIntent(intent: WelcomeIntent) {
+    override fun handleScreenIntent(intent: WelcomeIntent) {
         when (intent) {
             WelcomeIntent.OpenMain -> openMain()
         }

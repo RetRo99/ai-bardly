@@ -43,7 +43,7 @@ class DefaultChatPresenter(
         isResponding = false
     )
 
-    override suspend fun handleScreenIntent(intent: ChatScreenIntent) {
+    override fun handleScreenIntent(intent: ChatScreenIntent) {
         when (intent) {
             ChatScreenIntent.NavigateBack -> navigateBack()
             is ChatScreenIntent.MessageAnimationDone -> onMessageAnimationEnded(intent.message)
@@ -70,22 +70,24 @@ class DefaultChatPresenter(
         }
     }
 
-    private suspend fun onMessageSendClicked(messageText: String) {
-        val message = displayAndGetMessage(
-            messageText = messageText,
-            id = gameId,
-        )
-        chatsRepository
-            .getAnswerFor(message.toDomainModel())
-            .onSuccess { answer ->
-                displayMessage(answer.toUiModel(true))
-            }.onFailure {
-                updateOrSetSuccess {
-                    it.copy(
-                        isResponding = false
-                    )
+    private fun onMessageSendClicked(messageText: String) {
+        scope.launch {
+            val message = displayAndGetMessage(
+                messageText = messageText,
+                id = gameId,
+            )
+            chatsRepository
+                .getAnswerFor(message.toDomainModel())
+                .onSuccess { answer ->
+                    displayMessage(answer.toUiModel(true))
+                }.onFailure {
+                    updateOrSetSuccess {
+                        it.copy(
+                            isResponding = false
+                        )
+                    }
                 }
-            }
+        }
     }
 
     private fun onMessageAnimationEnded(message: MessageUiModel) {

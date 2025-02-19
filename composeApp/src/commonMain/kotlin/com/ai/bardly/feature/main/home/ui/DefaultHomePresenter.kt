@@ -39,7 +39,7 @@ class DefaultHomePresenter(
         loadRecentGames()
     }
 
-    override suspend fun handleScreenIntent(intent: HomeIntent) {
+    override fun handleScreenIntent(intent: HomeIntent) {
         when (intent) {
             is HomeIntent.OpenChatClicked -> openChat(intent.gameTitle, intent.gameId)
             is HomeIntent.OpenGameDetails -> openGameDetails(intent.game)
