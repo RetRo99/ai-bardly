@@ -8,10 +8,10 @@ interface UserRepository {
     suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String,
-    ): UserDomainModel?
+    ): Result<UserDomainModel?>
 
     suspend fun fetchUserWithEmailAndPassword(
         email: String,
         password: String,
-    ): UserDomainModel?
+    ): Result<UserDomainModel?>
 }

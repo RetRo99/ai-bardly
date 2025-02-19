@@ -23,14 +23,16 @@ class DataUserRepository(
     override suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String
-    ): UserDomainModel? {
-        return remoteSource.createUserWithEmailAndPassword(email, password)?.toDomainModel()
+    ): Result<UserDomainModel?> {
+        return remoteSource.createUserWithEmailAndPassword(email, password)
+            .map { it?.toDomainModel() }
     }
 
     override suspend fun fetchUserWithEmailAndPassword(
         email: String,
         password: String
-    ): UserDomainModel? {
-        return remoteSource.fetchUserWithEmailAndPassword(email, password)?.toDomainModel()
+    ): Result<UserDomainModel?> {
+        return remoteSource.fetchUserWithEmailAndPassword(email, password)
+            .map { it?.toDomainModel() }
     }
 }

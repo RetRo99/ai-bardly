@@ -9,6 +9,7 @@ import com.ai.bardly.feature.login.ui.components.LoginInputField
 import com.ai.bardly.user.domain.UserRepository
 import com.arkivanov.decompose.ComponentContext
 import dev.gitlive.firebase.auth.FirebaseUser
+import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -100,7 +101,15 @@ class DefaultSignInPresenter(
     }
 
     private fun signInWithEmail(email: String, password: String) {
-        TODO("Not yet implemented")
+        scope.launch {
+            userRepository.fetchUserWithEmailAndPassword(email, password)
+                .onSuccess {
+                    it
+                }
+                .onFailure {
+                    it
+                }
+        }
     }
 
     private fun handleSignInWithGoogleResult(result: Result<FirebaseUser?>) {
