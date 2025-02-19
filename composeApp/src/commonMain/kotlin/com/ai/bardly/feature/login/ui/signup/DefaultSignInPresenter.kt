@@ -4,9 +4,7 @@ import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.feature.login.ui.EmailField
-import com.ai.bardly.feature.login.ui.InputValidator
-import com.ai.bardly.feature.login.ui.PasswordField
+import com.ai.bardly.feature.login.ui.components.InputValidator
 import com.arkivanov.decompose.ComponentContext
 import dev.gitlive.firebase.auth.FirebaseUser
 import me.tatarka.inject.annotations.Assisted
@@ -46,7 +44,10 @@ class DefaultSignInPresenter(
     private fun updateEmailInput(newEmailInput: String) {
         updateOrSetSuccess {
             it.copy(
-                emailField = EmailField.validate(newEmailInput, inputValidator)
+                emailField = it.emailField.copy(
+                    value = newEmailInput,
+                    validator = inputValidator
+                )
             )
         }
     }
@@ -54,8 +55,10 @@ class DefaultSignInPresenter(
     private fun updatePasswordInput(newPasswordInput: String) {
         updateOrSetSuccess {
             it.copy(
-                passwordField = PasswordField.validate(newPasswordInput, inputValidator)
-                    .copy(isVisible = it.passwordField.isVisible)
+                passwordField = it.passwordField.copy(
+                    value = newPasswordInput,
+                    validator = inputValidator
+                )
             )
         }
     }
@@ -64,7 +67,8 @@ class DefaultSignInPresenter(
         updateOrSetSuccess {
             it.copy(
                 passwordField = it.passwordField.copy(
-                    isVisible = isVisible
+                    isPasswordVisible = isVisible,
+                    validator = inputValidator,
                 )
             )
         }
