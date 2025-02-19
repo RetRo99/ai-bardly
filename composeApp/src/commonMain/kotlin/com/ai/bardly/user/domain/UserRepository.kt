@@ -9,4 +9,9 @@ interface UserRepository {
         email: String,
         password: String,
     ): UserDomainModel?
+
+    suspend fun fetchUserWithEmailAndPassword(
+        email: String,
+        password: String,
+    ): UserDomainModel?
 }
