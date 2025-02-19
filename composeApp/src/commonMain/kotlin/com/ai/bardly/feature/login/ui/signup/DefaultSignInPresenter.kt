@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui
+package com.ai.bardly.feature.login.ui.signup
 
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope

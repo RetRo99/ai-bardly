@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui
+package com.ai.bardly.feature.login.ui.signup
 
 data class SignInViewState(
     val email: String = "",
