@@ -3,6 +3,7 @@ package com.ai.bardly.feature.auth.ui.login
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_visibility
 import ai_bardly.composeapp.generated.resources.ic_visibility_off
+import ai_bardly.composeapp.generated.resources.login_already_have_account
 import ai_bardly.composeapp.generated.resources.login_do_not_have_account
 import ai_bardly.composeapp.generated.resources.login_email
 import ai_bardly.composeapp.generated.resources.login_no_matching_user
@@ -10,6 +11,10 @@ import ai_bardly.composeapp.generated.resources.login_or_with
 import ai_bardly.composeapp.generated.resources.login_password
 import ai_bardly.composeapp.generated.resources.login_sign_in
 import ai_bardly.composeapp.generated.resources.login_sign_in_title
+import ai_bardly.composeapp.generated.resources.login_sign_in_with_google
+import ai_bardly.composeapp.generated.resources.login_sign_up
+import ai_bardly.composeapp.generated.resources.login_sign_up_title
+import ai_bardly.composeapp.generated.resources.login_sign_up_with_google
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -79,7 +84,7 @@ private fun LoginScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        SignInTitle()
+        LoginTitle(viewState.loginMode)
 
         EmailField(
             emailInputField = viewState.emailField,
@@ -103,7 +108,8 @@ private fun LoginScreenContent(
             NoMatchingUserRow()
         }
 
-        SignInButton(
+        LoginButton(
+            loginMode = viewState.loginMode,
             enabled = viewState.emailField.value.isNotBlank() && viewState.passwordField.value.isNotBlank(),
             onSignInClick = {
                 intentDispatcher(
@@ -119,13 +125,14 @@ private fun LoginScreenContent(
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        GoogleSignInSection(
+        GoogleLoginSection(
+            loginMode = viewState.loginMode,
             onResult = { result ->
                 intentDispatcher(LoginIntent.LoginWithGoogleResult(result))
             }
         )
         LoginFooterRow(
-            fullTextResId = Res.string.login_do_not_have_account,
+            loginMode = viewState.loginMode,
             onActionClick = { intentDispatcher(LoginIntent.OnFooterClicked) }
         )
     }
@@ -133,8 +140,8 @@ private fun LoginScreenContent(
 
 @Composable
 private fun LoginFooterRow(
-    fullTextResId: StringResource,
-    onActionClick: () -> Unit
+    loginMode: LoginMode,
+    onActionClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -143,11 +150,16 @@ private fun LoginFooterRow(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val text = when (loginMode) {
+            LoginMode.SignIn -> stringResource(Res.string.login_do_not_have_account)
+            LoginMode.SignUp -> stringResource(Res.string.login_already_have_account)
+        }
         TextButton(onClick = onActionClick) {
-            Text(text = stringResource(fullTextResId))
+            Text(text = text)
         }
     }
 }
+
 @Composable
 private fun NoMatchingUserRow() {
     Row(
@@ -163,10 +175,15 @@ private fun NoMatchingUserRow() {
         )
     }
 }
+
 @Composable
-private fun SignInTitle() {
+private fun LoginTitle(loginMode: LoginMode) {
+    val text = when (loginMode) {
+        LoginMode.SignIn -> stringResource(Res.string.login_sign_in_title)
+        LoginMode.SignUp -> stringResource(Res.string.login_sign_up_title)
+    }
     Text(
-        text = stringResource(Res.string.login_sign_in_title),
+        text = text,
         style = MaterialTheme.typography.headlineMedium,
         modifier = Modifier.padding(bottom = 32.dp)
     )
@@ -217,7 +234,7 @@ private fun PasswordField(
 }
 
 @Composable
-fun AuthTextField(
+private fun AuthTextField(
     inputField: LoginInputField,
     onValueChange: (String) -> Unit,
     labelResId: StringResource,
@@ -270,31 +287,41 @@ fun AuthTextField(
 }
 
 @Composable
-private fun SignInButton(
+private fun LoginButton(
     enabled: Boolean,
-    onSignInClick: () -> Unit
+    onSignInClick: () -> Unit,
+    loginMode: LoginMode
 ) {
+    val text = when (loginMode) {
+        LoginMode.SignIn -> stringResource(Res.string.login_sign_in)
+        LoginMode.SignUp -> stringResource(Res.string.login_sign_up)
+    }
     Button(
         onClick = onSignInClick,
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 32.dp),
+            .fillMaxWidth(),
         enabled = enabled
     ) {
-        Text(stringResource(Res.string.login_sign_in))
+        Text(text)
     }
 }
 
 @Composable
-private fun GoogleSignInSection(
+private fun GoogleLoginSection(
+    loginMode: LoginMode,
     onResult: (Result<FirebaseUser?>) -> Unit
 ) {
     GoogleButtonUiContainerFirebase(
         linkAccount = false,
         onResult = onResult
     ) {
+        val text = when (loginMode) {
+            LoginMode.SignIn -> stringResource(Res.string.login_sign_in_with_google)
+            LoginMode.SignUp -> stringResource(Res.string.login_sign_up_with_google)
+        }
         GoogleSignInButton(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            text = text
         ) {
             this.onClick()
         }

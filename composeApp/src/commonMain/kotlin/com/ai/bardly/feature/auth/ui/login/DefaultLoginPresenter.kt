@@ -31,7 +31,7 @@ class DefaultLoginPresenter(
     private val userRepository: UserRepository,
 ) : BasePresenterImpl<LoginViewState, LoginIntent>(componentContext), LoginPresenter {
 
-    override val defaultViewState = LoginViewState()
+    override val defaultViewState = LoginViewState(loginMode)
 
     override val initialState = BaseViewState.Success(defaultViewState)
 

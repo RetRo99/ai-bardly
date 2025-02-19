@@ -16,11 +16,14 @@
     <string name="home_new_game_available">New game available!</string>
     <string name="games_list_search_games">Search games...</string>
     <string name="login_email">Email</string>
+    <string name="login_sign_up_title">Create account</string>
     <string name="login_sign_in_title">Hi, welcome back!</string>
     <string name="login_password">Password</string>
     <string name="login_forgot_password">Forgot password?</string>
     <string name="login_sign_in">Sign in</string>
     <string name="login_sign_up">Sign up</string>
+    <string name="login_sign_in_with_google">Sign in with Google</string>
+    <string name="login_sign_up_with_google">Sign up with Google</string>
     <string name="login_or_with">Or with</string>
     <string name="login_no_matching_user">No matching user found.</string>
     <string name="login_already_have_account">Already have an account? Login</string>
