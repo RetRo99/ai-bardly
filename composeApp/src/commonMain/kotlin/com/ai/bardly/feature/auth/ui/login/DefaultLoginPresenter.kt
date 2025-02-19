@@ -5,12 +5,15 @@ import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
+import com.ai.bardly.feature.auth.domain.AuthRepository
 import com.ai.bardly.feature.auth.ui.components.InputValidator
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import com.ai.bardly.user.domain.UserRepository
 import com.ai.bardly.user.ui.UserUiModel
 import com.ai.bardly.user.ui.toUiModel
 import com.arkivanov.decompose.ComponentContext
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -31,6 +34,7 @@ class DefaultLoginPresenter(
     private val analytics: Analytics,
     private val inputValidator: InputValidator,
     private val userRepository: UserRepository,
+    private val authRepository: AuthRepository,
 ) : BasePresenterImpl<LoginViewState, LoginIntent>(componentContext), LoginPresenter {
 
     override val defaultViewState = LoginViewState(loginMode)
@@ -179,5 +183,10 @@ class DefaultLoginPresenter(
     }
 
     private fun onGetUserSuccess(user: UserUiModel?) {
+        scope.launch {
+            Firebase.auth.currentUser?.let {
+                authRepository.generateBearerToken(it.getIdToken(false).toString())
+            }
+        }
     }
 }

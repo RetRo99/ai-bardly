@@ -49,7 +49,7 @@ class NetworkClient(
         val url = buildUrl(path, queryBuilder)
         httpClient.post(url) {
             headers(headers)
-            setBody(body)
+            body?.let { setBody(it) }
             contentType(ContentType.Application.Json)
         }
     }
