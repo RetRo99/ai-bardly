@@ -6,6 +6,7 @@ import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.login.ui.components.InputValidator
 import com.ai.bardly.feature.login.ui.components.LoginInputField
+import com.ai.bardly.user.domain.UserRepository
 import com.arkivanov.decompose.ComponentContext
 import dev.gitlive.firebase.auth.FirebaseUser
 import me.tatarka.inject.annotations.Assisted
@@ -22,6 +23,7 @@ class DefaultSignInPresenter(
     @Assisted componentContext: ComponentContext,
     private val analytics: Analytics,
     private val inputValidator: InputValidator,
+    private val userRepository: UserRepository,
 ) : BasePresenterImpl<SignInViewState, SignInIntent>(componentContext), SignInPresenter {
 
     override val defaultViewState = SignInViewState()
