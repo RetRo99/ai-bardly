@@ -32,17 +32,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.login.ui.components.LoginInputField
+import com.ai.bardly.feature.login.ui.components.SuccessValidationState
+import com.ai.bardly.feature.login.ui.components.ValidationState
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import dev.gitlive.firebase.auth.FirebaseUser
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -79,7 +84,6 @@ private fun SignInScreenContent(
             onEmailChange = { email ->
                 intentDispatcher(SignInIntent.EmailInputChange(email))
             },
-            borderColor = Color.Black.copy(alpha = 0.4f)
         )
 
         PasswordField(
@@ -91,7 +95,6 @@ private fun SignInScreenContent(
             onPasswordVisibilityChange = { isVisible ->
                 intentDispatcher(SignInIntent.TogglePasswordVisibility(isVisible))
             },
-            borderColor = Color.Black.copy(alpha = 0.4f)
         )
 
         SignInButton(
@@ -131,33 +134,15 @@ private fun SignInTitle() {
 private fun EmailField(
     emailInputField: LoginInputField.Email,
     onEmailChange: (String) -> Unit,
-    borderColor: Color
 ) {
-    val textFieldColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = borderColor,
-        unfocusedBorderColor = borderColor
-    )
-
-    OutlinedTextField(
-        value = emailInputField,
+    AuthTextField(
+        value = emailInputField.value,
         onValueChange = onEmailChange,
-        label = { Text(stringResource(Res.string.login_email)) },
-        singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp),
-        colors = textFieldColors,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Email,
-            imeAction = ImeAction.Next
-        ),
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Email,
-                contentDescription = null,
-                tint = borderColor
-            )
-        }
+        labelResId = Res.string.login_email,
+        keyboardType = KeyboardType.Email,
+        imeAction = ImeAction.Next,
+        validationState = emailInputField.state,
+        leadingIcon = Icons.Default.Email
     )
 }
 
@@ -167,38 +152,15 @@ private fun PasswordField(
     onPasswordChange: (String) -> Unit,
     passwordVisible: Boolean,
     onPasswordVisibilityChange: (Boolean) -> Unit,
-    borderColor: Color
 ) {
-    val textFieldColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = borderColor,
-        unfocusedBorderColor = borderColor
-    )
-
-    OutlinedTextField(
+    AuthTextField(
         value = passwordInputField.value,
         onValueChange = onPasswordChange,
-        label = { Text(stringResource(Res.string.login_password)) },
-        singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 24.dp),
-        colors = textFieldColors,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
-        ),
-        visualTransformation = if (passwordVisible) {
-            VisualTransformation.None
-        } else {
-            PasswordVisualTransformation()
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = null,
-                tint = borderColor
-            )
-        },
+        labelResId = Res.string.login_password,
+        keyboardType = KeyboardType.Password,
+        imeAction = ImeAction.Done,
+        validationState = passwordInputField.state,
+        leadingIcon = Icons.Default.Lock,
         trailingIcon = {
             IconButton(onClick = { onPasswordVisibilityChange(!passwordVisible) }) {
                 Icon(
@@ -207,7 +169,61 @@ private fun PasswordField(
                         else Res.drawable.ic_visibility_off
                     ),
                     contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                    tint = borderColor
+                )
+            }
+        },
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+    )
+}
+
+@Composable
+fun AuthTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    labelResId: StringResource,
+    keyboardType: KeyboardType,
+    imeAction: ImeAction,
+    validationState: ValidationState,
+    leadingIcon: ImageVector,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    modifier: Modifier = Modifier
+) {
+    val textFieldColors = OutlinedTextFieldDefaults.colors(
+        unfocusedBorderColor = Color.Black.copy(alpha = 0.4f),
+        errorBorderColor = Color.Red
+    )
+
+    val isError = validationState !is SuccessValidationState
+    val errorMessage = if (isError) validationState.getLocalizedString() else ""
+
+    OutlinedTextField(
+        modifier = modifier.fillMaxWidth(),
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(stringResource(labelResId)) },
+        isError = isError,
+        singleLine = true,
+        colors = textFieldColors,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = imeAction
+        ),
+        visualTransformation = visualTransformation,
+        leadingIcon = {
+            Icon(
+                imageVector = leadingIcon,
+                contentDescription = null,
+            )
+        },
+        trailingIcon = trailingIcon,
+        supportingText = {
+            if (isError) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(start = 16.dp, top = 4.dp)
                 )
             }
         }

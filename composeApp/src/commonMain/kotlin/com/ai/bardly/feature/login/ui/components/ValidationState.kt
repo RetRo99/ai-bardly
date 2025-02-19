@@ -29,6 +29,7 @@ sealed class PasswordValidationState : ValidationState {
     object TooLong : PasswordValidationState()
     object MissingDigit : PasswordValidationState()
     object MissingLetter : PasswordValidationState()
+    object MissingCapitalLetter : PasswordValidationState()
 
     override fun getLocalizedString(): String {
         return when (this) {
@@ -38,6 +39,7 @@ sealed class PasswordValidationState : ValidationState {
             TooLong -> "validation_password_too_long"
             MissingDigit -> "validation_password_missing_digit"
             MissingLetter -> "validation_password_missing_letter"
+            MissingCapitalLetter -> "validation_password_missing_capital_letter"
         }
     }
 }

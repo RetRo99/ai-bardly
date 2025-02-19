@@ -38,6 +38,9 @@ class InputValidator {
         if (!password.any { it.isLetter() }) {
             return PasswordValidationState.MissingLetter
         }
+        if (!password.any { it.isUpperCase() }) {
+            return PasswordValidationState.MissingCapitalLetter
+        }
         return PasswordValidationState.Success
     }
 }
