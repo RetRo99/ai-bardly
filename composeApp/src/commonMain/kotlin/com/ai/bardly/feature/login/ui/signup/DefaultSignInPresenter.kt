@@ -5,6 +5,7 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.login.ui.components.InputValidator
+import com.ai.bardly.feature.login.ui.components.LoginInputField
 import com.arkivanov.decompose.ComponentContext
 import dev.gitlive.firebase.auth.FirebaseUser
 import me.tatarka.inject.annotations.Assisted
@@ -35,7 +36,10 @@ class DefaultSignInPresenter(
 
             is SignInIntent.TogglePasswordVisibility -> togglePasswordVisibility(intent.isVisible)
 
-            is SignInIntent.SignInWithEmail -> signInWithEmail(intent.email, intent.password)
+            is SignInIntent.SignInWithEmail -> handleSignInWithEmailClicked(
+                intent.email,
+                intent.password
+            )
 
             is SignInIntent.SignInWithGoogleResult -> handleSignInWithGoogleResult(intent.result)
         }
@@ -46,6 +50,7 @@ class DefaultSignInPresenter(
             it.copy(
                 emailField = it.emailField.copy(
                     value = newEmailInput,
+                    showErrorIfNeeded = false,
                     validator = inputValidator
                 )
             )
@@ -57,6 +62,7 @@ class DefaultSignInPresenter(
             it.copy(
                 passwordField = it.passwordField.copy(
                     value = newPasswordInput,
+                    showErrorIfNeeded = false,
                     validator = inputValidator
                 )
             )
@@ -71,6 +77,23 @@ class DefaultSignInPresenter(
                     validator = inputValidator,
                 )
             )
+        }
+    }
+
+    private fun handleSignInWithEmailClicked(
+        email: LoginInputField.Email,
+        password: LoginInputField.Password
+    ) {
+        when {
+            email.isValid && password.isValid -> signInWithEmail(email.value, password.value)
+            else -> {
+                updateOrSetSuccess {
+                    it.copy(
+                        emailField = it.emailField.copy(showErrorIfNeeded = true),
+                        passwordField = it.passwordField.copy(showErrorIfNeeded = true)
+                    )
+                }
+            }
         }
     }
 

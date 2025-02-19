@@ -42,8 +42,6 @@ import androidx.compose.ui.unit.sp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.login.ui.components.LoginInputField
-import com.ai.bardly.feature.login.ui.components.SuccessValidationState
-import com.ai.bardly.feature.login.ui.components.ValidationState
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import dev.gitlive.firebase.auth.FirebaseUser
@@ -98,12 +96,12 @@ private fun SignInScreenContent(
         )
 
         SignInButton(
-            enabled = viewState.emailField.isValid && viewState.passwordField.isValid,
+            enabled = viewState.emailField.value.isNotBlank() && viewState.passwordField.value.isNotBlank(),
             onSignInClick = {
                 intentDispatcher(
                     SignInIntent.SignInWithEmail(
-                        viewState.emailField.value,
-                        viewState.passwordField.value
+                        viewState.emailField,
+                        viewState.passwordField
                     )
                 )
             }
@@ -136,12 +134,11 @@ private fun EmailField(
     onEmailChange: (String) -> Unit,
 ) {
     AuthTextField(
-        value = emailInputField.value,
+        inputField = emailInputField,
         onValueChange = onEmailChange,
         labelResId = Res.string.login_email,
         keyboardType = KeyboardType.Email,
         imeAction = ImeAction.Next,
-        validationState = emailInputField.state,
         leadingIcon = Icons.Default.Email
     )
 }
@@ -154,12 +151,11 @@ private fun PasswordField(
     onPasswordVisibilityChange: (Boolean) -> Unit,
 ) {
     AuthTextField(
-        value = passwordInputField.value,
+        inputField = passwordInputField,
         onValueChange = onPasswordChange,
         labelResId = Res.string.login_password,
         keyboardType = KeyboardType.Password,
         imeAction = ImeAction.Done,
-        validationState = passwordInputField.state,
         leadingIcon = Icons.Default.Lock,
         trailingIcon = {
             IconButton(onClick = { onPasswordVisibilityChange(!passwordVisible) }) {
@@ -178,12 +174,11 @@ private fun PasswordField(
 
 @Composable
 fun AuthTextField(
-    value: String,
+    inputField: LoginInputField,
     onValueChange: (String) -> Unit,
     labelResId: StringResource,
     keyboardType: KeyboardType,
     imeAction: ImeAction,
-    validationState: ValidationState,
     leadingIcon: ImageVector,
     trailingIcon: (@Composable () -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -194,15 +189,14 @@ fun AuthTextField(
         errorBorderColor = Color.Red
     )
 
-    val isError = validationState !is SuccessValidationState
-    val errorMessage = if (isError) validationState.getLocalizedString() else ""
+    val errorMessage = if (inputField.showError) inputField.state.getLocalizedString() else ""
 
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
-        value = value,
+        value = inputField.value,
         onValueChange = onValueChange,
         label = { Text(stringResource(labelResId)) },
-        isError = isError,
+        isError = inputField.showError,
         singleLine = true,
         colors = textFieldColors,
         keyboardOptions = KeyboardOptions(
@@ -218,7 +212,7 @@ fun AuthTextField(
         },
         trailingIcon = trailingIcon,
         supportingText = {
-            if (isError) {
+            if (inputField.showError) {
                 Text(
                     text = errorMessage,
                     color = Color.Red,
