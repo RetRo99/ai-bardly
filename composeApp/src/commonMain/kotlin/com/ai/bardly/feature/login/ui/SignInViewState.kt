@@ -1,7 +1,11 @@
 package com.ai.bardly.feature.login.ui
 
-import com.ai.bardly.feature.main.games.ui.model.GameUiModel
-
 data class SignInViewState(
-    val recentGames: List<GameUiModel> = emptyList(),
+    val email: String = "",
+    val password: String = "",
+    val isPasswordVisible: Boolean = false,
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    val isValidEmail: Boolean = false,
+    val isValidPassword: Boolean = false
 )

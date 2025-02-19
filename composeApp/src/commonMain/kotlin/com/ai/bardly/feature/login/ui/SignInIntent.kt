@@ -1,5 +1,12 @@
 package com.ai.bardly.feature.login.ui
 
 import com.ai.bardly.base.ScreenIntent
+import dev.gitlive.firebase.auth.FirebaseUser
 
-sealed interface SignInIntent : ScreenIntent
+sealed interface SignInIntent : ScreenIntent {
+    data class EmailInputChange(val email: String) : SignInIntent
+    data class PasswordInputChange(val password: String) : SignInIntent
+    data class TogglePasswordVisibility(val isVisible: Boolean) : SignInIntent
+    data class SignInWithEmail(val email: String, val password: String) : SignInIntent
+    data class SignInWithGoogleResult(val result: Result<FirebaseUser?>) : SignInIntent
+}
