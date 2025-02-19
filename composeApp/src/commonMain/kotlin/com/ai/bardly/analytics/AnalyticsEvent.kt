@@ -50,4 +50,24 @@ sealed class AnalyticsEvent(
             AnalyticsEventParam.GameTitle to gameTitle,
         ),
     )
+
+    data class SignUpWithEmailInputError(
+        val error: String,
+    ) : AnalyticsEvent(
+        name = "sign_up_with_email_input_error",
+        origin = AnalyticsEventOrigin.SignUp,
+        params = mapOf(
+            AnalyticsEventParam.SingUpInputError to error,
+        ),
+    )
+
+    data class SignUpError(
+        val error: String,
+    ) : AnalyticsEvent(
+        name = "sign_up_error",
+        origin = AnalyticsEventOrigin.SignUp,
+        params = mapOf(
+            AnalyticsEventParam.SingUpError to error,
+        ),
+    )
 }

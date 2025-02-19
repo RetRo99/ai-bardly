@@ -53,9 +53,10 @@ import androidx.compose.ui.unit.sp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
+import com.ai.bardly.user.ui.UserUiModel
+import com.ai.bardly.user.ui.toUiModel
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
-import dev.gitlive.firebase.auth.FirebaseUser
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -323,11 +324,11 @@ private fun LoginButton(
 @Composable
 private fun GoogleLoginSection(
     loginMode: LoginMode,
-    onResult: (Result<FirebaseUser?>) -> Unit
+    onResult: (Result<UserUiModel?>) -> Unit
 ) {
     GoogleButtonUiContainerFirebase(
         linkAccount = false,
-        onResult = onResult
+        onResult = { onResult(it.map { it?.toUiModel() }) }
     ) {
         val text = when (loginMode) {
             LoginMode.SignIn -> stringResource(Res.string.login_sign_in_with_google)

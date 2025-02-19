@@ -5,7 +5,9 @@ import com.ai.bardly.decompose.RootChildStack
 import com.ai.bardly.feature.main.chats.ui.chat.ChatScreen
 import com.ai.bardly.feature.main.games.ui.details.GameDetailsScreen
 import com.ai.bardly.feature.main.home.ui.HomeScreen
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 
+@OptIn(ExperimentalDecomposeApi::class)
 @Composable
 fun RootHomeScreen(
     component: RootHomePresenter,

@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.auth.ui.login
 
 import com.ai.bardly.analytics.Analytics
+import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
@@ -8,6 +9,7 @@ import com.ai.bardly.feature.auth.ui.components.InputValidator
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import com.ai.bardly.user.domain.UserRepository
 import com.ai.bardly.user.ui.UserUiModel
+import com.ai.bardly.user.ui.toUiModel
 import com.arkivanov.decompose.ComponentContext
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
@@ -97,10 +99,30 @@ class DefaultLoginPresenter(
         password: LoginInputField.Password
     ) {
         when (loginMode) {
-            LoginMode.SignUp if email.isValid.not() -> showInputErrors()
-            LoginMode.SignUp if password.isValid.not() -> showInputErrors()
+            LoginMode.SignUp if email.isValid.not() -> {
+                logInvalidSignUpInput(email, password)
+                showInputErrors()
+            }
+
+            LoginMode.SignUp if password.isValid.not() -> {
+                logInvalidSignUpInput(email, password)
+                showInputErrors()
+            }
+
             LoginMode.SignUp -> signUpWithEmail(email.value, password.value)
             LoginMode.SignIn -> signInWithEmail(email.value, password.value)
+        }
+    }
+
+    private fun logInvalidSignUpInput(
+        email: LoginInputField.Email,
+        password: LoginInputField.Password
+    ) {
+        if (email.isValid.not()) {
+            analytics.log(AnalyticsEvent.SignUpWithEmailInputError(email.state.toString()))
+        }
+        if (password.isValid.not()) {
+            analytics.log(AnalyticsEvent.SignUpWithEmailInputError(password.state.toString()))
         }
     }
 
@@ -117,9 +139,10 @@ class DefaultLoginPresenter(
         scope.launch {
             userRepository.fetchUserWithEmailAndPassword(email, password)
                 .onSuccess {
-                    it
+                    onGetUserSuccess(it?.toUiModel())
                 }
                 .onFailure {
+                    analytics.log(AnalyticsEvent.SignUpError(it.toString()))
                     updateOrSetSuccess {
                         it.copy(
                             showNoMatchingUserError = true,
@@ -133,19 +156,23 @@ class DefaultLoginPresenter(
         scope.launch {
             userRepository.createUserWithEmailAndPassword(email, password)
                 .onSuccess {
-                    it
+                    onGetUserSuccess(it?.toUiModel())
                 }
                 .onFailure {
-                    updateOrSetSuccess {
-                        it.copy(
-                            showNoMatchingUserError = true,
-                        )
-                    }
+                    analytics.log(AnalyticsEvent.SignUpError(it.toString()))
                 }
         }
     }
 
     private fun handleSignInWithGoogleResult(result: Result<UserUiModel?>) {
-        TODO("Not yet implemented")
+        result
+            .onSuccess {
+                onGetUserSuccess(it)
+            }.onFailure {
+                analytics.log(AnalyticsEvent.SignUpError(it.toString()))
+            }
+    }
+
+    private fun onGetUserSuccess(user: UserUiModel?) {
     }
 }

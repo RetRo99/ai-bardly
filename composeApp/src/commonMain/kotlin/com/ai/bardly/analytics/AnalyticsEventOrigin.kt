@@ -7,4 +7,6 @@ sealed class AnalyticsEventOrigin(val analyticKey: String) {
     data object GameList : AnalyticsEventOrigin("game_list")
     data object GameSearch : AnalyticsEventOrigin("game_search")
     data object RecentChats : AnalyticsEventOrigin("recent_chats")
+    data object SignIn : AnalyticsEventOrigin("sign_in")
+    data object SignUp : AnalyticsEventOrigin("sign_in")
 }
