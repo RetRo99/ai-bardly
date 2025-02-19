@@ -19,8 +19,10 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -85,6 +87,7 @@ private fun LoginScreenContent(
         verticalArrangement = Arrangement.Center,
     ) {
         LoginTitle(viewState.loginMode)
+        Spacer(modifier = Modifier.height(16.dp))
 
         EmailField(
             emailInputField = viewState.emailField,
@@ -106,6 +109,7 @@ private fun LoginScreenContent(
 
         AnimatedVisibility(viewState.showNoMatchingUserError) {
             NoMatchingUserRow()
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
         LoginButton(
@@ -120,10 +124,11 @@ private fun LoginScreenContent(
                 )
             }
         )
+        Spacer(modifier = Modifier.height(16.dp))
 
-        OrWithDivider(
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
+        OrWithDivider()
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         GoogleLoginSection(
             loginMode = viewState.loginMode,
@@ -131,6 +136,8 @@ private fun LoginScreenContent(
                 intentDispatcher(LoginIntent.LoginWithGoogleResult(result))
             }
         )
+        Spacer(modifier = Modifier.height(16.dp))
+
         LoginFooterRow(
             loginMode = viewState.loginMode,
             onActionClick = { intentDispatcher(LoginIntent.OnFooterClicked) }
@@ -161,11 +168,12 @@ private fun LoginFooterRow(
 }
 
 @Composable
-private fun NoMatchingUserRow() {
+private fun NoMatchingUserRow(
+    modifier: Modifier = Modifier
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp),  // Add some space below the row
+        modifier = modifier
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -177,15 +185,18 @@ private fun NoMatchingUserRow() {
 }
 
 @Composable
-private fun LoginTitle(loginMode: LoginMode) {
+private fun LoginTitle(
+    loginMode: LoginMode,
+    modifier: Modifier = Modifier
+) {
     val text = when (loginMode) {
         LoginMode.SignIn -> stringResource(Res.string.login_sign_in_title)
         LoginMode.SignUp -> stringResource(Res.string.login_sign_up_title)
     }
     Text(
+        modifier = modifier,
         text = text,
         style = MaterialTheme.typography.headlineMedium,
-        modifier = Modifier.padding(bottom = 32.dp)
     )
 }
 
@@ -337,8 +348,7 @@ private fun OrWithDivider(
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         HorizontalDivider(
