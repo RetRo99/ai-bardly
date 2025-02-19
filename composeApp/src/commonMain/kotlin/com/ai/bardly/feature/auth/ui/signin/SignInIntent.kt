@@ -1,7 +1,7 @@
-package com.ai.bardly.feature.login.ui.signin
+package com.ai.bardly.feature.auth.ui.signin
 
 import com.ai.bardly.base.ScreenIntent
-import com.ai.bardly.feature.login.ui.components.LoginInputField
+import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import dev.gitlive.firebase.auth.FirebaseUser
 
 sealed interface SignInIntent : ScreenIntent {

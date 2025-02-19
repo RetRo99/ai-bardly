@@ -1,7 +1,7 @@
 package com.ai.bardly.app
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.login.LoginPresenterFactory
+import com.ai.bardly.feature.auth.LoginPresenterFactory
 import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
 import com.arkivanov.decompose.ComponentContext

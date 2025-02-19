@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui.components
+package com.ai.bardly.feature.auth.ui.components
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.validation_email_blank

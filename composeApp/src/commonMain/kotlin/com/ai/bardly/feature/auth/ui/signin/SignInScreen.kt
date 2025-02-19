@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui.signin
+package com.ai.bardly.feature.auth.ui.signin
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_visibility
@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
-import com.ai.bardly.feature.login.ui.components.LoginInputField
+import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import dev.gitlive.firebase.auth.FirebaseUser

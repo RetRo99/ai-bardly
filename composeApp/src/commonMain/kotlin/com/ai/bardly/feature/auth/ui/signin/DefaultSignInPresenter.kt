@@ -1,11 +1,11 @@
-package com.ai.bardly.feature.login.ui.signin
+package com.ai.bardly.feature.auth.ui.signin
 
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.feature.login.ui.components.InputValidator
-import com.ai.bardly.feature.login.ui.components.LoginInputField
+import com.ai.bardly.feature.auth.ui.components.InputValidator
+import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import com.ai.bardly.user.domain.UserRepository
 import com.arkivanov.decompose.ComponentContext
 import dev.gitlive.firebase.auth.FirebaseUser

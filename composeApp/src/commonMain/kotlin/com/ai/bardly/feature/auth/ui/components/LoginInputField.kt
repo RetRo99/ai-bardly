@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui.components
+package com.ai.bardly.feature.auth.ui.components
 
 
 sealed class LoginInputField(

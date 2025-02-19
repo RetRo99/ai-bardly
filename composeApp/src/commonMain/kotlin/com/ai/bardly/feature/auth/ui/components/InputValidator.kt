@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui.components
+package com.ai.bardly.feature.auth.ui.components
 
 import com.ai.bardly.annotations.ActivityScope
 import me.tatarka.inject.annotations.Inject

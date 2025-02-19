@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui.signin
+package com.ai.bardly.feature.auth.ui.signin
 
 import com.ai.bardly.base.BasePresenter
 
