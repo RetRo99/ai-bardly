@@ -24,4 +24,19 @@ class FirebaseUserRemoteDataSource(
             )
         }
     }
+
+    override suspend fun createUserWithEmailAndPassword(
+        email: String,
+        password: String
+    ): UserDto? {
+        return firebaseAuth
+            .createUserWithEmailAndPassword(email, password).user?.let { user ->
+                UserDto(
+                    id = user.uid,
+                    email = user.email,
+                    displayName = user.displayName,
+                    isEmailVerified = user.isEmailVerified,
+                )
+            }
+    }
 }
