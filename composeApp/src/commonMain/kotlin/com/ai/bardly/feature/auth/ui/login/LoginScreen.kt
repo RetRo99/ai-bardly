@@ -109,8 +109,10 @@ private fun LoginScreenContent(
         )
 
         AnimatedVisibility(viewState.showNoMatchingUserError) {
-            NoMatchingUserRow()
-            Spacer(modifier = Modifier.height(16.dp))
+            Column {
+                NoMatchingUserRow()
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
 
         LoginButton(

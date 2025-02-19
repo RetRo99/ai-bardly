@@ -98,6 +98,11 @@ class DefaultLoginPresenter(
         email: LoginInputField.Email,
         password: LoginInputField.Password
     ) {
+        updateOrSetSuccess {
+            it.copy(
+                showNoMatchingUserError = false,
+            )
+        }
         when (loginMode) {
             LoginMode.SignUp if email.isValid.not() -> {
                 logInvalidSignUpInput(email, password)
