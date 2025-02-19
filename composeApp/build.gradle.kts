@@ -32,7 +32,10 @@ kotlin {
             export(libs.essenty.stateKeeper)
         }
     }
-    compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+        freeCompilerArgs.add("-Xwhen-guards")
+    }
 
     sourceSets {
         androidMain.dependencies {

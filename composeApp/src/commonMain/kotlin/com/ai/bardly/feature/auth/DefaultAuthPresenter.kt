@@ -1,6 +1,7 @@
 package com.ai.bardly.feature.auth
 
 import com.ai.bardly.annotations.ActivityScope
+import com.ai.bardly.feature.auth.ui.login.LoginMode
 import com.ai.bardly.feature.auth.ui.login.LoginPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -51,7 +52,8 @@ class DefaultAuthPresenter(
         AuthPresenter.Config.SignIn -> AuthPresenter.Child.SignIn(
             loginPresenterFactory(
                 componentContext,
-                ::openSignUp
+                LoginMode.SignIn,
+                ::openSignUp,
             )
         )
     }

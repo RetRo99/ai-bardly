@@ -16,13 +16,15 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias LoginPresenterFactory = (
     ComponentContext,
-    onFooterClicked: () -> Unit
+    loginMode: LoginMode,
+    onFooterClicked: () -> Unit,
 ) -> DefaultLoginPresenter
 
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = LoginPresenter::class)
 class DefaultLoginPresenter(
     @Assisted componentContext: ComponentContext,
+    @Assisted private val loginMode: LoginMode,
     @Assisted private val onFooterClicked: () -> Unit,
     private val analytics: Analytics,
     private val inputValidator: InputValidator,
@@ -90,12 +92,42 @@ class DefaultLoginPresenter(
         email: LoginInputField.Email,
         password: LoginInputField.Password
     ) {
-        signInWithEmail(email.value, password.value)
+        when (loginMode) {
+            LoginMode.SignUp if email.isValid.not() -> showInputErrors()
+            LoginMode.SignUp if password.isValid.not() -> showInputErrors()
+            LoginMode.SignUp -> signUpWithEmail(email.value, password.value)
+            LoginMode.SignIn -> signInWithEmail(email.value, password.value)
+        }
+    }
+
+    private fun showInputErrors() {
+        updateOrSetSuccess {
+            it.copy(
+                emailField = it.emailField.copy(showErrorIfNeeded = true),
+                passwordField = it.passwordField.copy(showErrorIfNeeded = true)
+            )
+        }
     }
 
     private fun signInWithEmail(email: String, password: String) {
         scope.launch {
             userRepository.fetchUserWithEmailAndPassword(email, password)
+                .onSuccess {
+                    it
+                }
+                .onFailure {
+                    updateOrSetSuccess {
+                        it.copy(
+                            showNoMatchingUserError = true,
+                        )
+                    }
+                }
+        }
+    }
+
+    private fun signUpWithEmail(email: String, password: String) {
+        scope.launch {
+            userRepository.createUserWithEmailAndPassword(email, password)
                 .onSuccess {
                     it
                 }
