@@ -21,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -95,7 +94,7 @@ private fun SignInScreenContent(
         )
 
         SignInButton(
-            enabled = viewState.emailField.isValid && viewState.passwordField.isValid && !viewState.isLoading,
+            enabled = viewState.emailField.isValid && viewState.passwordField.isValid,
             onSignInClick = {
                 intentDispatcher(
                     SignInIntent.SignInWithEmail(
@@ -115,20 +114,6 @@ private fun SignInScreenContent(
                 intentDispatcher(SignInIntent.SignInWithGoogleResult(result))
             }
         )
-
-        if (viewState.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.padding(top = 16.dp)
-            )
-        }
-
-        viewState.error?.let { error ->
-            Text(
-                text = error,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier.padding(top = 16.dp)
-            )
-        }
     }
 }
 
