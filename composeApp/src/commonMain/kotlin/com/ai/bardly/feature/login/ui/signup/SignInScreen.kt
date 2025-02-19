@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.base.BaseScreen
 import com.ai.bardly.base.IntentDispatcher
+import com.ai.bardly.feature.login.ui.components.LoginInputField
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import dev.gitlive.firebase.auth.FirebaseUser
@@ -74,7 +75,7 @@ private fun SignInScreenContent(
         SignInTitle()
 
         EmailField(
-            email = viewState.emailField.value,
+            emailInputField = viewState.emailField,
             onEmailChange = { email ->
                 intentDispatcher(SignInIntent.EmailInputChange(email))
             },
@@ -82,7 +83,7 @@ private fun SignInScreenContent(
         )
 
         PasswordField(
-            password = viewState.passwordField.value,
+            passwordInputField = viewState.passwordField,
             onPasswordChange = { password ->
                 intentDispatcher(SignInIntent.PasswordInputChange(password))
             },
@@ -128,7 +129,7 @@ private fun SignInTitle() {
 
 @Composable
 private fun EmailField(
-    email: String,
+    emailInputField: LoginInputField.Email,
     onEmailChange: (String) -> Unit,
     borderColor: Color
 ) {
@@ -138,7 +139,7 @@ private fun EmailField(
     )
 
     OutlinedTextField(
-        value = email,
+        value = emailInputField,
         onValueChange = onEmailChange,
         label = { Text(stringResource(Res.string.login_email)) },
         singleLine = true,
@@ -162,7 +163,7 @@ private fun EmailField(
 
 @Composable
 private fun PasswordField(
-    password: String,
+    passwordInputField: LoginInputField.Password,
     onPasswordChange: (String) -> Unit,
     passwordVisible: Boolean,
     onPasswordVisibilityChange: (Boolean) -> Unit,
@@ -174,7 +175,7 @@ private fun PasswordField(
     )
 
     OutlinedTextField(
-        value = password,
+        value = passwordInputField.value,
         onValueChange = onPasswordChange,
         label = { Text(stringResource(Res.string.login_password)) },
         singleLine = true,
@@ -186,10 +187,11 @@ private fun PasswordField(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done
         ),
-        visualTransformation = if (passwordVisible)
+        visualTransformation = if (passwordVisible) {
             VisualTransformation.None
-        else
-            PasswordVisualTransformation(),
+        } else {
+            PasswordVisualTransformation()
+        },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Lock,
