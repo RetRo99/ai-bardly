@@ -11,11 +11,15 @@ interface AuthPresenter :
 
     sealed interface Child {
         data class SignIn(val component: LoginPresenter) : Child
+        data class SignUp(val component: LoginPresenter) : Child
     }
 
     @Serializable
     sealed interface Config {
         @Serializable
         data object SignIn : Config
+
+        @Serializable
+        data object SignUp : Config
     }
 }

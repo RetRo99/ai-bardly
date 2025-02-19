@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.Child
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
+import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.StackAnimation
 import com.arkivanov.decompose.router.stack.StackNavigator
 
 @OptIn(ExperimentalDecomposeApi::class, ExperimentalSharedTransitionApi::class)
@@ -16,15 +17,16 @@ import com.arkivanov.decompose.router.stack.StackNavigator
 fun <RootChild : Any, Config : Any> RootChildStack(
     root: RootDecomposeComponent<RootChild, Config>,
     modifier: Modifier = Modifier,
+    animation: StackAnimation<Config, RootChild> = backAnimation(
+        backHandler = root.backHandler,
+        onBack = root::onBackClicked,
+    ),
     content: @Composable AnimatedVisibilityScope.(child: Child.Created<Config, RootChild>) -> Unit,
 ) {
     SharedTransitionLayout {
         ChildStack(
             stack = root.childStack, modifier = modifier,
-            animation = backAnimation(
-                backHandler = root.backHandler,
-                onBack = root::onBackClicked,
-            ),
+            animation = animation,
         ) {
             ScreenAnimationProvider(this) {
                 content(it)
