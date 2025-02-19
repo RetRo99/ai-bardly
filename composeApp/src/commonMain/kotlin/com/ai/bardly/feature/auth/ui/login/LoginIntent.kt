@@ -2,7 +2,7 @@ package com.ai.bardly.feature.auth.ui.login
 
 import com.ai.bardly.base.ScreenIntent
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
-import dev.gitlive.firebase.auth.FirebaseUser
+import com.ai.bardly.user.ui.UserUiModel
 
 sealed interface LoginIntent : ScreenIntent {
 
@@ -14,6 +14,6 @@ sealed interface LoginIntent : ScreenIntent {
         val password: LoginInputField.Password
     ) : LoginIntent
 
-    data class LoginWithGoogleResult(val result: Result<FirebaseUser?>) : LoginIntent
+    data class LoginWithGoogleResult(val result: Result<UserUiModel?>) : LoginIntent
     data object OnFooterClicked : LoginIntent
 }

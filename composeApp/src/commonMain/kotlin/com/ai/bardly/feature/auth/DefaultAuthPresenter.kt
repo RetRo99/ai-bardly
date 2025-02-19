@@ -10,7 +10,6 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
-import com.arkivanov.decompose.router.stack.replaceAll
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -32,6 +31,7 @@ class DefaultAuthPresenter(
     override val childStack = childStack(
         source = navigation,
         serializer = AuthPresenter.Config.serializer(),
+        handleBackButton = true,
         initialConfiguration = AuthPresenter.Config.SignIn,
         childFactory = ::childFactory,
     )
@@ -45,12 +45,7 @@ class DefaultAuthPresenter(
     }
 
     private fun openSignUp() {
-        navigation.replaceAll(AuthPresenter.Config.SignUp)
-    }
-
-
-    private fun openSignIn() {
-        navigation.replaceAll(AuthPresenter.Config.SignIn)
+        navigation.pushNew(AuthPresenter.Config.SignUp)
     }
 
     private fun childFactory(
@@ -69,7 +64,7 @@ class DefaultAuthPresenter(
             loginPresenterFactory(
                 componentContext,
                 LoginMode.SignUp,
-                ::openSignIn,
+                {},
             )
         )
     }

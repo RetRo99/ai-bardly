@@ -138,10 +138,13 @@ private fun LoginScreenContent(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        LoginFooterRow(
-            loginMode = viewState.loginMode,
-            onActionClick = { intentDispatcher(LoginIntent.OnFooterClicked) }
-        )
+
+        if (viewState.loginMode == LoginMode.SignIn) {
+            LoginFooterRow(
+                loginMode = viewState.loginMode,
+                onActionClick = { intentDispatcher(LoginIntent.OnFooterClicked) }
+            )
+        }
     }
 }
 

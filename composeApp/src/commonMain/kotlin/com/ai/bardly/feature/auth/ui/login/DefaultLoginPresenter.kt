@@ -7,8 +7,8 @@ import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.auth.ui.components.InputValidator
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import com.ai.bardly.user.domain.UserRepository
+import com.ai.bardly.user.ui.UserUiModel
 import com.arkivanov.decompose.ComponentContext
-import dev.gitlive.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -88,6 +88,10 @@ class DefaultLoginPresenter(
         }
     }
 
+    private fun onFooterClicked() {
+        onFooterClicked.invoke()
+    }
+
     private fun handleSignInWithEmailClicked(
         email: LoginInputField.Email,
         password: LoginInputField.Password
@@ -141,7 +145,7 @@ class DefaultLoginPresenter(
         }
     }
 
-    private fun handleSignInWithGoogleResult(result: Result<FirebaseUser?>) {
+    private fun handleSignInWithGoogleResult(result: Result<UserUiModel?>) {
         TODO("Not yet implemented")
     }
 }
