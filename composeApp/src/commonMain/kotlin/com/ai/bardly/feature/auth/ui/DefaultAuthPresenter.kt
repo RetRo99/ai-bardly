@@ -1,8 +1,6 @@
-package com.ai.bardly.feature.auth
+package com.ai.bardly.feature.auth.ui
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.auth.AuthPresenter.Child.SignIn
-import com.ai.bardly.feature.auth.AuthPresenter.Child.SignUp
 import com.ai.bardly.feature.auth.ui.login.LoginMode
 import com.ai.bardly.feature.auth.ui.login.LoginPresenterFactory
 import com.arkivanov.decompose.ComponentContext
@@ -52,7 +50,7 @@ class DefaultAuthPresenter(
         screenConfig: AuthPresenter.Config,
         componentContext: ComponentContext
     ): AuthPresenter.Child = when (screenConfig) {
-        AuthPresenter.Config.SignIn -> SignIn(
+        AuthPresenter.Config.SignIn -> AuthPresenter.Child.SignIn(
             loginPresenterFactory(
                 componentContext,
                 LoginMode.SignIn,
@@ -60,7 +58,7 @@ class DefaultAuthPresenter(
             )
         )
 
-        AuthPresenter.Config.SignUp -> SignUp(
+        AuthPresenter.Config.SignUp -> AuthPresenter.Child.SignUp(
             loginPresenterFactory(
                 componentContext,
                 LoginMode.SignUp,

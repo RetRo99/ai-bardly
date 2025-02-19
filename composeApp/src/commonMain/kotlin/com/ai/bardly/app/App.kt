@@ -3,7 +3,7 @@ package com.ai.bardly.app
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import bardlyLightColors
-import com.ai.bardly.feature.auth.LoginScreen
+import com.ai.bardly.feature.auth.ui.LoginScreen
 import com.ai.bardly.feature.main.MainScreen
 import com.ai.bardly.feature.onboarding.RootOnboardingScreen
 import com.arkivanov.decompose.ExperimentalDecomposeApi

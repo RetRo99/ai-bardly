@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.auth
+package com.ai.bardly.feature.auth.ui
 
 import androidx.compose.runtime.Composable
 import com.ai.bardly.decompose.RootChildStack

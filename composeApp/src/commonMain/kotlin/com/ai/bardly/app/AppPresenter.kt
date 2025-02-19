@@ -1,7 +1,7 @@
 package com.ai.bardly.app
 
 import com.ai.bardly.decompose.RootDecomposeComponent
-import com.ai.bardly.feature.auth.AuthPresenter
+import com.ai.bardly.feature.auth.ui.AuthPresenter
 import com.ai.bardly.feature.main.MainPresenter
 import com.ai.bardly.feature.onboarding.OnboardingPresenter
 import kotlinx.serialization.Serializable

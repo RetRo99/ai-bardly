@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.auth
+package com.ai.bardly.feature.auth.ui
 
 import com.ai.bardly.decompose.RootDecomposeComponent
 import com.ai.bardly.feature.auth.ui.login.LoginPresenter
