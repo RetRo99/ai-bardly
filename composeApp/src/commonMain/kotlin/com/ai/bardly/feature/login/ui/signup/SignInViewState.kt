@@ -1,11 +1,11 @@
 package com.ai.bardly.feature.login.ui.signup
 
+import com.ai.bardly.feature.login.ui.EmailField
+import com.ai.bardly.feature.login.ui.PasswordField
+
 data class SignInViewState(
-    val email: String = "",
-    val password: String = "",
-    val isPasswordVisible: Boolean = false,
+    val emailField: EmailField = EmailField(),
+    val passwordField: PasswordField = PasswordField(),
     val isLoading: Boolean = false,
-    val error: String? = null,
-    val isValidEmail: Boolean = false,
-    val isValidPassword: Boolean = false
+    val error: String? = null
 )

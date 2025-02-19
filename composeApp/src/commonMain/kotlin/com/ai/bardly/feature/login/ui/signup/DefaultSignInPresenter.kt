@@ -4,7 +4,9 @@ import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.base.BasePresenterImpl
 import com.ai.bardly.base.BaseViewState
-import com.ai.bardly.feature.login.InputValidator
+import com.ai.bardly.feature.login.ui.EmailField
+import com.ai.bardly.feature.login.ui.InputValidator
+import com.ai.bardly.feature.login.ui.PasswordField
 import com.arkivanov.decompose.ComponentContext
 import dev.gitlive.firebase.auth.FirebaseUser
 import me.tatarka.inject.annotations.Assisted
@@ -20,6 +22,7 @@ typealias SignInPresenterFactory = (
 class DefaultSignInPresenter(
     @Assisted componentContext: ComponentContext,
     private val analytics: Analytics,
+    private val inputValidator: InputValidator,
 ) : BasePresenterImpl<SignInViewState, SignInIntent>(componentContext), SignInPresenter {
 
     override val defaultViewState = SignInViewState()
@@ -43,8 +46,7 @@ class DefaultSignInPresenter(
     private fun updateEmailInput(newEmailInput: String) {
         updateOrSetSuccess {
             it.copy(
-                email = newEmailInput,
-                isValidEmail = InputValidator.isValidEmail(newEmailInput)
+                emailField = EmailField.validate(newEmailInput, inputValidator)
             )
         }
     }
@@ -52,15 +54,19 @@ class DefaultSignInPresenter(
     private fun updatePasswordInput(newPasswordInput: String) {
         updateOrSetSuccess {
             it.copy(
-                password = newPasswordInput,
-                isValidPassword = InputValidator.isValidPassword(newPasswordInput)
+                passwordField = PasswordField.validate(newPasswordInput, inputValidator)
+                    .copy(isVisible = it.passwordField.isVisible)
             )
         }
     }
 
-    private fun togglePasswordVisibility(currentVisibility: Boolean) {
+    private fun togglePasswordVisibility(isVisible: Boolean) {
         updateOrSetSuccess {
-            it.copy(isPasswordVisible = !currentVisibility)
+            it.copy(
+                passwordField = it.passwordField.copy(
+                    isVisible = isVisible
+                )
+            )
         }
     }
 

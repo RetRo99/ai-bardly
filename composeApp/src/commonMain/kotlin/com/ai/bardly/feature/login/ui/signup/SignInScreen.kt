@@ -75,7 +75,7 @@ private fun SignInScreenContent(
         SignInTitle()
 
         EmailField(
-            email = viewState.email,
+            email = viewState.emailField.value,
             onEmailChange = { email ->
                 intentDispatcher(SignInIntent.EmailInputChange(email))
             },
@@ -83,11 +83,11 @@ private fun SignInScreenContent(
         )
 
         PasswordField(
-            password = viewState.password,
+            password = viewState.passwordField.value,
             onPasswordChange = { password ->
                 intentDispatcher(SignInIntent.PasswordInputChange(password))
             },
-            passwordVisible = viewState.isPasswordVisible,
+            passwordVisible = viewState.passwordField.isVisible,
             onPasswordVisibilityChange = { isVisible ->
                 intentDispatcher(SignInIntent.TogglePasswordVisibility(isVisible))
             },
@@ -95,9 +95,14 @@ private fun SignInScreenContent(
         )
 
         SignInButton(
-            enabled = viewState.isValidEmail && viewState.isValidPassword && !viewState.isLoading,
+            enabled = viewState.emailField.isValid && viewState.passwordField.isValid && !viewState.isLoading,
             onSignInClick = {
-                intentDispatcher(SignInIntent.SignInWithEmail(viewState.email, viewState.password))
+                intentDispatcher(
+                    SignInIntent.SignInWithEmail(
+                        viewState.emailField.value,
+                        viewState.passwordField.value
+                    )
+                )
             }
         )
 

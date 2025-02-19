@@ -1,6 +1,12 @@
-package com.ai.bardly.feature.login
+package com.ai.bardly.feature.login.ui
 
-object InputValidator {
+import com.ai.bardly.annotations.ActivityScope
+import me.tatarka.inject.annotations.Inject
+import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
+
+@Inject
+@SingleIn(ActivityScope::class)
+class InputValidator {
     private val EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$".toRegex()
 
     fun isValidEmail(email: String): Boolean {
