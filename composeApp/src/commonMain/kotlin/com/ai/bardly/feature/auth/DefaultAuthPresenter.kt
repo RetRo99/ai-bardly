@@ -2,7 +2,7 @@ package com.ai.bardly.feature.auth
 
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.decompose.switchTab
-import com.ai.bardly.feature.auth.ui.signin.SignInPresenterFactory
+import com.ai.bardly.feature.auth.ui.login.SignInPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack

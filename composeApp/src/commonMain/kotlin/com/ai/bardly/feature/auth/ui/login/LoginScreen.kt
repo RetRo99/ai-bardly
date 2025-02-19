@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.auth.ui.signin
+package com.ai.bardly.feature.auth.ui.login
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_visibility
@@ -100,6 +100,7 @@ private fun LoginScreenContent(
         AnimatedVisibility(viewState.showNoMatchingUserError) {
             NoMatchingUserRow()
         }
+
         SignInButton(
             enabled = viewState.emailField.value.isNotBlank() && viewState.passwordField.value.isNotBlank(),
             onSignInClick = {

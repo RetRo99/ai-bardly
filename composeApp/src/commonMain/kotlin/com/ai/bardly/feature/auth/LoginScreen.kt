@@ -2,7 +2,7 @@ package com.ai.bardly.feature.auth
 
 import androidx.compose.runtime.Composable
 import com.ai.bardly.decompose.RootChildStack
-import com.ai.bardly.feature.auth.ui.signin.LoginScreen
+import com.ai.bardly.feature.auth.ui.login.LoginScreen
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 
 @OptIn(ExperimentalDecomposeApi::class)

@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.auth.ui.signin
+package com.ai.bardly.feature.auth.ui.login
 
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
 
