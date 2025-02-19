@@ -28,7 +28,7 @@ fun App(
             when (val child = it.instance) {
                 is AppPresenter.Child.Main -> MainScreen(child.component)
                 is AppPresenter.Child.Onboarding -> RootOnboardingScreen(child.component)
-                is AppPresenter.Child.Login -> LoginScreen(child.component)
+                is AppPresenter.Child.Auth -> LoginScreen(child.component)
             }
         }
     }

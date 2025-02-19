@@ -14,14 +14,16 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
-typealias SignInPresenterFactory = (
+typealias LoginPresenterFactory = (
     ComponentContext,
+    onFooterClicked: () -> Unit
 ) -> DefaultLoginPresenter
 
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = LoginPresenter::class)
 class DefaultLoginPresenter(
     @Assisted componentContext: ComponentContext,
+    @Assisted private val onFooterClicked: () -> Unit,
     private val analytics: Analytics,
     private val inputValidator: InputValidator,
     private val userRepository: UserRepository,
@@ -45,6 +47,7 @@ class DefaultLoginPresenter(
             )
 
             is LoginIntent.LoginWithGoogleResult -> handleSignInWithGoogleResult(intent.result)
+            is LoginIntent.OnFooterClicked -> onFooterClicked()
         }
     }
 

@@ -20,7 +20,7 @@ class DefaultAppPresenter(
     componentContext: ComponentContext,
     private val mainPresenterFactory: MainPresenterFactory,
     private val onboardingPresenterFactory: OnboardingPresenterFactory,
-    private val loginPresenterFactory: AuthPresenterFactory,
+    private val authPresenterFactory: AuthPresenterFactory,
 ) : AppPresenter, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<AppPresenter.Config>()
@@ -28,7 +28,7 @@ class DefaultAppPresenter(
     override val childStack = childStack(
         source = navigation,
         serializer = AppPresenter.Config.serializer(),
-        initialConfiguration = AppPresenter.Config.Login,
+        initialConfiguration = AppPresenter.Config.Auth,
         handleBackButton = true,
         childFactory = ::childFactory,
     )
@@ -58,8 +58,8 @@ class DefaultAppPresenter(
             )
         )
 
-        AppPresenter.Config.Login -> AppPresenter.Child.Login(
-            loginPresenterFactory(
+        AppPresenter.Config.Auth -> AppPresenter.Child.Auth(
+            authPresenterFactory(
                 componentContext,
                 ::openMain,
             )

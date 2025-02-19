@@ -1,12 +1,12 @@
 package com.ai.bardly.feature.auth
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.decompose.switchTab
-import com.ai.bardly.feature.auth.ui.login.SignInPresenterFactory
+import com.ai.bardly.feature.auth.ui.login.LoginPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushNew
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -21,7 +21,7 @@ internal typealias AuthPresenterFactory = (
 class DefaultAuthPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val openMain: () -> Unit,
-    private val signInPresenterFactory: SignInPresenterFactory,
+    private val loginPresenterFactory: LoginPresenterFactory,
 ) : AuthPresenter, ComponentContext by componentContext {
     private val navigation = StackNavigation<AuthPresenter.Config>()
 
@@ -37,7 +37,11 @@ class DefaultAuthPresenter(
     }
 
     override fun navigate(config: AuthPresenter.Config) {
-        navigation.switchTab(config)
+        navigation.pushNew(config)
+    }
+
+    fun openSignUp() {
+//        navigation
     }
 
     private fun childFactory(
@@ -45,7 +49,10 @@ class DefaultAuthPresenter(
         componentContext: ComponentContext
     ): AuthPresenter.Child = when (screenConfig) {
         AuthPresenter.Config.SignIn -> AuthPresenter.Child.SignIn(
-            signInPresenterFactory(componentContext)
+            loginPresenterFactory(
+                componentContext,
+                ::openSignUp
+            )
         )
     }
 }

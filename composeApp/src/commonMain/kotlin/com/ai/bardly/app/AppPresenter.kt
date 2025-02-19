@@ -12,7 +12,7 @@ interface AppPresenter :
     sealed interface Child {
         data class Main(val component: MainPresenter) : Child
         data class Onboarding(val component: OnboardingPresenter) : Child
-        data class Login(val component: AuthPresenter) : Child
+        data class Auth(val component: AuthPresenter) : Child
     }
 
     @Serializable
@@ -24,6 +24,6 @@ interface AppPresenter :
         data object Onboarding : Config()
 
         @Serializable
-        data object Login : Config()
+        data object Auth : Config()
     }
 }

@@ -3,6 +3,7 @@ package com.ai.bardly.feature.auth.ui.login
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_visibility
 import ai_bardly.composeapp.generated.resources.ic_visibility_off
+import ai_bardly.composeapp.generated.resources.login_do_not_have_account
 import ai_bardly.composeapp.generated.resources.login_email
 import ai_bardly.composeapp.generated.resources.login_no_matching_user
 import ai_bardly.composeapp.generated.resources.login_or_with
@@ -30,6 +31,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -122,9 +124,30 @@ private fun LoginScreenContent(
                 intentDispatcher(LoginIntent.LoginWithGoogleResult(result))
             }
         )
+        LoginFooterRow(
+            fullTextResId = Res.string.login_do_not_have_account,
+            onActionClick = { intentDispatcher(LoginIntent.OnFooterClicked) }
+        )
     }
 }
 
+@Composable
+private fun LoginFooterRow(
+    fullTextResId: StringResource,
+    onActionClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        TextButton(onClick = onActionClick) {
+            Text(text = stringResource(fullTextResId))
+        }
+    }
+}
 @Composable
 private fun NoMatchingUserRow() {
     Row(
