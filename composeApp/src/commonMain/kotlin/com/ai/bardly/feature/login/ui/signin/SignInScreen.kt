@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.login.ui.signup
+package com.ai.bardly.feature.login.ui.signin
 
 import ai_bardly.composeapp.generated.resources.Res
 import ai_bardly.composeapp.generated.resources.ic_visibility
