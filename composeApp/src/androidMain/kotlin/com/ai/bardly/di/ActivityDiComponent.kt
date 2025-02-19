@@ -4,6 +4,7 @@ import androidx.activity.ComponentActivity
 import com.ai.bardly.BardlyApplication
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.app.App
+import com.ai.bardly.settings.BardySettings
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.defaultComponentContext
 import me.tatarka.inject.annotations.Provides
@@ -27,6 +28,7 @@ interface ActivityDiComponent {
     }
 
     val app: App
+    val settings: BardySettings
 
     companion object {
         fun create(activity: ComponentActivity): ActivityDiComponent =

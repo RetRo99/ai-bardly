@@ -42,6 +42,7 @@ kotlin {
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.security.crypto)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -58,6 +59,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.sqlite.bundled)
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.auth)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kermit)
@@ -76,6 +78,7 @@ kotlin {
             implementation(libs.essenty.coroutines)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.markdown)
+            implementation(libs.multiplatformSettings)
         }
 //        configurations.all {
 //            resolutionStrategy.eachDependency {

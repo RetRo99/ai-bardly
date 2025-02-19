@@ -58,4 +58,8 @@ class FirebaseUserRemoteDataSource(
                 }
         }
     }
+
+    override suspend fun getCurrentUserFirebaseToken(): String? {
+        return firebaseAuth.currentUser?.getIdToken(false)
+    }
 }

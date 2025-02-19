@@ -28,7 +28,7 @@ class DefaultAppPresenter(
     override val childStack = childStack(
         source = navigation,
         serializer = AppPresenter.Config.serializer(),
-        initialConfiguration = AppPresenter.Config.Auth,
+        initialConfiguration = AppPresenter.Config.Main,
         handleBackButton = true,
         childFactory = ::childFactory,
     )
