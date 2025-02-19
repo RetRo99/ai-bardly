@@ -16,35 +16,35 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias SignInPresenterFactory = (
     ComponentContext,
-) -> DefaultSignInPresenter
+) -> DefaultLoginPresenter
 
 @Inject
-@ContributesBinding(ActivityScope::class, boundType = SignInPresenter::class)
-class DefaultSignInPresenter(
+@ContributesBinding(ActivityScope::class, boundType = LoginPresenter::class)
+class DefaultLoginPresenter(
     @Assisted componentContext: ComponentContext,
     private val analytics: Analytics,
     private val inputValidator: InputValidator,
     private val userRepository: UserRepository,
-) : BasePresenterImpl<SignInViewState, SignInIntent>(componentContext), SignInPresenter {
+) : BasePresenterImpl<LoginViewState, LoginIntent>(componentContext), LoginPresenter {
 
-    override val defaultViewState = SignInViewState()
+    override val defaultViewState = LoginViewState()
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    override fun handleScreenIntent(intent: SignInIntent) {
+    override fun handleScreenIntent(intent: LoginIntent) {
         when (intent) {
-            is SignInIntent.EmailInputChange -> updateEmailInput(intent.email)
+            is LoginIntent.EmailInputChange -> updateEmailInput(intent.email)
 
-            is SignInIntent.PasswordInputChange -> updatePasswordInput(intent.password)
+            is LoginIntent.PasswordInputChange -> updatePasswordInput(intent.password)
 
-            is SignInIntent.TogglePasswordVisibility -> togglePasswordVisibility(intent.isVisible)
+            is LoginIntent.TogglePasswordVisibility -> togglePasswordVisibility(intent.isVisible)
 
-            is SignInIntent.SignInWithEmail -> handleSignInWithEmailClicked(
+            is LoginIntent.LoginWithEmail -> handleSignInWithEmailClicked(
                 intent.email,
                 intent.password
             )
 
-            is SignInIntent.SignInWithGoogleResult -> handleSignInWithGoogleResult(intent.result)
+            is LoginIntent.LoginWithGoogleResult -> handleSignInWithGoogleResult(intent.result)
         }
     }
 

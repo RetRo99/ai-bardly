@@ -52,11 +52,11 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SignInScreen(
-    component: SignInPresenter,
+fun LoginScreen(
+    component: LoginPresenter,
 ) {
     BaseScreen(component) { viewState, intentDispatcher ->
-        SignInScreenContent(
+        LoginScreenContent(
             viewState = viewState,
             intentDispatcher = intentDispatcher,
         )
@@ -64,9 +64,9 @@ fun SignInScreen(
 }
 
 @Composable
-private fun SignInScreenContent(
-    viewState: SignInViewState,
-    intentDispatcher: IntentDispatcher<SignInIntent>,
+private fun LoginScreenContent(
+    viewState: LoginViewState,
+    intentDispatcher: IntentDispatcher<LoginIntent>,
 ) {
     Column(
         modifier = Modifier
@@ -82,18 +82,18 @@ private fun SignInScreenContent(
         EmailField(
             emailInputField = viewState.emailField,
             onEmailChange = { email ->
-                intentDispatcher(SignInIntent.EmailInputChange(email))
+                intentDispatcher(LoginIntent.EmailInputChange(email))
             },
         )
 
         PasswordField(
             passwordInputField = viewState.passwordField,
             onPasswordChange = { password ->
-                intentDispatcher(SignInIntent.PasswordInputChange(password))
+                intentDispatcher(LoginIntent.PasswordInputChange(password))
             },
             passwordVisible = viewState.passwordField.isVisible,
             onPasswordVisibilityChange = { isVisible ->
-                intentDispatcher(SignInIntent.TogglePasswordVisibility(isVisible))
+                intentDispatcher(LoginIntent.TogglePasswordVisibility(isVisible))
             },
         )
 
@@ -104,7 +104,7 @@ private fun SignInScreenContent(
             enabled = viewState.emailField.value.isNotBlank() && viewState.passwordField.value.isNotBlank(),
             onSignInClick = {
                 intentDispatcher(
-                    SignInIntent.SignInWithEmail(
+                    LoginIntent.LoginWithEmail(
                         viewState.emailField,
                         viewState.passwordField
                     )
@@ -118,7 +118,7 @@ private fun SignInScreenContent(
 
         GoogleSignInSection(
             onResult = { result ->
-                intentDispatcher(SignInIntent.SignInWithGoogleResult(result))
+                intentDispatcher(LoginIntent.LoginWithGoogleResult(result))
             }
         )
     }
