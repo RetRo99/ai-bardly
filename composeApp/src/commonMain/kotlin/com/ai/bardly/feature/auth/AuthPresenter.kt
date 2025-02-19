@@ -4,8 +4,8 @@ import com.ai.bardly.decompose.RootDecomposeComponent
 import com.ai.bardly.feature.auth.ui.signin.SignInPresenter
 import kotlinx.serialization.Serializable
 
-interface LoginPresenter :
-    RootDecomposeComponent<LoginPresenter.Child, LoginPresenter.Config> {
+interface AuthPresenter :
+    RootDecomposeComponent<AuthPresenter.Child, AuthPresenter.Config> {
 
     fun navigate(config: Config)
 

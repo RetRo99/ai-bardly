@@ -11,24 +11,24 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
-internal typealias LoginPresenterFactory = (
+internal typealias AuthPresenterFactory = (
     ComponentContext,
     openMain: () -> Unit
-) -> DefaultLoginPresenter
+) -> DefaultAuthPresenter
 
 @Inject
-@ContributesBinding(ActivityScope::class, boundType = LoginPresenter::class)
-class DefaultLoginPresenter(
+@ContributesBinding(ActivityScope::class, boundType = AuthPresenter::class)
+class DefaultAuthPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val openMain: () -> Unit,
     private val signInPresenterFactory: SignInPresenterFactory,
-) : LoginPresenter, ComponentContext by componentContext {
-    private val navigation = StackNavigation<LoginPresenter.Config>()
+) : AuthPresenter, ComponentContext by componentContext {
+    private val navigation = StackNavigation<AuthPresenter.Config>()
 
     override val childStack = childStack(
         source = navigation,
-        serializer = LoginPresenter.Config.serializer(),
-        initialConfiguration = LoginPresenter.Config.SignIn,
+        serializer = AuthPresenter.Config.serializer(),
+        initialConfiguration = AuthPresenter.Config.SignIn,
         childFactory = ::childFactory,
     )
 
@@ -36,15 +36,15 @@ class DefaultLoginPresenter(
         navigation.pop()
     }
 
-    override fun navigate(config: LoginPresenter.Config) {
+    override fun navigate(config: AuthPresenter.Config) {
         navigation.switchTab(config)
     }
 
     private fun childFactory(
-        screenConfig: LoginPresenter.Config,
+        screenConfig: AuthPresenter.Config,
         componentContext: ComponentContext
-    ): LoginPresenter.Child = when (screenConfig) {
-        LoginPresenter.Config.SignIn -> LoginPresenter.Child.SignIn(
+    ): AuthPresenter.Child = when (screenConfig) {
+        AuthPresenter.Config.SignIn -> AuthPresenter.Child.SignIn(
             signInPresenterFactory(componentContext)
         )
     }

@@ -1,7 +1,7 @@
 package com.ai.bardly.app
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.auth.LoginPresenterFactory
+import com.ai.bardly.feature.auth.AuthPresenterFactory
 import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
 import com.arkivanov.decompose.ComponentContext
@@ -20,7 +20,7 @@ class DefaultAppPresenter(
     componentContext: ComponentContext,
     private val mainPresenterFactory: MainPresenterFactory,
     private val onboardingPresenterFactory: OnboardingPresenterFactory,
-    private val loginPresenterFactory: LoginPresenterFactory,
+    private val loginPresenterFactory: AuthPresenterFactory,
 ) : AppPresenter, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<AppPresenter.Config>()

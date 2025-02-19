@@ -7,12 +7,12 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-fun LoginScreen(component: LoginPresenter) {
+fun LoginScreen(component: AuthPresenter) {
     RootChildStack(
         root = component
     ) {
         when (val child = it.instance) {
-            is LoginPresenter.Child.SignIn -> SignInScreen(child.component)
+            is AuthPresenter.Child.SignIn -> SignInScreen(child.component)
         }
     }
 }
