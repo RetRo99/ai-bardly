@@ -1,6 +1,7 @@
-package com.ai.bardly.feature.auth.data
+package com.ai.bardly.feature.auth.data.tokens
 
 import com.ai.bardly.feature.auth.data.remote.AuthRemoteDataSource
+import com.ai.bardly.networking.tokens.BearerTokenRefresher
 import com.ai.bardly.user.data.remote.UsersRemoteDataSource
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -14,7 +15,7 @@ class DefaultTokenRefresher(
     // Lazy inject because of circular dependency
     val authDataSourceProvider: () -> AuthRemoteDataSource,
     val userDataSource: UsersRemoteDataSource,
-) : TokenRefresher {
+) : BearerTokenRefresher {
 
     override suspend fun refreshBearerToken(): String? {
         val firebaseToken = userDataSource.getCurrentUserFirebaseToken()

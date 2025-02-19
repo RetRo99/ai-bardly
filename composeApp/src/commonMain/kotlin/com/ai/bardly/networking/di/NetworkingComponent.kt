@@ -1,9 +1,9 @@
 package com.ai.bardly.networking.di
 
 import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.feature.auth.data.TokenProvider
-import com.ai.bardly.feature.auth.data.TokenRefresher
 import com.ai.bardly.networking.getHttpEngine
+import com.ai.bardly.networking.tokens.BearerTokenProvider
+import com.ai.bardly.networking.tokens.BearerTokenRefresher
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
@@ -36,8 +36,8 @@ interface NetworkingComponent {
         httpFactory: HttpClientEngineFactory<*>,
         analytics: Analytics,
         json: Json,
-        tokenProvider: TokenProvider,
-        tokenRefresher: TokenRefresher,
+        tokenProvider: BearerTokenProvider,
+        tokenRefresher: BearerTokenRefresher,
     ): HttpClient {
         return HttpClient(httpFactory) {
             install(ContentNegotiation) {
