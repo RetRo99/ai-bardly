@@ -1,4 +1,4 @@
-package com.ai.bardly.auth.di
+package com.ai.bardly.feature.auth.di
 
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseAuth
