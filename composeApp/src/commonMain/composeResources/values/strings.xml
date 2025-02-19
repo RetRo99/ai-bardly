@@ -44,4 +44,15 @@
         <item quantity="one">%1$d week ago</item>
         <item quantity="other">%1$d weeks ago</item>
     </plurals>
+    <string name="validation_email_success">Email is valid</string>
+    <string name="validation_email_blank">Email cannot be blank</string>
+    <string name="validation_email_too_long">Email is too long</string>
+    <string name="validation_email_invalid_format">Invalid email format</string>
+    <string name="validation_password_success">Password is valid</string>
+    <string name="validation_password_blank">Password cannot be blank</string>
+    <string name="validation_password_too_short">Password is too short</string>
+    <string name="validation_password_too_long">Password is too long</string>
+    <string name="validation_password_missing_digit">Password must contain at least one digit</string>
+    <string name="validation_password_missing_letter">Password must contain at least one letter</string>
+    <string name="validation_password_missing_capital_letter">Password must contain at least one uppercase letter</string>
 </resources>

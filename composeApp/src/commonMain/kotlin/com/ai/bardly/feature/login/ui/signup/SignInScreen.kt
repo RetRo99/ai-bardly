@@ -189,7 +189,8 @@ fun AuthTextField(
         errorBorderColor = Color.Red
     )
 
-    val errorMessage = if (inputField.showError) inputField.state.getLocalizedString() else ""
+    val errorMessage =
+        if (inputField.showError) stringResource(inputField.state.errorResource) else ""
 
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
