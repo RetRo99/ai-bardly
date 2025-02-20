@@ -52,10 +52,6 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.sqlite.bundled)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.auth)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kermit)
             implementation(libs.androidx.room.runtime)
             implementation(libs.datetime)
@@ -73,6 +69,7 @@ kotlin {
             implementation(libs.bundles.kotlinInject)
             implementation(libs.markdown)
             implementation(libs.multiplatformSettings)
+            implementation(projects.network)
         }
 //        configurations.all {
 //            resolutionStrategy.eachDependency {

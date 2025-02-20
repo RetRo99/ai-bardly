@@ -1,9 +1,8 @@
-package com.ai.bardly.networking.di
+package com.retro99.network.di
 
-import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.networking.getHttpEngine
-import com.ai.bardly.networking.tokens.BearerTokenProvider
-import com.ai.bardly.networking.tokens.BearerTokenRefresher
+import com.retro99.network.getHttpEngine
+import com.retro99.network.tokens.BearerTokenProvider
+import com.retro99.network.tokens.BearerTokenRefresher
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
@@ -28,13 +27,13 @@ interface NetworkingComponent {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideJson() = Json { ignoreUnknownKeys = true }
+    fun provideJson(): Json = Json { ignoreUnknownKeys = true }
 
     @Provides
     @SingleIn(AppScope::class)
     fun provideHttpClient(
         httpFactory: HttpClientEngineFactory<*>,
-        analytics: Analytics,
+//        analytics: Analytics,
         json: Json,
         tokenProvider: BearerTokenProvider,
         tokenRefresher: BearerTokenRefresher,
@@ -57,7 +56,7 @@ interface NetworkingComponent {
             }
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { cause, request ->
-                    analytics.logException(cause, request.url.toString())
+//                    analytics.logException(cause, request.url.toString())
                 }
             }
         }

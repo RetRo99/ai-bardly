@@ -1,4 +1,4 @@
-package com.ai.bardly.networking
+package com.retro99.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

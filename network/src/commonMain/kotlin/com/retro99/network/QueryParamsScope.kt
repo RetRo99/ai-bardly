@@ -1,4 +1,4 @@
-package com.ai.bardly.networking
+package com.retro99.network
 
 class QueryParamsScope {
     internal val params = mutableMapOf<String, Any?>()

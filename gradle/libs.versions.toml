@@ -79,6 +79,11 @@ kotlinInject = [
     "kotlinInject-anvil-runtime",
     "kotlinInject-anvil-runtime-optional"
 ]
+ktorClientBundle = [
+    "ktor-client-core",
+    "ktor-client-auth",
+    "ktor-client-content-negotiation",
+]
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

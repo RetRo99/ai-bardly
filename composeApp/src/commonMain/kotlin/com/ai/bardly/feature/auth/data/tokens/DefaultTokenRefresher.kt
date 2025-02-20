@@ -1,8 +1,8 @@
 package com.ai.bardly.feature.auth.data.tokens
 
 import com.ai.bardly.feature.auth.data.remote.AuthRemoteDataSource
-import com.ai.bardly.networking.tokens.BearerTokenRefresher
 import com.ai.bardly.user.data.remote.UsersRemoteDataSource
+import com.retro99.network.tokens.BearerTokenRefresher
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
