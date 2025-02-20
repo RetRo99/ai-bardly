@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
@@ -12,12 +10,7 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
+    androidTarget()
     listOf(
         iosX64(),
         iosArm64(),
@@ -36,6 +29,7 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
         freeCompilerArgs.add("-Xwhen-guards")
     }
+    jvmToolchain(libs.versions.jdk.get().toInt())
 
     sourceSets {
         androidMain.dependencies {
@@ -100,8 +94,8 @@ android {
     }
     defaultConfig {
         applicationId = "com.ai.bardly"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 5
         versionName = "0.0.1"
     }
@@ -124,10 +118,6 @@ android {
             isMinifyEnabled = false
             resValue("string", "app_name", "Bardly")
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 

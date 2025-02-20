@@ -1,4 +1,9 @@
 [versions]
+compileSdk = "35"
+targetSdk = "35"
+minSdk = "29"
+jdk = "21"
+
 agp = "8.6.1"
 androidx-activityCompose = "1.10.0"
 androidx-ui-tooling = "1.7.7"
@@ -76,6 +81,7 @@ kotlinInject = [
 ]
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
