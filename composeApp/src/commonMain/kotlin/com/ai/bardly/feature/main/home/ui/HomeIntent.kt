@@ -1,9 +1,9 @@
 package com.ai.bardly.feature.main.home.ui
 
-import com.ai.bardly.base.ScreenIntent
+import com.ai.bardly.base.BaseScreenIntent
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 
-sealed interface HomeIntent : ScreenIntent {
+sealed interface HomeIntent : BaseScreenIntent {
     data class OpenChatClicked(val gameTitle: String, val gameId: Int) : HomeIntent
     data class OpenGameDetails(val game: GameUiModel) : HomeIntent
 }

@@ -1,10 +1,10 @@
 package com.ai.bardly.feature.auth.ui.login
 
-import com.ai.bardly.base.ScreenIntent
+import com.ai.bardly.base.BaseScreenIntent
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import com.ai.bardly.user.ui.UserUiModel
 
-sealed interface LoginIntent : ScreenIntent {
+sealed interface LoginIntent : BaseScreenIntent {
 
     data class EmailInputChange(val email: String) : LoginIntent
     data class PasswordInputChange(val password: String) : LoginIntent

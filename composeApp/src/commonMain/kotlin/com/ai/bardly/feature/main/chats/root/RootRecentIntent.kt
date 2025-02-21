@@ -1,5 +1,5 @@
 package com.ai.bardly.feature.main.chats.root
 
-import com.ai.bardly.base.ScreenIntent
+import com.ai.bardly.base.BaseScreenIntent
 
-sealed interface RootRecentIntent : ScreenIntent
+sealed interface RootRecentIntent : BaseScreenIntent

@@ -2,10 +2,10 @@ package com.ai.bardly.base
 
 import kotlin.jvm.JvmInline
 
-interface ScreenIntent
+interface BaseScreenIntent
 
 @JvmInline
-value class IntentDispatcher<T : ScreenIntent>(private val handler: (T) -> Unit) {
+value class IntentDispatcher<T : BaseScreenIntent>(private val handler: (T) -> Unit) {
     operator fun invoke(intent: T) {
         handler(intent)
     }

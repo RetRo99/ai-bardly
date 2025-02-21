@@ -1,8 +1,8 @@
 package com.ai.bardly.feature.main.chats.ui.recent
 
-import com.ai.bardly.base.ScreenIntent
+import com.ai.bardly.base.BaseScreenIntent
 
-sealed interface RecentChatsIntent : ScreenIntent {
+sealed interface RecentChatsIntent : BaseScreenIntent {
     data class RecentChatClicked(
         val gameTitle: String,
         val gameId: Int,

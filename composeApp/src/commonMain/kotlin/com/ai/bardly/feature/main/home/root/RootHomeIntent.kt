@@ -1,5 +1,5 @@
 package com.ai.bardly.feature.main.home.root
 
-import com.ai.bardly.base.ScreenIntent
+import com.ai.bardly.base.BaseScreenIntent
 
-sealed interface RootHomeIntent : ScreenIntent
+sealed interface RootHomeIntent : BaseScreenIntent

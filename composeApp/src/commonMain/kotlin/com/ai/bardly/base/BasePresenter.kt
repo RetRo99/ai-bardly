@@ -9,13 +9,13 @@ import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
-interface BasePresenter<ScreenViewState, Intent : ScreenIntent> {
+interface BasePresenter<ScreenViewState, Intent : BaseScreenIntent> {
     val viewState: Value<BaseViewState<ScreenViewState>>
     fun onScreenIntent(intent: Intent)
     fun currentViewState(): ScreenViewState
 }
 
-abstract class BasePresenterImpl<ScreenViewState, Intent : ScreenIntent>(componentContext: ComponentContext) :
+abstract class BasePresenterImpl<ScreenViewState, Intent : BaseScreenIntent>(componentContext: ComponentContext) :
     BasePresenter<ScreenViewState, Intent>, ComponentContext by componentContext,
     Lifecycle.Callbacks {
     protected val scope = coroutineScope(Dispatchers.Main + SupervisorJob())
