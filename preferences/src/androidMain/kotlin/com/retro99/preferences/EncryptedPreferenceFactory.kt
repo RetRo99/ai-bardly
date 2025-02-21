@@ -1,4 +1,4 @@
-package com.ai.bardly.settings
+package com.retro99.preferences
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences

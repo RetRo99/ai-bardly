@@ -1,23 +1,21 @@
 package com.ai.bardly.feature.auth.data.tokens
 
-import com.ai.bardly.settings.BardySettingKey
-import com.ai.bardly.settings.BardySettings
 import com.retro99.network.tokens.BearerTokenProvider
+import com.retro99.preferences.Preferences
+import com.retro99.preferences.PreferencesKey
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
-import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 
 
 @Inject
-@SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
 class StoredTokenProvider(
-    private val settings: BardySettings
+    private val preferences: Preferences
 ) : BearerTokenProvider {
 
     override suspend fun getBearerToken(): String? {
-        return settings.getStringOrNull(BardySettingKey.AccessToken)
+        return preferences.getStringOrNull(PreferencesKey.AccessToken)
     }
 
 }
