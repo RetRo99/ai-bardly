@@ -1,8 +1,6 @@
 plugins {
-    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.ksp)
 }
 
 version = "1.0"
@@ -28,13 +26,6 @@ kotlin {
         }
     }
 }
-
-dependencies {
-    add("kspAndroid", libs.kotlinInject.anvil.compiler)
-    add("kspIosArm64", libs.kotlinInject.anvil.compiler)
-    add("kspIosSimulatorArm64", libs.kotlinInject.anvil.compiler)
-}
-
 
 android {
     namespace = "com.retro99.network.api"
