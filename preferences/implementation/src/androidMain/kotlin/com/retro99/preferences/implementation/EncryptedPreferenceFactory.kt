@@ -1,4 +1,4 @@
-package com.retro99.preferences
+package com.retro99.preferences.implementation
 
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -14,7 +14,6 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 class EncryptedPreferenceFactory(
     private val context: Context
 ) : Settings.Factory {
-
 
     override fun create(name: String?): Settings {
         checkNotNull(name) { "Settings Name cannot be null" }

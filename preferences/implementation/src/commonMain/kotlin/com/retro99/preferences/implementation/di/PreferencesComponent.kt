@@ -1,4 +1,4 @@
-package com.retro99.preferences.di
+package com.retro99.preferences.implementation.di
 
 import com.russhwolf.settings.Settings
 import me.tatarka.inject.annotations.Component

@@ -1,4 +1,4 @@
-package com.retro99.preferences.di
+package com.retro99.preferences.implementation
 
 import com.russhwolf.settings.ExperimentalSettingsImplementation
 import com.russhwolf.settings.KeychainSettings

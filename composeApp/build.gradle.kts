@@ -67,7 +67,8 @@ kotlin {
             implementation(libs.markdown)
             implementation(projects.network.api)
             implementation(projects.network.implementation)
-            implementation(projects.preferences)
+            implementation(projects.preferences.api)
+            implementation(projects.preferences.implementation)
         }
 //        configurations.all {
 //            resolutionStrategy.eachDependency {

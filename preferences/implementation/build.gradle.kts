@@ -19,14 +19,11 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
             api(libs.multiplatformSettings)
+            implementation(projects.preferences.api)
         }
 
         androidMain.dependencies {
             implementation(libs.androidx.security.crypto)
-        }
-
-        iosMain.dependencies {
-
         }
     }
 }
@@ -39,6 +36,6 @@ dependencies {
 
 
 android {
-    namespace = "com.retro99.network"
+    namespace = "com.retro99.preferences.implementation"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }
