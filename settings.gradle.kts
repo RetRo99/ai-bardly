@@ -29,5 +29,6 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":network")
 include(":preferences")
+include(":network:implementation")
+include(":network:api")

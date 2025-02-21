@@ -65,7 +65,8 @@ kotlin {
             implementation(libs.essenty.coroutines)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.markdown)
-            implementation(projects.network)
+            implementation(projects.network.api)
+            implementation(projects.network.implementation)
             implementation(projects.preferences)
         }
 //        configurations.all {

@@ -1,8 +1,9 @@
 package com.ai.bardly.feature.auth.data.remote
 
-import com.retro99.network.NetworkClient
 import io.ktor.http.HttpHeaders
 import me.tatarka.inject.annotations.Inject
+import retro99.network.api.NetworkClient
+import retro99.network.api.post
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

@@ -5,8 +5,9 @@ import com.ai.bardly.feature.main.games.data.remote.model.GameDto
 import com.ai.bardly.feature.main.games.data.remote.model.GamesListDto
 import com.ai.bardly.paging.BardlyPagingSource
 import com.ai.bardly.paging.PagingResult
-import com.retro99.network.NetworkClient
 import me.tatarka.inject.annotations.Inject
+import retro99.network.api.NetworkClient
+import retro99.network.api.get
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
