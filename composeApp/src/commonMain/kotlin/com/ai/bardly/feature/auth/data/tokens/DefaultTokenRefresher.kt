@@ -3,7 +3,7 @@ package com.ai.bardly.feature.auth.data.tokens
 import com.ai.bardly.feature.auth.data.remote.AuthRemoteDataSource
 import com.ai.bardly.user.data.remote.UsersRemoteDataSource
 import me.tatarka.inject.annotations.Inject
-import retro99.network.api.tokens.BearerTokenRefresher
+import retro99.games.api.tokens.BearerTokenRefresher
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

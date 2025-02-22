@@ -2,11 +2,89 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5121d74549752faf9eda5c98a51ea68d",
+    "identityHash": "f0fd48a8c1bf280800c9b69213229422",
     "entities": [
       {
-        "tableName": "MessageEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `text` TEXT NOT NULL, `gameTitle` TEXT NOT NULL, `timestamp` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
+        "tableName": "GameEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `rating` TEXT NOT NULL, `yearPublished` TEXT NOT NULL, `numberOfPlayers` TEXT NOT NULL, `playingTime` TEXT NOT NULL, `ageRange` TEXT NOT NULL, `complexity` TEXT NOT NULL, `link` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rating",
+            "columnName": "rating",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "yearPublished",
+            "columnName": "yearPublished",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numberOfPlayers",
+            "columnName": "numberOfPlayers",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playingTime",
+            "columnName": "playingTime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ageRange",
+            "columnName": "ageRange",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "complexity",
+            "columnName": "complexity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "link",
+            "columnName": "link",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thumbnail",
+            "columnName": "thumbnail",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "GameMetadataEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `lastOpenTime` TEXT NOT NULL, PRIMARY KEY(`gameId`), FOREIGN KEY(`gameId`) REFERENCES `GameEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "gameId",
@@ -15,20 +93,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "text",
-            "columnName": "text",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "gameTitle",
-            "columnName": "gameTitle",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "timestamp",
-            "columnName": "timestamp",
+            "fieldPath": "lastOpenTime",
+            "columnName": "lastOpenTime",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -36,14 +102,27 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "timestamp"
+            "gameId"
           ]
-        }
+        },
+        "foreignKeys": [
+          {
+            "table": "GameEntity",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "gameId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5121d74549752faf9eda5c98a51ea68d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f0fd48a8c1bf280800c9b69213229422')"
     ]
   }
 }

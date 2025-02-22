@@ -1,11 +1,5 @@
 package com.retro99.base.ui.compose
 
-import ai_bardly.translations.generated.resources.Res
-import ai_bardly.translations.generated.resources.days_ago
-import ai_bardly.translations.generated.resources.hours_ago
-import ai_bardly.translations.generated.resources.just_now
-import ai_bardly.translations.generated.resources.minutes_ago
-import ai_bardly.translations.generated.resources.weeks_ago
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -22,12 +16,19 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import com.retro99.translations.PluralRes
+import com.retro99.translations.StringRes
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
+import resources.translations.days_ago
+import resources.translations.hours_ago
+import resources.translations.just_now
+import resources.translations.minutes_ago
+import resources.translations.weeks_ago
 
 @Composable
 fun Int.toDp(): Dp {
@@ -84,26 +85,26 @@ fun LocalDateTime.timeAgo(): String {
 
     return when {
         duration.inWholeDays > 7 -> pluralStringResource(
-            Res.plurals.weeks_ago,
+            PluralRes.weeks_ago,
             (duration.inWholeDays / 7).toInt(), duration.inWholeDays / 7
         )
 
         duration.inWholeDays > 0 -> pluralStringResource(
-            Res.plurals.days_ago,
+            PluralRes.days_ago,
             duration.inWholeDays.toInt(), duration.inWholeDays
         )
 
         duration.inWholeHours > 0 -> pluralStringResource(
-            Res.plurals.hours_ago,
+            PluralRes.hours_ago,
             duration.inWholeHours.toInt(), duration.inWholeHours
         )
 
         duration.inWholeMinutes > 0 -> pluralStringResource(
-            Res.plurals.minutes_ago,
+            PluralRes.minutes_ago,
             duration.inWholeMinutes.toInt(), duration.inWholeMinutes
         )
 
-        else -> stringResource(Res.string.just_now)
+        else -> stringResource(StringRes.just_now)
     }
 
 }

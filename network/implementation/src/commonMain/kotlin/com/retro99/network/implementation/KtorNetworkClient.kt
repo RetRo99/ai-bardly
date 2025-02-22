@@ -20,8 +20,8 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import me.tatarka.inject.annotations.Inject
-import retro99.network.api.NetworkClient
-import retro99.network.api.QueryParamsScope
+import retro99.games.api.NetworkClient
+import retro99.games.api.QueryParamsScope
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

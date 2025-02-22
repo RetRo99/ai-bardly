@@ -11,8 +11,8 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
-import retro99.network.api.tokens.BearerTokenProvider
-import retro99.network.api.tokens.BearerTokenRefresher
+import retro99.games.api.tokens.BearerTokenProvider
+import retro99.games.api.tokens.BearerTokenRefresher
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 

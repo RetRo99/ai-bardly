@@ -1,6 +1,6 @@
 package com.ai.bardly.feature.main.chats.domain.model
 
-import com.ai.bardly.util.now
+import com.retro99.base.now
 import kotlinx.datetime.LocalDateTime
 
 data class MessageDomainModel(

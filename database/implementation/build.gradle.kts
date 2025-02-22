@@ -21,6 +21,8 @@ kotlin {
             implementation(libs.sqlite.bundled)
             implementation(projects.database.api)
             implementation(projects.base)
+            implementation(projects.games.data)
+            implementation(projects.paging.domain)
         }
     }
 }

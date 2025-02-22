@@ -1,7 +1,5 @@
 package com.ai.bardly.feature.main.chats.ui.recent
 
-import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.chat_lists_recent_chats
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,11 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.main.chats.ui.model.RecentMessageUiModel
-import com.ai.bardly.feature.main.games.ui.components.GameImage
+import com.bardly.games.ui.components.GameImage
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.timeAgo
+import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.stringResource
+import resources.translations.chat_lists_recent_chats
 
 @Composable
 fun RecentChatsScreen(component: RecentChatsComponent) {
@@ -56,7 +56,7 @@ private fun RecentChatsContent(
                 Text(
                     modifier = Modifier
                         .padding(16.dp),
-                    text = stringResource(Res.string.chat_lists_recent_chats),
+                    text = stringResource(StringRes.chat_lists_recent_chats),
                     style = MaterialTheme.typography.headlineLarge,
                 )
             }

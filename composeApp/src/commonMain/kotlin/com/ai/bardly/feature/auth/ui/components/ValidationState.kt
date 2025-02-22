@@ -1,18 +1,18 @@
 package com.ai.bardly.feature.auth.ui.components
 
-import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.validation_email_blank
-import ai_bardly.composeapp.generated.resources.validation_email_invalid_format
-import ai_bardly.composeapp.generated.resources.validation_email_success
-import ai_bardly.composeapp.generated.resources.validation_email_too_long
-import ai_bardly.composeapp.generated.resources.validation_password_blank
-import ai_bardly.composeapp.generated.resources.validation_password_missing_capital_letter
-import ai_bardly.composeapp.generated.resources.validation_password_missing_digit
-import ai_bardly.composeapp.generated.resources.validation_password_missing_letter
-import ai_bardly.composeapp.generated.resources.validation_password_success
-import ai_bardly.composeapp.generated.resources.validation_password_too_long
-import ai_bardly.composeapp.generated.resources.validation_password_too_short
+import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.StringResource
+import resources.translations.validation_email_blank
+import resources.translations.validation_email_invalid_format
+import resources.translations.validation_email_success
+import resources.translations.validation_email_too_long
+import resources.translations.validation_password_blank
+import resources.translations.validation_password_missing_capital_letter
+import resources.translations.validation_password_missing_digit
+import resources.translations.validation_password_missing_letter
+import resources.translations.validation_password_success
+import resources.translations.validation_password_too_long
+import resources.translations.validation_password_too_short
 
 interface ValidationState {
     val errorResource: StringResource
@@ -21,24 +21,24 @@ interface ValidationState {
 interface SuccessValidationState
 
 sealed class EmailValidationState(override val errorResource: StringResource) : ValidationState {
-    object Success : EmailValidationState(Res.string.validation_email_success),
+    object Success : EmailValidationState(StringRes.validation_email_success),
         SuccessValidationState
 
-    object Blank : EmailValidationState(Res.string.validation_email_blank)
-    object TooLong : EmailValidationState(Res.string.validation_email_too_long)
-    object InvalidFormat : EmailValidationState(Res.string.validation_email_invalid_format)
+    object Blank : EmailValidationState(StringRes.validation_email_blank)
+    object TooLong : EmailValidationState(StringRes.validation_email_too_long)
+    object InvalidFormat : EmailValidationState(StringRes.validation_email_invalid_format)
 }
 
 sealed class PasswordValidationState(override val errorResource: StringResource) :
     ValidationState {
-    object Success : PasswordValidationState(Res.string.validation_password_success),
+    object Success : PasswordValidationState(StringRes.validation_password_success),
         SuccessValidationState
 
-    object Blank : PasswordValidationState(Res.string.validation_password_blank)
-    object TooShort : PasswordValidationState(Res.string.validation_password_too_short)
-    object TooLong : PasswordValidationState(Res.string.validation_password_too_long)
-    object MissingDigit : PasswordValidationState(Res.string.validation_password_missing_digit)
-    object MissingLetter : PasswordValidationState(Res.string.validation_password_missing_letter)
+    object Blank : PasswordValidationState(StringRes.validation_password_blank)
+    object TooShort : PasswordValidationState(StringRes.validation_password_too_short)
+    object TooLong : PasswordValidationState(StringRes.validation_password_too_long)
+    object MissingDigit : PasswordValidationState(StringRes.validation_password_missing_digit)
+    object MissingLetter : PasswordValidationState(StringRes.validation_password_missing_letter)
     object MissingCapitalLetter :
-        PasswordValidationState(Res.string.validation_password_missing_capital_letter)
+        PasswordValidationState(StringRes.validation_password_missing_capital_letter)
 }

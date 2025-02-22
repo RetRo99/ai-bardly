@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.main.chats.domain
 
 import com.ai.bardly.feature.main.chats.domain.model.RecentMessageDomainModel
-import com.ai.bardly.feature.main.games.domain.GamesRepository
+import com.retro99.network.implementation.GamesRepository
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

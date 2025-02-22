@@ -1,20 +1,21 @@
 package com.ai.bardly.feature.main
 
-import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.chats
-import ai_bardly.composeapp.generated.resources.games
-import ai_bardly.composeapp.generated.resources.home
-import ai_bardly.composeapp.generated.resources.ic_chats
-import ai_bardly.composeapp.generated.resources.ic_games
-import ai_bardly.composeapp.generated.resources.ic_home
 import com.ai.bardly.decompose.RootDecomposeComponent
 import com.ai.bardly.feature.main.chats.root.RootRecentPresenter
 import com.ai.bardly.feature.main.games.root.RootGamesPresenter
 import com.ai.bardly.feature.main.home.root.RootHomePresenter
+import com.retro99.base.ui.resources.DrawableRes
+import com.retro99.translations.StringRes
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import resources.icons.ic_chats
+import resources.icons.ic_games
+import resources.icons.ic_home
+import resources.translations.chats
+import resources.translations.games
+import resources.translations.home
 
 interface MainPresenter :
     RootDecomposeComponent<MainPresenter.Child, MainPresenter.Config> {
@@ -35,20 +36,20 @@ interface MainPresenter :
     ) {
         @Serializable
         data object GameList : Config(
-            title = Res.string.games,
-            icon = Res.drawable.ic_games,
+            title = StringRes.games,
+            icon = DrawableRes.ic_games,
         )
 
         @Serializable
         data object Home : Config(
-            title = Res.string.home,
-            icon = Res.drawable.ic_home,
+            title = StringRes.home,
+            icon = DrawableRes.ic_home,
         )
 
         @Serializable
         data object RecentChats : Config(
-            title = Res.string.chats,
-            icon = Res.drawable.ic_chats,
+            title = StringRes.chats,
+            icon = DrawableRes.ic_chats,
         )
     }
 

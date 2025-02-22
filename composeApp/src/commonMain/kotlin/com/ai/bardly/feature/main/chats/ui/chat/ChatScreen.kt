@@ -1,8 +1,5 @@
 package com.ai.bardly.feature.main.chats.ui.chat
 
-import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.chat_details_message_hint
-import ai_bardly.composeapp.generated.resources.ic_send
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -73,9 +70,13 @@ import com.mikepenz.markdown.m3.markdownColor
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.sharedScreenBounds
+import com.retro99.base.ui.resources.DrawableRes
+import com.retro99.translations.StringRes
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import resources.icons.ic_send
+import resources.translations.chat_details_message_hint
 
 @Composable
 fun ChatScreen(
@@ -287,7 +288,7 @@ fun MessageInputField(
                     ) {
                         if (state.text.isEmpty()) {
                             Text(
-                                text = stringResource(Res.string.chat_details_message_hint),
+                                text = stringResource(StringRes.chat_details_message_hint),
                                 style = TextStyle(
                                     fontSize = 16.sp,
                                     color = Color.Gray // Placeholder color
@@ -311,7 +312,7 @@ fun MessageInputField(
                             )
                         ) {
                             Image(
-                                painterResource(Res.drawable.ic_send),
+                                painterResource(DrawableRes.ic_send),
                                 contentDescription = null
                             )
                         }

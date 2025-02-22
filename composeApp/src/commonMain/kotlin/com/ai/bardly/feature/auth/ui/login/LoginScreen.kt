@@ -1,20 +1,5 @@
 package com.ai.bardly.feature.auth.ui.login
 
-import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.ic_visibility
-import ai_bardly.composeapp.generated.resources.ic_visibility_off
-import ai_bardly.composeapp.generated.resources.login_already_have_account
-import ai_bardly.composeapp.generated.resources.login_do_not_have_account
-import ai_bardly.composeapp.generated.resources.login_email
-import ai_bardly.composeapp.generated.resources.login_no_matching_user
-import ai_bardly.composeapp.generated.resources.login_or_with
-import ai_bardly.composeapp.generated.resources.login_password
-import ai_bardly.composeapp.generated.resources.login_sign_in
-import ai_bardly.composeapp.generated.resources.login_sign_in_title
-import ai_bardly.composeapp.generated.resources.login_sign_in_with_google
-import ai_bardly.composeapp.generated.resources.login_sign_up
-import ai_bardly.composeapp.generated.resources.login_sign_up_title
-import ai_bardly.composeapp.generated.resources.login_sign_up_with_google
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -57,9 +42,25 @@ import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
+import com.retro99.base.ui.resources.DrawableRes
+import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import resources.icons.ic_visibility
+import resources.icons.ic_visibility_off
+import resources.translations.login_already_have_account
+import resources.translations.login_do_not_have_account
+import resources.translations.login_email
+import resources.translations.login_no_matching_user
+import resources.translations.login_or_with
+import resources.translations.login_password
+import resources.translations.login_sign_in
+import resources.translations.login_sign_in_title
+import resources.translations.login_sign_in_with_google
+import resources.translations.login_sign_up
+import resources.translations.login_sign_up_title
+import resources.translations.login_sign_up_with_google
 
 @Composable
 fun LoginScreen(
@@ -164,8 +165,8 @@ private fun LoginFooterRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         val text = when (loginMode) {
-            LoginMode.SignIn -> stringResource(Res.string.login_do_not_have_account)
-            LoginMode.SignUp -> stringResource(Res.string.login_already_have_account)
+            LoginMode.SignIn -> stringResource(StringRes.login_do_not_have_account)
+            LoginMode.SignUp -> stringResource(StringRes.login_already_have_account)
         }
         TextButton(onClick = onActionClick) {
             Text(text = text)
@@ -184,7 +185,7 @@ private fun NoMatchingUserRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(Res.string.login_no_matching_user),
+            text = stringResource(StringRes.login_no_matching_user),
             color = MaterialTheme.colorScheme.error
         )
     }
@@ -196,8 +197,8 @@ private fun LoginTitle(
     modifier: Modifier = Modifier
 ) {
     val text = when (loginMode) {
-        LoginMode.SignIn -> stringResource(Res.string.login_sign_in_title)
-        LoginMode.SignUp -> stringResource(Res.string.login_sign_up_title)
+        LoginMode.SignIn -> stringResource(StringRes.login_sign_in_title)
+        LoginMode.SignUp -> stringResource(StringRes.login_sign_up_title)
     }
     Text(
         modifier = modifier,
@@ -214,7 +215,7 @@ private fun EmailField(
     AuthTextField(
         inputField = emailInputField,
         onValueChange = onEmailChange,
-        labelResId = Res.string.login_email,
+        labelResId = StringRes.login_email,
         keyboardType = KeyboardType.Email,
         imeAction = ImeAction.Next,
         leadingIcon = Icons.Default.Email
@@ -231,7 +232,7 @@ private fun PasswordField(
     AuthTextField(
         inputField = passwordInputField,
         onValueChange = onPasswordChange,
-        labelResId = Res.string.login_password,
+        labelResId = StringRes.login_password,
         keyboardType = KeyboardType.Password,
         imeAction = ImeAction.Done,
         leadingIcon = Icons.Default.Lock,
@@ -239,8 +240,8 @@ private fun PasswordField(
             IconButton(onClick = { onPasswordVisibilityChange(!passwordVisible) }) {
                 Icon(
                     painter = painterResource(
-                        if (passwordVisible) Res.drawable.ic_visibility
-                        else Res.drawable.ic_visibility_off
+                        if (passwordVisible) DrawableRes.ic_visibility
+                        else DrawableRes.ic_visibility_off
                     ),
                     contentDescription = if (passwordVisible) "Hide password" else "Show password",
                 )
@@ -310,8 +311,8 @@ private fun LoginButton(
     loginMode: LoginMode
 ) {
     val text = when (loginMode) {
-        LoginMode.SignIn -> stringResource(Res.string.login_sign_in)
-        LoginMode.SignUp -> stringResource(Res.string.login_sign_up)
+        LoginMode.SignIn -> stringResource(StringRes.login_sign_in)
+        LoginMode.SignUp -> stringResource(StringRes.login_sign_up)
     }
     Button(
         onClick = onSignInClick,
@@ -333,8 +334,8 @@ private fun GoogleLoginSection(
         onResult = { onResult(it.map { it?.toUiModel() }) }
     ) {
         val text = when (loginMode) {
-            LoginMode.SignIn -> stringResource(Res.string.login_sign_in_with_google)
-            LoginMode.SignUp -> stringResource(Res.string.login_sign_up_with_google)
+            LoginMode.SignIn -> stringResource(StringRes.login_sign_in_with_google)
+            LoginMode.SignUp -> stringResource(StringRes.login_sign_up_with_google)
         }
         GoogleSignInButton(
             modifier = Modifier.fillMaxWidth(),
@@ -365,7 +366,7 @@ private fun OrWithDivider(
         )
 
         Text(
-            text = stringResource(Res.string.login_or_with),
+            text = stringResource(StringRes.login_or_with),
             color = textColor,
         )
 

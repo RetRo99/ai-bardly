@@ -17,6 +17,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
+            implementation(libs.datetime)
         }
     }
 }

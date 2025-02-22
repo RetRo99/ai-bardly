@@ -30,6 +30,11 @@ kotlin {
         }
     }
 }
+compose.resources {
+    publicResClass = true
+    generateResClass = always
+    packageOfResClass = "resources.icons"
+}
 
 android {
     namespace = "com.retro99.base.ui"

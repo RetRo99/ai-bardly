@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
-import com.retro99.database.implementation.toremove.MessageEntity
+import retro99.games.api.local.GamesDao
+import retro99.games.api.local.model.GameEntity
+import retro99.games.api.local.model.GameMetadataEntity
 
 @Database(
     entities = [
-        MessageEntity::class,
-//        GameEntity::class,
-//        GameMetadataEntity::class,
+//        MessageEntity::class,
+        GameEntity::class,
+        GameMetadataEntity::class,
     ],
     version = 1,
     exportSchema = true,
@@ -19,8 +21,8 @@ import com.retro99.database.implementation.toremove.MessageEntity
 @ConstructedBy(AppDatabaseConstructor::class)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-//    abstract fun getMessagesDao(): MessagesDao
-//    abstract fun getGamesDao(): GamesDao
+    //    abstract fun getMessagesDao(): MessagesDao
+    abstract fun getGamesDao(): GamesDao
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")

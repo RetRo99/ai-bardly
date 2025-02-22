@@ -25,7 +25,8 @@ kotlin {
 }
 compose.resources {
     publicResClass = true
-    generateResClass = auto
+    generateResClass = always
+    packageOfResClass = "resources.translations"
 }
 android {
     namespace = "com.retro99.translations"

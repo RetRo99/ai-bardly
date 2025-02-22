@@ -15,7 +15,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.paging.common)
+            api(libs.paging.common)
         }
     }
 }

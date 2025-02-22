@@ -68,6 +68,9 @@ kotlin {
             implementation(projects.database.api)
             implementation(projects.baseUi)
             implementation(projects.base)
+            implementation(projects.games.ui)
+            implementation(projects.games.domain)
+            implementation(projects.games.data)
             implementation(projects.translations)
         }
     }
