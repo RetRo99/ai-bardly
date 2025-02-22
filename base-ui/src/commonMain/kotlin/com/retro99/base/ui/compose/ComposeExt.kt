@@ -1,4 +1,4 @@
-package com.retro99.base.compose
+package com.retro99.base.ui.compose
 
 import ai_bardly.translations.generated.resources.Res
 import ai_bardly.translations.generated.resources.days_ago

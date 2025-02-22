@@ -10,8 +10,8 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
-import com.retro99.base.BasePresenterImpl
-import com.retro99.base.BaseViewState
+import com.retro99.base.ui.BasePresenterImpl
+import com.retro99.base.ui.BaseViewState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding

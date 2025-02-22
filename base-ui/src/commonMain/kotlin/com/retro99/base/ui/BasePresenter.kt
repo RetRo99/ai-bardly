@@ -1,4 +1,4 @@
-package com.retro99.base
+package com.retro99.base.ui
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue

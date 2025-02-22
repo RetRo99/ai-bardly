@@ -1,4 +1,4 @@
-package com.ai.bardly.buildconfig
+package com.retro99.base.buildconfig
 
 import kotlin.experimental.ExperimentalNativeApi
 

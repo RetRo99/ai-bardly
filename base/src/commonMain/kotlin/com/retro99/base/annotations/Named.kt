@@ -1,4 +1,4 @@
-package com.retro99.database.implementation.toremove
+package com.retro99.base.annotations
 
 import me.tatarka.inject.annotations.Qualifier
 

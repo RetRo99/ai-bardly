@@ -55,8 +55,8 @@ import com.ai.bardly.user.ui.UserUiModel
 import com.ai.bardly.user.ui.toUiModel
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
-import com.retro99.base.BaseScreen
-import com.retro99.base.IntentDispatcher
+import com.retro99.base.ui.BaseScreen
+import com.retro99.base.ui.IntentDispatcher
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

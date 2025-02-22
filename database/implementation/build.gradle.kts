@@ -20,6 +20,7 @@ kotlin {
             implementation(libs.datetime)
             implementation(libs.sqlite.bundled)
             implementation(projects.database.api)
+            implementation(projects.base)
         }
     }
 }

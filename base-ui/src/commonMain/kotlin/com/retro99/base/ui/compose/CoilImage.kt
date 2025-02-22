@@ -1,4 +1,4 @@
-package com.retro99.base.compose
+package com.retro99.base.ui.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

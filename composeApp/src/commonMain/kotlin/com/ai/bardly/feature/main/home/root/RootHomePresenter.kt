@@ -5,7 +5,7 @@ import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenter
 import com.ai.bardly.feature.main.games.ui.details.GameDetailsPresenter
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.ai.bardly.feature.main.home.ui.HomePresenter
-import com.retro99.base.BasePresenter
+import com.retro99.base.ui.BasePresenter
 import kotlinx.serialization.Serializable
 
 interface RootHomePresenter : BasePresenter<RootHomeViewState, RootHomeIntent>,

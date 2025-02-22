@@ -31,8 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
-import com.retro99.base.compose.CoilImage
-import com.retro99.base.compose.sharedScreenBounds
+import com.retro99.base.ui.compose.CoilImage
+import com.retro99.base.ui.compose.sharedScreenBounds
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 

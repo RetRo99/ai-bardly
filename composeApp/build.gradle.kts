@@ -67,6 +67,7 @@ kotlin {
             implementation(projects.database.implementation)
             implementation(projects.database.api)
             implementation(projects.baseUi)
+            implementation(projects.base)
             implementation(projects.translations)
         }
     }
@@ -74,11 +75,8 @@ kotlin {
 
 android {
     namespace = "com.ai.bardly"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
-    buildFeatures {
-        buildConfig = true
-    }
     defaultConfig {
         applicationId = "com.ai.bardly"
         minSdk = libs.versions.minSdk.get().toInt()

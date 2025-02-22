@@ -1,4 +1,4 @@
-package com.retro99.base
+package com.retro99.base.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

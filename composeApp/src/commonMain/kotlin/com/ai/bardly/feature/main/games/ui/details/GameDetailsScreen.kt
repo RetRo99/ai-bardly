@@ -43,9 +43,9 @@ import com.ai.bardly.feature.main.games.ui.components.GameImage
 import com.ai.bardly.feature.main.games.ui.components.SharedTransitionText
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.mikepenz.markdown.m3.Markdown
-import com.retro99.base.BaseScreen
-import com.retro99.base.IntentDispatcher
-import com.retro99.base.compose.sharedScreenBounds
+import com.retro99.base.ui.BaseScreen
+import com.retro99.base.ui.IntentDispatcher
+import com.retro99.base.ui.compose.sharedScreenBounds
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

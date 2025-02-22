@@ -5,8 +5,8 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import com.retro99.base.compose.LocalScreenAnimationScope
-import com.retro99.base.compose.LocalScreenTransitionScope
+import com.retro99.base.ui.compose.LocalScreenAnimationScope
+import com.retro99.base.ui.compose.LocalScreenTransitionScope
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

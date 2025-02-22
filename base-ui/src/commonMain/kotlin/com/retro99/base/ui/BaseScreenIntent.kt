@@ -1,4 +1,4 @@
-package com.retro99.base
+package com.retro99.base.ui
 
 import kotlin.jvm.JvmInline
 

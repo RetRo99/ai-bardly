@@ -3,7 +3,7 @@ package com.ai.bardly.analytics.di
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsManager
 import com.ai.bardly.analytics.DebugAnalyticsManager
-import com.ai.bardly.annotations.Named
+import com.retro99.base.annotations.Named
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import dev.gitlive.firebase.analytics.analytics

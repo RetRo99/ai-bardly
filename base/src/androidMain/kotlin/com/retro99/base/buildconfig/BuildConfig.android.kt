@@ -1,8 +1,7 @@
-package com.ai.bardly.buildconfig
-
+package com.retro99.base.buildconfig
 
 class BuildConfigAndroid: BuildConfig {
     override val isDebug: Boolean
-        get() = com.ai.bardly.BuildConfig.DEBUG
+        get() = com.retro99.base.BuildConfig.DEBUG
 }
 actual fun getBuildConfig(): BuildConfig = BuildConfigAndroid()

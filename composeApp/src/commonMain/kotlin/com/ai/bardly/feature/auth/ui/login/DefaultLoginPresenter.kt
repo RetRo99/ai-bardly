@@ -10,8 +10,8 @@ import com.ai.bardly.user.domain.UserRepository
 import com.ai.bardly.user.ui.UserUiModel
 import com.ai.bardly.user.ui.toUiModel
 import com.arkivanov.decompose.ComponentContext
-import com.retro99.base.BasePresenterImpl
-import com.retro99.base.BaseViewState
+import com.retro99.base.ui.BasePresenterImpl
+import com.retro99.base.ui.BaseViewState
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.launch

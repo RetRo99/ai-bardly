@@ -2,8 +2,8 @@ package com.ai.bardly.feature.onboarding.welcome.ui
 
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
-import com.retro99.base.BasePresenterImpl
-import com.retro99.base.BaseViewState
+import com.retro99.base.ui.BasePresenterImpl
+import com.retro99.base.ui.BaseViewState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding

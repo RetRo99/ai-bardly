@@ -70,9 +70,9 @@ import androidx.compose.ui.unit.sp
 import com.ai.bardly.feature.main.chats.ui.model.MessageUiModel
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownColor
-import com.retro99.base.BaseScreen
-import com.retro99.base.IntentDispatcher
-import com.retro99.base.compose.sharedScreenBounds
+import com.retro99.base.ui.BaseScreen
+import com.retro99.base.ui.IntentDispatcher
+import com.retro99.base.ui.compose.sharedScreenBounds
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

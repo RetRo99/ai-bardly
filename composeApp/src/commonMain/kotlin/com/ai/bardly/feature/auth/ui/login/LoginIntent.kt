@@ -2,7 +2,7 @@ package com.ai.bardly.feature.auth.ui.login
 
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
 import com.ai.bardly.user.ui.UserUiModel
-import com.retro99.base.BaseScreenIntent
+import com.retro99.base.ui.BaseScreenIntent
 
 sealed interface LoginIntent : BaseScreenIntent {
 

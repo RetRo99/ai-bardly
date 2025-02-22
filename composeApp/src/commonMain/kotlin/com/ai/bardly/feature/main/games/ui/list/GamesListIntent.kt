@@ -1,7 +1,7 @@
 package com.ai.bardly.feature.main.games.ui.list
 
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
-import com.retro99.base.BaseScreenIntent
+import com.retro99.base.ui.BaseScreenIntent
 
 sealed interface GamesListIntent : BaseScreenIntent {
     data class GameClicked(val game: GameUiModel) : GamesListIntent

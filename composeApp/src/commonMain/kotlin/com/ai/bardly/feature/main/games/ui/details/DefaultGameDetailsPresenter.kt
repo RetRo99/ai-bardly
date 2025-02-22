@@ -7,8 +7,8 @@ import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.main.games.domain.GamesRepository
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
 import com.arkivanov.decompose.ComponentContext
-import com.retro99.base.BasePresenterImpl
-import com.retro99.base.BaseViewState
+import com.retro99.base.ui.BasePresenterImpl
+import com.retro99.base.ui.BaseViewState
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

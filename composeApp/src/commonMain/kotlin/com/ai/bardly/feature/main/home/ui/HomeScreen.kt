@@ -31,8 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ai.bardly.feature.main.games.ui.components.GamesLazyGrid
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
-import com.retro99.base.BaseScreen
-import com.retro99.base.IntentDispatcher
+import com.retro99.base.ui.BaseScreen
+import com.retro99.base.ui.IntentDispatcher
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

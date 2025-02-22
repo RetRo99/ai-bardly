@@ -1,4 +1,4 @@
-package com.retro99.base
+package com.retro99.base.ui
 
 sealed class BaseViewState<out T> {
     data object Loading : BaseViewState<Nothing>()
