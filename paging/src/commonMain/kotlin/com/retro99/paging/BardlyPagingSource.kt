@@ -1,4 +1,4 @@
-package com.ai.bardly.paging
+package com.retro99.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

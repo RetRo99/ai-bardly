@@ -44,8 +44,8 @@ import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.main.games.ui.components.GamesLazyColumn
 import com.ai.bardly.feature.main.games.ui.list.GamesListIntent.OpenChatClicked
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
-import com.ai.bardly.paging.collectAsLazyPagingItems
 import com.ai.bardly.util.keyboardAsState
+import com.retro99.paging.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
 

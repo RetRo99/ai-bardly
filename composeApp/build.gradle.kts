@@ -69,6 +69,7 @@ kotlin {
             implementation(projects.network.implementation)
             implementation(projects.preferences.api)
             implementation(projects.preferences.implementation)
+            implementation(projects.paging)
         }
     }
 }

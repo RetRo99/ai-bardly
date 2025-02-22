@@ -1,4 +1,4 @@
-package com.ai.bardly.paging
+package com.retro99.paging
 
 data class PagingResult<ITEM : PagingItem>(
     val items: List<ITEM>,

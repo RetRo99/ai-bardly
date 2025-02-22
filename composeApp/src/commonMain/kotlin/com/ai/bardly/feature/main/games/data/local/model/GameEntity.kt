@@ -5,7 +5,7 @@ import androidx.paging.map
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ai.bardly.feature.main.games.domain.model.GameDomainModel
-import com.ai.bardly.paging.PagingItem
+import com.retro99.paging.PagingItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
