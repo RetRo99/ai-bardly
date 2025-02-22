@@ -1,4 +1,4 @@
-package com.retro99.paging.domain
+package com.retro99.paging.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

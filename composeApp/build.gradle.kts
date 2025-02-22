@@ -70,6 +70,7 @@ kotlin {
             implementation(projects.preferences.api)
             implementation(projects.preferences.implementation)
             implementation(projects.paging.domain)
+            implementation(projects.paging.ui)
         }
     }
 }
