@@ -1,4 +1,4 @@
-package com.ai.bardly.base
+package com.retro99.base
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue

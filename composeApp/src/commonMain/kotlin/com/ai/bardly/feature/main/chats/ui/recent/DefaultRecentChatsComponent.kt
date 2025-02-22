@@ -3,11 +3,11 @@ package com.ai.bardly.feature.main.chats.ui.recent
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.analytics.AnalyticsEventOrigin
-import com.ai.bardly.base.BasePresenterImpl
-import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.main.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.main.chats.ui.model.toUiModel
 import com.arkivanov.decompose.ComponentContext
+import com.retro99.base.BasePresenterImpl
+import com.retro99.base.BaseViewState
 import kotlinx.coroutines.launch
 
 class DefaultRecentChatsComponent(

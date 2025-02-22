@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.ai.bardly.base.BaseScreen
-import com.ai.bardly.base.IntentDispatcher
+import com.retro99.base.BaseScreen
+import com.retro99.base.IntentDispatcher
 
 @Composable
 fun WelcomeScreen(

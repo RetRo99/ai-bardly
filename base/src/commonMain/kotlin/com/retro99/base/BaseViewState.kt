@@ -1,4 +1,4 @@
-package com.ai.bardly.base
+package com.retro99.base
 
 sealed class BaseViewState<out T> {
     data object Loading : BaseViewState<Nothing>()

@@ -3,8 +3,6 @@ package com.ai.bardly.feature.auth.ui.login
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.base.BasePresenterImpl
-import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.auth.domain.AuthRepository
 import com.ai.bardly.feature.auth.ui.components.InputValidator
 import com.ai.bardly.feature.auth.ui.components.LoginInputField
@@ -12,6 +10,8 @@ import com.ai.bardly.user.domain.UserRepository
 import com.ai.bardly.user.ui.UserUiModel
 import com.ai.bardly.user.ui.toUiModel
 import com.arkivanov.decompose.ComponentContext
+import com.retro99.base.BasePresenterImpl
+import com.retro99.base.BaseViewState
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.launch

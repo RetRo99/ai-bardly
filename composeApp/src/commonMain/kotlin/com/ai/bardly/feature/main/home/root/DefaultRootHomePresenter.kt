@@ -1,8 +1,6 @@
 package com.ai.bardly.feature.main.home.root
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.base.BasePresenterImpl
-import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenterFactory
 import com.ai.bardly.feature.main.games.ui.details.GameDetailsPresenterFactory
 import com.ai.bardly.feature.main.games.ui.model.GameUiModel
@@ -12,6 +10,8 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
+import com.retro99.base.BasePresenterImpl
+import com.retro99.base.BaseViewState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding

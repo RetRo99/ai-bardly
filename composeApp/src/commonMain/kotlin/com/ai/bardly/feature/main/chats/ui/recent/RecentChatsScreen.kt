@@ -22,11 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ai.bardly.base.BaseScreen
-import com.ai.bardly.base.IntentDispatcher
 import com.ai.bardly.feature.main.chats.ui.model.RecentMessageUiModel
 import com.ai.bardly.feature.main.games.ui.components.GameImage
 import com.ai.bardly.util.timeAgo
+import com.retro99.base.BaseScreen
+import com.retro99.base.IntentDispatcher
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

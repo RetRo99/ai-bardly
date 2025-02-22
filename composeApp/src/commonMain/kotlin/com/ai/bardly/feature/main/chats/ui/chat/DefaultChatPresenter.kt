@@ -3,14 +3,14 @@ package com.ai.bardly.feature.main.chats.ui.chat
 import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.base.BasePresenterImpl
-import com.ai.bardly.base.BaseViewState
 import com.ai.bardly.feature.main.chats.domain.ChatsRepository
 import com.ai.bardly.feature.main.chats.domain.model.MessageType
 import com.ai.bardly.feature.main.chats.ui.model.MessageUiModel
 import com.ai.bardly.feature.main.chats.ui.model.toDomainModel
 import com.ai.bardly.feature.main.chats.ui.model.toUiModel
 import com.arkivanov.decompose.ComponentContext
+import com.retro99.base.BasePresenterImpl
+import com.retro99.base.BaseViewState
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject

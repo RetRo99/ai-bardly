@@ -39,7 +39,6 @@ kotlin {
         iosMain.dependencies {
         }
         commonMain.dependencies {
-            api(libs.essenty.lifecycle)
             api(libs.essenty.stateKeeper)
             api(libs.essenty.backhandler)
             implementation(compose.runtime)
@@ -58,8 +57,6 @@ kotlin {
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
-            api(libs.bundles.decompose)
-            implementation(libs.essenty.coroutines)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.markdown)
             implementation(projects.network.api)
@@ -70,6 +67,7 @@ kotlin {
             implementation(projects.paging.ui)
             implementation(projects.database.implementation)
             implementation(projects.database.api)
+            implementation(projects.base)
         }
     }
 }
