@@ -48,16 +48,13 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.sqlite.bundled)
             implementation(libs.kermit)
-            implementation(libs.androidx.room.runtime)
             implementation(libs.datetime)
             implementation(libs.kmpauth.google)
             implementation(libs.kmpauth.firebase)
             implementation(libs.kmpauth.uihelper)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
-            implementation(libs.androidx.room.paging)
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
@@ -71,6 +68,8 @@ kotlin {
             implementation(projects.preferences.implementation)
             implementation(projects.paging.domain)
             implementation(projects.paging.ui)
+            implementation(projects.database.implementation)
+            implementation(projects.database.api)
         }
     }
 }
@@ -113,15 +112,10 @@ android {
 
 dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
-    ksp(libs.androidx.room.compiler)
     add("kspAndroid", libs.kotlinInject.compiler)
     add("kspAndroid", libs.kotlinInject.anvil.compiler)
     add("kspIosArm64", libs.kotlinInject.compiler)
     add("kspIosArm64", libs.kotlinInject.anvil.compiler)
     add("kspIosSimulatorArm64", libs.kotlinInject.compiler)
     add("kspIosSimulatorArm64", libs.kotlinInject.anvil.compiler)
-}
-
-ksp {
-    arg("room.schemaLocation", "${projectDir}/schemas")
 }

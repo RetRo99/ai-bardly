@@ -17,24 +17,25 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
-            api(libs.multiplatformSettings)
-            implementation(projects.preferences.api)
-        }
-
-        androidMain.dependencies {
-            implementation(libs.androidx.security.crypto)
+            implementation(libs.datetime)
+            implementation(libs.sqlite.bundled)
+            implementation(projects.database.api)
         }
     }
 }
 
+android {
+    namespace = "com.bardly.database.implementation"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+}
+
 dependencies {
+    ksp(libs.androidx.room.compiler)
     add("kspAndroid", libs.kotlinInject.anvil.compiler)
     add("kspIosArm64", libs.kotlinInject.anvil.compiler)
     add("kspIosSimulatorArm64", libs.kotlinInject.anvil.compiler)
 }
 
-
-android {
-    namespace = "com.retro99.preferences.implementation"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+ksp {
+    arg("room.schemaLocation", "${projectDir}/schemas")
 }

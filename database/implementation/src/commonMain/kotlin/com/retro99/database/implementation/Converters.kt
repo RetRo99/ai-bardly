@@ -1,4 +1,4 @@
-package com.ai.bardly.database
+package com.retro99.database.implementation
 
 import androidx.room.TypeConverter
 import kotlinx.datetime.LocalDateTime

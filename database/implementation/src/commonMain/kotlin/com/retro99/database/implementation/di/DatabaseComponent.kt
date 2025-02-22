@@ -1,9 +1,8 @@
-package com.ai.bardly.database.di
+package com.retro99.database.implementation.di
 
 import androidx.room.RoomDatabase
-import com.ai.bardly.database.AppDatabase
+import com.retro99.database.implementation.AppDatabase
 import me.tatarka.inject.annotations.Component
-import me.tatarka.inject.annotations.KmpComponentCreate
 import me.tatarka.inject.annotations.Provides
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesTo
@@ -20,6 +19,3 @@ interface DatabaseComponent {
         return builder.build()
     }
 }
-
-@KmpComponentCreate
-expect fun createDatabaseComponent(): DatabaseComponent

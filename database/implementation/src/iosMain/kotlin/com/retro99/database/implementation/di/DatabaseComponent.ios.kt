@@ -1,10 +1,10 @@
-package com.ai.bardly.database.di
+package com.retro99.database.implementation.di
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
-import com.ai.bardly.annotations.Named
-import com.ai.bardly.database.AppDatabase
+import com.retro99.database.implementation.AppDatabase
+import com.retro99.database.implementation.toremove.Named
 import kotlinx.cinterop.ExperimentalForeignApi
 import me.tatarka.inject.annotations.Provides
 import platform.Foundation.NSDocumentDirectory

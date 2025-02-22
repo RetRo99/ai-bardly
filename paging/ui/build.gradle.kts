@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeCompiler)

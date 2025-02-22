@@ -15,12 +15,13 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.paging.common)
+            api(libs.androidx.room.runtime)
+            api(libs.androidx.room.paging)
         }
     }
 }
 
 android {
-    namespace = "com.retro99.paging.domain"
+    namespace = "com.bardly.database.api"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }
