@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
 }
 
 version = "1.0"
@@ -15,19 +17,17 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(libs.bundles.ktorClientBundle)
-        }
-
-        androidMain.dependencies {
-
-        }
-        iosMain.dependencies {
-
+            api(compose.components.resources)
+            implementation(compose.runtime)
         }
     }
-}
 
+}
+compose.resources {
+    publicResClass = true
+    generateResClass = auto
+}
 android {
-    namespace = "com.retro99.network.api"
+    namespace = "com.retro99.translations"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

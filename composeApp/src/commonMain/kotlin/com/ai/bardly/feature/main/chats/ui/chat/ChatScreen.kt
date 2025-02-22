@@ -68,11 +68,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.bardly.feature.main.chats.ui.model.MessageUiModel
-import com.ai.bardly.util.sharedScreenBounds
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownColor
 import com.retro99.base.BaseScreen
 import com.retro99.base.IntentDispatcher
+import com.retro99.base.compose.sharedScreenBounds
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource

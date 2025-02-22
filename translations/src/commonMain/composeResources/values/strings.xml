@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="home">Home</string>
+    <string name="games">Games</string>
+    <string name="chats">Chats</string>
+    <string name="game_length">Game Length</string>
+    <string name="game_complexity">Complexity</string>
+    <string name="game_age_recommendation">Age</string>
+    <string name="amount_of_players">Players</string>
+    <string name="chat_lists_recent_chats">Recent chats</string>
+    <string name="home_recent_games">Recent games</string>
+    <string name="home_whats_new">What's new</string>
+    <string name="home_greeting_title">Good to see ya' back!</string>
+    <string name="home_greeting_subtitle">On what quest are we taking on today?</string>
+    <string name="home_explore_now">Explore now!</string>
+    <string name="home_new_game_available">New game available!</string>
+    <string name="games_list_search_games">Search games...</string>
+    <string name="login_email">Email</string>
+    <string name="login_sign_up_title">Create account</string>
+    <string name="login_sign_in_title">Hi, welcome back!</string>
+    <string name="login_password">Password</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="login_sign_up">Sign up</string>
+    <string name="login_sign_in_with_google">Sign in with Google</string>
+    <string name="login_sign_up_with_google">Sign up with Google</string>
+    <string name="login_or_with">Or with</string>
+    <string name="login_no_matching_user">No matching user found.</string>
+    <string name="login_already_have_account">Already have an account? Login</string>
+    <string name="login_do_not_have_account">Don’t have an account? Sign Up</string>
+    <string name="chat_details_message_hint">Ask Bardly...</string>
+    <string name="general_search">Search</string>
+    <string name="just_now">Just now</string>
+    <plurals name="minutes_ago">
+        <item quantity="one">%1$d minute ago</item>
+        <item quantity="other">%1$d minutes ago</item>
+    </plurals>
+
+    <plurals name="hours_ago">
+        <item quantity="one">%1$d hour ago</item>
+        <item quantity="other">%1$d hours ago</item>
+    </plurals>
+
+    <plurals name="days_ago">
+        <item quantity="one">%1$d day ago</item>
+        <item quantity="other">%1$d days ago</item>
+    </plurals>
+
+    <plurals name="weeks_ago">
+        <item quantity="one">%1$d week ago</item>
+        <item quantity="other">%1$d weeks ago</item>
+    </plurals>
+    <string name="validation_email_success">Email is valid</string>
+    <string name="validation_email_blank">Email cannot be blank</string>
+    <string name="validation_email_too_long">Email is too long</string>
+    <string name="validation_email_invalid_format">Invalid email format</string>
+    <string name="validation_password_success">Password is valid</string>
+    <string name="validation_password_blank">Password cannot be blank</string>
+    <string name="validation_password_too_short">Password is too short</string>
+    <string name="validation_password_too_long">Password is too long</string>
+    <string name="validation_password_missing_digit">Password must contain at least one digit</string>
+    <string name="validation_password_missing_letter">Password must contain at least one letter</string>
+    <string name="validation_password_missing_capital_letter">Password must contain at least one uppercase letter</string>
+</resources>

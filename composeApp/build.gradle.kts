@@ -45,6 +45,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
+            // TODO remove when base ui has icon
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kermit)
@@ -52,8 +53,6 @@ kotlin {
             implementation(libs.kmpauth.google)
             implementation(libs.kmpauth.firebase)
             implementation(libs.kmpauth.uihelper)
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.ktor)
             implementation(libs.paging.common)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)
@@ -67,7 +66,8 @@ kotlin {
             implementation(projects.paging.ui)
             implementation(projects.database.implementation)
             implementation(projects.database.api)
-            implementation(projects.base)
+            implementation(projects.baseUi)
+            implementation(projects.translations)
         }
     }
 }

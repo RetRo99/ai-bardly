@@ -23,11 +23,15 @@ kotlin {
             api(libs.bundles.decompose)
             implementation(libs.essenty.lifecycle)
             implementation(libs.essenty.coroutines)
+            implementation(libs.datetime)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
+            api(projects.translations)
         }
     }
 }
 
 android {
-    namespace = "com.retro99.base"
+    namespace = "com.retro99.base.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

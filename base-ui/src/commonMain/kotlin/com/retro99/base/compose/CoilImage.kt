@@ -1,4 +1,4 @@
-package com.ai.bardly.ui
+package com.retro99.base.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,9 +6,9 @@ import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
 import coil3.compose.LocalPlatformContext
-import org.jetbrains.compose.resources.DrawableResource
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 fun CoilImage(

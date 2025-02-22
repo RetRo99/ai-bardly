@@ -1,11 +1,11 @@
-package com.ai.bardly.util
+package com.retro99.base.compose
 
-import ai_bardly.composeapp.generated.resources.Res
-import ai_bardly.composeapp.generated.resources.days_ago
-import ai_bardly.composeapp.generated.resources.hours_ago
-import ai_bardly.composeapp.generated.resources.just_now
-import ai_bardly.composeapp.generated.resources.minutes_ago
-import ai_bardly.composeapp.generated.resources.weeks_ago
+import ai_bardly.translations.generated.resources.Res
+import ai_bardly.translations.generated.resources.days_ago
+import ai_bardly.translations.generated.resources.hours_ago
+import ai_bardly.translations.generated.resources.just_now
+import ai_bardly.translations.generated.resources.minutes_ago
+import ai_bardly.translations.generated.resources.weeks_ago
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
