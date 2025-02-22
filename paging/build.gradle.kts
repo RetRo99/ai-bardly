@@ -18,7 +18,6 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.bundles.kotlinInject)
             implementation(libs.paging.common)
             implementation(compose.runtime)
         }
