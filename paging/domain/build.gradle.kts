@@ -2,8 +2,6 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
 }
 
 version = "1.0"
@@ -19,7 +17,6 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.paging.common)
-            implementation(compose.runtime)
         }
     }
 }
