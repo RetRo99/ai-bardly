@@ -3,7 +3,7 @@ package com.ai.bardly.feature.main.games.ui.model
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.ai.bardly.feature.main.games.domain.model.GameDomainModel
-import com.retro99.paging.PagingItem
+import com.retro99.paging.domain.PagingItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable

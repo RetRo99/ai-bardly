@@ -25,6 +25,6 @@ kotlin {
 }
 
 android {
-    namespace = "com.retro99.network.implementation"
+    namespace = "com.retro99.paging.domain"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

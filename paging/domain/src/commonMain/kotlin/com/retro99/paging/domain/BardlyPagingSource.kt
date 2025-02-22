@@ -1,4 +1,4 @@
-package com.retro99.paging
+package com.retro99.paging.domain
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

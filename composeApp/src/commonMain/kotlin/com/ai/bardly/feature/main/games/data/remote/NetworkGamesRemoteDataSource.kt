@@ -3,8 +3,8 @@ package com.ai.bardly.feature.main.games.data.remote
 import androidx.paging.PagingSource
 import com.ai.bardly.feature.main.games.data.remote.model.GameDto
 import com.ai.bardly.feature.main.games.data.remote.model.GamesListDto
-import com.retro99.paging.BardlyPagingSource
-import com.retro99.paging.PagingResult
+import com.retro99.paging.domain.BardlyPagingSource
+import com.retro99.paging.domain.PagingResult
 import me.tatarka.inject.annotations.Inject
 import retro99.network.api.NetworkClient
 import retro99.network.api.get

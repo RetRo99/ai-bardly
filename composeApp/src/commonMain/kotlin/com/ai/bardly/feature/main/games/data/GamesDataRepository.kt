@@ -12,7 +12,7 @@ import com.ai.bardly.feature.main.games.data.remote.model.toDomainModel
 import com.ai.bardly.feature.main.games.domain.GamesRepository
 import com.ai.bardly.feature.main.games.domain.model.GameDomainModel
 import com.ai.bardly.util.now
-import com.retro99.paging.BardlyRemoteMediator
+import com.retro99.paging.domain.BardlyRemoteMediator
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope

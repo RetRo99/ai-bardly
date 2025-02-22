@@ -1,6 +1,6 @@
 package com.ai.bardly.feature.main.games.domain.model
 
-import com.retro99.paging.PagingItem
+import com.retro99.paging.domain.PagingItem
 
 data class GameDomainModel(
     val title: String,
