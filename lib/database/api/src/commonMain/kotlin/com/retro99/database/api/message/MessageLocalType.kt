@@ -1,4 +1,4 @@
-package com.retro99.database.api
+package com.retro99.database.api.message
 
 enum class MessageLocalType {
     User,

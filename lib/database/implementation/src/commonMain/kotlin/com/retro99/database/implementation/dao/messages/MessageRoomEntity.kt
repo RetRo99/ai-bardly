@@ -2,8 +2,8 @@ package com.retro99.database.implementation.dao.messages
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.retro99.database.api.MessageEntity
-import com.retro99.database.api.MessageLocalType
+import com.retro99.database.api.message.MessageEntity
+import com.retro99.database.api.message.MessageLocalType
 import kotlinx.datetime.LocalDateTime
 
 @Entity

@@ -2,8 +2,8 @@ package com.retro99.chats.data.local.model
 
 import com.retro99.chats.domain.model.MessageDomainModel
 import com.retro99.chats.domain.model.MessageType
-import com.retro99.database.api.MessageEntity
-import com.retro99.database.api.MessageLocalType
+import com.retro99.database.api.message.MessageEntity
+import com.retro99.database.api.message.MessageLocalType
 import kotlinx.datetime.LocalDateTime
 
 data class MessageLocalModel(

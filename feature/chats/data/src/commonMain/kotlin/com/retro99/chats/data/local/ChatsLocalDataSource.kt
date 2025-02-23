@@ -1,6 +1,6 @@
 package com.retro99.chats.data.local
 
-import com.retro99.database.api.MessageEntity
+import com.retro99.database.api.message.MessageEntity
 
 interface ChatsLocalDataSource {
     suspend fun getMessages(gameId: Int): Result<List<MessageEntity>>
