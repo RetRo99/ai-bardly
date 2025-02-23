@@ -22,7 +22,6 @@ user experience. This project serves as an example of a modern, scalable Android
 - **Markdown:** Implementation of markdown support with `multiplatform-markdown-renderer-m3`.
 - **Multiplatform Settings:** Use of the `multiplatform-settings` library for settings management.
 - **Translations:** Use of compose resources for providing translations.
-- **Sqlite:** Use of `Sqlite` for storage.
 
 ## Project Structure
 
