@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.ksp)
 }
 
@@ -16,15 +18,25 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.chats.domain)
-            implementation(libs.bundles.kotlinInject)
-            implementation(projects.database.api)
-            implementation(libs.datetime)
-            implementation(libs.androidx.room.runtime)
-            implementation(projects.database.api)
+            implementation(projects.feature.chats.domain)
+            implementation(projects.baseUi)
             implementation(projects.base)
-            implementation(projects.network.api)
-            implementation(libs.serialization)
+            implementation(projects.analytics.api)
+            implementation(projects.feature.games.ui)
+
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+
+            implementation(libs.markdown)
+            implementation(libs.bundles.kotlinInject)
+            implementation(libs.datetime)
+
+        }
+
+        androidMain.dependencies {
+        }
+        iosMain.dependencies {
         }
     }
 }
@@ -36,6 +48,6 @@ dependencies {
 }
 
 android {
-    namespace = "com.retro99.chats.data"
+    namespace = "com.retro99.chats.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

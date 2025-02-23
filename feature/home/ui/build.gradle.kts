@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.ksp)
 }
 
@@ -16,15 +18,23 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.games.domain)
-            implementation(projects.paging.domain)
-            implementation(libs.bundles.kotlinInject)
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.datetime)
-            implementation(libs.serialization)
-            implementation(projects.network.api)
+            implementation(projects.analytics.api)
             implementation(projects.base)
-            implementation(projects.database.api)
+            implementation(projects.baseUi)
+            implementation(projects.feature.games.ui)
+            implementation(projects.feature.games.domain)
+            implementation(projects.paging.domain)
+
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+
+            implementation(libs.bundles.kotlinInject)
+        }
+
+        androidMain.dependencies {
+        }
+        iosMain.dependencies {
         }
     }
 }
@@ -36,6 +46,6 @@ dependencies {
 }
 
 android {
-    namespace = "com.retro99.games.data"
+    namespace = "com.retro99.home.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

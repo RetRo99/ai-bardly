@@ -26,7 +26,7 @@ kotlin {
             implementation(projects.baseUi)
             implementation(projects.base)
             implementation(projects.paging.domain)
-            implementation(projects.games.domain)
+            implementation(projects.feature.games.domain)
             implementation(projects.paging.ui)
             implementation(libs.markdown)
             implementation(projects.analytics.api)

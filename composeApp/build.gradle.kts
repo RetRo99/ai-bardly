@@ -63,16 +63,16 @@ kotlin {
             implementation(projects.database.api)
             implementation(projects.baseUi)
             implementation(projects.base)
-            implementation(projects.games.ui)
-            implementation(projects.games.domain)
-            implementation(projects.games.data)
+            implementation(projects.feature.games.ui)
+            implementation(projects.feature.games.domain)
+            implementation(projects.feature.games.data)
             implementation(projects.translations)
             implementation(projects.analytics.api)
             implementation(projects.analytics.implementation)
-            implementation(projects.chats.data)
-            implementation(projects.chats.domain)
-            implementation(projects.chats.ui)
-            implementation(projects.home.ui)
+            implementation(projects.feature.chats.data)
+            implementation(projects.feature.chats.domain)
+            implementation(projects.feature.chats.ui)
+            implementation(projects.feature.home.ui)
         }
     }
 }

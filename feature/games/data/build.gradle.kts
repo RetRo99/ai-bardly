@@ -16,12 +16,15 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.base)
-            implementation(projects.games.domain)
+            implementation(projects.feature.games.domain)
             implementation(projects.paging.domain)
-
             implementation(libs.bundles.kotlinInject)
+            implementation(libs.androidx.room.runtime)
             implementation(libs.datetime)
+            implementation(libs.serialization)
+            implementation(projects.network.api)
+            implementation(projects.base)
+            implementation(projects.database.api)
         }
     }
 }
@@ -33,6 +36,6 @@ dependencies {
 }
 
 android {
-    namespace = "com.retro99.chats.domain"
+    namespace = "com.retro99.games.data"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }
