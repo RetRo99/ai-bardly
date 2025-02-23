@@ -18,7 +18,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.base)
             implementation(projects.feature.games.domain)
-            implementation(projects.paging.domain)
+            implementation(projects.lib.paging.domain)
 
             implementation(libs.bundles.kotlinInject)
             implementation(libs.datetime)

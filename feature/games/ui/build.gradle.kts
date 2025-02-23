@@ -25,11 +25,11 @@ kotlin {
             implementation(libs.bundles.kotlinInject)
             implementation(projects.baseUi)
             implementation(projects.base)
-            implementation(projects.paging.domain)
+            implementation(projects.lib.paging.domain)
             implementation(projects.feature.games.domain)
-            implementation(projects.paging.ui)
+            implementation(projects.lib.paging.ui)
             implementation(libs.markdown)
-            implementation(projects.analytics.api)
+            implementation(projects.lib.analytics.api)
         }
 
         androidMain.dependencies {

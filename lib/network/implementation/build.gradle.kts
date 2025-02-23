@@ -19,9 +19,9 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
             api(libs.bundles.ktorClientBundle)
-            implementation(projects.network.api)
+            implementation(projects.lib.network.api)
             api(libs.ktor.serialization.kotlinx.json)
-            api(projects.analytics.api)
+            api(projects.lib.analytics.api)
         }
 
         androidMain.dependencies {

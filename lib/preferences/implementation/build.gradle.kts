@@ -18,7 +18,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
             api(libs.multiplatformSettings)
-            implementation(projects.preferences.api)
+            implementation(projects.lib.preferences.api)
         }
 
         androidMain.dependencies {

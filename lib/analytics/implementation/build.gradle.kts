@@ -17,7 +17,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
-            implementation(projects.analytics.api)
+            implementation(projects.lib.analytics.api)
             implementation(libs.kermit)
             api(libs.gitlive.firebase.kotlin.crashlytics)
             api(libs.gitlive.firebase.kotlin.analytics)

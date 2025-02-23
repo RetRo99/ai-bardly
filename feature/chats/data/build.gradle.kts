@@ -18,12 +18,12 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.feature.chats.domain)
             implementation(libs.bundles.kotlinInject)
-            implementation(projects.database.api)
+            implementation(projects.lib.database.api)
             implementation(libs.datetime)
             implementation(libs.androidx.room.runtime)
-            implementation(projects.database.api)
+            implementation(projects.lib.database.api)
             implementation(projects.base)
-            implementation(projects.network.api)
+            implementation(projects.lib.network.api)
             implementation(libs.serialization)
         }
     }

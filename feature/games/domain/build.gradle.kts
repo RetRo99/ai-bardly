@@ -15,7 +15,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.paging.domain)
+            implementation(projects.lib.paging.domain)
         }
     }
 }

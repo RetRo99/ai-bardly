@@ -19,14 +19,14 @@ kotlin {
             implementation(libs.bundles.kotlinInject)
             implementation(libs.datetime)
             implementation(libs.sqlite.bundled)
-            implementation(projects.database.api)
+            implementation(projects.lib.database.api)
             implementation(projects.base)
             implementation(projects.feature.games.data)
             implementation(projects.feature.chats.data)
-            implementation(projects.paging.domain)
+            implementation(projects.lib.paging.domain)
             api(libs.androidx.room.runtime)
             implementation(libs.androidx.room.paging)
-            implementation(projects.analytics.api)
+            implementation(projects.lib.analytics.api)
         }
     }
 }

@@ -18,12 +18,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.analytics.api)
+            implementation(projects.lib.analytics.api)
             implementation(projects.base)
             implementation(projects.baseUi)
             implementation(projects.feature.games.ui)
             implementation(projects.feature.games.domain)
-            implementation(projects.paging.domain)
+            implementation(projects.lib.paging.domain)
 
             implementation(compose.runtime)
             implementation(compose.foundation)

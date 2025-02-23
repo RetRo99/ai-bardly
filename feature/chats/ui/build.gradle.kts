@@ -21,7 +21,7 @@ kotlin {
             implementation(projects.feature.chats.domain)
             implementation(projects.baseUi)
             implementation(projects.base)
-            implementation(projects.analytics.api)
+            implementation(projects.lib.analytics.api)
             implementation(projects.feature.games.ui)
 
             implementation(compose.runtime)

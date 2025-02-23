@@ -17,14 +17,14 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.feature.games.domain)
-            implementation(projects.paging.domain)
+            implementation(projects.lib.paging.domain)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.androidx.room.runtime)
             implementation(libs.datetime)
             implementation(libs.serialization)
-            implementation(projects.network.api)
+            implementation(projects.lib.network.api)
             implementation(projects.base)
-            implementation(projects.database.api)
+            implementation(projects.lib.database.api)
         }
     }
 }
