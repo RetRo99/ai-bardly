@@ -42,6 +42,7 @@ kotlin {
             api(libs.bundles.decompose)
             api(libs.essenty.stateKeeper)
             api(libs.essenty.backhandler)
+            api(libs.essenty.lifecycle)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
