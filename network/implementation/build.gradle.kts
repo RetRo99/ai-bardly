@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
-            implementation(libs.bundles.ktorClientBundle)
+            api(libs.bundles.ktorClientBundle)
             implementation(projects.network.api)
             api(libs.ktor.serialization.kotlinx.json)
         }

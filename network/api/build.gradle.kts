@@ -15,7 +15,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(libs.bundles.ktorClientBundle)
+            implementation(libs.bundles.ktorClientBundle)
         }
 
         androidMain.dependencies {

@@ -21,6 +21,7 @@ kotlin {
             implementation(libs.bundles.kotlinInject)
             implementation(libs.androidx.room.runtime)
             implementation(libs.datetime)
+            implementation(libs.serialization)
             implementation(projects.network.api)
             implementation(projects.base)
             implementation(projects.database.api)
