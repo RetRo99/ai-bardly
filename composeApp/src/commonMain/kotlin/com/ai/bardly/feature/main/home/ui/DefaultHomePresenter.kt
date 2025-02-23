@@ -1,8 +1,5 @@
 package com.ai.bardly.feature.main.home.ui
 
-import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.analytics.AnalyticsEvent
-import com.ai.bardly.analytics.AnalyticsEventOrigin
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
@@ -13,6 +10,9 @@ import com.retro99.network.implementation.GamesRepository
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import retro99.analytics.api.Analytics
+import retro99.analytics.api.AnalyticsEvent
+import retro99.analytics.api.AnalyticsEventOrigin
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias HomePresenterFactory = (

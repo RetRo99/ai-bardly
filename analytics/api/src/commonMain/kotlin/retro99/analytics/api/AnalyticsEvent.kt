@@ -1,4 +1,4 @@
-package com.ai.bardly.analytics
+package retro99.analytics.api
 
 sealed class AnalyticsEvent(
     val name: String,

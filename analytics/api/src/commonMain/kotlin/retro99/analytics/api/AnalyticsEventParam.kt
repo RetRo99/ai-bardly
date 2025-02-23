@@ -1,4 +1,4 @@
-package com.ai.bardly.analytics
+package retro99.analytics.api
 
 sealed class AnalyticsEventParam(val analyticKey: String) {
     data object GameTitle : AnalyticsEventParam("game_title")

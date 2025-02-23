@@ -1,6 +1,5 @@
 package com.ai.bardly.feature.main.chats.root
 
-import com.ai.bardly.analytics.Analytics
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.main.chats.domain.GetRecentChatsUseCase
 import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenterFactory
@@ -14,6 +13,7 @@ import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import retro99.analytics.api.Analytics
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 internal typealias RootRecentPresenterFactory = (

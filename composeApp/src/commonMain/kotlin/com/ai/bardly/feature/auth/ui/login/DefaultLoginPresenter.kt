@@ -1,7 +1,5 @@
 package com.ai.bardly.feature.auth.ui.login
 
-import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.auth.domain.AuthRepository
 import com.ai.bardly.feature.auth.ui.components.InputValidator
@@ -17,6 +15,8 @@ import dev.gitlive.firebase.auth.auth
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import retro99.analytics.api.Analytics
+import retro99.analytics.api.AnalyticsEvent
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias LoginPresenterFactory = (

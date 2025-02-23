@@ -1,7 +1,5 @@
 package com.ai.bardly.feature.main.chats.ui.chat
 
-import com.ai.bardly.analytics.Analytics
-import com.ai.bardly.analytics.AnalyticsEvent
 import com.ai.bardly.annotations.ActivityScope
 import com.ai.bardly.feature.main.chats.domain.ChatsRepository
 import com.ai.bardly.feature.main.chats.domain.model.MessageType
@@ -14,6 +12,8 @@ import com.retro99.base.ui.BaseViewState
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import retro99.analytics.api.Analytics
+import retro99.analytics.api.AnalyticsEvent
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias ChatPresenterFactory = (

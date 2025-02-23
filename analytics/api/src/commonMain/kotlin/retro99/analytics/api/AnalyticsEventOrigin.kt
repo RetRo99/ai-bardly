@@ -1,4 +1,4 @@
-package com.ai.bardly.analytics
+package retro99.analytics.api
 
 sealed class AnalyticsEventOrigin(val analyticKey: String) {
     data object Home : AnalyticsEventOrigin("home")

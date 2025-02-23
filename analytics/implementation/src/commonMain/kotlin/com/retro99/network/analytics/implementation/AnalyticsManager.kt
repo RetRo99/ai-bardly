@@ -1,7 +1,9 @@
-package com.ai.bardly.analytics
+package com.retro99.network.analytics.implementation
 
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import dev.gitlive.firebase.crashlytics.FirebaseCrashlytics
+import retro99.analytics.api.Analytics
+import retro99.analytics.api.AnalyticsEvent
 
 class AnalyticsManager(
     private val firebaseAnalytics: FirebaseAnalytics,

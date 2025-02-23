@@ -45,17 +45,12 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
-            // TODO remove when base ui has icon
-            implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.kermit)
             implementation(libs.datetime)
             implementation(libs.kmpauth.google)
             implementation(libs.kmpauth.firebase)
             implementation(libs.kmpauth.uihelper)
             implementation(libs.paging.common)
-            api(libs.gitlive.firebase.kotlin.crashlytics)
-            api(libs.gitlive.firebase.kotlin.analytics)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.markdown)
             implementation(projects.network.api)
@@ -72,6 +67,8 @@ kotlin {
             implementation(projects.games.domain)
             implementation(projects.games.data)
             implementation(projects.translations)
+            implementation(projects.analytics.api)
+            implementation(projects.analytics.implementation)
         }
     }
 }
