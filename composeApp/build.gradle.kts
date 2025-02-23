@@ -39,6 +39,7 @@ kotlin {
         iosMain.dependencies {
         }
         commonMain.dependencies {
+            api(libs.bundles.decompose)
             api(libs.essenty.stateKeeper)
             api(libs.essenty.backhandler)
             implementation(compose.runtime)
