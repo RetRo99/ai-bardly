@@ -23,6 +23,8 @@ kotlin {
             implementation(projects.base)
             implementation(projects.games.data)
             implementation(projects.paging.domain)
+            api(libs.androidx.room.runtime)
+            implementation(libs.androidx.room.paging)
         }
     }
 }
