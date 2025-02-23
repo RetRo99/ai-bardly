@@ -24,6 +24,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import retro99.analytics.api.Analytics
+import retro99.analytics.api.AnalyticsEvent
+import retro99.analytics.api.AnalyticsEventOrigin
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias GamesListComponentFactory = (
@@ -39,7 +42,7 @@ class DefaultGamesListComponent(
     @Assisted val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
     private val gamesRepository: GamesRepository,
-//    private val analytics: Analytics,
+    private val analytics: Analytics,
 ) : BasePresenterImpl<GamesListViewState, GamesListIntent>(componentContext), GamesListComponent {
 
     override val defaultViewState = GamesListViewState()
@@ -61,23 +64,23 @@ class DefaultGamesListComponent(
     }
 
     private fun openGameDetails(game: GameUiModel) {
-//        analytics.log(
-//            AnalyticsEvent.OpenGameDetails(
-//                gameTitle = game.title,
-//                origin = getEventOrigin(),
-//            )
-//        )
+        analytics.log(
+            AnalyticsEvent.OpenGameDetails(
+                gameTitle = game.title,
+                origin = getEventOrigin(),
+            )
+        )
         navigateToGameDetails(game)
     }
 
 
     private fun onOpenChatClicked(gameTitle: String, gameId: Int) {
-//        analytics.log(
-//            AnalyticsEvent.OpenChat(
-//                gameTitle = gameTitle,
-//                origin = getEventOrigin(),
-//            )
-//        )
+        analytics.log(
+            AnalyticsEvent.OpenChat(
+                gameTitle = gameTitle,
+                origin = getEventOrigin(),
+            )
+        )
         navigateToChat(gameTitle, gameId)
     }
 
@@ -142,11 +145,11 @@ class DefaultGamesListComponent(
         }
     }
 
-//    private fun getEventOrigin(): AnalyticsEventOrigin {
-//        return if (currentViewState().isSearchActive) {
-//            AnalyticsEventOrigin.GameSearch
-//        } else {
-//            AnalyticsEventOrigin.GameList
-//        }
-//    }
+    private fun getEventOrigin(): AnalyticsEventOrigin {
+        return if (currentViewState().isSearchActive) {
+            AnalyticsEventOrigin.GameSearch
+        } else {
+            AnalyticsEventOrigin.GameList
+        }
+    }
 }

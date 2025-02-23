@@ -21,6 +21,7 @@ kotlin {
             api(libs.bundles.ktorClientBundle)
             implementation(projects.network.api)
             api(libs.ktor.serialization.kotlinx.json)
+            api(projects.analytics.api)
         }
 
         androidMain.dependencies {

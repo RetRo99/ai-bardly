@@ -29,6 +29,7 @@ kotlin {
             implementation(projects.games.domain)
             implementation(projects.paging.ui)
             implementation(libs.markdown)
+            implementation(projects.analytics.api)
         }
 
         androidMain.dependencies {

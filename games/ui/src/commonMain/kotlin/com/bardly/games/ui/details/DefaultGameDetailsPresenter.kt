@@ -9,6 +9,9 @@ import com.retro99.network.implementation.GamesRepository
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import retro99.analytics.api.Analytics
+import retro99.analytics.api.AnalyticsEvent
+import retro99.analytics.api.AnalyticsEventOrigin
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias GameDetailsPresenterFactory = (
@@ -26,7 +29,7 @@ class DefaultGameDetailsPresenter(
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateBack: () -> Unit,
     private val gamesRepository: GamesRepository,
-//    private val analytics: Analytics,
+    private val analytics: Analytics,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {
 
@@ -46,12 +49,12 @@ class DefaultGameDetailsPresenter(
     }
 
     private fun openChat() {
-//        analytics.log(
-//            AnalyticsEvent.OpenChat(
-//                gameTitle = game.title,
-//                origin = AnalyticsEventOrigin.GameDetails,
-//            )
-//        )
+        analytics.log(
+            AnalyticsEvent.OpenChat(
+                gameTitle = game.title,
+                origin = AnalyticsEventOrigin.GameDetails,
+            )
+        )
         navigateToChat(game.title, game.id)
     }
 

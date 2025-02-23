@@ -11,6 +11,7 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
+import retro99.analytics.api.Analytics
 import retro99.games.api.tokens.BearerTokenProvider
 import retro99.games.api.tokens.BearerTokenRefresher
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -20,7 +21,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 @SingleIn(AppScope::class)
 class HttpClientProvider(
     private val httpFactory: HttpClientEngineFactory<*>,
-//    private val analytics: Analytics,
+    private val analytics: Analytics,
     private val json: Json,
     private val tokenProvider: BearerTokenProvider,
     private val tokenRefresher: BearerTokenRefresher,
@@ -44,7 +45,7 @@ class HttpClientProvider(
             }
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { cause, request ->
-//                    analytics.logException(cause, request.url.toString())
+                    analytics.logException(cause, request.url.toString())
                 }
             }
         }

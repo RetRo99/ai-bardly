@@ -25,6 +25,7 @@ kotlin {
             implementation(projects.paging.domain)
             api(libs.androidx.room.runtime)
             implementation(libs.androidx.room.paging)
+            implementation(projects.analytics.api)
         }
     }
 }
