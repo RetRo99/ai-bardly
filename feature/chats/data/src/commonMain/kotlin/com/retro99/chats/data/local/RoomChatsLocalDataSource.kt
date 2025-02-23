@@ -1,7 +1,7 @@
 package com.retro99.chats.data.local
 
-import com.retro99.chats.data.local.model.MessageEntity
-import com.retro99.database.api.DatabaseExecutor
+import com.retro99.database.api.MessageEntity
+import com.retro99.database.api.MessagesDatabase
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -11,25 +11,19 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
 class RoomChatsLocalDataSource(
-    private val dao: MessagesDao,
-    private val daoExecutor: DatabaseExecutor,
+    private val database: MessagesDatabase,
 ) : ChatsLocalDataSource {
 
     override suspend fun getMessages(gameId: Int): Result<List<MessageEntity>> {
-        return daoExecutor.executeDatabaseOperation {
-            dao.getMessage(gameId)
-        }
+        return database.getMessage(gameId)
     }
 
     override suspend fun saveMessage(message: MessageEntity): Result<Unit> {
-        return daoExecutor.executeDatabaseOperation {
-            dao.insert(message)
-        }
+        return database.insert(message)
     }
 
     override suspend fun getLatestMessagesPerGame(): Result<List<MessageEntity>> {
-        return daoExecutor.executeDatabaseOperation {
-            dao.getLatestMessagesPerGame()
-        }
+        return database.getLatestMessagesPerGame()
+
     }
 }

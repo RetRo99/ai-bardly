@@ -24,7 +24,7 @@ kotlin {
             implementation(projects.feature.games.data)
             implementation(projects.feature.chats.data)
             implementation(projects.lib.paging.domain)
-            api(libs.androidx.room.runtime)
+            api(libs.room.runtime)
             implementation(libs.androidx.room.paging)
             implementation(projects.lib.analytics.api)
         }

@@ -19,7 +19,7 @@ kotlin {
             implementation(projects.feature.games.domain)
             implementation(projects.lib.paging.domain)
             implementation(libs.bundles.kotlinInject)
-            implementation(libs.androidx.room.runtime)
+            implementation(libs.room.runtime)
             implementation(libs.datetime)
             implementation(libs.serialization)
             implementation(projects.lib.network.api)

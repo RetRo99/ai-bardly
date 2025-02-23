@@ -20,7 +20,7 @@ kotlin {
             implementation(libs.bundles.kotlinInject)
             implementation(projects.lib.database.api)
             implementation(libs.datetime)
-            implementation(libs.androidx.room.runtime)
+            implementation(libs.room.runtime)
             implementation(projects.lib.database.api)
             implementation(projects.base)
             implementation(projects.lib.network.api)
