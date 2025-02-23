@@ -21,8 +21,6 @@ kotlin {
             implementation(libs.sqlite.bundled)
             implementation(projects.lib.database.api)
             implementation(projects.base)
-            implementation(projects.feature.games.data)
-            implementation(projects.feature.chats.data)
             implementation(projects.lib.paging.domain)
             api(libs.room.runtime)
             implementation(libs.androidx.room.paging)

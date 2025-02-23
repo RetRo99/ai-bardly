@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 version = "1.0"
@@ -19,7 +20,6 @@ kotlin {
             implementation(projects.feature.games.domain)
             implementation(projects.lib.paging.domain)
             implementation(libs.bundles.kotlinInject)
-            implementation(libs.room.runtime)
             implementation(libs.datetime)
             implementation(libs.serialization)
             implementation(projects.lib.network.api)

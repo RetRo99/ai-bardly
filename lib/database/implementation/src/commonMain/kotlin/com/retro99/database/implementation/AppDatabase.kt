@@ -5,19 +5,19 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
+import com.retro99.database.implementation.dao.games.GamesDao
+import com.retro99.database.implementation.dao.games.RoomGameEntity
+import com.retro99.database.implementation.dao.games.RoomGameMetadataEntity
 import com.retro99.database.implementation.dao.messages.MessageRoomEntity
 import com.retro99.database.implementation.dao.messages.MessagesDao
-import com.retro99.games.data.local.GamesDao
-import com.retro99.games.data.local.model.GameEntity
-import com.retro99.games.data.local.model.GameMetadataEntity
 
 @Database(
     entities = [
         MessageRoomEntity::class,
-        GameEntity::class,
-        GameMetadataEntity::class,
+        RoomGameEntity::class,
+        RoomGameMetadataEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

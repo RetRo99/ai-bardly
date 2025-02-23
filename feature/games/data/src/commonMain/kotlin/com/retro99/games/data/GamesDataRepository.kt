@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import com.retro99.base.now
 import com.retro99.games.data.local.GamesLocalDataSource
 import com.retro99.games.data.local.model.toDomainModel
-import com.retro99.games.data.local.model.toEntity
+import com.retro99.games.data.local.model.toLocalModel
 import com.retro99.games.data.remote.GamesRemoteDataSource
 import com.retro99.games.data.remote.model.toDomainModel
 import com.retro99.games.domain.GamesRepository
@@ -40,7 +40,7 @@ class GamesDataRepository(
                 remoteSource = remotePagingSource,
                 localSource = localSource.getGames(query),
                 saveToLocal = { localSource.saveGames(it) },
-                remoteToLocal = { it.toDomainModel().toEntity() }
+                remoteToLocal = { it.toDomainModel().toLocalModel() }
             ),
             pagingSourceFactory = { localSource.getGames(query) }
         ).flow.toDomainModel()

@@ -1,7 +1,7 @@
 package com.retro99.games.data.local
 
 import androidx.paging.PagingSource
-import com.retro99.games.data.local.model.GameEntity
+import com.retro99.database.api.games.GameEntity
 import kotlinx.datetime.LocalDateTime
 
 interface GamesLocalDataSource {
@@ -11,7 +11,7 @@ interface GamesLocalDataSource {
 
     suspend fun getGame(id: Int): Result<GameEntity>
 
-    suspend fun saveGames(games: List<GameEntity>)
+    suspend fun saveGames(games: List<GameEntity>): Result<Unit>
 
     suspend fun getRecentlyOpenGames(amount: Int): Result<List<GameEntity>>
 
