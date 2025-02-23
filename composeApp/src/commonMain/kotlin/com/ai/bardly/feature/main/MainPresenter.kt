@@ -1,9 +1,9 @@
 package com.ai.bardly.feature.main
 
-import com.ai.bardly.decompose.RootDecomposeComponent
 import com.ai.bardly.feature.main.chats.root.RootRecentPresenter
 import com.ai.bardly.feature.main.games.root.RootGamesPresenter
 import com.ai.bardly.feature.main.home.root.RootHomePresenter
+import com.retro99.base.ui.decompose.RootDecomposeComponent
 import com.retro99.base.ui.resources.DrawableRes
 import com.retro99.translations.StringRes
 import kotlinx.serialization.Contextual

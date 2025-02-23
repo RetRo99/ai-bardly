@@ -1,9 +1,9 @@
 package com.ai.bardly.feature.main.chats.root
 
-import com.ai.bardly.decompose.RootDecomposeComponent
 import com.bardly.chats.ui.chat.ChatPresenter
 import com.bardly.chats.ui.recent.RecentChatsComponent
 import com.retro99.base.ui.BasePresenter
+import com.retro99.base.ui.decompose.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface RootRecentPresenter : BasePresenter<RootRecentViewState, RootRecentIntent>,

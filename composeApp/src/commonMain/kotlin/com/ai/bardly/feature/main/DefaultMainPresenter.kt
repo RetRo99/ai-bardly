@@ -1,7 +1,6 @@
 package com.ai.bardly.feature.main
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.decompose.switchTab
 import com.ai.bardly.feature.main.chats.root.RootRecentPresenterFactory
 import com.ai.bardly.feature.main.games.root.RootGamesPresenterFactory
 import com.ai.bardly.feature.main.home.root.RootHomePresenterFactory
@@ -9,6 +8,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.retro99.base.ui.decompose.switchTab
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding

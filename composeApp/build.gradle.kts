@@ -50,7 +50,6 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.datetime)
             implementation(libs.kmpauth.google)
-            implementation(libs.kmpauth.firebase)
             implementation(libs.kmpauth.uihelper)
             implementation(libs.paging.common)
             implementation(libs.bundles.kotlinInject)
@@ -75,6 +74,9 @@ kotlin {
             implementation(projects.feature.chats.domain)
             implementation(projects.feature.chats.ui)
             implementation(projects.feature.home.ui)
+            implementation(projects.feature.auth.data)
+            implementation(projects.feature.auth.domain)
+            implementation(projects.feature.auth.ui)
         }
     }
 }

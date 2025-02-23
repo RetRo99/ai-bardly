@@ -1,11 +1,11 @@
 package com.ai.bardly.feature.main.games.root
 
-import com.ai.bardly.decompose.RootDecomposeComponent
 import com.bardly.chats.ui.chat.ChatPresenter
 import com.bardly.games.ui.details.GameDetailsPresenter
 import com.bardly.games.ui.list.GamesListComponent
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenter
+import com.retro99.base.ui.decompose.RootDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface RootGamesPresenter : BasePresenter<RootGamesViewState, RootGamesIntent>,
