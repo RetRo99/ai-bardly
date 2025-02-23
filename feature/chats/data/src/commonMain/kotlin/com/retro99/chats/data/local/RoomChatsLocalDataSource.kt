@@ -1,7 +1,7 @@
 package com.retro99.chats.data.local
 
 import com.retro99.chats.data.local.model.MessageEntity
-import com.retro99.database.implementation.DatabaseExecutor
+import com.retro99.database.api.DatabaseExecutor
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding

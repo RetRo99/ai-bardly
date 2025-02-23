@@ -1,7 +1,7 @@
 package com.retro99.games.data.local
 
 import androidx.paging.PagingSource
-import com.retro99.database.implementation.DatabaseExecutor
+import com.retro99.database.api.DatabaseExecutor
 import com.retro99.games.data.local.model.GameEntity
 import com.retro99.games.data.local.model.GameMetadataEntity
 import kotlinx.datetime.LocalDateTime
