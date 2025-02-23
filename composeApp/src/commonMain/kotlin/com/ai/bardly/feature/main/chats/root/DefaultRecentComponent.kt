@@ -1,16 +1,16 @@
 package com.ai.bardly.feature.main.chats.root
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.main.chats.domain.GetRecentChatsUseCase
-import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenterFactory
-import com.ai.bardly.feature.main.chats.ui.recent.DefaultRecentChatsComponent
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
+import com.bardly.chats.ui.chat.ChatPresenterFactory
+import com.bardly.chats.ui.recent.DefaultRecentChatsComponent
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
+import com.retro99.chats.domain.GetRecentChatsUseCase
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics

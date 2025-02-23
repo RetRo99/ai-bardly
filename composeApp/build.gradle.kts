@@ -69,6 +69,9 @@ kotlin {
             implementation(projects.translations)
             implementation(projects.analytics.api)
             implementation(projects.analytics.implementation)
+            implementation(projects.chats.data)
+            implementation(projects.chats.domain)
+            implementation(projects.chats.ui)
         }
     }
 }

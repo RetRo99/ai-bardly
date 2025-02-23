@@ -13,7 +13,7 @@ interface DaoComponent {
     @SingleIn(AppScope::class)
     fun provideGamesDao(appDatabase: AppDatabase) = appDatabase.getGamesDao()
 
-//    @Provides
-//    @SingleIn(AppScope::class)
-//    fun provideMessagesDao(appDatabase: AppDatabase) = appDatabase.getMessagesDao()
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideMessagesDao(appDatabase: AppDatabase) = appDatabase.getMessagesDao()
 }

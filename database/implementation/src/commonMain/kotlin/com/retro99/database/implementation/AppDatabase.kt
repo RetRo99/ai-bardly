@@ -5,13 +5,15 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
+import com.retro99.chats.data.local.MessagesDao
+import com.retro99.chats.data.local.model.MessageEntity
 import retro99.games.api.local.GamesDao
 import retro99.games.api.local.model.GameEntity
 import retro99.games.api.local.model.GameMetadataEntity
 
 @Database(
     entities = [
-//        MessageEntity::class,
+        MessageEntity::class,
         GameEntity::class,
         GameMetadataEntity::class,
     ],
@@ -21,7 +23,7 @@ import retro99.games.api.local.model.GameMetadataEntity
 @ConstructedBy(AppDatabaseConstructor::class)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    //    abstract fun getMessagesDao(): MessagesDao
+    abstract fun getMessagesDao(): MessagesDao
     abstract fun getGamesDao(): GamesDao
 }
 

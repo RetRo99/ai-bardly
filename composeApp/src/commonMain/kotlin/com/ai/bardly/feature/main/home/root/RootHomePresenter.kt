@@ -1,8 +1,8 @@
 package com.ai.bardly.feature.main.home.root
 
 import com.ai.bardly.decompose.RootDecomposeComponent
-import com.ai.bardly.feature.main.chats.ui.chat.ChatPresenter
 import com.ai.bardly.feature.main.home.ui.HomePresenter
+import com.bardly.chats.ui.chat.ChatPresenter
 import com.bardly.games.ui.details.GameDetailsPresenter
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenter
