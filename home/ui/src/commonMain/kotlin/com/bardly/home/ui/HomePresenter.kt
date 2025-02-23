@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.home.ui
+package com.bardly.home.ui
 
 import com.retro99.base.ui.BasePresenter
 

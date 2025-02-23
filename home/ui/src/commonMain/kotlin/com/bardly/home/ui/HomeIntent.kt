@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.home.ui
+package com.bardly.home.ui
 
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BaseScreenIntent

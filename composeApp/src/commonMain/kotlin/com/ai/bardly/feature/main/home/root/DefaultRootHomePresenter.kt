@@ -1,7 +1,6 @@
 package com.ai.bardly.feature.main.home.root
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.main.home.ui.HomePresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
@@ -10,6 +9,7 @@ import com.arkivanov.decompose.router.stack.pushNew
 import com.bardly.chats.ui.chat.ChatPresenterFactory
 import com.bardly.games.ui.details.GameDetailsPresenterFactory
 import com.bardly.games.ui.model.GameUiModel
+import com.bardly.home.ui.HomePresenterFactory
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import me.tatarka.inject.annotations.Assisted

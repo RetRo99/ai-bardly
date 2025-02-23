@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.home.ui
+package com.bardly.home.ui
 
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext

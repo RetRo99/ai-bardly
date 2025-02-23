@@ -72,6 +72,7 @@ kotlin {
             implementation(projects.chats.data)
             implementation(projects.chats.domain)
             implementation(projects.chats.ui)
+            implementation(projects.home.ui)
         }
     }
 }

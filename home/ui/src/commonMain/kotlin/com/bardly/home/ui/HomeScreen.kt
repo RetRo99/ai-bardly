@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.home.ui
+package com.bardly.home.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
