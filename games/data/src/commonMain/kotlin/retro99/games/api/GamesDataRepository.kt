@@ -5,8 +5,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.retro99.base.now
-import com.retro99.network.implementation.GamesRepository
-import com.retro99.network.implementation.model.GameDomainModel
+import com.retro99.games.implementation.GamesRepository
+import com.retro99.games.implementation.model.GameDomainModel
 import com.retro99.paging.domain.BardlyRemoteMediator
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject

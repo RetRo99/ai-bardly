@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.retro99.network.implementation.model.GameDomainModel
+import com.retro99.games.implementation.model.GameDomainModel
 import com.retro99.paging.domain.PagingItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
