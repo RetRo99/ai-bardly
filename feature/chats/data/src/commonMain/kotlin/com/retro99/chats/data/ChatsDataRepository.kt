@@ -2,7 +2,7 @@ package com.retro99.chats.data
 
 import com.retro99.chats.data.local.ChatsLocalDataSource
 import com.retro99.chats.data.local.model.toDomainModel
-import com.retro99.chats.data.local.model.toEntity
+import com.retro99.chats.data.local.model.toLocalModel
 import com.retro99.chats.data.remote.ChatsRemoteDataSource
 import com.retro99.chats.data.remote.model.toDomainModel
 import com.retro99.chats.data.remote.model.toDto
@@ -26,13 +26,13 @@ class ChatsDataRepository(
     override suspend fun getAnswerFor(
         request: MessageDomainModel
     ): Result<MessageDomainModel> = coroutineScope {
-        val saveRequestDeferred = async { localChatsDataSource.saveMessage(request.toEntity()) }
+        val saveRequestDeferred = async { localChatsDataSource.saveMessage(request.toLocalModel()) }
         val answerMessage = remoteChatsDataSource
             .getAnswer(request.toDto())
             .map { it.toDomainModel() }
             .onSuccess { answer ->
                 localChatsDataSource.saveMessage(
-                    answer.toEntity()
+                    answer.toLocalModel()
                 )
             }
 

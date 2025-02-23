@@ -35,7 +35,7 @@ fun MessageType.toLocalType() = when (this) {
 
 fun List<MessageEntity>.toDomainModel() = map(MessageEntity::toDomainModel)
 
-fun MessageDomainModel.toEntity() = MessageLocalModel(
+fun MessageDomainModel.toLocalModel() = MessageLocalModel(
     gameId = gameId,
     text = text,
     type = type.toLocalType(),
@@ -43,4 +43,4 @@ fun MessageDomainModel.toEntity() = MessageLocalModel(
     gameTitle = gameTitle,
 )
 
-fun List<MessageDomainModel>.toEntity() = map(MessageDomainModel::toEntity)
+fun List<MessageDomainModel>.toLocalModel() = map(MessageDomainModel::toLocalModel)
