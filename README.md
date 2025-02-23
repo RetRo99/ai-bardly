@@ -1,4 +1,4 @@
-# ai-bardly: Your AI-Powered Companion App
+# Bardy: Your AI-Powered Companion App
 
 **ai-bardly** is a cutting-edge, multiplatform Android application built with Kotlin and Jetpack
 Compose. It leverages AI technologies and modern Android development practices to provide a unique
