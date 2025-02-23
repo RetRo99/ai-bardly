@@ -1,4 +1,4 @@
-package com.retro99.games.implementation.model
+package com.retro99.games.domain.model
 
 import com.retro99.paging.domain.PagingItem
 

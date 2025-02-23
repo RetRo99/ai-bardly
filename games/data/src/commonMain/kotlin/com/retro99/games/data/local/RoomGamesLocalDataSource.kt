@@ -1,11 +1,11 @@
-package retro99.games.api.local
+package com.retro99.games.data.local
 
 import androidx.paging.PagingSource
 import com.retro99.database.implementation.DatabaseExecutor
+import com.retro99.games.data.local.model.GameEntity
+import com.retro99.games.data.local.model.GameMetadataEntity
 import kotlinx.datetime.LocalDateTime
 import me.tatarka.inject.annotations.Inject
-import retro99.games.api.local.model.GameEntity
-import retro99.games.api.local.model.GameMetadataEntity
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

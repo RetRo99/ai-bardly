@@ -7,7 +7,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
 import com.bardly.games.ui.model.toUiModels
 import com.retro99.base.ui.BasePresenterImpl
-import com.retro99.games.implementation.GamesRepository
+import com.retro99.games.domain.GamesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.IO

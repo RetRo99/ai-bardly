@@ -1,10 +1,10 @@
-package retro99.games.api.local.model
+package com.retro99.games.data.local.model
 
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.retro99.games.implementation.model.GameDomainModel
+import com.retro99.games.domain.model.GameDomainModel
 import com.retro99.paging.domain.PagingItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

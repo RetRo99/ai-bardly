@@ -1,13 +1,13 @@
-package retro99.games.api.remote
+package com.retro99.games.data.remote
 
 import androidx.paging.PagingSource
+import com.retro99.games.data.remote.model.GameDto
+import com.retro99.games.data.remote.model.GamesListDto
 import com.retro99.paging.domain.BardlyPagingSource
 import com.retro99.paging.domain.PagingResult
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
 import retro99.games.api.get
-import retro99.games.api.remote.model.GameDto
-import retro99.games.api.remote.model.GamesListDto
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

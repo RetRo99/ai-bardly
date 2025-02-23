@@ -1,12 +1,12 @@
-package retro99.games.api.local
+package com.retro99.games.data.local
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import retro99.games.api.local.model.GameEntity
-import retro99.games.api.local.model.GameMetadataEntity
+import com.retro99.games.data.local.model.GameEntity
+import com.retro99.games.data.local.model.GameMetadataEntity
 
 @Dao
 interface GamesDao {

@@ -1,8 +1,8 @@
-package retro99.games.api.local
+package com.retro99.games.data.local
 
 import androidx.paging.PagingSource
+import com.retro99.games.data.local.model.GameEntity
 import kotlinx.datetime.LocalDateTime
-import retro99.games.api.local.model.GameEntity
 
 interface GamesLocalDataSource {
     fun getGames(query: String?): PagingSource<Int, GameEntity>

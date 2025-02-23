@@ -1,6 +1,6 @@
-package retro99.games.api.remote.model
+package com.retro99.games.data.remote.model
 
-import com.retro99.games.implementation.model.GameDomainModel
+import com.retro99.games.domain.model.GameDomainModel
 import com.retro99.paging.domain.PagingItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

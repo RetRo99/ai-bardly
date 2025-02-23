@@ -1,7 +1,7 @@
-package com.retro99.games.implementation
+package com.retro99.games.domain
 
 import androidx.paging.PagingData
-import com.retro99.games.implementation.model.GameDomainModel
+import com.retro99.games.domain.model.GameDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface GamesRepository {

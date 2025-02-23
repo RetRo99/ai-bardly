@@ -1,4 +1,4 @@
-package retro99.games.api.local.model
+package com.retro99.games.data.local.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

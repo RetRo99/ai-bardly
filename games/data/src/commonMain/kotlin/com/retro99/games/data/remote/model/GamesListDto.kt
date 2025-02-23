@@ -1,4 +1,4 @@
-package retro99.games.api.remote.model
+package com.retro99.games.data.remote.model
 
 import kotlinx.serialization.Serializable
 

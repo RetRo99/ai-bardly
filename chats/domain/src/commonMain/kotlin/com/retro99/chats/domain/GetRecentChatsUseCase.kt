@@ -1,7 +1,7 @@
 package com.retro99.chats.domain
 
 import com.retro99.chats.domain.model.RecentMessageDomainModel
-import com.retro99.games.implementation.GamesRepository
+import com.retro99.games.domain.GamesRepository
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

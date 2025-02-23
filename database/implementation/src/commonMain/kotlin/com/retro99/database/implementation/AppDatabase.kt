@@ -7,9 +7,9 @@ import androidx.room.RoomDatabaseConstructor
 import androidx.room.TypeConverters
 import com.retro99.chats.data.local.MessagesDao
 import com.retro99.chats.data.local.model.MessageEntity
-import retro99.games.api.local.GamesDao
-import retro99.games.api.local.model.GameEntity
-import retro99.games.api.local.model.GameMetadataEntity
+import com.retro99.games.data.local.GamesDao
+import com.retro99.games.data.local.model.GameEntity
+import com.retro99.games.data.local.model.GameMetadataEntity
 
 @Database(
     entities = [
