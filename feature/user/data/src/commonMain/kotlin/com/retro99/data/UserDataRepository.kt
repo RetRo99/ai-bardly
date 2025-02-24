@@ -1,9 +1,9 @@
-package com.ai.bardly.user.data
+package com.retro99.data
 
-import com.ai.bardly.user.data.remote.UsersRemoteDataSource
-import com.ai.bardly.user.domain.UserRepository
-import com.ai.bardly.user.domain.model.UserDomainModel
-import com.ai.bardly.user.domain.model.toDomainModel
+import com.retro99.auth.domain.UserRepository
+import com.retro99.auth.domain.model.UserDomainModel
+import com.retro99.data.remote.UsersRemoteDataSource
+import com.retro99.data.remote.model.toDomainModel
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding

@@ -1,6 +1,4 @@
-package com.ai.bardly.user.ui
-
-import com.ai.bardly.user.domain.model.UserDomainModel
+import com.retro99.auth.domain.model.UserDomainModel
 import dev.gitlive.firebase.auth.FirebaseUser
 
 data class UserUiModel(

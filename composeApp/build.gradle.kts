@@ -49,8 +49,6 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.datetime)
-            implementation(libs.kmpauth.google)
-            implementation(libs.kmpauth.uihelper)
             implementation(libs.paging.common)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.markdown)
@@ -77,6 +75,9 @@ kotlin {
             implementation(projects.feature.auth.data)
             implementation(projects.feature.auth.domain)
             implementation(projects.feature.auth.ui)
+            implementation(projects.feature.user.data)
+            implementation(projects.feature.user.domain)
+            implementation(projects.feature.user.ui)
         }
     }
 }

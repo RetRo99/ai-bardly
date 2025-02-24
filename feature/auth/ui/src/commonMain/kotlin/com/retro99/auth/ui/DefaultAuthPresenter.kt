@@ -12,7 +12,7 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
-internal typealias AuthPresenterFactory = (
+typealias AuthPresenterFactory = (
     ComponentContext,
     openMain: () -> Unit
 ) -> DefaultAuthPresenter

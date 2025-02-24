@@ -15,7 +15,7 @@ actual fun SharedTransitionScope.ScreenAnimationProvider(
     content: @Composable SharedTransitionScope.() -> Unit
 ) {
     CompositionLocalProvider(
-        LocalScreenTransitionScope provides thisScreenAnimationProvider,
+        LocalScreenTransitionScope provides this@ScreenAnimationProvider,
         LocalScreenAnimationScope provides animateVisibilityScope,
     ) {
         content()

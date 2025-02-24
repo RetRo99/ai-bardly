@@ -1,5 +1,6 @@
 package com.retro99.auth.ui.login
 
+import UserUiModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,8 +36,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ai.bardly.user.ui.UserUiModel
-import com.ai.bardly.user.ui.toUiModel
 import com.mmk.kmpauth.firebase.google.GoogleButtonUiContainerFirebase
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import com.retro99.auth.ui.components.LoginInputField
@@ -61,6 +60,7 @@ import resources.translations.login_sign_in_with_google
 import resources.translations.login_sign_up
 import resources.translations.login_sign_up_title
 import resources.translations.login_sign_up_with_google
+import toUiModel
 
 @Composable
 fun LoginScreen(

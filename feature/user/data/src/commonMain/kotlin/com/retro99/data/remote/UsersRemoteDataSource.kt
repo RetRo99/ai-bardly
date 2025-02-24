@@ -1,6 +1,6 @@
-package com.ai.bardly.user.data.remote
+package com.retro99.data.remote
 
-import com.ai.bardly.user.data.remote.model.UserDto
+import com.retro99.data.remote.model.UserDto
 
 interface UsersRemoteDataSource {
     suspend fun getCurrentUser(): UserDto?

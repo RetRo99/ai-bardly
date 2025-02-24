@@ -1,6 +1,6 @@
-package com.ai.bardly.user.domain
+package com.retro99.auth.domain
 
-import com.ai.bardly.user.domain.model.UserDomainModel
+import com.retro99.auth.domain.model.UserDomainModel
 
 interface UserRepository {
     suspend fun getCurrentUser(): UserDomainModel?

@@ -1,11 +1,10 @@
 package com.retro99.auth.ui.login
 
+import UserUiModel
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.auth.domain.AuthRepository
-import com.ai.bardly.user.domain.UserRepository
-import com.ai.bardly.user.ui.UserUiModel
-import com.ai.bardly.user.ui.toUiModel
 import com.arkivanov.decompose.ComponentContext
+import com.retro99.auth.domain.AuthRepository
+import com.retro99.auth.domain.UserRepository
 import com.retro99.auth.ui.components.InputValidator
 import com.retro99.auth.ui.components.LoginInputField
 import com.retro99.base.ui.BasePresenterImpl
@@ -18,6 +17,7 @@ import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
 import retro99.analytics.api.AnalyticsEvent
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
+import toUiModel
 
 typealias LoginPresenterFactory = (
     ComponentContext,

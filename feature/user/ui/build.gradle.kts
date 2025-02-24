@@ -15,11 +15,17 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.feature.user.domain)
+            implementation(libs.gitlive.firebase.kotlin.auth)
+        }
+        androidMain.dependencies {
+        }
+        iosMain.dependencies {
         }
     }
 }
 
 android {
-    namespace = "com.retro99.auth.domain"
+    namespace = "com.retro99.user.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

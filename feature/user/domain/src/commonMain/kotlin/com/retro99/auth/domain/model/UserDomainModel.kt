@@ -1,6 +1,6 @@
-package com.ai.bardly.user.data.remote.model
+package com.retro99.auth.domain.model
 
-data class UserDto(
+data class UserDomainModel(
     val id: String,
     val email: String?,
     val displayName: String?,

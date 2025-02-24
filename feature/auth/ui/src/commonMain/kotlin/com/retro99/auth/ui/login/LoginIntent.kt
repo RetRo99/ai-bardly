@@ -1,6 +1,6 @@
 package com.retro99.auth.ui.login
 
-import com.ai.bardly.user.ui.UserUiModel
+import UserUiModel
 import com.retro99.auth.ui.components.LoginInputField
 import com.retro99.base.ui.BaseScreenIntent
 

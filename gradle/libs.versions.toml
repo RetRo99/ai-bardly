@@ -45,6 +45,7 @@ coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", v
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kmpauth-google = { module = "io.github.mirzemehdi:kmpauth-google", version.ref = "kmpauth" }
 kmpauth-uihelper = { module = "io.github.mirzemehdi:kmpauth-uihelper", version.ref = "kmpauth" }
+kmpauth-firebase = { module = "io.github.mirzemehdi:kmpauth-firebase", version.ref = "kmpauth" }
 serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

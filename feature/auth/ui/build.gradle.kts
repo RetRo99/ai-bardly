@@ -27,12 +27,18 @@ kotlin {
             implementation(projects.baseUi)
             implementation(projects.lib.analytics.api)
             implementation(projects.feature.auth.domain)
+            implementation(projects.feature.user.domain)
+            implementation(projects.feature.user.ui)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
 
             implementation(libs.bundles.kotlinInject)
+            implementation(libs.gitlive.firebase.kotlin.auth)
+            implementation(libs.kmpauth.google)
+            implementation(libs.kmpauth.uihelper)
+            implementation(libs.kmpauth.firebase)
         }
 
         androidMain.dependencies {

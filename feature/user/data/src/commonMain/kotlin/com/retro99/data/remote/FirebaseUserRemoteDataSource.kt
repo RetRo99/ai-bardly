@@ -1,6 +1,6 @@
-package com.ai.bardly.user.data.remote
+package com.retro99.data.remote
 
-import com.ai.bardly.user.data.remote.model.UserDto
+import com.retro99.data.remote.model.UserDto
 import dev.gitlive.firebase.auth.FirebaseAuth
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope

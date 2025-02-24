@@ -16,15 +16,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.feature.auth.domain)
-            implementation(projects.feature.user.data)
-            implementation(projects.lib.network.api)
-            implementation(projects.lib.preferences.api)
-            implementation(projects.lib.preferences.api)
+            implementation(projects.feature.user.domain)
+            implementation(libs.gitlive.firebase.kotlin.auth)
 
             implementation(libs.bundles.kotlinInject)
-            api(libs.gitlive.firebase.kotlin.auth)
-            api(libs.kmpauth.google)
         }
     }
 }
@@ -36,6 +31,6 @@ dependencies {
 }
 
 android {
-    namespace = "com.retro99.auth.data"
+    namespace = "com.retro99.user.data"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }
