@@ -18,11 +18,13 @@ class DefaultUserSessionManager(
     private val userRepository: UserRepository,
     private val scope: CoroutineScope,
 ) : UserSessionManager {
-    override val isUserLoggedIn: StateFlow<Boolean> = userRepository.observeCurrentUser()
+    private val isLoggedIn: StateFlow<Boolean> = userRepository.observeCurrentUser()
         .map { it != null }
         .stateIn(
             scope = scope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = false
         )
+    override val isUserLoggedIn: Boolean
+        get() = isLoggedIn.value
 }
