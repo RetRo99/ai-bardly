@@ -32,7 +32,7 @@ class DefaultGameDetailsPresenter(
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateBack: () -> Unit,
     private val gamesRepository: GamesRepository,
-    private val toggleFavoritesUsecase: ToggleGameFavouriteStateUseCase,
+    private val toggleFavoritesUseCase: ToggleGameFavouriteStateUseCase,
     private val analytics: Analytics,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {
@@ -63,7 +63,7 @@ class DefaultGameDetailsPresenter(
 
     private fun onChangeFavorite(isFavorite: Boolean) {
         scope.launch {
-            toggleFavoritesUsecase(game.id, isFavorite)
+            toggleFavoritesUseCase(game.id, isFavorite)
         }
     }
 
