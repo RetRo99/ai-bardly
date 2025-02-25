@@ -8,6 +8,7 @@ import com.retro99.paging.domain.PagingResult
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
 import retro99.games.api.get
+import retro99.games.api.post
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
@@ -45,5 +46,11 @@ class NetworkGamesRemoteDataSource(
                 "search" to query
             }
         ).getOrThrow()
+    }
+
+    override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
+        return networkClient.post<Unit>(
+            path = "games/:$gameId/favourite",
+        )
     }
 }

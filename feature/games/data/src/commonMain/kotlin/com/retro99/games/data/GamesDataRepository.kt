@@ -54,6 +54,10 @@ class GamesDataRepository(
         return localSource.getGamesById(ids).map { it.toDomainModel() }
     }
 
+    override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
+        return remoteSource.markAsFavourite(gameId)
+    }
+
     override suspend fun updateGameOpenDate(gameId: Int): Result<Unit> {
         return localSource.updateGameOpenTime(gameId, now())
     }
