@@ -14,6 +14,7 @@ import com.retro99.games.domain.GamesRepository
 import com.retro99.games.domain.model.GameDomainModel
 import com.retro99.paging.domain.BardlyRemoteMediator
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -63,5 +64,18 @@ class GamesDataRepository(
 
     override suspend fun updateGameOpenDate(gameId: Int): Result<Unit> {
         return localSource.updateGameOpenTime(gameId, now())
+    }
+
+    override fun isMarkedAsFavorite(gameId: Int): Flow<Boolean> {
+        return flow {
+            val isFavoriteLocal = localSource.isMarkedAsFavorite(gameId).getOrThrow()
+            emit(isFavoriteLocal)
+//            val isFavoriteRemote = remoteSource.isMarkedAsFavorite(gameId)
+//                .onSuccess {
+//                    localSource.markAsFavourite(gameId)
+//                }.getOrThrow()
+//            emit(isFavoriteRemote)
+        }
+
     }
 }

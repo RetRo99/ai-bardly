@@ -74,4 +74,12 @@ interface GamesDao {
 
     @Query("SELECT * FROM RoomGameMetadataEntity WHERE gameId = :gameId")
     suspend fun getMetadataByGameId(gameId: Int): RoomGameMetadataEntity?
+
+    @Query(
+        """
+    SELECT isFavourite FROM RoomGameMetadataEntity
+    WHERE gameId = :gameId
+    """
+    )
+    suspend fun isMarkedAsFavorite(gameId: Int): Boolean?
 }

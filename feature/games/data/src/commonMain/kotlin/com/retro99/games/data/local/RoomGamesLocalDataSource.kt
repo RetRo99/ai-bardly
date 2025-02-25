@@ -47,4 +47,8 @@ class RoomGamesLocalDataSource(
     override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
         return gamesDatabase.markAsFavourite(gameId)
     }
+
+    override suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean> {
+        return gamesDatabase.isMarkedAsFavorite(gameId)
+    }
 }

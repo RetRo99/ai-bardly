@@ -70,5 +70,9 @@ class RoomGamesDatabase(
         }
     }
 
-
+    override suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean> {
+        return daoExecutor.executeDatabaseOperation {
+            dao.isMarkedAsFavorite(gameId) == true
+        }
+    }
 }

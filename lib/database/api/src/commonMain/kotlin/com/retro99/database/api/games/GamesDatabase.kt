@@ -22,4 +22,6 @@ interface GamesDatabase {
     fun getGames(query: String?): PagingSource<Int, GameEntity>
 
     suspend fun markAsFavourite(gameId: Int): Result<Unit>
+
+    suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean>
 }
