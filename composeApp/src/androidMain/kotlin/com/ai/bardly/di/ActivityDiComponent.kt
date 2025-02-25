@@ -17,11 +17,13 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 @SingleIn(ActivityScope::class)
 interface ActivityDiComponent {
     @Provides
+    @SingleIn(ActivityScope::class)
     fun provideComponentContext(
         activity: ComponentActivity
     ): ComponentContext = activity.defaultComponentContext()
 
     @Provides
+    @SingleIn(ActivityScope::class)
     fun provideAppCoroutineScope(
         componentContext: ComponentContext
     ): CoroutineScope = componentContext.coroutineScope()

@@ -41,6 +41,10 @@ class DefaultAppPresenter(
         navigation.pushNew(AppPresenter.Config.Main)
     }
 
+    private fun openLogin() {
+        navigation.pushNew(AppPresenter.Config.Auth)
+    }
+
     private fun childFactory(
         screenConfig: AppPresenter.Config,
         componentContext: ComponentContext
@@ -48,6 +52,7 @@ class DefaultAppPresenter(
         AppPresenter.Config.Main -> AppPresenter.Child.Main(
             mainPresenterFactory(
                 componentContext,
+                ::openLogin,
             )
         )
 

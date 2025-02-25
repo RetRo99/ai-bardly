@@ -23,6 +23,7 @@ typealias GameDetailsPresenterFactory = (
     game: GameUiModel,
     navigateToChat: (String, Int) -> Unit,
     navigateBack: () -> Unit,
+    openLogin: () -> Unit,
 ) -> DefaultGameDetailsPresenter
 
 @Inject
@@ -32,6 +33,7 @@ class DefaultGameDetailsPresenter(
     @Assisted private val game: GameUiModel,
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateBack: () -> Unit,
+    @Assisted private val openLogin: () -> Unit,
     private val gamesRepository: GamesRepository,
     private val toggleFavoritesUseCase: ToggleGameFavouriteStateUseCase,
     private val userSessionManager: UserSessionManager,
@@ -59,13 +61,19 @@ class DefaultGameDetailsPresenter(
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
             GameDetailsIntent.OpenChatClicked -> openChat()
-            is GameDetailsIntent.OnChangeFavorite -> onChangeFavorite(intent.isFavoriteNew)
+            is GameDetailsIntent.OnChangeFavoriteClicked -> {
+                onChangeFavoriteClicked(intent.isFavoriteNew)
+            }
         }
     }
 
-    private fun onChangeFavorite(isFavorite: Boolean) {
-        scope.launch {
-            toggleFavoritesUseCase(game.id, isFavorite)
+    private fun onChangeFavoriteClicked(isFavorite: Boolean) {
+        if (userSessionManager.isUserLoggedIn) {
+            scope.launch {
+                toggleFavoritesUseCase(game.id, isFavorite)
+            }
+        } else {
+            openLogin()
         }
     }
 

@@ -18,12 +18,14 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias RootGamesPresenterFactory = (
     ComponentContext,
+    openLogin: () -> Unit,
 ) -> DefaultRootGamesPresenter
 
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = RootGamesPresenter::class)
 class DefaultRootGamesPresenter(
     @Assisted componentContext: ComponentContext,
+    @Assisted private val openLogin: () -> Unit,
     private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
     private val chatPresenterFactory: ChatPresenterFactory,
     private val gamesListComponentFactory: GamesListComponentFactory,
@@ -77,6 +79,7 @@ class DefaultRootGamesPresenter(
                 screenConfig.game,
                 ::openChat,
                 ::onBackClicked,
+                openLogin,
             )
         )
 

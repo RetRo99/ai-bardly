@@ -78,7 +78,13 @@ fun GamesScreenContent(
     ) {
         TopBar(
             onBackClick = { intentDispatcher(GameDetailsIntent.NavigateBack) },
-            onChangeFavorite = { new -> intentDispatcher(GameDetailsIntent.OnChangeFavorite(new)) },
+            onChangeFavorite = { new ->
+                intentDispatcher(
+                    GameDetailsIntent.OnChangeFavoriteClicked(
+                        new
+                    )
+                )
+            },
             isFavorite = viewState.isFavorite,
         )
 

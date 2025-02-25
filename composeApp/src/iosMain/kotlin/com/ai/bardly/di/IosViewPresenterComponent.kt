@@ -16,6 +16,7 @@ interface IosViewPresenterComponent {
     val rootViewController: RootViewController
 
     @Provides
+    @SingleIn(ActivityScope::class)
     fun provideAppCoroutineScope(
         componentContext: ComponentContext
     ): CoroutineScope = componentContext.coroutineScope()

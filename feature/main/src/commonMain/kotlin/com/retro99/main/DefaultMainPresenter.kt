@@ -15,12 +15,14 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias MainPresenterFactory = (
     ComponentContext,
+    openLogin: () -> Unit,
 ) -> DefaultMainPresenter
 
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = MainPresenter::class)
 class DefaultMainPresenter(
     @Assisted componentContext: ComponentContext,
+    @Assisted private val openLogin: () -> Unit,
     private val rootGamesFactory: RootGamesPresenterFactory,
     private val rootHomeFactory: RootHomePresenterFactory,
     private val rootRecentFactory: RootRecentPresenterFactory,
@@ -47,11 +49,17 @@ class DefaultMainPresenter(
         componentContext: ComponentContext
     ): MainPresenter.Child = when (screenConfig) {
         MainPresenter.Config.GameList -> MainPresenter.Child.GameList(
-            rootGamesFactory(componentContext)
+            rootGamesFactory(
+                componentContext,
+                openLogin,
+            )
         )
 
         MainPresenter.Config.Home -> MainPresenter.Child.Home(
-            rootHomeFactory(componentContext)
+            rootHomeFactory(
+                componentContext,
+                openLogin,
+            )
         )
 
         MainPresenter.Config.RecentChats -> MainPresenter.Child.RecentChats(
