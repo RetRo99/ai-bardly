@@ -6,6 +6,7 @@ import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.games.domain.GamesRepository
+import com.retro99.games.domain.usecase.ToggleGameFavouriteStateUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -31,6 +32,7 @@ class DefaultGameDetailsPresenter(
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateBack: () -> Unit,
     private val gamesRepository: GamesRepository,
+    private val toggleFavoritesUsecase: ToggleGameFavouriteStateUseCase,
     private val analytics: Analytics,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {
@@ -59,9 +61,9 @@ class DefaultGameDetailsPresenter(
         }
     }
 
-    private fun onChangeFavorite(value: Boolean) {
+    private fun onChangeFavorite(isFavorite: Boolean) {
         scope.launch {
-            gamesRepository.markAsFavourite(game.id)
+            toggleFavoritesUsecase(game.id, isFavorite)
         }
     }
 

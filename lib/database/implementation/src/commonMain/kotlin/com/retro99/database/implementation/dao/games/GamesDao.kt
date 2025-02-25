@@ -54,10 +54,14 @@ interface GamesDao {
     suspend fun updateGameMetaData(game: RoomGameMetadataEntity)
 
     @Transaction
-    suspend fun markAsFavourite(gameId: Int) {
+    suspend fun updateIsFavorite(gameId: Int, isFavorite: Boolean) {
         val existing = getMetadataByGameId(gameId)
         val metadata =
-            existing?.copy(isFavourite = true) ?: RoomGameMetadataEntity(gameId, null, true)
+            existing?.copy(isFavourite = isFavorite) ?: RoomGameMetadataEntity(
+                gameId,
+                null,
+                isFavorite
+            )
         updateGameMetaData(metadata)
     }
 

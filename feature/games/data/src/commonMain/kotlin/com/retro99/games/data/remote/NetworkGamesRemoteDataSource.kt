@@ -7,6 +7,7 @@ import com.retro99.paging.domain.BardlyPagingSource
 import com.retro99.paging.domain.PagingResult
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
+import retro99.games.api.delete
 import retro99.games.api.get
 import retro99.games.api.post
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -48,8 +49,14 @@ class NetworkGamesRemoteDataSource(
         ).getOrThrow()
     }
 
-    override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
+    override suspend fun addToFavourites(gameId: Int): Result<Unit> {
         return networkClient.post<Unit>(
+            path = "games/:$gameId/favourite",
+        )
+    }
+
+    override suspend fun removeFromFavourites(gameId: Int): Result<Unit> {
+        return networkClient.delete<Unit>(
             path = "games/:$gameId/favourite",
         )
     }

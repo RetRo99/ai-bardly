@@ -64,9 +64,15 @@ class RoomGamesDatabase(
         return dao.getGames(query) as PagingSource<Int, GameEntity>
     }
 
-    override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
+    override suspend fun addToFavourites(gameId: Int): Result<Unit> {
         return daoExecutor.executeDatabaseOperation {
-            dao.markAsFavourite(gameId)
+            dao.updateIsFavorite(gameId, true)
+        }
+    }
+
+    override suspend fun removeFromFavourites(gameId: Int): Result<Unit> {
+        return daoExecutor.executeDatabaseOperation {
+            dao.updateIsFavorite(gameId, false)
         }
     }
 

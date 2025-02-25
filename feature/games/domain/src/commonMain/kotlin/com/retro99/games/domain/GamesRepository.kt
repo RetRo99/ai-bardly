@@ -9,6 +9,7 @@ interface GamesRepository {
     suspend fun getRecentlyOpenGames(amount: Int = 6): Result<List<GameDomainModel>>
     suspend fun updateGameOpenDate(gameId: Int): Result<Unit>
     suspend fun getGamesById(ids: List<Int>): Result<List<GameDomainModel>>
-    suspend fun markAsFavourite(gameId: Int): Result<Unit>
+    suspend fun addToFavourites(gameId: Int): Result<Unit>
+    suspend fun removeFromFavourites(gameId: Int): Result<Unit>
     fun isMarkedAsFavorite(gameId: Int): Flow<Boolean>
 }

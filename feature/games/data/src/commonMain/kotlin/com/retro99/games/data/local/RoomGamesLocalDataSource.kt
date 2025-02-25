@@ -44,8 +44,12 @@ class RoomGamesLocalDataSource(
         return gamesDatabase.updateGameOpenTime(id, openedDateTime)
     }
 
-    override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
-        return gamesDatabase.markAsFavourite(gameId)
+    override suspend fun addToFavourites(gameId: Int): Result<Unit> {
+        return gamesDatabase.addToFavourites(gameId)
+    }
+
+    override suspend fun removeFromFavourites(gameId: Int): Result<Unit> {
+        return gamesDatabase.removeFromFavourites(gameId)
     }
 
     override suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean> {

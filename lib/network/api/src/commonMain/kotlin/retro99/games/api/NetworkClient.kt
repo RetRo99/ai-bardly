@@ -19,6 +19,14 @@ interface NetworkClient {
         headers: HeadersBuilder.() -> Unit = {}
     ): Result<T>
 
+    suspend fun <T : Any> deleteWithClass(
+        path: String,
+        type: KClass<T>,
+        body: Any? = null,
+        queryBuilder: QueryParamsScope.() -> Unit = {},
+        headers: HeadersBuilder.() -> Unit = {}
+    ): Result<T>
+
     fun close()
 }
 
@@ -35,3 +43,10 @@ suspend inline fun <reified T : Any> NetworkClient.post(
     noinline queryBuilder: QueryParamsScope.() -> Unit = {},
     noinline headers: HeadersBuilder.() -> Unit = {}
 ): Result<T> = postWithClass(path, T::class, body, queryBuilder, headers)
+
+suspend inline fun <reified T : Any> NetworkClient.delete(
+    path: String,
+    body: Any? = null,
+    noinline queryBuilder: QueryParamsScope.() -> Unit = {},
+    noinline headers: HeadersBuilder.() -> Unit = {}
+): Result<T> = deleteWithClass(path, T::class, body, queryBuilder, headers)

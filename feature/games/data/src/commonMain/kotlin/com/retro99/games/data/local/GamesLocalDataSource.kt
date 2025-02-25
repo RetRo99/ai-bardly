@@ -19,7 +19,8 @@ interface GamesLocalDataSource {
 
     suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime?): Result<Unit>
 
-    suspend fun markAsFavourite(gameId: Int): Result<Unit>
+    suspend fun addToFavourites(gameId: Int): Result<Unit>
+    suspend fun removeFromFavourites(gameId: Int): Result<Unit>
 
     suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean>
 }

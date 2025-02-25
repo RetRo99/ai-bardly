@@ -55,10 +55,17 @@ class GamesDataRepository(
         return localSource.getGamesById(ids).map { it.toDomainModel() }
     }
 
-    override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
-        return remoteSource.markAsFavourite(gameId)
+    override suspend fun addToFavourites(gameId: Int): Result<Unit> {
+        return remoteSource.addToFavourites(gameId)
             .onSuccess {
-                localSource.markAsFavourite(gameId)
+                localSource.addToFavourites(gameId)
+            }
+    }
+
+    override suspend fun removeFromFavourites(gameId: Int): Result<Unit> {
+        return remoteSource.removeFromFavourites(gameId)
+            .onSuccess {
+                localSource.removeFromFavourites(gameId)
             }
     }
 
@@ -72,7 +79,7 @@ class GamesDataRepository(
             emit(isFavoriteLocal)
 //            val isFavoriteRemote = remoteSource.isMarkedAsFavorite(gameId)
 //                .onSuccess {
-//                    localSource.markAsFavourite(gameId)
+//                    localSource.addToFavourites(gameId)
 //                }.getOrThrow()
 //            emit(isFavoriteRemote)
         }

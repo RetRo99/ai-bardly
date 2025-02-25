@@ -2,6 +2,7 @@ package com.retro99.network.implementation
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.request.post
@@ -56,6 +57,21 @@ class KtorNetworkClient(
     ): Result<T> = performRequest(type) {
         val url = buildUrl(path, queryBuilder)
         httpClient.post(url) {
+            headers(headers)
+            body?.let { setBody(it) }
+            contentType(ContentType.Application.Json)
+        }
+    }
+
+    override suspend fun <T : Any> deleteWithClass(
+        path: String,
+        type: KClass<T>,
+        body: Any?,
+        queryBuilder: QueryParamsScope.() -> Unit,
+        headers: HeadersBuilder.() -> Unit
+    ): Result<T> = performRequest(type) {
+        val url = buildUrl(path, queryBuilder)
+        httpClient.delete(url) {
             headers(headers)
             body?.let { setBody(it) }
             contentType(ContentType.Application.Json)
