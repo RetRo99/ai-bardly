@@ -15,7 +15,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 @SingleIn(ActivityScope::class)
 @ContributesBinding(ActivityScope::class)
 class DefaultUserSessionManager(
-    private val userRepository: UserRepository,
+    userRepository: UserRepository,
     private val scope: CoroutineScope,
 ) : UserSessionManager {
     private val isLoggedIn: StateFlow<Boolean> = userRepository.observeCurrentUser()
@@ -25,6 +25,7 @@ class DefaultUserSessionManager(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = false
         )
+
     override val isUserLoggedIn: Boolean
         get() = isLoggedIn.value
 }
