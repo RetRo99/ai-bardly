@@ -18,6 +18,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
             implementation(libs.coroutines)
+            implementation(projects.base)
         }
     }
 }

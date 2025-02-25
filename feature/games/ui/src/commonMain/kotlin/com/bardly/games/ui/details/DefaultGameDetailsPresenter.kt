@@ -3,6 +3,7 @@ package com.bardly.games.ui.details
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
+import com.retro99.auth.domain.manager.UserSessionManager
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.games.domain.GamesRepository
@@ -33,6 +34,7 @@ class DefaultGameDetailsPresenter(
     @Assisted private val navigateBack: () -> Unit,
     private val gamesRepository: GamesRepository,
     private val toggleFavoritesUseCase: ToggleGameFavouriteStateUseCase,
+    private val userSessionManager: UserSessionManager,
     private val analytics: Analytics,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {
