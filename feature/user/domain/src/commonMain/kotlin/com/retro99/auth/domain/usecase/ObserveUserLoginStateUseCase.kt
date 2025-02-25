@@ -13,7 +13,7 @@ class ObserveUserLoginStateUseCase(
     private val userRepository: UserRepository,
 ) {
 
-    suspend operator fun invoke(): Flow<Boolean> {
+    operator fun invoke(): Flow<Boolean> {
         return userRepository.observeCurrentUser().map {
             it != null
         }
