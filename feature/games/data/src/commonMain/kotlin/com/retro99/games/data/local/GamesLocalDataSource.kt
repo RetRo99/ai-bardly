@@ -17,5 +17,7 @@ interface GamesLocalDataSource {
 
     suspend fun clearAll()
 
-    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime): Result<Unit>
+    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime?): Result<Unit>
+
+    suspend fun markAsFavourite(gameId: Int): Result<Unit>
 }

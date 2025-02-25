@@ -16,10 +16,12 @@ import kotlinx.datetime.LocalDateTime
 )
 data class RoomGameMetadataEntity(
     @PrimaryKey override val gameId: Int,
-    override val lastOpenTime: LocalDateTime
+    override val lastOpenTime: LocalDateTime?,
+    override val isFavourite: Boolean
 ) : GameMetadataEntity
 
 fun GameMetadataEntity.toRoomEntity() = RoomGameMetadataEntity(
     gameId = gameId,
     lastOpenTime = lastOpenTime,
+    isFavourite = isFavourite
 )

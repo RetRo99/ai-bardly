@@ -56,6 +56,9 @@ class GamesDataRepository(
 
     override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
         return remoteSource.markAsFavourite(gameId)
+            .onSuccess {
+                localSource.markAsFavourite(gameId)
+            }
     }
 
     override suspend fun updateGameOpenDate(gameId: Int): Result<Unit> {

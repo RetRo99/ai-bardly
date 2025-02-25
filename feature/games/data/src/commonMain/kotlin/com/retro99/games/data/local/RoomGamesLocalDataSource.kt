@@ -3,7 +3,6 @@ package com.retro99.games.data.local
 import androidx.paging.PagingSource
 import com.retro99.database.api.games.GameEntity
 import com.retro99.database.api.games.GamesDatabase
-import com.retro99.games.data.local.model.GameMetadataLocalModel
 import kotlinx.datetime.LocalDateTime
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -41,7 +40,11 @@ class RoomGamesLocalDataSource(
         gamesDatabase.clearAll()
     }
 
-    override suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime): Result<Unit> {
-        return gamesDatabase.updateGameOpenTime(GameMetadataLocalModel(id, openedDateTime))
+    override suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime?): Result<Unit> {
+        return gamesDatabase.updateGameOpenTime(id, openedDateTime)
+    }
+
+    override suspend fun markAsFavourite(gameId: Int): Result<Unit> {
+        return gamesDatabase.markAsFavourite(gameId)
     }
 }

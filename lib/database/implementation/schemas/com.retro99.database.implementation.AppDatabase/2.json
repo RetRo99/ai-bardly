@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "04e5019431a5a62d967697af044f3894",
+    "identityHash": "0b5efbd71bd879d33248d7fe0e083e95",
     "entities": [
       {
         "tableName": "MessageRoomEntity",
@@ -126,7 +126,7 @@
       },
       {
         "tableName": "RoomGameMetadataEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `lastOpenTime` TEXT NOT NULL, PRIMARY KEY(`gameId`), FOREIGN KEY(`gameId`) REFERENCES `RoomGameEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `lastOpenTime` TEXT, `isFavourite` INTEGER NOT NULL, PRIMARY KEY(`gameId`), FOREIGN KEY(`gameId`) REFERENCES `RoomGameEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "gameId",
@@ -137,7 +137,12 @@
           {
             "fieldPath": "lastOpenTime",
             "columnName": "lastOpenTime",
-            "affinity": "TEXT",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isFavourite",
+            "columnName": "isFavourite",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -164,7 +169,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '04e5019431a5a62d967697af044f3894')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0b5efbd71bd879d33248d7fe0e083e95')"
     ]
   }
 }
