@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -57,7 +58,7 @@ fun GameDetailsScreen(
 ) {
     BaseScreen(component) { viewState, intentDispatcher ->
         GamesScreenContent(
-            game = viewState.game,
+            viewState = viewState,
             intentDispatcher = intentDispatcher,
         )
     }
@@ -65,7 +66,7 @@ fun GameDetailsScreen(
 
 @Composable
 fun GamesScreenContent(
-    game: GameUiModel,
+    viewState: GameDetailsViewState,
     intentDispatcher: IntentDispatcher<GameDetailsIntent>,
     modifier: Modifier = Modifier
 ) {
@@ -75,17 +76,25 @@ fun GamesScreenContent(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        TopBar(onBackClick = { intentDispatcher(GameDetailsIntent.NavigateBack) })
+        TopBar(
+            onBackClick = { intentDispatcher(GameDetailsIntent.NavigateBack) },
+            onChangeFavorite = { new -> intentDispatcher(GameDetailsIntent.OnChangeFavorite(new)) },
+            isFavorite = viewState.isFavorite,
+        )
 
         GameDetailsContent(
-            game = game,
+            game = viewState.game,
             intentDispatcher = intentDispatcher,
         )
     }
 }
 
 @Composable
-private fun TopBar(onBackClick: () -> Unit) {
+private fun TopBar(
+    onBackClick: () -> Unit,
+    onChangeFavorite: (Boolean) -> Unit,
+    isFavorite: Boolean?,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -93,6 +102,15 @@ private fun TopBar(onBackClick: () -> Unit) {
         IconButton(onClick = onBackClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = null
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        IconButton(
+            onClick = { isFavorite?.let { onChangeFavorite(!it) } }
+        ) {
+            Icon(
+                imageVector = Icons.Default.FavoriteBorder,
                 contentDescription = null
             )
         }
@@ -233,7 +251,7 @@ private fun GameInformationCards(
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement =
-        Arrangement.SpaceBetween,
+            Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         GameInfoCard(

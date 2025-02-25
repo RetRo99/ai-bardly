@@ -6,6 +6,8 @@ import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.games.domain.GamesRepository
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -39,12 +41,27 @@ class DefaultGameDetailsPresenter(
 
     init {
         updateGameOpen(game.id)
+        fetchIsFavoriteGame(game.id)
+    }
+
+    private fun fetchIsFavoriteGame(gameId: Int) {
+        gamesRepository.isMarkedAsFavorite(gameId)
+            .onEach { isFavorite ->
+                updateOrSetSuccess { it.copy(isFavorite = isFavorite) }
+            }.launchIn(scope)
     }
 
     override fun handleScreenIntent(intent: GameDetailsIntent) {
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
             GameDetailsIntent.OpenChatClicked -> openChat()
+            is GameDetailsIntent.OnChangeFavorite -> onChangeFavorite(intent.isFavoriteNew)
+        }
+    }
+
+    private fun onChangeFavorite(value: Boolean) {
+        scope.launch {
+            gamesRepository.markAsFavourite(game.id)
         }
     }
 
