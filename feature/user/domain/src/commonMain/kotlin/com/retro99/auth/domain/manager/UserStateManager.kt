@@ -22,7 +22,7 @@ class DefaultUserSessionManager(
         .map { it != null }
         .stateIn(
             scope = scope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Eagerly,
             initialValue = false
         )
 
