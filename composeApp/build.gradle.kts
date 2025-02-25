@@ -43,6 +43,7 @@ kotlin {
             api(libs.essenty.stateKeeper)
             api(libs.essenty.backhandler)
             api(libs.essenty.lifecycle)
+            implementation(libs.essenty.coroutines)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
