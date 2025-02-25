@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.home.root
+package com.retro99.main.home
 
 import com.bardly.chats.ui.chat.ChatPresenter
 import com.bardly.games.ui.details.GameDetailsPresenter

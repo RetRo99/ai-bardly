@@ -1,19 +1,19 @@
-package com.ai.bardly.feature.main
+package com.retro99.main
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.main.chats.root.RootRecentPresenterFactory
-import com.ai.bardly.feature.main.games.root.RootGamesPresenterFactory
-import com.ai.bardly.feature.main.home.root.RootHomePresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.retro99.base.ui.decompose.switchTab
+import com.retro99.main.chats.RootRecentPresenterFactory
+import com.retro99.main.games.RootGamesPresenterFactory
+import com.retro99.main.home.RootHomePresenterFactory
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
-internal typealias MainPresenterFactory = (
+typealias MainPresenterFactory = (
     ComponentContext,
 ) -> DefaultMainPresenter
 

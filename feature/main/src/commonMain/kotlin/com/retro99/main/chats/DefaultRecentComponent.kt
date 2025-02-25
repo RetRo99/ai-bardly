@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.chats.root
+package com.retro99.main.chats
 
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
@@ -7,13 +7,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.bardly.chats.ui.chat.ChatPresenterFactory
-import com.bardly.chats.ui.recent.DefaultRecentChatsComponent
+import com.bardly.chats.ui.recent.RecentChatsComponentFactory
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
-import com.retro99.chats.domain.GetRecentChatsUseCase
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import retro99.analytics.api.Analytics
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 internal typealias RootRecentPresenterFactory = (
@@ -24,9 +22,8 @@ internal typealias RootRecentPresenterFactory = (
 @ContributesBinding(ActivityScope::class, boundType = RootRecentPresenter::class)
 class DefaultRootRecentPresenter(
     @Assisted componentContext: ComponentContext,
-    private val recentChatUseCase: GetRecentChatsUseCase,
     private val chatPresenterFactory: ChatPresenterFactory,
-    private val analytics: Analytics,
+    private val recentChatsComponentFactory: RecentChatsComponentFactory,
 ) : BasePresenterImpl<RootRecentViewState, RootRecentIntent>(componentContext),
     RootRecentPresenter {
 
@@ -61,11 +58,9 @@ class DefaultRootRecentPresenter(
         componentContext: ComponentContext
     ): RootRecentPresenter.Child = when (screenConfig) {
         RootRecentPresenter.Config.RecentChats -> RootRecentPresenter.Child.RecentChats(
-            DefaultRecentChatsComponent(
+            recentChatsComponentFactory(
                 componentContext,
-                recentChatUseCase,
                 ::openChat,
-                analytics
             )
         )
 

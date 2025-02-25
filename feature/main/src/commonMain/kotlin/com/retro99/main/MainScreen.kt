@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main
+package com.retro99.main
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -18,14 +18,14 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
-import com.ai.bardly.feature.main.chats.root.RootRecentScreen
-import com.ai.bardly.feature.main.games.root.RootGamesScreen
-import com.ai.bardly.feature.main.home.root.RootHomeScreen
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.retro99.main.chats.RootRecentScreen
+import com.retro99.main.games.RootGamesScreen
+import com.retro99.main.home.RootHomeScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

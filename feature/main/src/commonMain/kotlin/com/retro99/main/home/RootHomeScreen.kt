@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.home.root
+package com.retro99.main.home
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi

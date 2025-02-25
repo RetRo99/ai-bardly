@@ -1,19 +1,30 @@
 package com.bardly.chats.ui.recent
 
+import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.chats.ui.model.toUiModel
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.chats.domain.GetRecentChatsUseCase
 import kotlinx.coroutines.launch
+import me.tatarka.inject.annotations.Assisted
+import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
 import retro99.analytics.api.AnalyticsEvent
 import retro99.analytics.api.AnalyticsEventOrigin
+import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
-class DefaultRecentChatsComponent(
+typealias RecentChatsComponentFactory = (
     componentContext: ComponentContext,
+    navigateToChat: (String, Int) -> Unit,
+) -> DefaultRecentChatsComponent
+
+@Inject
+@ContributesBinding(ActivityScope::class, boundType = RecentChatsComponent::class)
+class DefaultRecentChatsComponent(
+    @Assisted componentContext: ComponentContext,
+    @Assisted private val navigateToChat: (String, Int) -> Unit,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
-    private val navigateToChat: (String, Int) -> Unit,
     private val analytics: Analytics,
 ) : BasePresenterImpl<RecentChatsViewState, RecentChatsIntent>(componentContext),
     RecentChatsComponent {

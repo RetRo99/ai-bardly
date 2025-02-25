@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.chats.root
+package com.retro99.main.chats
 
 import com.bardly.chats.ui.chat.ChatPresenter
 import com.bardly.chats.ui.recent.RecentChatsComponent

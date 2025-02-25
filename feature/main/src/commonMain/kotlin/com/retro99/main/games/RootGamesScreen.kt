@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.games.root
+package com.retro99.main.games
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi

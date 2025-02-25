@@ -3,11 +3,11 @@ package com.ai.bardly.app
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import bardlyLightColors
-import com.ai.bardly.feature.main.MainScreen
 import com.ai.bardly.feature.onboarding.RootOnboardingScreen
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.retro99.auth.ui.LoginScreen
+import com.retro99.main.MainScreen
 import me.tatarka.inject.annotations.Inject
 
 typealias App = @Composable () -> Unit

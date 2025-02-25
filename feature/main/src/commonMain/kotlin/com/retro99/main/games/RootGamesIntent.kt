@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.games.root
+package com.retro99.main.games
 
 import com.retro99.base.ui.BaseScreenIntent
 

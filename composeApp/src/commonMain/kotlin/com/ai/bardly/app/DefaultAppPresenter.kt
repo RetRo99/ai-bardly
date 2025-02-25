@@ -1,7 +1,6 @@
 package com.ai.bardly.app
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -9,6 +8,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.retro99.auth.ui.AuthPresenterFactory
+import com.retro99.main.MainPresenterFactory
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

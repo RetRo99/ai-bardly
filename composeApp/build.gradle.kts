@@ -78,6 +78,7 @@ kotlin {
             implementation(projects.feature.user.data)
             implementation(projects.feature.user.domain)
             implementation(projects.feature.user.ui)
+            implementation(projects.feature.main)
         }
     }
 }

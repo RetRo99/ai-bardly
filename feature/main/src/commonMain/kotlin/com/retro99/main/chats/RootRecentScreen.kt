@@ -1,4 +1,4 @@
-package com.ai.bardly.feature.main.chats.root
+package com.retro99.main.chats
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi
