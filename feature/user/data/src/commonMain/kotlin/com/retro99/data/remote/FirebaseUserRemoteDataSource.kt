@@ -2,6 +2,8 @@ package com.retro99.data.remote
 
 import com.retro99.data.remote.model.UserDto
 import dev.gitlive.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -22,6 +24,19 @@ class FirebaseUserRemoteDataSource(
                 displayName = user.displayName,
                 isEmailVerified = user.isEmailVerified,
             )
+        }
+    }
+
+    override fun observeCurrentUser(): Flow<UserDto?> {
+        return firebaseAuth.authStateChanged.map { user ->
+            user?.let {
+                UserDto(
+                    id = user.uid,
+                    email = user.email,
+                    displayName = user.displayName,
+                    isEmailVerified = user.isEmailVerified,
+                )
+            }
         }
     }
 

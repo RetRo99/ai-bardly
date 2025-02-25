@@ -4,6 +4,8 @@ import com.retro99.auth.domain.UserRepository
 import com.retro99.auth.domain.model.UserDomainModel
 import com.retro99.data.remote.UsersRemoteDataSource
 import com.retro99.data.remote.model.toDomainModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -18,6 +20,10 @@ class UserDataRepository(
 
     override suspend fun getCurrentUser(): UserDomainModel? {
         return remoteSource.getCurrentUser()?.toDomainModel()
+    }
+
+    override fun observeCurrentUser(): Flow<UserDomainModel?> {
+        return remoteSource.observeCurrentUser().map { it?.toDomainModel() }
     }
 
     override suspend fun createUserWithEmailAndPassword(

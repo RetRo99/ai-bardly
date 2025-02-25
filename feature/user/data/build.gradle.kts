@@ -20,6 +20,7 @@ kotlin {
             implementation(libs.gitlive.firebase.kotlin.auth)
 
             implementation(libs.bundles.kotlinInject)
+            implementation(libs.coroutines)
         }
     }
 }
