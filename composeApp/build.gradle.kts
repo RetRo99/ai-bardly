@@ -93,7 +93,7 @@ android {
         applicationId = "com.ai.bardly"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 5
+        versionCode = 6
         versionName = "0.0.1"
     }
     packaging {
