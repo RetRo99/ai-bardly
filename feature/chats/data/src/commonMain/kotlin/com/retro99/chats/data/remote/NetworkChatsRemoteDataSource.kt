@@ -1,6 +1,8 @@
 package com.retro99.chats.data.remote
 
+import com.github.michaelbull.result.map
 import com.retro99.base.now
+import com.retro99.base.result.AppResult
 import com.retro99.chats.data.remote.model.MessageDto
 import com.retro99.chats.data.remote.model.PromptResponseDto
 import com.retro99.chats.data.remote.model.toRequest
@@ -19,7 +21,7 @@ class NetworkChatsRemoteDataSource(
     private val networkClient: NetworkClient,
 ) : ChatsRemoteDataSource {
 
-    override suspend fun getAnswer(message: MessageDto): Result<MessageDto> {
+    override suspend fun getAnswer(message: MessageDto): AppResult<MessageDto> {
         return networkClient.post<PromptResponseDto>(
             path = "prompt",
             body = message.toRequest()

@@ -1,5 +1,6 @@
 package com.retro99.chats.data.local
 
+import com.retro99.base.result.AppResult
 import com.retro99.database.api.message.MessageEntity
 import com.retro99.database.api.message.MessagesDatabase
 import me.tatarka.inject.annotations.Inject
@@ -14,15 +15,15 @@ class RoomChatsLocalDataSource(
     private val database: MessagesDatabase,
 ) : ChatsLocalDataSource {
 
-    override suspend fun getMessages(gameId: Int): Result<List<MessageEntity>> {
+    override suspend fun getMessages(gameId: Int): AppResult<List<MessageEntity>> {
         return database.getMessage(gameId)
     }
 
-    override suspend fun saveMessage(message: MessageEntity): Result<Unit> {
+    override suspend fun saveMessage(message: MessageEntity): AppResult<Unit> {
         return database.insert(message)
     }
 
-    override suspend fun getLatestMessagesPerGame(): Result<List<MessageEntity>> {
+    override suspend fun getLatestMessagesPerGame(): AppResult<List<MessageEntity>> {
         return database.getLatestMessagesPerGame()
 
     }
