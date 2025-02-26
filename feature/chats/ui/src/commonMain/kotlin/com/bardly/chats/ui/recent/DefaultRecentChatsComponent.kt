@@ -6,7 +6,6 @@ import com.bardly.chats.ui.model.toUiModel
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.chats.domain.GetRecentChatsUseCase
-import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
@@ -49,16 +48,12 @@ class DefaultRecentChatsComponent(
     }
 
     override fun onResume() {
-        scope.launch {
-            getRecentChatsUseCase()
-                .onSuccess { recentChats ->
-                    updateOrSetSuccess {
-                        it.copy(recentChats = recentChats.toUiModel())
-                    }
-                }
-                .onFailure {
-                    setError(it)
-                }
+        launchDataOperation(
+            block = { getRecentChatsUseCase() },
+        ) { recentChats ->
+            updateOrSetSuccess {
+                it.copy(recentChats = recentChats.toUiModel())
+            }
         }
     }
 }
