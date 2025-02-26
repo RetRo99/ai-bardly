@@ -1,5 +1,6 @@
 package com.retro99.auth.data.remote
 
+import com.github.michaelbull.result.map
 import com.retro99.base.result.AppResult
 import io.ktor.http.HttpHeaders
 import me.tatarka.inject.annotations.Inject
@@ -17,11 +18,11 @@ class NetworkAuthRemoteDataSource(
 ) : AuthRemoteDataSource {
 
     override suspend fun generateBearerToken(id: String): AppResult<String> {
-        return networkClient.post<String>(
+        return networkClient.post<CreateBearerTokenResponseDto>(
             path = "auth/login/firebase",
             headers = {
                 append(HttpHeaders.Authorization, "Bearer $id")
             }
-        )
+        ).map { it.accessToken }
     }
 }

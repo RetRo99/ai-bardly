@@ -18,4 +18,8 @@ class MultiplatformPreferences(
 
     override fun putString(key: PreferencesKey, value: String) =
         settings.putString(key.name, value)
+
+    override fun remove(key: PreferencesKey) {
+        settings.remove(key.name)
+    }
 }
