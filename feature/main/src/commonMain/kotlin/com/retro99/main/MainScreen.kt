@@ -23,6 +23,7 @@ import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.retro99.base.ui.compose.keyboardAsState
 import com.retro99.main.chats.RootRecentScreen
 import com.retro99.main.games.RootGamesScreen
 import com.retro99.main.home.RootHomeScreen
@@ -35,8 +36,10 @@ fun MainScreen(component: MainPresenter) {
     Surface {
         Scaffold(
             bottomBar = {
+                val isKeyboardOpen by keyboardAsState()
+
                 AnimatedVisibility(
-                    true,
+                    !isKeyboardOpen,
                     enter = slideInVertically(initialOffsetY = { it }),
                     exit = slideOutVertically(targetOffsetY = { it })
                 ) {

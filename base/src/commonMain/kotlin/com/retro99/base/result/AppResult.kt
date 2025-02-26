@@ -15,13 +15,15 @@ inline fun <V, E> Result<V, E>.andThenAlways(action: (Result<V, E>) -> Result<V,
     return action(this)
 }
 
-sealed class AppError {
+sealed class AppError(open val message: String?) {
     data class NetworkError(val throwable: Throwable, val isConnectivity: Boolean = false) :
-        AppError()
+        AppError(throwable.message)
 
-    data class ApiError(val code: Int, val message: String? = null) : AppError()
-    data class DatabaseError(val throwable: Throwable, val table: String? = null) : AppError()
-    data class UnknownError(val throwable: Throwable) : AppError()
+    data class ApiError(val code: Int, override val message: String? = null) : AppError(message)
+    data class DatabaseError(val throwable: Throwable, val table: String? = null) :
+        AppError(throwable.message)
+
+    data class UnknownError(val throwable: Throwable) : AppError(throwable.message)
 }
 
 /**

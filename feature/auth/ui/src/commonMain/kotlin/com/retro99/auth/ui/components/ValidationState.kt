@@ -21,24 +21,26 @@ interface ValidationState {
 interface SuccessValidationState
 
 sealed class EmailValidationState(override val errorResource: StringResource) : ValidationState {
-    object Success : EmailValidationState(StringRes.validation_email_success),
+    data object Success : EmailValidationState(StringRes.validation_email_success),
         SuccessValidationState
 
-    object Blank : EmailValidationState(StringRes.validation_email_blank)
-    object TooLong : EmailValidationState(StringRes.validation_email_too_long)
-    object InvalidFormat : EmailValidationState(StringRes.validation_email_invalid_format)
+    data object Blank : EmailValidationState(StringRes.validation_email_blank)
+    data object TooLong : EmailValidationState(StringRes.validation_email_too_long)
+    data object InvalidFormat : EmailValidationState(StringRes.validation_email_invalid_format)
 }
 
 sealed class PasswordValidationState(override val errorResource: StringResource) :
     ValidationState {
-    object Success : PasswordValidationState(StringRes.validation_password_success),
+    data object Success : PasswordValidationState(StringRes.validation_password_success),
         SuccessValidationState
 
-    object Blank : PasswordValidationState(StringRes.validation_password_blank)
-    object TooShort : PasswordValidationState(StringRes.validation_password_too_short)
-    object TooLong : PasswordValidationState(StringRes.validation_password_too_long)
-    object MissingDigit : PasswordValidationState(StringRes.validation_password_missing_digit)
-    object MissingLetter : PasswordValidationState(StringRes.validation_password_missing_letter)
-    object MissingCapitalLetter :
+    data object Blank : PasswordValidationState(StringRes.validation_password_blank)
+    data object TooShort : PasswordValidationState(StringRes.validation_password_too_short)
+    data object TooLong : PasswordValidationState(StringRes.validation_password_too_long)
+    data object MissingDigit : PasswordValidationState(StringRes.validation_password_missing_digit)
+    data object MissingLetter :
+        PasswordValidationState(StringRes.validation_password_missing_letter)
+
+    data object MissingCapitalLetter :
         PasswordValidationState(StringRes.validation_password_missing_capital_letter)
 }
