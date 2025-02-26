@@ -16,13 +16,15 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.feature.chats.domain)
-            implementation(libs.bundles.kotlinInject)
-            implementation(projects.lib.database.api)
-            implementation(libs.datetime)
-            implementation(projects.lib.database.api)
             implementation(projects.base)
+            implementation(projects.feature.chats.domain)
+
+            implementation(projects.lib.database.api)
+            implementation(projects.lib.database.api)
             implementation(projects.lib.network.api)
+
+            implementation(libs.bundles.kotlinInject)
+            implementation(libs.datetime)
             implementation(libs.serialization)
             implementation(libs.coroutines)
         }

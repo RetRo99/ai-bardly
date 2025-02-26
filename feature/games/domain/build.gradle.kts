@@ -16,6 +16,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.base)
             implementation(projects.lib.paging.domain)
 
             implementation(libs.bundles.kotlinInject)

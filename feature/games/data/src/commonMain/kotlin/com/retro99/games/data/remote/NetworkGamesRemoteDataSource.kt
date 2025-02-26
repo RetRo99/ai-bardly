@@ -1,6 +1,8 @@
 package com.retro99.games.data.remote
 
 import androidx.paging.PagingSource
+import com.github.michaelbull.result.getOrThrow
+import com.retro99.base.result.ThrowableResult
 import com.retro99.games.data.remote.model.GameDto
 import com.retro99.games.data.remote.model.GamesListDto
 import com.retro99.paging.domain.BardlyPagingSource
@@ -49,19 +51,19 @@ class NetworkGamesRemoteDataSource(
         ).getOrThrow()
     }
 
-    override suspend fun addToFavourites(gameId: Int): Result<Unit> {
+    override suspend fun addToFavourites(gameId: Int): ThrowableResult<Unit> {
         return networkClient.post<Unit>(
             path = "games/:$gameId/favourite",
         )
     }
 
-    override suspend fun removeFromFavourites(gameId: Int): Result<Unit> {
+    override suspend fun removeFromFavourites(gameId: Int): ThrowableResult<Unit> {
         return networkClient.delete<Unit>(
             path = "games/:$gameId/favourite",
         )
     }
 
-    override suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean> {
+    override suspend fun isMarkedAsFavorite(gameId: Int): ThrowableResult<Boolean> {
         return networkClient.get<Boolean>(
             path = "games/:$gameId/favourite",
         )
