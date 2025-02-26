@@ -1,5 +1,7 @@
 package com.retro99.chats.domain
 
+import com.github.michaelbull.result.coroutines.coroutineBinding
+import com.retro99.base.result.AppResult
 import com.retro99.chats.domain.model.RecentMessageDomainModel
 import com.retro99.games.domain.GamesRepository
 import me.tatarka.inject.annotations.Inject
@@ -12,22 +14,26 @@ class GetRecentChatsUseCase(
     private val chatsRepository: ChatsRepository,
     private val gamesRepository: GamesRepository
 ) {
+    suspend operator fun invoke(): AppResult<List<RecentMessageDomainModel>> {
+        return coroutineBinding {
+            val recentMessages = chatsRepository.getLatestMessagesPerGame().bind()
 
-    suspend operator fun invoke(): Result<List<RecentMessageDomainModel>> {
-        return runCatching {
-            val recentMessages = chatsRepository.getLatestMessagesPerGame().getOrThrow()
+            if (recentMessages.isEmpty()) {
+                return@coroutineBinding emptyList()
+            }
+
             val gameIds = recentMessages.map { it.gameId }.distinct()
-            val games = gamesRepository.getGamesById(gameIds).getOrThrow()
+            val games = gamesRepository.getGamesById(gameIds).bind()
                 .associateBy { it.id }
 
-            recentMessages.map { message ->
-                val game = games[message.gameId]
-                    ?: throw IllegalStateException("Game not found for id: ${message.gameId}")
+            recentMessages.mapNotNull { message ->
+                val game = games[message.gameId] ?: return@mapNotNull null
+
                 RecentMessageDomainModel(
                     gameId = game.id,
                     gameTitle = game.title,
                     timestamp = message.timestamp,
-                    thumbnail = game.thumbnail,
+                    thumbnail = game.thumbnail
                 )
             }
         }

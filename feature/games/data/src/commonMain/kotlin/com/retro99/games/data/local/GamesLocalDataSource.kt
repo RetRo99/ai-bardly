@@ -2,6 +2,7 @@ package com.retro99.games.data.local
 
 import androidx.paging.PagingSource
 import com.retro99.base.result.AppResult
+import com.retro99.base.result.CompletableResult
 import com.retro99.database.api.games.GameEntity
 import kotlinx.datetime.LocalDateTime
 
