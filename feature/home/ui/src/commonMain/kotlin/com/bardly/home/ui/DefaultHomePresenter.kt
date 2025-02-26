@@ -4,11 +4,9 @@ import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
 import com.bardly.games.ui.model.toUiModel
-import com.github.michaelbull.result.fold
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.games.domain.GamesRepository
-import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
@@ -68,20 +66,14 @@ class DefaultHomePresenter(
     }
 
     private fun loadRecentGames() {
-        scope.launch {
-            gamesRepository.getRecentlyOpenGames()
-                .fold(
-                    success = { games ->
-                        updateOrSetSuccess {
-                            it.copy(
-                                recentGames = games.toUiModel()
-                            )
-                        }
-                    },
-                    failure = { error ->
-                        setError(throwable = error)
-                    }
+        launchDataOperation(
+            block = gamesRepository::getRecentlyOpenGames
+        ) { games ->
+            updateOrSetSuccess {
+                it.copy(
+                    recentGames = games.toUiModel()
                 )
+            }
         }
     }
 }

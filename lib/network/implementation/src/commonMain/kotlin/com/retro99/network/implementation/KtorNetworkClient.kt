@@ -2,8 +2,8 @@ package com.retro99.network.implementation
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.retro99.base.result.AppError
 import com.retro99.base.result.AppResult
-import com.retro99.base.result.Error
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.ConnectTimeoutException
@@ -139,7 +139,7 @@ class KtorNetworkClient(
             Ok(response.body(TypeInfo(type)))
         } catch (e: Exception) {
             Err(
-                Error.ApiError(
+                AppError.ApiError(
                     code = 0,
                     message = "Failed to parse response: ${e.message}"
                 )
@@ -154,14 +154,14 @@ class KtorNetworkClient(
         return when (errorCode) {
             in 400..499 -> handleClientError(errorCode, errorBody)
             in 500..599 -> Err(
-                Error.ApiError(
+                AppError.ApiError(
                     code = errorCode,
                     message = "Server error: $errorBody"
                 )
             )
 
             else -> Err(
-                Error.ApiError(
+                AppError.ApiError(
                     code = errorCode,
                     message = "HTTP error $errorCode: $errorBody"
                 )
@@ -172,21 +172,21 @@ class KtorNetworkClient(
     private fun handleClientError(errorCode: Int, errorBody: String): AppResult<Nothing> {
         return when (errorCode) {
             401, 403 -> Err(
-                Error.ApiError(
+                AppError.ApiError(
                     code = errorCode,
                     message = "Authentication error: $errorBody"
                 )
             )
 
             404 -> Err(
-                Error.ApiError(
+                AppError.ApiError(
                     code = errorCode,
                     message = "Resource not found: $errorBody"
                 )
             )
 
             else -> Err(
-                Error.ApiError(
+                AppError.ApiError(
                     code = errorCode,
                     message = "Client error: $errorBody"
                 )
@@ -201,13 +201,13 @@ class KtorNetworkClient(
             is SocketTimeoutException -> handleNetworkException(e)
 
             is SerializationException -> Err(
-                Error.ApiError(
+                AppError.ApiError(
                     code = 0,
                     message = "Failed to parse response: ${e.message}"
                 )
             )
 
-            else -> Err(Error.UnknownError(e))
+            else -> Err(AppError.UnknownError(e))
         }
     }
 
@@ -220,7 +220,7 @@ class KtorNetworkClient(
         } == true
 
         return Err(
-            Error.NetworkError(
+            AppError.NetworkError(
                 throwable = e,
                 isConnectivity = isConnectivity
             )
