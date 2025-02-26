@@ -9,7 +9,6 @@ import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.chats.domain.ChatsRepository
 import com.retro99.chats.domain.model.MessageType
-import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
@@ -54,39 +53,40 @@ class DefaultChatPresenter(
     override val initialState = BaseViewState.Success(defaultViewState)
 
     init {
-        scope.launch {
-            chatsRepository
-                .getMessages(gameId)
-                .onSuccess { messages ->
-                    updateOrSetSuccess {
-                        it.copy(
-                            messages = messages.map { it.toUiModel(false) }
-                        )
-                    }
-                }
-                .onFailure {
-                    setError(throwable = it)
-                }
+        launchDataOperation(
+            block = {
+                chatsRepository
+                    .getMessages(gameId)
+            }
+        ) { messages ->
+            updateOrSetSuccess {
+                it.copy(
+                    messages = messages.map { it.toUiModel(false) }
+                )
+            }
         }
     }
 
     private fun onMessageSendClicked(messageText: String) {
-        scope.launch {
-            val message = displayAndGetMessage(
-                messageText = messageText,
-                id = gameId,
-            )
-            chatsRepository
-                .getAnswerFor(message.toDomainModel())
-                .onSuccess { answer ->
-                    displayMessage(answer.toUiModel(true))
-                }.onFailure {
-                    updateOrSetSuccess {
-                        it.copy(
-                            isResponding = false
-                        )
-                    }
+        val message = displayAndGetMessage(
+            messageText = messageText,
+            id = gameId,
+        )
+
+        launchDataOperation(
+            block = {
+                chatsRepository
+                    .getAnswerFor(message.toDomainModel())
+            },
+            onError = {
+                updateOrSetSuccess {
+                    it.copy(
+                        isResponding = false
+                    )
                 }
+            }
+        ) { answer ->
+            displayMessage(answer.toUiModel(true))
         }
     }
 

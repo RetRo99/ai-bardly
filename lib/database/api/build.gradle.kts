@@ -16,8 +16,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.room.runtime)
+            implementation(projects.base)
             implementation(projects.lib.paging.domain)
+
+            implementation(libs.room.runtime)
             implementation(libs.datetime)
         }
     }
