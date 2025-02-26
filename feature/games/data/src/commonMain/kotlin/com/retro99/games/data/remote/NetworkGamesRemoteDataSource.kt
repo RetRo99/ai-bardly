@@ -3,6 +3,7 @@ package com.retro99.games.data.remote
 import androidx.paging.PagingSource
 import com.github.michaelbull.result.getOrThrow
 import com.retro99.base.result.AppResult
+import com.retro99.base.result.CompletableResult
 import com.retro99.games.data.remote.model.GameDto
 import com.retro99.games.data.remote.model.GamesListDto
 import com.retro99.paging.domain.BardlyPagingSource

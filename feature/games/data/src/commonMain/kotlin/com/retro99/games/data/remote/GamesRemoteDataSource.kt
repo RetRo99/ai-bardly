@@ -2,6 +2,7 @@ package com.retro99.games.data.remote
 
 import androidx.paging.PagingSource
 import com.retro99.base.result.AppResult
+import com.retro99.base.result.CompletableResult
 import com.retro99.games.data.remote.model.GameDto
 
 interface GamesRemoteDataSource {
