@@ -44,6 +44,7 @@ kotlin {
             api(libs.essenty.backhandler)
             api(libs.essenty.lifecycle)
             implementation(libs.essenty.coroutines)
+            implementation(libs.ktor.serialization.kotlinx.json)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

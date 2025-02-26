@@ -18,10 +18,10 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
-            api(libs.bundles.ktorClientBundle)
+            implementation(libs.bundles.ktorClientBundle)
             implementation(projects.lib.network.api)
-            api(libs.ktor.serialization.kotlinx.json)
-            api(projects.lib.analytics.api)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(projects.lib.analytics.api)
         }
 
         androidMain.dependencies {
