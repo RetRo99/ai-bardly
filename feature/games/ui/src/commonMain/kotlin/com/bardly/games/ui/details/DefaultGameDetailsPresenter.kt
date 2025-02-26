@@ -69,8 +69,10 @@ class DefaultGameDetailsPresenter(
 
     private fun onChangeFavoriteClicked(isFavorite: Boolean) {
         if (userSessionManager.isUserLoggedIn) {
-            scope.launch {
-                toggleFavoritesUseCase(game.id, isFavorite)
+            launchDataOperation(
+                block = { toggleFavoritesUseCase(game.id, isFavorite) },
+            ) {
+                updateOrSetSuccess { it.copy(isFavorite = isFavorite) }
             }
         } else {
             openLogin()
