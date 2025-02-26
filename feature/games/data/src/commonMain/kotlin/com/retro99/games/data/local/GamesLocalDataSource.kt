@@ -12,16 +12,16 @@ interface GamesLocalDataSource {
 
     suspend fun getGame(id: Int): AppResult<GameEntity>
 
-    suspend fun saveGames(games: List<GameEntity>): AppResult<Unit>
+    suspend fun saveGames(games: List<GameEntity>): CompletableResult
 
     suspend fun getRecentlyOpenGames(amount: Int): AppResult<List<GameEntity>>
 
     suspend fun clearAll()
 
-    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime?): AppResult<Unit>
+    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime?): CompletableResult
 
-    suspend fun addToFavourites(gameId: Int): AppResult<Unit>
-    suspend fun removeFromFavourites(gameId: Int): AppResult<Unit>
+    suspend fun addToFavourites(gameId: Int): CompletableResult
+    suspend fun removeFromFavourites(gameId: Int): CompletableResult
 
     suspend fun isMarkedAsFavorite(gameId: Int): AppResult<Boolean>
 }

@@ -4,6 +4,8 @@ import com.github.michaelbull.result.Result
 
 typealias AppResult<T> = Result<T, AppError>
 
+typealias CompletableResult = Result<Unit, AppError>
+
 inline fun <V, E> Result<V, E>.andThenAlways(action: (Result<V, E>) -> Result<V, E>): Result<V, E> {
     return action(this)
 }

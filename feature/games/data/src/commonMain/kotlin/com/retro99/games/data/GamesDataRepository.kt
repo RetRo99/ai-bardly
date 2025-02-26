@@ -60,21 +60,21 @@ class GamesDataRepository(
         return localSource.getGamesById(ids).map { it.toDomainModel() }
     }
 
-    override suspend fun addToFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun addToFavourites(gameId: Int): CompletableResult {
         return remoteSource.addToFavourites(gameId)
             .onSuccess {
                 localSource.addToFavourites(gameId)
             }
     }
 
-    override suspend fun removeFromFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun removeFromFavourites(gameId: Int): CompletableResult {
         return remoteSource.removeFromFavourites(gameId)
             .onSuccess {
                 localSource.removeFromFavourites(gameId)
             }
     }
 
-    override suspend fun updateGameOpenDate(gameId: Int): AppResult<Unit> {
+    override suspend fun updateGameOpenDate(gameId: Int): CompletableResult {
         return localSource.updateGameOpenTime(gameId, now())
     }
 

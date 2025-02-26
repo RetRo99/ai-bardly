@@ -51,13 +51,13 @@ class NetworkGamesRemoteDataSource(
         ).getOrThrow()
     }
 
-    override suspend fun addToFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun addToFavourites(gameId: Int): CompletableResult {
         return networkClient.post<Unit>(
             path = "games/:$gameId/favourite",
         )
     }
 
-    override suspend fun removeFromFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun removeFromFavourites(gameId: Int): CompletableResult {
         return networkClient.delete<Unit>(
             path = "games/:$gameId/favourite",
         )
