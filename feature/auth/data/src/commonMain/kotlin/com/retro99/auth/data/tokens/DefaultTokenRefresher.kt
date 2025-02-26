@@ -1,5 +1,6 @@
 package com.retro99.auth.data.tokens
 
+import com.github.michaelbull.result.get
 import com.retro99.auth.data.remote.AuthRemoteDataSource
 import com.retro99.data.remote.UsersRemoteDataSource
 import me.tatarka.inject.annotations.Inject
@@ -19,6 +20,6 @@ class DefaultTokenRefresher(
 
     override suspend fun refreshBearerToken(): String? {
         val firebaseToken = userDataSource.getCurrentUserFirebaseToken()
-        return firebaseToken?.let { authDataSourceProvider().generateBearerToken(it) }?.getOrNull()
+        return firebaseToken?.let { authDataSourceProvider().generateBearerToken(it) }?.get()
     }
 }
