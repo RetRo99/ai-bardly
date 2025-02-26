@@ -1,5 +1,8 @@
 package com.retro99.network.implementation
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.retro99.base.result.CustomResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
@@ -41,7 +44,7 @@ class KtorNetworkClient(
         type: KClass<T>,
         queryBuilder: QueryParamsScope.() -> Unit,
         headers: HeadersBuilder.() -> Unit
-    ): Result<T> = performRequest(type) {
+    ): CustomResult<T, Throwable> = performRequest(type) {
         val url = buildUrl(path, queryBuilder)
         httpClient.get(url) {
             headers(headers)
@@ -54,7 +57,7 @@ class KtorNetworkClient(
         body: Any?,
         queryBuilder: QueryParamsScope.() -> Unit,
         headers: HeadersBuilder.() -> Unit
-    ): Result<T> = performRequest(type) {
+    ): CustomResult<T, Throwable> = performRequest(type) {
         val url = buildUrl(path, queryBuilder)
         httpClient.post(url) {
             headers(headers)
@@ -69,7 +72,7 @@ class KtorNetworkClient(
         body: Any?,
         queryBuilder: QueryParamsScope.() -> Unit,
         headers: HeadersBuilder.() -> Unit
-    ): Result<T> = performRequest(type) {
+    ): CustomResult<T, Throwable> = performRequest(type) {
         val url = buildUrl(path, queryBuilder)
         httpClient.delete(url) {
             headers(headers)
@@ -102,17 +105,17 @@ class KtorNetworkClient(
     private suspend fun <T : Any> performRequest(
         type: KClass<T>,
         block: suspend () -> HttpResponse
-    ): Result<T> = withContext(Dispatchers.IO) {
+    ): CustomResult<T, Throwable> = withContext(Dispatchers.IO) {
         try {
             val response = block()
             if (response.status.isSuccess()) {
-                Result.success(response.body(TypeInfo(type)))
+                Ok(response.body(TypeInfo(type)))
             } else {
-                Result.failure(Exception("HTTP error ${response.status}: ${response.bodyAsText()}"))
+                Err(Exception("HTTP error ${response.status}: ${response.bodyAsText()}"))
             }
         } catch (e: Exception) {
             ensureActive()
-            Result.failure(e)
+            Err(e)
         }
     }
 
