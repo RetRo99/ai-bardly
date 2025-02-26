@@ -60,4 +60,10 @@ class NetworkGamesRemoteDataSource(
             path = "games/:$gameId/favourite",
         )
     }
+
+    override suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean> {
+        return networkClient.get<Boolean>(
+            path = "games/:$gameId/favourite",
+        )
+    }
 }

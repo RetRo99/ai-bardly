@@ -14,6 +14,7 @@ import com.retro99.games.domain.GamesRepository
 import com.retro99.games.domain.model.GameDomainModel
 import com.retro99.paging.domain.BardlyRemoteMediator
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -77,12 +78,11 @@ class GamesDataRepository(
         return flow {
             val isFavoriteLocal = localSource.isMarkedAsFavorite(gameId).getOrThrow()
             emit(isFavoriteLocal)
-//            val isFavoriteRemote = remoteSource.isMarkedAsFavorite(gameId)
-//                .onSuccess {
-//                    localSource.addToFavourites(gameId)
-//                }.getOrThrow()
-//            emit(isFavoriteRemote)
-        }
-
+            val isFavoriteRemote = remoteSource.isMarkedAsFavorite(gameId)
+                .onSuccess {
+                    localSource.addToFavourites(gameId)
+                }.getOrThrow()
+            emit(isFavoriteRemote)
+        }.catch { emit(false) }
     }
 }

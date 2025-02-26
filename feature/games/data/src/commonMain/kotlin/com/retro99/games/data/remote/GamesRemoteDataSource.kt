@@ -7,4 +7,5 @@ interface GamesRemoteDataSource {
     suspend fun getGames(query: String?): PagingSource<Int, GameDto>
     suspend fun addToFavourites(gameId: Int): Result<Unit>
     suspend fun removeFromFavourites(gameId: Int): Result<Unit>
+    suspend fun isMarkedAsFavorite(gameId: Int): Result<Boolean>
 }
