@@ -1,6 +1,6 @@
 package retro99.games.api
 
-import com.retro99.base.result.ThrowableResult
+import com.retro99.base.result.AppResult
 import io.ktor.http.HeadersBuilder
 import kotlin.reflect.KClass
 
@@ -10,7 +10,7 @@ interface NetworkClient {
         type: KClass<T>,
         queryBuilder: QueryParamsScope.() -> Unit = {},
         headers: HeadersBuilder.() -> Unit = {}
-    ): ThrowableResult<T>
+    ): AppResult<T>
 
     suspend fun <T : Any> postWithClass(
         path: String,
@@ -18,7 +18,7 @@ interface NetworkClient {
         body: Any? = null,
         queryBuilder: QueryParamsScope.() -> Unit = {},
         headers: HeadersBuilder.() -> Unit = {}
-    ): ThrowableResult<T>
+    ): AppResult<T>
 
     suspend fun <T : Any> deleteWithClass(
         path: String,
@@ -26,7 +26,7 @@ interface NetworkClient {
         body: Any? = null,
         queryBuilder: QueryParamsScope.() -> Unit = {},
         headers: HeadersBuilder.() -> Unit = {}
-    ): ThrowableResult<T>
+    ): AppResult<T>
 
     fun close()
 }
@@ -36,18 +36,18 @@ suspend inline fun <reified T : Any> NetworkClient.get(
     path: String,
     noinline queryBuilder: QueryParamsScope.() -> Unit = {},
     noinline headers: HeadersBuilder.() -> Unit = {}
-): ThrowableResult<T> = getWithClass(path, T::class, queryBuilder, headers)
+): AppResult<T> = getWithClass(path, T::class, queryBuilder, headers)
 
 suspend inline fun <reified T : Any> NetworkClient.post(
     path: String,
     body: Any? = null,
     noinline queryBuilder: QueryParamsScope.() -> Unit = {},
     noinline headers: HeadersBuilder.() -> Unit = {}
-): ThrowableResult<T> = postWithClass(path, T::class, body, queryBuilder, headers)
+): AppResult<T> = postWithClass(path, T::class, body, queryBuilder, headers)
 
 suspend inline fun <reified T : Any> NetworkClient.delete(
     path: String,
     body: Any? = null,
     noinline queryBuilder: QueryParamsScope.() -> Unit = {},
     noinline headers: HeadersBuilder.() -> Unit = {}
-): ThrowableResult<T> = deleteWithClass(path, T::class, body, queryBuilder, headers)
+): AppResult<T> = deleteWithClass(path, T::class, body, queryBuilder, headers)

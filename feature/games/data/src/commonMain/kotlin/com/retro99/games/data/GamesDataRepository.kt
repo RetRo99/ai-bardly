@@ -8,7 +8,7 @@ import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.retro99.base.now
-import com.retro99.base.result.ThrowableResult
+import com.retro99.base.result.AppResult
 import com.retro99.base.result.andThenAlways
 import com.retro99.games.data.local.GamesLocalDataSource
 import com.retro99.games.data.local.model.toDomainModel
@@ -52,29 +52,29 @@ class GamesDataRepository(
         ).flow.toDomainModel()
     }
 
-    override suspend fun getRecentlyOpenGames(amount: Int): ThrowableResult<List<GameDomainModel>> {
+    override suspend fun getRecentlyOpenGames(amount: Int): AppResult<List<GameDomainModel>> {
         return localSource.getRecentlyOpenGames(amount).map { it.toDomainModel() }
     }
 
-    override suspend fun getGamesById(ids: List<Int>): ThrowableResult<List<GameDomainModel>> {
+    override suspend fun getGamesById(ids: List<Int>): AppResult<List<GameDomainModel>> {
         return localSource.getGamesById(ids).map { it.toDomainModel() }
     }
 
-    override suspend fun addToFavourites(gameId: Int): ThrowableResult<Unit> {
+    override suspend fun addToFavourites(gameId: Int): AppResult<Unit> {
         return remoteSource.addToFavourites(gameId)
             .onSuccess {
                 localSource.addToFavourites(gameId)
             }
     }
 
-    override suspend fun removeFromFavourites(gameId: Int): ThrowableResult<Unit> {
+    override suspend fun removeFromFavourites(gameId: Int): AppResult<Unit> {
         return remoteSource.removeFromFavourites(gameId)
             .onSuccess {
                 localSource.removeFromFavourites(gameId)
             }
     }
 
-    override suspend fun updateGameOpenDate(gameId: Int): ThrowableResult<Unit> {
+    override suspend fun updateGameOpenDate(gameId: Int): AppResult<Unit> {
         return localSource.updateGameOpenTime(gameId, now())
     }
 
