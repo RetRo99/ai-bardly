@@ -9,6 +9,7 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.retro99.base.now
 import com.retro99.base.result.AppResult
+import com.retro99.base.result.CompletableResult
 import com.retro99.base.result.andThenAlways
 import com.retro99.games.data.local.GamesLocalDataSource
 import com.retro99.games.data.local.model.toDomainModel
