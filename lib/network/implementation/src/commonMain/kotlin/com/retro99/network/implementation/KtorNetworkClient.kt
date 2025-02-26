@@ -2,7 +2,7 @@ package com.retro99.network.implementation
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import com.retro99.base.result.CustomResult
+import com.retro99.base.result.ThrowableResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
@@ -44,7 +44,7 @@ class KtorNetworkClient(
         type: KClass<T>,
         queryBuilder: QueryParamsScope.() -> Unit,
         headers: HeadersBuilder.() -> Unit
-    ): CustomResult<T, Throwable> = performRequest(type) {
+    ): ThrowableResult<T> = performRequest(type) {
         val url = buildUrl(path, queryBuilder)
         httpClient.get(url) {
             headers(headers)
@@ -57,7 +57,7 @@ class KtorNetworkClient(
         body: Any?,
         queryBuilder: QueryParamsScope.() -> Unit,
         headers: HeadersBuilder.() -> Unit
-    ): CustomResult<T, Throwable> = performRequest(type) {
+    ): ThrowableResult<T> = performRequest(type) {
         val url = buildUrl(path, queryBuilder)
         httpClient.post(url) {
             headers(headers)
@@ -72,7 +72,7 @@ class KtorNetworkClient(
         body: Any?,
         queryBuilder: QueryParamsScope.() -> Unit,
         headers: HeadersBuilder.() -> Unit
-    ): CustomResult<T, Throwable> = performRequest(type) {
+    ): ThrowableResult<T> = performRequest(type) {
         val url = buildUrl(path, queryBuilder)
         httpClient.delete(url) {
             headers(headers)
@@ -105,7 +105,7 @@ class KtorNetworkClient(
     private suspend fun <T : Any> performRequest(
         type: KClass<T>,
         block: suspend () -> HttpResponse
-    ): CustomResult<T, Throwable> = withContext(Dispatchers.IO) {
+    ): ThrowableResult<T> = withContext(Dispatchers.IO) {
         try {
             val response = block()
             if (response.status.isSuccess()) {
