@@ -3,15 +3,11 @@ package com.retro99.auth.ui.login
 import UserUiModel
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
-import com.retro99.auth.domain.AuthRepository
 import com.retro99.auth.domain.UserRepository
 import com.retro99.auth.ui.components.InputValidator
 import com.retro99.auth.ui.components.LoginInputField
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.auth.auth
-import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
@@ -23,6 +19,7 @@ typealias LoginPresenterFactory = (
     ComponentContext,
     loginMode: LoginMode,
     onFooterClicked: () -> Unit,
+    onLoginSuccess: () -> Unit,
 ) -> DefaultLoginPresenter
 
 @Inject
@@ -31,10 +28,10 @@ class DefaultLoginPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val loginMode: LoginMode,
     @Assisted private val onFooterClicked: () -> Unit,
+    @Assisted private val onLoginSuccess: () -> Unit,
     private val analytics: Analytics,
     private val inputValidator: InputValidator,
     private val userRepository: UserRepository,
-    private val authRepository: AuthRepository,
 ) : BasePresenterImpl<LoginViewState, LoginIntent>(componentContext), LoginPresenter {
 
     override val defaultViewState = LoginViewState(loginMode)
@@ -187,10 +184,6 @@ class DefaultLoginPresenter(
     }
 
     private fun onGetUserSuccess(user: UserUiModel?) {
-        scope.launch {
-            Firebase.auth.currentUser?.let {
-                authRepository.generateBearerToken(it.getIdToken(false).toString())
-            }
-        }
+        onLoginSuccess()
     }
 }

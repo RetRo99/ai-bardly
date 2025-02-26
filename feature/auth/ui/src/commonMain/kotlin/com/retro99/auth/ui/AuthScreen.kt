@@ -9,7 +9,7 @@ import com.retro99.base.ui.decompose.RootChildStack
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-fun LoginScreen(component: AuthPresenter) {
+fun AuthScreen(component: AuthPresenter) {
     RootChildStack(
         root = component,
         animation = stackAnimation(

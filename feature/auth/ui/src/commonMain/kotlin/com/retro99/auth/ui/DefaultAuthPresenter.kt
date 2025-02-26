@@ -14,14 +14,14 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias AuthPresenterFactory = (
     ComponentContext,
-    openMain: () -> Unit
+    onLoginSuccess: () -> Unit,
 ) -> DefaultAuthPresenter
 
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = AuthPresenter::class)
 class DefaultAuthPresenter(
     @Assisted componentContext: ComponentContext,
-    @Assisted private val openMain: () -> Unit,
+    @Assisted private val onLoginSuccess: () -> Unit,
     private val loginPresenterFactory: LoginPresenterFactory,
 ) : AuthPresenter, ComponentContext by componentContext {
     private val navigation = StackNavigation<AuthPresenter.Config>()
@@ -55,6 +55,7 @@ class DefaultAuthPresenter(
                 componentContext,
                 LoginMode.SignIn,
                 ::openSignUp,
+                onLoginSuccess
             )
         )
 
@@ -63,6 +64,7 @@ class DefaultAuthPresenter(
                 componentContext,
                 LoginMode.SignUp,
                 {},
+                onLoginSuccess
             )
         )
     }

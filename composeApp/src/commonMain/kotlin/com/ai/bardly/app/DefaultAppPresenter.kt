@@ -37,8 +37,8 @@ class DefaultAppPresenter(
         navigation.pop()
     }
 
-    private fun openMain() {
-        navigation.pushNew(AppPresenter.Config.Main)
+    private fun onLoginSuccess() {
+        onBackClicked()
     }
 
     private fun openLogin() {
@@ -59,14 +59,14 @@ class DefaultAppPresenter(
         AppPresenter.Config.Onboarding -> AppPresenter.Child.Onboarding(
             onboardingPresenterFactory(
                 componentContext,
-                ::openMain,
+                ::onLoginSuccess,
             )
         )
 
         AppPresenter.Config.Auth -> AppPresenter.Child.Auth(
             authPresenterFactory(
                 componentContext,
-                ::openMain,
+                ::onLoginSuccess,
             )
         )
     }

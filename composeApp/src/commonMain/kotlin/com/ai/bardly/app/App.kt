@@ -6,7 +6,9 @@ import bardlyLightColors
 import com.ai.bardly.feature.onboarding.RootOnboardingScreen
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.experimental.stack.ChildStack
-import com.retro99.auth.ui.LoginScreen
+import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.slide
+import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
+import com.retro99.auth.ui.AuthScreen
 import com.retro99.main.MainScreen
 import me.tatarka.inject.annotations.Inject
 
@@ -24,11 +26,14 @@ fun App(
     ) {
         ChildStack(
             stack = applicationComponent.childStack,
+            animation = stackAnimation(
+                animator = slide(),
+            )
         ) {
             when (val child = it.instance) {
                 is AppPresenter.Child.Main -> MainScreen(child.component)
                 is AppPresenter.Child.Onboarding -> RootOnboardingScreen(child.component)
-                is AppPresenter.Child.Auth -> LoginScreen(child.component)
+                is AppPresenter.Child.Auth -> AuthScreen(child.component)
             }
         }
     }
