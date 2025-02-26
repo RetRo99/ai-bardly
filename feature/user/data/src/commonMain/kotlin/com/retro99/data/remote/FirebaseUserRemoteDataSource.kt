@@ -1,5 +1,7 @@
 package com.retro99.data.remote
 
+import com.retro99.base.result.AppResult
+import com.retro99.base.result.runCatchingAsAppError
 import com.retro99.data.remote.model.UserDto
 import dev.gitlive.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.Flow
@@ -43,8 +45,8 @@ class FirebaseUserRemoteDataSource(
     override suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String
-    ): Result<UserDto?> {
-        return runCatching {
+    ): AppResult<UserDto?> {
+        return runCatchingAsAppError {
             firebaseAuth
                 .createUserWithEmailAndPassword(email, password).user?.let { user ->
                     UserDto(
@@ -60,8 +62,8 @@ class FirebaseUserRemoteDataSource(
     override suspend fun fetchUserWithEmailAndPassword(
         email: String,
         password: String
-    ): Result<UserDto?> {
-        return runCatching {
+    ): AppResult<UserDto?> {
+        return runCatchingAsAppError {
             firebaseAuth
                 .signInWithEmailAndPassword(email, password).user?.let { user ->
                     UserDto(

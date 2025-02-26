@@ -16,9 +16,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.base)
             implementation(projects.feature.user.domain)
-            implementation(libs.gitlive.firebase.kotlin.auth)
 
+            implementation(libs.gitlive.firebase.kotlin.auth)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.coroutines)
         }

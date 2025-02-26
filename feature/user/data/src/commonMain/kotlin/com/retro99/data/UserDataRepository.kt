@@ -1,7 +1,9 @@
 package com.retro99.data
 
+import com.github.michaelbull.result.map
 import com.retro99.auth.domain.UserRepository
 import com.retro99.auth.domain.model.UserDomainModel
+import com.retro99.base.result.AppResult
 import com.retro99.data.remote.UsersRemoteDataSource
 import com.retro99.data.remote.model.toDomainModel
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +31,7 @@ class UserDataRepository(
     override suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String
-    ): Result<UserDomainModel?> {
+    ): AppResult<UserDomainModel?> {
         return remoteSource.createUserWithEmailAndPassword(email, password)
             .map { it?.toDomainModel() }
     }
@@ -37,7 +39,7 @@ class UserDataRepository(
     override suspend fun fetchUserWithEmailAndPassword(
         email: String,
         password: String
-    ): Result<UserDomainModel?> {
+    ): AppResult<UserDomainModel?> {
         return remoteSource.fetchUserWithEmailAndPassword(email, password)
             .map { it?.toDomainModel() }
     }

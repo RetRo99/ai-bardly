@@ -145,31 +145,35 @@ class DefaultLoginPresenter(
     }
 
     private fun signInWithEmail(email: String, password: String) {
-        scope.launch {
-            userRepository.fetchUserWithEmailAndPassword(email, password)
-                .onSuccess {
-                    onGetUserSuccess(it?.toUiModel())
+        launchDataOperation(
+            block = {
+                userRepository.fetchUserWithEmailAndPassword(email, password)
+            },
+            onError = {
+                analytics.log(AnalyticsEvent.SignUpError(it.toString()))
+                updateOrSetSuccess {
+                    it.copy(
+                        showNoMatchingUserError = true,
+                    )
                 }
-                .onFailure {
-                    analytics.log(AnalyticsEvent.SignUpError(it.toString()))
-                    updateOrSetSuccess {
-                        it.copy(
-                            showNoMatchingUserError = true,
-                        )
-                    }
-                }
+
+            }
+        ) {
+            onGetUserSuccess(it?.toUiModel())
         }
     }
 
+
     private fun signUpWithEmail(email: String, password: String) {
-        scope.launch {
-            userRepository.createUserWithEmailAndPassword(email, password)
-                .onSuccess {
-                    onGetUserSuccess(it?.toUiModel())
-                }
-                .onFailure {
-                    analytics.log(AnalyticsEvent.SignUpError(it.toString()))
-                }
+        launchDataOperation(
+            block = {
+                userRepository.createUserWithEmailAndPassword(email, password)
+            },
+            onError = {
+                analytics.log(AnalyticsEvent.SignUpError(it.toString()))
+            }
+        ) {
+            onGetUserSuccess(it?.toUiModel())
         }
     }
 

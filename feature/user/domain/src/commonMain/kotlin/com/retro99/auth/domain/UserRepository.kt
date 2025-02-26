@@ -1,6 +1,7 @@
 package com.retro99.auth.domain
 
 import com.retro99.auth.domain.model.UserDomainModel
+import com.retro99.base.result.AppResult
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -11,10 +12,10 @@ interface UserRepository {
     suspend fun createUserWithEmailAndPassword(
         email: String,
         password: String,
-    ): Result<UserDomainModel?>
+    ): AppResult<UserDomainModel?>
 
     suspend fun fetchUserWithEmailAndPassword(
         email: String,
         password: String,
-    ): Result<UserDomainModel?>
+    ): AppResult<UserDomainModel?>
 }
