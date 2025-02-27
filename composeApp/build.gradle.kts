@@ -95,7 +95,7 @@ android {
         applicationId = "com.ai.bardly"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 8
+        versionCode = 9
         versionName = "0.0.1"
     }
     packaging {
@@ -107,7 +107,7 @@ android {
         getByName("debug") {
             manifestPlaceholders["crashlyticsCollectionEnabled"] = false
             manifestPlaceholders["usesCleartextTraffic"] = true
-            resValue("string", "app_name", "Bardly Debug")
+            resValue("string", "app_name", "Bardy Debug")
         }
         getByName("release") {
             manifestPlaceholders += mapOf()
