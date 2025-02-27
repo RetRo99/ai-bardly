@@ -1,5 +1,6 @@
 package com.retro99.snackbar.implementation
 
+import com.retro99.base.ui.compose.TextWrapper
 import com.retro99.snackbar.api.SnackbarData
 import com.retro99.snackbar.api.SnackbarManager
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +22,7 @@ class DefaultSnackbarManager : SnackbarManager {
         _messages.tryEmit(snackbarData)
     }
 
-    override fun showSnackbar(title: String) {
+    override fun showSnackbar(title: TextWrapper) {
         showSnackbar(SnackbarData(title))
     }
 

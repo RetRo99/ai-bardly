@@ -21,6 +21,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            api(compose.components.resources)
             api(libs.bundles.decompose)
             implementation(libs.essenty.lifecycle)
             implementation(libs.essenty.coroutines)

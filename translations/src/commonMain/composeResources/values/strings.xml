@@ -28,6 +28,8 @@
     <string name="login_no_matching_user">No matching user found.</string>
     <string name="login_already_have_account">Already have an account? Login</string>
     <string name="login_do_not_have_account">Don’t have an account? Sign Up</string>
+    <string name="login_sign_in_success">Successfully logged in</string>
+    <string name="login_sign_up_success">Account created</string>
     <string name="chat_details_message_hint">Ask Bardly...</string>
     <string name="general_search">Search</string>
     <string name="just_now">Just now</string>

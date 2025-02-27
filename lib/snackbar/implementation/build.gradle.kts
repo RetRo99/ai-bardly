@@ -16,6 +16,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.baseUi)
             implementation(projects.lib.snackbar.api)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.coroutines)

@@ -31,6 +31,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.retro99.base.ui.compose.stringTextWrapper
 import kotlinx.coroutines.delay
 
 /**
@@ -139,7 +140,7 @@ private fun Snackbar(modifier: Modifier, data: SnackbarData) {
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = data.title,
+                text = stringTextWrapper(data.title),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onError,
                 fontWeight = FontWeight.SemiBold

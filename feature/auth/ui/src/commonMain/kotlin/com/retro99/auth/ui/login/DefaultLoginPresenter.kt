@@ -8,9 +8,13 @@ import com.retro99.auth.ui.components.InputValidator
 import com.retro99.auth.ui.components.LoginInputField
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
+import com.retro99.base.ui.compose.TextWrapper
 import com.retro99.snackbar.api.SnackbarManager
+import com.retro99.translations.StringRes
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import resources.translations.login_sign_in_success
+import resources.translations.login_sign_up_success
 import retro99.analytics.api.Analytics
 import retro99.analytics.api.AnalyticsEvent
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -169,7 +173,7 @@ class DefaultLoginPresenter(
                 userRepository.createUserWithEmailAndPassword(email, password)
             },
             onError = {
-                snackbarManager.showSnackbar(it.message.toString())
+                snackbarManager.showSnackbar(TextWrapper.Text(it.message.toString()))
                 analytics.log(AnalyticsEvent.SignUpError(it.toString()))
             }
         ) {
@@ -182,12 +186,17 @@ class DefaultLoginPresenter(
             .onSuccess {
                 onGetUserSuccess(it)
             }.onFailure {
-                snackbarManager.showSnackbar(it.message.toString())
+                snackbarManager.showSnackbar(TextWrapper.Text(it.message.toString()))
                 analytics.log(AnalyticsEvent.SignUpError(it.toString()))
             }
     }
 
     private fun onGetUserSuccess(user: UserUiModel?) {
+        val successMessage = when (loginMode) {
+            LoginMode.SignIn -> StringRes.login_sign_in_success
+            LoginMode.SignUp -> StringRes.login_sign_up_success
+        }
+        snackbarManager.showSnackbar(TextWrapper.Resource(successMessage))
         onLoginSuccess()
     }
 }
