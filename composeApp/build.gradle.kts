@@ -81,6 +81,8 @@ kotlin {
             implementation(projects.feature.user.domain)
             implementation(projects.feature.user.ui)
             implementation(projects.feature.main)
+            implementation(projects.lib.snackbar.api)
+            implementation(projects.lib.snackbar.implementation)
         }
     }
 }
