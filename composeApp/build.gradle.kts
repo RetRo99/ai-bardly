@@ -115,7 +115,8 @@ android {
             manifestPlaceholders["usesCleartextTraffic"] = false
             isMinifyEnabled = true // Enable minification here
             isMinifyEnabled = false
-            resValue("string", "app_name", "Bardly")
+            resValue("string", "app_name", "Bardy")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }
