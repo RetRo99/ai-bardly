@@ -26,6 +26,7 @@ kotlin {
             implementation(projects.base)
             implementation(projects.baseUi)
             implementation(projects.lib.analytics.api)
+            implementation(projects.lib.snackbar.api)
             implementation(projects.feature.auth.domain)
             implementation(projects.feature.user.domain)
             implementation(projects.feature.user.ui)

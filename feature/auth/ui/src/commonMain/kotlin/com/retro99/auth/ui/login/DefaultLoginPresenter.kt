@@ -8,6 +8,7 @@ import com.retro99.auth.ui.components.InputValidator
 import com.retro99.auth.ui.components.LoginInputField
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
+import com.retro99.snackbar.api.SnackbarManager
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
@@ -32,6 +33,7 @@ class DefaultLoginPresenter(
     private val analytics: Analytics,
     private val inputValidator: InputValidator,
     private val userRepository: UserRepository,
+    private val snackbarManager: SnackbarManager,
 ) : BasePresenterImpl<LoginViewState, LoginIntent>(componentContext), LoginPresenter {
 
     override val defaultViewState = LoginViewState(loginMode)
@@ -167,6 +169,7 @@ class DefaultLoginPresenter(
                 userRepository.createUserWithEmailAndPassword(email, password)
             },
             onError = {
+                snackbarManager.showSnackbar(it.message.toString())
                 analytics.log(AnalyticsEvent.SignUpError(it.toString()))
             }
         ) {
@@ -179,6 +182,7 @@ class DefaultLoginPresenter(
             .onSuccess {
                 onGetUserSuccess(it)
             }.onFailure {
+                snackbarManager.showSnackbar(it.message.toString())
                 analytics.log(AnalyticsEvent.SignUpError(it.toString()))
             }
     }

@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.SharedFlow
 interface SnackbarManager {
     val messages: SharedFlow<SnackbarData>
     fun showSnackbar(snackbarData: SnackbarData)
+    fun showSnackbar(title: String)
 }

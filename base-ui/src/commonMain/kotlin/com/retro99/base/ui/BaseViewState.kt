@@ -12,4 +12,6 @@ sealed class BaseViewState<out T> {
     data class Error(
         val error: AppError
     ) : BaseViewState<Nothing>()
+
+    fun isLoading() = this is Loading
 }

@@ -21,4 +21,8 @@ class DefaultSnackbarManager : SnackbarManager {
         _messages.tryEmit(snackbarData)
     }
 
+    override fun showSnackbar(title: String) {
+        showSnackbar(SnackbarData(title))
+    }
+
 }
