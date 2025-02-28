@@ -14,7 +14,7 @@ interface RootGamesPresenter : BasePresenter<RootGamesViewState, RootGamesIntent
     sealed interface Child {
         data class GamesList(val component: GamesListComponent) : Child
         data class GameDetails(val component: GameDetailsPresenter) : Child
-        data class ChatDetails(val component: ChatPresenter) : Child
+        data class Chat(val component: ChatPresenter) : Child
     }
 
     @Serializable

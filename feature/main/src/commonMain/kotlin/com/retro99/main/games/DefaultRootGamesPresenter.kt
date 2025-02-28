@@ -83,7 +83,7 @@ class DefaultRootGamesPresenter(
             )
         )
 
-        is RootGamesPresenter.Config.Chat -> RootGamesPresenter.Child.ChatDetails(
+        is RootGamesPresenter.Config.Chat -> RootGamesPresenter.Child.Chat(
             chatPresenterFactory(
                 componentContext,
                 screenConfig.title,

@@ -7,8 +7,10 @@ import com.bardly.chats.ui.model.toDomainModel
 import com.bardly.chats.ui.model.toUiModel
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
+import com.retro99.base.ui.compose.TextWrapper
 import com.retro99.chats.domain.ChatsRepository
 import com.retro99.chats.domain.model.MessageType
+import com.retro99.snackbar.api.SnackbarManager
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import retro99.analytics.api.Analytics
@@ -31,6 +33,7 @@ class DefaultChatPresenter(
     @Assisted private val navigateBack: () -> Unit,
     private val chatsRepository: ChatsRepository,
     private val analytics: Analytics,
+    private val snackbarManager: SnackbarManager,
 ) : BasePresenterImpl<ChatViewState, ChatScreenIntent>(componentContext), ChatPresenter {
 
     private var questionsAskedInSession = 0
@@ -79,6 +82,7 @@ class DefaultChatPresenter(
                     .getAnswerFor(message.toDomainModel())
             },
             onError = {
+                snackbarManager.showSnackbar(TextWrapper.Text("Error: ${it.message}"))
                 updateOrSetSuccess {
                     it.copy(
                         isResponding = false

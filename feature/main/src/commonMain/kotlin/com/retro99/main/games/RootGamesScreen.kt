@@ -18,7 +18,7 @@ fun RootGamesScreen(
         when (val screen = child.instance) {
             is RootGamesPresenter.Child.GamesList -> GamesListScreen(screen.component)
             is RootGamesPresenter.Child.GameDetails -> GameDetailsScreen(screen.component)
-            is RootGamesPresenter.Child.ChatDetails -> ChatScreen(screen.component)
+            is RootGamesPresenter.Child.Chat -> ChatScreen(screen.component)
         }
     }
 }
