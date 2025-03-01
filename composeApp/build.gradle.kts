@@ -35,6 +35,10 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            // work around for https://github.com/GitLiveApp/firebase-kotlin-sdk/issues/676
+            implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
+            implementation("com.google.firebase:firebase-analytics-ktx:22.3.0")
+            implementation("com.google.firebase:firebase-crashlytics-ktx:19.4.1")
         }
         iosMain.dependencies {
         }
