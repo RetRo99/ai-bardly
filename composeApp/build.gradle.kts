@@ -25,10 +25,6 @@ kotlin {
             export(libs.essenty.stateKeeper)
         }
     }
-    compilerOptions {
-        freeCompilerArgs.add("-Xexpect-actual-classes")
-        freeCompilerArgs.add("-Xwhen-guards")
-    }
     jvmToolchain(libs.versions.jdk.get().toInt())
 
     sourceSets {
