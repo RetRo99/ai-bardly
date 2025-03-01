@@ -34,4 +34,9 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - build
+      - build:
+          retry:
+            limit: 1
+            when:
+              condition: "${CIRCLE_JOB} == 'build'"
+              on_fail: true
