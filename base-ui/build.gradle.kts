@@ -26,7 +26,7 @@ kotlin {
             implementation(libs.essenty.lifecycle)
             implementation(libs.essenty.coroutines)
             implementation(libs.datetime)
-            implementation(libs.coil.compose)
+            api(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             api(projects.translations)
         }
