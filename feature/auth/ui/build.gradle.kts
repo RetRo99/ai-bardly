@@ -17,10 +17,6 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    compilerOptions {
-        freeCompilerArgs.add("-Xwhen-guards")
-    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(projects.base)
