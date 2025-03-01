@@ -1,7 +1,13 @@
 package com.bardly.games.ui.details
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -18,16 +24,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -57,7 +67,7 @@ fun GameDetailsScreen(
 ) {
     BaseScreen(component) { viewState, intentDispatcher ->
         GamesScreenContent(
-            game = viewState.game,
+            viewState = viewState,
             intentDispatcher = intentDispatcher,
         )
     }
@@ -65,7 +75,7 @@ fun GameDetailsScreen(
 
 @Composable
 fun GamesScreenContent(
-    game: GameUiModel,
+    viewState: GameDetailsViewState,
     intentDispatcher: IntentDispatcher<GameDetailsIntent>,
     modifier: Modifier = Modifier
 ) {
@@ -75,17 +85,31 @@ fun GamesScreenContent(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        TopBar(onBackClick = { intentDispatcher(GameDetailsIntent.NavigateBack) })
+        TopBar(
+            onBackClick = { intentDispatcher(GameDetailsIntent.NavigateBack) },
+            onChangeFavorite = { new ->
+                intentDispatcher(
+                    GameDetailsIntent.OnChangeFavoriteClicked(
+                        new
+                    )
+                )
+            },
+            isFavorite = viewState.isFavorite,
+        )
 
         GameDetailsContent(
-            game = game,
+            game = viewState.game,
             intentDispatcher = intentDispatcher,
         )
     }
 }
 
 @Composable
-private fun TopBar(onBackClick: () -> Unit) {
+private fun TopBar(
+    onBackClick: () -> Unit,
+    onChangeFavorite: (Boolean) -> Unit,
+    isFavorite: Boolean?,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -95,6 +119,39 @@ private fun TopBar(onBackClick: () -> Unit) {
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = null
             )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+
+        if (isFavorite != null) {
+            AnimatedContent(
+                targetState = isFavorite,
+                transitionSpec = {
+                    if (targetState) {
+                        scaleIn(initialScale = 0.8f) + fadeIn() togetherWith
+                                scaleOut(targetScale = 2f) + fadeOut()
+                    } else {
+                        fadeIn() togetherWith fadeOut()
+                    }
+                }
+            ) { isFavorite ->
+                IconButton(
+                    onClick = { onChangeFavorite(!isFavorite) }
+                ) {
+                    if (isFavorite) {
+                        Icon(
+                            imageVector = Icons.Default.Favorite,
+                            contentDescription = "Remove from favorites",
+                            tint = Color.Red
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.FavoriteBorder,
+                            contentDescription = "Add to favorites",
+                            tint = LocalContentColor.current
+                        )
+                    }
+                }
+            }
         }
     }
 }

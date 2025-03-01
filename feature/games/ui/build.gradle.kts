@@ -25,6 +25,7 @@ kotlin {
             implementation(libs.bundles.kotlinInject)
             implementation(projects.baseUi)
             implementation(projects.base)
+            implementation(projects.feature.user.domain)
             implementation(projects.lib.paging.domain)
             implementation(projects.feature.games.domain)
             implementation(projects.lib.paging.ui)

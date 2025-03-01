@@ -35,6 +35,10 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            // work around for https://github.com/GitLiveApp/firebase-kotlin-sdk/issues/676
+            implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
+            implementation("com.google.firebase:firebase-analytics-ktx:22.3.0")
+            implementation("com.google.firebase:firebase-crashlytics-ktx:19.4.1")
         }
         iosMain.dependencies {
         }
@@ -43,15 +47,14 @@ kotlin {
             api(libs.essenty.stateKeeper)
             api(libs.essenty.backhandler)
             api(libs.essenty.lifecycle)
+            implementation(libs.essenty.coroutines)
+            implementation(libs.ktor.serialization.kotlinx.json)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.datetime)
-            implementation(libs.kmpauth.google)
-            implementation(libs.kmpauth.firebase)
-            implementation(libs.kmpauth.uihelper)
             implementation(libs.paging.common)
             implementation(libs.bundles.kotlinInject)
             implementation(libs.markdown)
@@ -75,6 +78,15 @@ kotlin {
             implementation(projects.feature.chats.domain)
             implementation(projects.feature.chats.ui)
             implementation(projects.feature.home.ui)
+            implementation(projects.feature.auth.data)
+            implementation(projects.feature.auth.domain)
+            implementation(projects.feature.auth.ui)
+            implementation(projects.feature.user.data)
+            implementation(projects.feature.user.domain)
+            implementation(projects.feature.user.ui)
+            implementation(projects.feature.main)
+            implementation(projects.lib.snackbar.api)
+            implementation(projects.lib.snackbar.implementation)
         }
     }
 }
@@ -87,7 +99,7 @@ android {
         applicationId = "com.ai.bardly"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 5
+        versionCode = 10
         versionName = "0.0.1"
     }
     packaging {
@@ -99,7 +111,7 @@ android {
         getByName("debug") {
             manifestPlaceholders["crashlyticsCollectionEnabled"] = false
             manifestPlaceholders["usesCleartextTraffic"] = true
-            resValue("string", "app_name", "Bardly Debug")
+            resValue("string", "app_name", "Bardy Debug")
         }
         getByName("release") {
             manifestPlaceholders += mapOf()
@@ -107,7 +119,8 @@ android {
             manifestPlaceholders["usesCleartextTraffic"] = false
             isMinifyEnabled = true // Enable minification here
             isMinifyEnabled = false
-            resValue("string", "app_name", "Bardly")
+            resValue("string", "app_name", "Bardy")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

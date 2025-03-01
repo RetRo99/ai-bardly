@@ -4,4 +4,5 @@ import com.bardly.games.ui.model.GameUiModel
 
 data class GameDetailsViewState(
     val game: GameUiModel,
+    val isFavorite: Boolean? = null,
 )

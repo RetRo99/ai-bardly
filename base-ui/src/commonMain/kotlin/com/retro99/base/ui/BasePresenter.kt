@@ -6,8 +6,13 @@ import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
+import com.github.michaelbull.result.fold
+import com.retro99.base.result.AppError
+import com.retro99.base.result.AppResult
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 interface BasePresenter<ScreenViewState, Intent : BaseScreenIntent> {
     val viewState: Value<BaseViewState<ScreenViewState>>
@@ -52,10 +57,27 @@ abstract class BasePresenterImpl<ScreenViewState, Intent : BaseScreenIntent>(com
     }
 
     protected fun setError(
-        throwable: Throwable,
+        error: AppError,
     ) {
         _viewState.update {
-            BaseViewState.Error(throwable)
+            BaseViewState.Error(error)
+        }
+    }
+
+    protected fun <T> launchDataOperation(
+        block: suspend () -> AppResult<T>,
+        onError: (AppError) -> Unit = ::setError,
+        onSuccess: (T) -> Unit,
+    ): Job {
+        return scope.launch {
+            block().fold(
+                success = { data ->
+                    onSuccess(data)
+                },
+                failure = { error ->
+                    onError(error)
+                }
+            )
         }
     }
 

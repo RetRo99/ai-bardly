@@ -3,9 +3,13 @@ package com.bardly.games.ui.details
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
+import com.retro99.auth.domain.manager.UserSessionManager
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.games.domain.GamesRepository
+import com.retro99.games.domain.usecase.ToggleGameFavouriteStateUseCase
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -19,6 +23,7 @@ typealias GameDetailsPresenterFactory = (
     game: GameUiModel,
     navigateToChat: (String, Int) -> Unit,
     navigateBack: () -> Unit,
+    openLogin: () -> Unit,
 ) -> DefaultGameDetailsPresenter
 
 @Inject
@@ -28,7 +33,10 @@ class DefaultGameDetailsPresenter(
     @Assisted private val game: GameUiModel,
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateBack: () -> Unit,
+    @Assisted private val openLogin: () -> Unit,
     private val gamesRepository: GamesRepository,
+    private val toggleFavoritesUseCase: ToggleGameFavouriteStateUseCase,
+    private val userSessionManager: UserSessionManager,
     private val analytics: Analytics,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {
@@ -39,12 +47,35 @@ class DefaultGameDetailsPresenter(
 
     init {
         updateGameOpen(game.id)
+        fetchIsFavoriteGame(game.id)
+    }
+
+    private fun fetchIsFavoriteGame(gameId: Int) {
+        gamesRepository.isMarkedAsFavorite(gameId)
+            .onEach { isFavorite ->
+                updateOrSetSuccess { it.copy(isFavorite = isFavorite) }
+            }.launchIn(scope)
     }
 
     override fun handleScreenIntent(intent: GameDetailsIntent) {
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
             GameDetailsIntent.OpenChatClicked -> openChat()
+            is GameDetailsIntent.OnChangeFavoriteClicked -> {
+                onChangeFavoriteClicked(intent.isFavoriteNew)
+            }
+        }
+    }
+
+    private fun onChangeFavoriteClicked(isFavorite: Boolean) {
+        if (userSessionManager.isUserLoggedIn) {
+            launchDataOperation(
+                block = { toggleFavoritesUseCase(game.id, isFavorite) },
+            ) {
+                updateOrSetSuccess { it.copy(isFavorite = isFavorite) }
+            }
+        } else {
+            openLogin()
         }
     }
 

@@ -4,7 +4,13 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.github.michaelbull.result.map
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import com.retro99.base.now
+import com.retro99.base.result.AppResult
+import com.retro99.base.result.CompletableResult
+import com.retro99.base.result.andThenAlways
 import com.retro99.games.data.local.GamesLocalDataSource
 import com.retro99.games.data.local.model.toDomainModel
 import com.retro99.games.data.local.model.toLocalModel
@@ -14,6 +20,7 @@ import com.retro99.games.domain.GamesRepository
 import com.retro99.games.domain.model.GameDomainModel
 import com.retro99.paging.domain.BardlyRemoteMediator
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -46,15 +53,56 @@ class GamesDataRepository(
         ).flow.toDomainModel()
     }
 
-    override suspend fun getRecentlyOpenGames(amount: Int): Result<List<GameDomainModel>> {
+    override suspend fun getRecentlyOpenGames(amount: Int): AppResult<List<GameDomainModel>> {
         return localSource.getRecentlyOpenGames(amount).map { it.toDomainModel() }
     }
 
-    override suspend fun getGamesById(ids: List<Int>): Result<List<GameDomainModel>> {
+    override suspend fun getGamesById(ids: List<Int>): AppResult<List<GameDomainModel>> {
         return localSource.getGamesById(ids).map { it.toDomainModel() }
     }
 
-    override suspend fun updateGameOpenDate(gameId: Int): Result<Unit> {
+    override suspend fun addToFavourites(gameId: Int): CompletableResult {
+        return remoteSource.addToFavourites(gameId)
+            .onSuccess {
+                localSource.addToFavourites(gameId)
+            }
+    }
+
+    override suspend fun removeFromFavourites(gameId: Int): CompletableResult {
+        return remoteSource.removeFromFavourites(gameId)
+            .onSuccess {
+                localSource.removeFromFavourites(gameId)
+            }
+    }
+
+    override suspend fun updateGameOpenDate(gameId: Int): CompletableResult {
         return localSource.updateGameOpenTime(gameId, now())
+    }
+
+    override fun isMarkedAsFavorite(gameId: Int): Flow<Boolean> {
+        return flow {
+            localSource.isMarkedAsFavorite(gameId)
+                .onSuccess { localFavoriteStatus ->
+                    emit(localFavoriteStatus)
+                }
+                .andThenAlways { localResult ->
+                    remoteSource.isMarkedAsFavorite(gameId)
+                        .onSuccess { remoteFavoriteStatus ->
+                            if (localResult.isErr || localResult.value != remoteFavoriteStatus) {
+                                emit(remoteFavoriteStatus)
+                            }
+                            if (remoteFavoriteStatus) {
+                                localSource.addToFavourites(gameId)
+                            } else {
+                                localSource.removeFromFavourites(gameId)
+                            }
+                        }
+                        .onFailure {
+                            if (localResult.isErr) {
+                                emit(false)
+                            }
+                        }
+                }
+        }
     }
 }

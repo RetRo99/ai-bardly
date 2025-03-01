@@ -5,5 +5,5 @@ sealed class AnalyticsEventParam(val analyticKey: String) {
     data object ScreenName : AnalyticsEventParam("screen_name")
     data object QuestionsAsked : AnalyticsEventParam("questions_asked")
     data object SingUpInputError : AnalyticsEventParam("sign_up_input_error")
-    data object SingUpError : AnalyticsEventParam("sign_up_error")
+    data object SingUpError : AnalyticsEventParam("error_message")
 }

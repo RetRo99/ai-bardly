@@ -1,9 +1,9 @@
 package com.retro99.games.data.local
 
 import androidx.paging.PagingSource
+import com.retro99.base.result.AppResult
 import com.retro99.database.api.games.GameEntity
 import com.retro99.database.api.games.GamesDatabase
-import com.retro99.games.data.local.model.GameMetadataLocalModel
 import kotlinx.datetime.LocalDateTime
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -21,19 +21,19 @@ class RoomGamesLocalDataSource(
         return gamesDatabase.getGames(query)
     }
 
-    override suspend fun getGamesById(ids: List<Int>): Result<List<GameEntity>> {
+    override suspend fun getGamesById(ids: List<Int>): AppResult<List<GameEntity>> {
         return gamesDatabase.getGamesById(ids)
     }
 
-    override suspend fun getGame(id: Int): Result<GameEntity> {
+    override suspend fun getGame(id: Int): AppResult<GameEntity> {
         return gamesDatabase.getGame(id)
     }
 
-    override suspend fun saveGames(games: List<GameEntity>): Result<Unit> {
+    override suspend fun saveGames(games: List<GameEntity>): AppResult<Unit> {
         return gamesDatabase.insert(games)
     }
 
-    override suspend fun getRecentlyOpenGames(amount: Int): Result<List<GameEntity>> {
+    override suspend fun getRecentlyOpenGames(amount: Int): AppResult<List<GameEntity>> {
         return gamesDatabase.getRecentlyOpenGames(amount)
     }
 
@@ -41,7 +41,22 @@ class RoomGamesLocalDataSource(
         gamesDatabase.clearAll()
     }
 
-    override suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime): Result<Unit> {
-        return gamesDatabase.updateGameOpenTime(GameMetadataLocalModel(id, openedDateTime))
+    override suspend fun updateGameOpenTime(
+        id: Int,
+        openedDateTime: LocalDateTime?
+    ): AppResult<Unit> {
+        return gamesDatabase.updateGameOpenTime(id, openedDateTime)
+    }
+
+    override suspend fun addToFavourites(gameId: Int): AppResult<Unit> {
+        return gamesDatabase.addToFavourites(gameId)
+    }
+
+    override suspend fun removeFromFavourites(gameId: Int): AppResult<Unit> {
+        return gamesDatabase.removeFromFavourites(gameId)
+    }
+
+    override suspend fun isMarkedAsFavorite(gameId: Int): AppResult<Boolean> {
+        return gamesDatabase.isMarkedAsFavorite(gameId)
     }
 }

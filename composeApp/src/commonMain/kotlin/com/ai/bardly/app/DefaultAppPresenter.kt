@@ -1,14 +1,18 @@
 package com.ai.bardly.app
 
 import com.ai.bardly.annotations.ActivityScope
-import com.ai.bardly.feature.auth.ui.AuthPresenterFactory
-import com.ai.bardly.feature.main.MainPresenterFactory
 import com.ai.bardly.feature.onboarding.OnboardingPresenterFactory
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
+import com.retro99.auth.ui.AuthPresenterFactory
+import com.retro99.base.ui.BasePresenterImpl
+import com.retro99.base.ui.BaseViewState
+import com.retro99.main.MainPresenterFactory
+import com.retro99.snackbar.api.SnackbarManager
+import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
@@ -21,7 +25,37 @@ class DefaultAppPresenter(
     private val mainPresenterFactory: MainPresenterFactory,
     private val onboardingPresenterFactory: OnboardingPresenterFactory,
     private val authPresenterFactory: AuthPresenterFactory,
-) : AppPresenter, ComponentContext by componentContext {
+    private val snackbarManager: SnackbarManager,
+) : BasePresenterImpl<AppViewState, AppScreenIntent>(componentContext), AppPresenter {
+
+    override val defaultViewState = AppViewState()
+    override val initialState = BaseViewState.Success(defaultViewState)
+
+    override fun onCreate() {
+        subscribeToSnackbars()
+    }
+
+    override fun handleScreenIntent(intent: AppScreenIntent) {
+        when (intent) {
+            is AppScreenIntent.SnackbarMessageShown -> snackbarMessageShown()
+        }
+    }
+
+    private fun snackbarMessageShown() {
+        updateOrSetSuccess { currentViewState ->
+            currentViewState.copy(snackbarData = null)
+        }
+    }
+
+    private fun subscribeToSnackbars() {
+        scope.launch {
+            snackbarManager.messages.collect { message ->
+                updateOrSetSuccess { currentViewState ->
+                    currentViewState.copy(snackbarData = message)
+                }
+            }
+        }
+    }
 
     private val navigation = StackNavigation<AppPresenter.Config>()
 
@@ -37,8 +71,12 @@ class DefaultAppPresenter(
         navigation.pop()
     }
 
-    private fun openMain() {
-        navigation.pushNew(AppPresenter.Config.Main)
+    private fun onLoginSuccess() {
+        onBackClicked()
+    }
+
+    private fun openLogin() {
+        navigation.pushNew(AppPresenter.Config.Auth)
     }
 
     private fun childFactory(
@@ -48,20 +86,21 @@ class DefaultAppPresenter(
         AppPresenter.Config.Main -> AppPresenter.Child.Main(
             mainPresenterFactory(
                 componentContext,
+                ::openLogin,
             )
         )
 
         AppPresenter.Config.Onboarding -> AppPresenter.Child.Onboarding(
             onboardingPresenterFactory(
                 componentContext,
-                ::openMain,
+                ::onLoginSuccess,
             )
         )
 
         AppPresenter.Config.Auth -> AppPresenter.Child.Auth(
             authPresenterFactory(
                 componentContext,
-                ::openMain,
+                ::onLoginSuccess,
             )
         )
     }

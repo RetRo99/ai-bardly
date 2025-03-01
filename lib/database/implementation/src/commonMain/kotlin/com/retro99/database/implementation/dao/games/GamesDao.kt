@@ -5,6 +5,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import kotlinx.datetime.LocalDateTime
 
 @Dao
 interface GamesDao {
@@ -49,5 +51,39 @@ interface GamesDao {
     suspend fun getRecentlyOpenGames(amount: Int): List<RoomGameEntity>
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
-    suspend fun updateGameOpenTime(game: RoomGameMetadataEntity)
+    suspend fun updateGameMetaData(game: RoomGameMetadataEntity)
+
+    @Transaction
+    suspend fun updateIsFavorite(gameId: Int, isFavorite: Boolean) {
+        val existing = getMetadataByGameId(gameId)
+        val metadata =
+            existing?.copy(isFavourite = isFavorite) ?: RoomGameMetadataEntity(
+                gameId,
+                null,
+                isFavorite
+            )
+        updateGameMetaData(metadata)
+    }
+
+    @Transaction
+    suspend fun updateGameOpenTime(gameId: Int, dateTime: LocalDateTime?) {
+        val existing = getMetadataByGameId(gameId)
+        val metadata = existing?.copy(lastOpenTime = dateTime) ?: RoomGameMetadataEntity(
+            gameId,
+            dateTime,
+            false
+        )
+        updateGameMetaData(metadata)
+    }
+
+    @Query("SELECT * FROM RoomGameMetadataEntity WHERE gameId = :gameId")
+    suspend fun getMetadataByGameId(gameId: Int): RoomGameMetadataEntity?
+
+    @Query(
+        """
+    SELECT isFavourite FROM RoomGameMetadataEntity
+    WHERE gameId = :gameId
+    """
+    )
+    suspend fun isMarkedAsFavorite(gameId: Int): Boolean?
 }

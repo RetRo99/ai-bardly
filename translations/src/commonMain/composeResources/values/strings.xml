@@ -28,6 +28,8 @@
     <string name="login_no_matching_user">No matching user found.</string>
     <string name="login_already_have_account">Already have an account? Login</string>
     <string name="login_do_not_have_account">Don’t have an account? Sign Up</string>
+    <string name="login_sign_in_success">Successfully logged in</string>
+    <string name="login_sign_up_success">Account created</string>
     <string name="chat_details_message_hint">Ask Bardly...</string>
     <string name="general_search">Search</string>
     <string name="just_now">Just now</string>
@@ -61,4 +63,15 @@
     <string name="validation_password_missing_digit">Password must contain at least one digit</string>
     <string name="validation_password_missing_letter">Password must contain at least one letter</string>
     <string name="validation_password_missing_capital_letter">Password must contain at least one uppercase letter</string>
+
+
+    <string name="error_title">Something went wrong</string>
+    <string name="error_network_connectivity">No internet connection available. Please check your connection.</string>
+    <string name="error_network_generic">Network error encountered. Please try again.</string>
+    <string name="error_api_generic">Server error (code %1$d). Please try again later.</string>
+    <string name="error_api_unknown">Server error. Please try again later.</string>
+    <string name="error_database_generic">Database error encountered. Please try again.</string>
+    <string name="error_database_specific">Database error in %1$s. Please try again.</string>
+    <string name="error_unknown">An unexpected error occurred. Please try again.</string>
+    <string name="error_retry">Retry</string>
 </resources>

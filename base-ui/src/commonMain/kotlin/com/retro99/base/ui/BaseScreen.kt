@@ -1,8 +1,11 @@
 package com.retro99.base.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -10,7 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.retro99.base.result.AppError
+import com.retro99.translations.StringRes
+import org.jetbrains.compose.resources.stringResource
+import resources.translations.error_api_generic
+import resources.translations.error_api_unknown
+import resources.translations.error_database_generic
+import resources.translations.error_database_specific
+import resources.translations.error_network_connectivity
+import resources.translations.error_network_generic
+import resources.translations.error_title
+import resources.translations.error_unknown
 
 @Composable
 fun <ScreenViewState, Intent : BaseScreenIntent> BaseScreen(
@@ -34,17 +50,57 @@ fun <ScreenViewState, Intent : BaseScreenIntent> BaseScreen(
     }
 }
 
-
 @Composable
 fun ErrorScreen(error: BaseViewState.Error) {
     Box(Modifier.fillMaxSize()) {
-        Text(
-            error.throwable.message ?: error.throwable.toString(), modifier = Modifier.align
-                (
-                Alignment
-                    .Center
+        val errorMessage = when (val appError = error.error) {
+            is AppError.NetworkError -> if (appError.isConnectivity) {
+                stringResource(StringRes.error_network_connectivity)
+            } else {
+                stringResource(StringRes.error_network_generic)
+            }
+
+            is AppError.ApiError -> if (appError.message != null) {
+                stringResource(StringRes.error_api_generic, appError.code)
+            } else {
+                stringResource(StringRes.error_api_unknown)
+            }
+
+            is AppError.DatabaseError -> if (appError.table != null) {
+                stringResource(StringRes.error_database_specific, appError.table!!)
+            } else {
+                stringResource(StringRes.error_database_generic)
+            }
+
+            is AppError.UnknownError -> stringResource(StringRes.error_unknown)
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = stringResource(StringRes.error_title),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center
             )
-        )
+
+            Text(
+                text = errorMessage,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyLarge
+            )
+
+//            Button(onClick = {
+//                 Implement retry logic here
+//            }) {
+//                Text(text = stringResource(StringRes.error_retry))
+//            }
+        }
     }
 }
 
