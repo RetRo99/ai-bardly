@@ -1,42 +1,32 @@
 version: 2.1
 
 jobs:
-  build:
-    working_directory: ~/project
+  test:
     docker:
       - image: cimg/android:2023.08
     environment:
       JVM_OPTS: -Xmx3200m
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum "composeApp/build.gradle.kts" }}
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum "composeApp/build.gradle.kts" }}
       - run:
           name: Run Tests
-          command: ./gradlew test
-      - run:
-          name: Build Debug APK
-          command: ./gradlew assembleDebug
-      - store_artifacts:
-          path: app/build/outputs/apk/debug/
-          destination: apks/
+          command: ./gradlew :composeApp:testDebugUnitTest
       - store_test_results:
-          path: app/build/test-results
+          path: composeApp/build/test-results
 
 workflows:
   version: 2
-  build-and-test:
+  test:
     jobs:
-      - build:
-          retry:
-            limit: 1
-            when:
-              condition: "${CIRCLE_JOB} == 'build'"
-              on_fail: true
+      - test
