@@ -5,12 +5,12 @@ orbs:
 jobs:
   test:
     executor:
-      name: android/android-docker
+      name: android/android_docker
       resource_class: medium
       tag: 2024.01.1
     steps:
       - checkout
-      # Restore caches - note the hyphen vs underscore difference
+      # Restore caches
       - android/restore_gradle_cache:
           cache_prefix: jars-v1
       - android/restore_build_cache:
@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Run Tests via Fastlane
           command: bundle exec fastlane android test
-      # Save caches - note the hyphen vs underscore difference
+      # Save caches
       - android/save_gradle_cache:
           cache_prefix: jars-v1
       - android/save_build_cache:
