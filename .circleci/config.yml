@@ -1,30 +1,30 @@
 version: 2.1
 
+orbs:
+  android: circleci/android@2.3.0
+
 jobs:
   test:
-    docker:
-      - image: cimg/android:2023.08
-    environment:
-      JVM_OPTS: -Xmx3200m
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    executor: android/android-machine
     steps:
       - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum "composeApp/build.gradle.kts" }}
+      - android/restore-gradle-cache:
+          cache-prefix: jars-v1
+      - android/restore-build-cache:
+          cache-prefix: build-cache-v1
+      - run:
+          name: Install OpenJDK 21
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y openjdk-21-jdk
+            sudo update-java-alternatives -s java-1.21.0-openjdk-amd64 || echo "Java 21 not found, continuing with existing Java version"
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
-      - save_cache:
-          paths:
-            - ~/.gradle/caches
-            - ~/.gradle/wrapper
-          key: jars-{{ checksum "build.gradle.kts" }}-{{ checksum "composeApp/build.gradle.kts" }}
-      - run:
-          name: Set Java Version
-          command: sudo update-java-alternatives -s java-1.21.0-openjdk-amd64 || echo "Java 21 not found, attempting to install."
-      - run:
-          name: Install OpenJDK 21
-          command: sudo apt-get update && sudo apt-get install -y openjdk-21-jdk
+      - android/save-gradle-cache:
+          cache-prefix: jars-v1
+      - android/save-build-cache:
+          cache-prefix: build-cache-v1
       - run:
           name: Run Tests
           command: ./gradlew :composeApp:testDebugUnitTest
