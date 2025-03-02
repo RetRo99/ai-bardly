@@ -3,31 +3,6 @@ orbs:
   android: circleci/android@3.1.0
   ruby: circleci/ruby@1.8.0
 
-jobs:
-  test:
-    executor:
-      name: android/android_machine
-      resource-class: medium
-      tag: 2024.01.1
-    steps:
-      - checkout
-      # Restore caches using custom commands
-      - restore_gradle_cache
-      # Setup Ruby and Fastlane
-      - ruby/install:
-          version: "3.1.2"
-      - ruby/install-deps:
-          key: gems-v1
-      # Run tests using Fastlane
-      - run:
-          name: Run Tests via Fastlane
-          command: bundle exec fastlane android test
-      # Save caches using custom commands
-      - save_gradle_cache
-      # Store test results
-      - store_test_results:
-          path: composeApp/build/test-results
-
 # Define custom commands for gradle cache
 commands:
   restore_gradle_cache:
@@ -46,6 +21,32 @@ commands:
           paths:
             - ~/.gradle/caches
           key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
+
+jobs:
+  test:
+    # Use the standard Android executor from the orb
+    executor:
+      name: android/android-machine
+      tag: 2023.10.1  # Use an available tag for the machine image
+
+    steps:
+      - checkout
+      # Restore caches using custom commands
+      - restore_gradle_cache
+      # Setup Ruby and Fastlane
+      - ruby/install:
+          version: "3.1.2"
+      - ruby/install-deps:
+          key: gems-v1
+      # Run tests using Fastlane
+      - run:
+          name: Run Tests via Fastlane
+          command: bundle exec fastlane android test
+      # Save caches using custom commands
+      - save_gradle_cache
+      # Store test results
+      - store_test_results:
+          path: composeApp/build/test-results
 
 workflows:
   version: 2
