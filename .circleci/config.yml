@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  android: circleci/android@2.3.0
+  android: circleci/android@3.1.0
   ruby: circleci/ruby@1.8.0
 
 jobs:
@@ -11,33 +11,41 @@ jobs:
       tag: 2024.01.1
     steps:
       - checkout
-
-      # Restore caches
-      - android/restore-gradle-cache:
-          cache-prefix: jars-v1
-      - android/restore-build-cache:
-          cache-prefix: build-cache-v1
-
+      # Restore caches using custom commands
+      - restore_gradle_cache
       # Setup Ruby and Fastlane
       - ruby/install:
           version: "3.1.2"
       - ruby/install-deps:
           key: gems-v1
-
       # Run tests using Fastlane
       - run:
           name: Run Tests via Fastlane
           command: bundle exec fastlane android test
-
-      # Save caches
-      - android/save-gradle-cache:
-          cache-prefix: jars-v1
-      - android/save-build-cache:
-          cache-prefix: build-cache-v1
-
+      # Save caches using custom commands
+      - save_gradle_cache
       # Store test results
       - store_test_results:
           path: composeApp/build/test-results
+
+# Define custom commands for gradle cache
+commands:
+  restore_gradle_cache:
+    steps:
+      - restore_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
+  save_gradle_cache:
+    steps:
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
 
 workflows:
   version: 2
