@@ -5,7 +5,9 @@ orbs:
 
 jobs:
   test:
-    executor: android/android-machine
+    executor:
+      name: android/android-machine
+      tag: 2023.07.1
     steps:
       - checkout
       - android/restore-gradle-cache:
