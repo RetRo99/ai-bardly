@@ -2,37 +2,19 @@ version: 2.1
 orbs:
   android: circleci/android@3.1.0
   ruby: circleci/ruby@1.8.0
-
-# Define custom commands for gradle cache
-commands:
-  restore_gradle_cache:
-    steps:
-      - restore_cache:
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - restore_cache:
-          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
-  save_gradle_cache:
-    steps:
-      - save_cache:
-          paths:
-            - ~/.gradle/wrapper
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - save_cache:
-          paths:
-            - ~/.gradle/caches
-          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
-
 jobs:
   test:
-    # Use the standard Android executor from the orb
     executor:
-      name: android/android-machine
-      tag: 2023.10.1  # Use an available tag for the machine image
-
+      name: android/android-docker
+      resource_class: medium
+      tag: 2024.01.1
     steps:
       - checkout
-      # Restore caches using custom commands
-      - restore_gradle_cache
+      # Restore caches - note the hyphen vs underscore difference
+      - android/restore_gradle_cache:
+          cache_prefix: jars-v1
+      - android/restore_build_cache:
+          cache_prefix: build-cache-v1
       # Setup Ruby and Fastlane
       - ruby/install:
           version: "3.1.2"
@@ -42,12 +24,14 @@ jobs:
       - run:
           name: Run Tests via Fastlane
           command: bundle exec fastlane android test
-      # Save caches using custom commands
-      - save_gradle_cache
+      # Save caches - note the hyphen vs underscore difference
+      - android/save_gradle_cache:
+          cache_prefix: jars-v1
+      - android/save_build_cache:
+          cache_prefix: build-cache-v1
       # Store test results
       - store_test_results:
           path: composeApp/build/test-results
-
 workflows:
   version: 2
   test:
