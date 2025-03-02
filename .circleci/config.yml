@@ -63,6 +63,11 @@ jobs:
             echo "storePassword=$KEYSTORE_PASSWORD" >> keystore.properties
             echo "keyAlias=$KEY_ALIAS" >> keystore.properties
             echo "keyPassword=$KEY_PASSWORD" >> keystore.properties
+      # Setup Google Play service account
+      - run:
+          name: Decode Google Play service account
+          command: |
+            echo $GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 | base64 -d > fastlane/google-play-service-account.json
       # Run deploy using Fastlane
       - run:
           name: Deploy to Google Play via Fastlane
