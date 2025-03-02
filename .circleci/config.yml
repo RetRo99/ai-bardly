@@ -1,42 +1,41 @@
 version: 2.1
-
 orbs:
   android: circleci/android@2.3.0
-
-executors:
-  android-docker:
-    docker:
-      - image: cimg/android:2023.08
-    environment:
-      JVM_OPTS: -Xmx3200m
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-    resource_class: medium
+  ruby: circleci/ruby@1.8.0
 
 jobs:
   test:
-    executor: android-docker
+    executor:
+      name: android/android-docker
+      resource-class: large
+      tag: "2023.08"
     steps:
       - checkout
+
+      # Restore caches
       - android/restore-gradle-cache:
           cache-prefix: jars-v1
       - android/restore-build-cache:
           cache-prefix: build-cache-v1
+
+      # Setup Ruby and Fastlane
+      - ruby/install:
+          version: "3.1.2"
+      - ruby/install-deps:
+          key: gems-v1
+
+      # Run tests using Fastlane
       - run:
-          name: Install OpenJDK 21
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y openjdk-21-jdk
-            sudo update-java-alternatives -s java-1.21.0-openjdk-amd64 || echo "Java 21 not found, continuing with existing Java version"
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
+          name: Run Tests via Fastlane
+          command: bundle exec fastlane android test
+
+      # Save caches
       - android/save-gradle-cache:
           cache-prefix: jars-v1
       - android/save-build-cache:
           cache-prefix: build-cache-v1
-      - run:
-          name: Run Tests
-          command: ./gradlew :composeApp:testDebugUnitTest
+
+      # Store test results
       - store_test_results:
           path: composeApp/build/test-results
 
