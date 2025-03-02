@@ -1,14 +1,15 @@
 version: 2.1
+executors:
+  java21:
+    docker:
+      - image: 'cimg/openjdk:21.0'
 orbs:
   android: circleci/android@2.3.0
   ruby: circleci/ruby@1.8.0
 
 jobs:
   test:
-    executor:
-      name: android/android-docker
-      resource-class: large
-      tag: "2023.08"
+    executor: java21
     steps:
       - checkout
 
