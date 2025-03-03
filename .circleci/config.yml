@@ -52,6 +52,12 @@ jobs:
           version: "3.1.2"
       - ruby/install-deps:
           key: gems-v1
+      # Setup Git configuration for tagging and commits
+      - run:
+          name: Setup Git user
+          command: |
+            git config --global user.email "ci@gmail.com"
+            git config --global user.name "CircleCI"
       # Setup signing keys
       - run:
           name: Decode Android keystore
