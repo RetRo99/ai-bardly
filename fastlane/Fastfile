@@ -32,7 +32,6 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    # Ensure we have a clean git status before deploying
 
     # Build the release bundle
     gradle(task: "clean bundleRelease")
@@ -41,6 +40,7 @@ platform :android do
     upload_to_play_store(
       json_key: 'fastlane/google-play-service-account.json',
       track: 'internal', # Deploy to internal track
+      release_status: 'draft'  # Add this line
     )
 
     # Optionally: Tag the current commit with the version
