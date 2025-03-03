@@ -88,7 +88,6 @@ platform :android do
       path: ["composeApp/build.gradle.kts"],
       message: "[skip ci] chore: #{changelog}",
       allow_nothing_to_commit: true,
-      git_user_name: "CircleCI",
     )
 
     # Get current branch
