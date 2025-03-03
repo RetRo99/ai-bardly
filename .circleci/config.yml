@@ -72,7 +72,7 @@ jobs:
       # Run deploy using Fastlane with custom gradle command
       - run:
           name: Deploy to Google Play via Fastlane
-          command: bundle exec fastlane android deploy
+          command: bundle exec fastlane android deploy_and_bump
           no_output_timeout: 30m
       # Save caches
       - android/save_gradle_cache:
@@ -84,9 +84,9 @@ workflows:
   test-and-deploy:
     jobs:
       - test
-      - deploy
-#          requires:
-#            - test
-#          filters:
-#            branches:
-#              only: main  # Only run deploy on main branch
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main

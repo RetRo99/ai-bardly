@@ -40,6 +40,15 @@ Submit a new Beta Build to Crashlytics Beta
 
 Deploy a new version to the Google Play
 
+### android deploy_and_bump
+
+```sh
+[bundle exec] fastlane android deploy_and_bump
+```
+
+Deploy a new app version to Google Play Store and automatically update version information across
+branches
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [

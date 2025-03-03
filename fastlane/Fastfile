@@ -32,9 +32,116 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
+    # Ensure we have a clean git status before deploying
+    ensure_git_status_clean
+
+    # Build the release bundle
     gradle(task: "clean bundleRelease")
-      upload_to_play_store(
-        json_key: 'fastlane/google-play-service-account.json'
-      )
+
+    # Upload to Google Play Store
+    upload_to_play_store(
+      json_key: 'fastlane/google-play-service-account.json',
+      track: 'internal', # Deploy to internal track
+    )
+
+    # Optionally: Tag the current commit with the version
+    current_version = get_version_name(app_project_dir: '**/composeApp')
+    current_code = get_version_code(app_project_dir: '**/composeApp')
+
+    # Create and push a tag for this release
+    add_git_tag(
+      tag: "v#{current_version}-#{current_code}",
+      message: "Release to internal track: v#{current_version} (#{current_code})",
+      sign: false
+    )
+
+    push_git_tags
+
+    UI.success("Successfully deployed v#{current_version} (#{current_code}) to Google Play internal track 🚀")
   end
+
+  desc "Deploy a new app version to Google Play Store and automatically update version information across branches"
+  lane :deploy_and_bump do
+    # Call the deploy lane to handle the actual deployment
+    deploy
+
+    # Get current version info before bumping
+    old_version = get_version_name(app_project_dir: '**/composeApp')
+    old_code = get_version_code(app_project_dir: '**/composeApp')
+
+    # After successful deployment, bump the version
+    increment_version_name(
+      app_project_dir: '**/composeApp',
+      bump_type: 'patch'
+    )
+
+    # Increment version code
+    increment_version_code(app_project_dir: '**/composeApp')
+
+    # Get new version for commit message
+    new_version = get_version_name(app_project_dir: '**/composeApp')
+    new_code = get_version_code(app_project_dir: '**/composeApp')
+
+    # Create changelog for commit
+    changelog = "Version bump from #{old_version} (#{old_code}) to #{new_version} (#{new_code})"
+
+    # Commit the version changes
+    git_commit(
+      path: ["composeApp/build.gradle.kts"],
+      message: "[skip ci] chore: #{changelog}",
+      allow_nothing_to_commit: true,
+      git_user_name: "CircleCI",
+      git_user_email: "ci-build@your-domain.com"
+    )
+
+    # Get current branch
+    current_branch = git_branch
+
+    # Push changes to current branch
+    push_to_git_remote(
+      remote: "origin",
+      local_branch: current_branch,
+      remote_branch: current_branch
+    )
+
+    # Now apply the same changes to develop branch if it exists
+    begin
+      # Check if develop branch exists using the git_branch_exists? method
+      if git_branch_exists?(branch: "develop")
+        # Get the SHA of the commit we just made
+        last_commit_sha = last_git_commit[:commit_hash]
+
+        # Checkout develop branch
+        sh("git fetch origin develop")
+        sh("git checkout develop")
+
+        # Cherry-pick the commit from main
+        sh("git cherry-pick #{last_commit_sha}")
+
+        # Push to develop
+        push_to_git_remote(
+          remote: "origin",
+          local_branch: "develop",
+          remote_branch: "develop",
+          force: false
+        )
+
+        # Switch back to the original branch
+        sh("git checkout #{current_branch}")
+        UI.success("Version bump successfully applied to both #{current_branch} and develop branches")
+      else
+        UI.important("develop branch doesn't exist - only updated #{current_branch}")
+      end
+    rescue => ex
+      UI.error("Failed to apply version bump to develop branch: #{ex}")
+      UI.important("Version bump was only applied to #{current_branch}")
+      sh("git checkout #{current_branch}") rescue nil
+    end
+  end
+
+  # Helper method to check if a branch exists
+  def git_branch_exists?(branch:)
+    `git ls-remote --heads origin #{branch}`.strip.length > 0
+  end
+
 end
