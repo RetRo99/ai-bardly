@@ -4,7 +4,7 @@ coroutines = "1.10.1"
 kotlinResult = "2.0.1"
 targetSdk = "35"
 minSdk = "29"
-jdk = "21"
+jdk = "17"
 
 agp = "8.8.1"
 androidx-activityCompose = "1.10.0"
