@@ -33,8 +33,16 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean bundleRelease")
-      upload_to_play_store(
-        json_key: 'fastlane/google-play-service-account.json'
-      )
+    upload_to_play_store(
+      json_key: 'fastlane/google-play-service-account.json',
+      track: 'internal',  # Changed from 'production' to 'internal'
+      release_status: 'completed',
+      skip_upload_apk: true,
+      aab: ENV["GRADLE_AAB_OUTPUT_PATH"],
+      # Key addition for App Signing
+      validate_package_name: false,
+      validate_only: false,
+      check_superseded_tracks: false
+    )
   end
 end
