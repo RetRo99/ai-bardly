@@ -40,7 +40,6 @@ platform :android do
     upload_to_play_store(
       json_key: 'fastlane/google-play-service-account.json',
       track: 'internal', # Deploy to internal track
-      release_status: 'complete'
     )
 
     # Optionally: Tag the current commit with the version
