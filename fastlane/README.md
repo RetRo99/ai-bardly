@@ -49,6 +49,12 @@ Deploy a new version to the Google Play
 Deploy a new app version to Google Play Store and automatically update version information across
 branches
 
+### android checkout_main
+
+```sh
+[bundle exec] fastlane android checkout_main
+```
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [
