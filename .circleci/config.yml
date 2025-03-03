@@ -2,12 +2,11 @@ version: 2.1
 orbs:
   android: circleci/android@3.1.0
   ruby: circleci/ruby@1.8.0
-
 jobs:
   test:
     executor:
       name: android/android_docker
-      resource_class: medium
+      resource_class: large
       tag: 2024.01.1
     steps:
       - checkout
@@ -33,12 +32,14 @@ jobs:
       # Store test results
       - store_test_results:
           path: composeApp/build/test-results
-
   deploy:
     executor:
       name: android/android_docker
-      resource_class: medium
+      resource_class: large
       tag: 2024.01.1
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.compiler.execution.strategy=in-process -Dkotlin.incremental=false"
+      _JAVA_OPTIONS: "-Xmx3g -XX:+HeapDumpOnOutOfMemoryError"
     steps:
       - checkout
       # Restore caches
@@ -68,16 +69,16 @@ jobs:
           name: Decode Google Play service account
           command: |
             echo $GOOGLE_PLAY_SERVICE_ACCOUNT_JSON_BASE64 | base64 -d > fastlane/google-play-service-account.json
-      # Run deploy using Fastlane
+      # Run deploy using Fastlane with custom gradle command
       - run:
           name: Deploy to Google Play via Fastlane
           command: bundle exec fastlane android deploy
+          no_output_timeout: 30m
       # Save caches
       - android/save_gradle_cache:
           cache_prefix: jars-v1
       - android/save_build_cache:
           cache_prefix: build-cache-v1
-
 workflows:
   version: 2
   test-and-deploy:
