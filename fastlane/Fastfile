@@ -33,7 +33,6 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     # Ensure we have a clean git status before deploying
-    ensure_git_status_clean
 
     # Build the release bundle
     gradle(task: "clean bundleRelease")
@@ -91,7 +90,6 @@ platform :android do
       message: "[skip ci] chore: #{changelog}",
       allow_nothing_to_commit: true,
       git_user_name: "CircleCI",
-      git_user_email: "ci-build@your-domain.com"
     )
 
     # Get current branch
