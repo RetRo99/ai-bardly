@@ -140,4 +140,8 @@ platform :android do
     `git ls-remote --heads origin #{branch}`.strip.length > 0
   end
 
+    lane :checkout_main do
+        sh "git flow release start 1.0.0"
+    end
+
 end
