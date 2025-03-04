@@ -1,15 +1,15 @@
-package com.retro99.network.analytics.implementation.di
+package com.retro99.analytics.implementation.di
 
+import com.retro99.analytics.api.Analytics
+import com.retro99.analytics.implementation.AnalyticsManager
+import com.retro99.analytics.implementation.DebugAnalyticsManager
 import com.retro99.base.annotations.Named
-import com.retro99.network.analytics.implementation.AnalyticsManager
-import com.retro99.network.analytics.implementation.DebugAnalyticsManager
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import dev.gitlive.firebase.analytics.analytics
 import dev.gitlive.firebase.crashlytics.FirebaseCrashlytics
 import dev.gitlive.firebase.crashlytics.crashlytics
 import me.tatarka.inject.annotations.Provides
-import retro99.analytics.api.Analytics
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesTo
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

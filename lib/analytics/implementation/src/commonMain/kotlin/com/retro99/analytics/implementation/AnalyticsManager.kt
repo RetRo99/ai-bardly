@@ -1,9 +1,9 @@
-package com.retro99.network.analytics.implementation
+package com.retro99.analytics.implementation
 
+import com.retro99.analytics.api.Analytics
+import com.retro99.analytics.api.AnalyticsEvent
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import dev.gitlive.firebase.crashlytics.FirebaseCrashlytics
-import retro99.analytics.api.Analytics
-import retro99.analytics.api.AnalyticsEvent
 
 class AnalyticsManager(
     private val firebaseAnalytics: FirebaseAnalytics,

@@ -1,9 +1,9 @@
 package com.retro99.preferences.implementation
 
+import com.retro99.preferences.api.Preferences
+import com.retro99.preferences.api.PreferencesKey
 import com.russhwolf.settings.Settings
 import me.tatarka.inject.annotations.Inject
-import retro99.preferences.api.Preferences
-import retro99.preferences.api.PreferencesKey
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn

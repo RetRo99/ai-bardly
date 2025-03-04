@@ -1,4 +1,4 @@
-package retro99.preferences.api
+package com.retro99.preferences.api
 
 interface Preferences {
     fun getStringOrNull(key: PreferencesKey): String?
