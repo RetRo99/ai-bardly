@@ -136,6 +136,14 @@ platform :android do
         sh("git checkout develop")
         sh("git flow release start #{version}")
         sh("git flow release finish #{version}")
+
+        # Push main and develop branches first
+        sh("git checkout main")
+        push_to_git_remote(remote: "origin", local_branch: "main", remote_branch: "main")
+        sh("git checkout develop")
+        push_to_git_remote(remote: "origin", local_branch: "develop", remote_branch: "develop")
+
+        # Finally push tags
         push_git_tags
     end
 
