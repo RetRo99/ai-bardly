@@ -3,6 +3,8 @@ package com.retro99.auth.ui.login
 import UserUiModel
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
+import com.retro99.analytics.api.Analytics
+import com.retro99.analytics.api.AnalyticsEvent
 import com.retro99.auth.domain.UserRepository
 import com.retro99.auth.ui.components.InputValidator
 import com.retro99.auth.ui.components.LoginInputField
@@ -15,8 +17,6 @@ import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import resources.translations.login_sign_in_success
 import resources.translations.login_sign_up_success
-import retro99.analytics.api.Analytics
-import retro99.analytics.api.AnalyticsEvent
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import toUiModel
 

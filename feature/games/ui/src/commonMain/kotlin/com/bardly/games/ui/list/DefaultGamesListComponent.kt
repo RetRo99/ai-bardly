@@ -6,6 +6,9 @@ import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
 import com.bardly.games.ui.model.toUiModels
+import com.retro99.analytics.api.Analytics
+import com.retro99.analytics.api.AnalyticsEvent
+import com.retro99.analytics.api.AnalyticsEventOrigin
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.games.domain.GamesRepository
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +27,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import retro99.analytics.api.Analytics
-import retro99.analytics.api.AnalyticsEvent
-import retro99.analytics.api.AnalyticsEventOrigin
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias GamesListComponentFactory = (

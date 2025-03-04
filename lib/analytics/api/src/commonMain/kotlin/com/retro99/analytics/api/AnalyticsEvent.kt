@@ -1,4 +1,4 @@
-package retro99.analytics.api
+package com.retro99.analytics.api
 
 sealed class AnalyticsEvent(
     val name: String,

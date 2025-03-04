@@ -1,5 +1,6 @@
 package com.retro99.network.implementation
 
+import com.retro99.analytics.api.Analytics
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.plugins.HttpResponseValidator
@@ -11,7 +12,6 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
-import retro99.analytics.api.Analytics
 import retro99.games.api.tokens.BearerTokenProvider
 import retro99.games.api.tokens.BearerTokenRefresher
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope

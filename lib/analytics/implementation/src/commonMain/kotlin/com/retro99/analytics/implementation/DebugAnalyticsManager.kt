@@ -1,12 +1,12 @@
-package com.retro99.network.analytics.implementation
+package com.retro99.analytics.implementation
 
 import co.touchlab.kermit.Logger
-import retro99.analytics.api.Analytics
-import retro99.analytics.api.AnalyticsEvent
+import com.retro99.analytics.api.Analytics
+import com.retro99.analytics.api.AnalyticsEvent
 
 class DebugAnalyticsManager : Analytics {
 
-    private val logger = Logger.withTag("DebugAnalyticsManager")
+    private val logger = Logger.Companion.withTag("DebugAnalyticsManager")
 
     override fun log(event: AnalyticsEvent) {
         logger.d { "Logging event: $event" }

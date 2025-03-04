@@ -5,6 +5,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.bardly.chats.ui.model.MessageUiModel
 import com.bardly.chats.ui.model.toDomainModel
 import com.bardly.chats.ui.model.toUiModel
+import com.retro99.analytics.api.Analytics
+import com.retro99.analytics.api.AnalyticsEvent
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.base.ui.compose.TextWrapper
@@ -13,8 +15,6 @@ import com.retro99.chats.domain.model.MessageType
 import com.retro99.snackbar.api.SnackbarManager
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
-import retro99.analytics.api.Analytics
-import retro99.analytics.api.AnalyticsEvent
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias ChatPresenterFactory = (
