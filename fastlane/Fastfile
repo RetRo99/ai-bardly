@@ -42,7 +42,6 @@ platform :android do
       track: 'internal', # Deploy to internal track
     )
 
-    UI.success("Successfully deployed v#{current_version} (#{current_code}) to Google Play internal track 🚀")
   end
 
   desc "Deploy a new app version to Google Play Store and automatically update version information across branches"
