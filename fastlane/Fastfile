@@ -42,19 +42,6 @@ platform :android do
       track: 'internal', # Deploy to internal track
     )
 
-    # Optionally: Tag the current commit with the version
-    current_version = get_version_name(app_project_dir: '**/composeApp')
-    current_code = get_version_code(app_project_dir: '**/composeApp')
-
-    # Create and push a tag for this release
-    add_git_tag(
-      tag: "v#{current_version}-#{current_code}",
-      message: "Release to internal track: v#{current_version} (#{current_code})",
-      sign: false
-    )
-
-    push_git_tags
-
     UI.success("Successfully deployed v#{current_version} (#{current_code}) to Google Play internal track 🚀")
   end
 
@@ -140,16 +127,16 @@ platform :android do
     `git ls-remote --heads origin #{branch}`.strip.length > 0
   end
 
-    lane :checkout_main do
-        sh "git flow release start 1.0.0"
-    end
-
     lane :release do
+        git_pull(remote: "origin", branch: "develop")
+        git_pull(remote: "origin", branch: "main")
         versionName = get_version_name(app_project_dir: '**/composeApp')
         versionCode = get_version_code(app_project_dir: '**/composeApp')
         version = "#{versionName}-#{versionCode}"
-
-        sh "git flow release start #{version}"
+        sh("git checkout develop")
+        sh("git flow release start #{version}")
+        sh("git flow release finish #{version}")
+        push_git_tags
     end
 
 end
