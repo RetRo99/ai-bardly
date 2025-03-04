@@ -144,4 +144,12 @@ platform :android do
         sh "git flow release start 1.0.0"
     end
 
+    lane :release do
+        versionName = get_version_name(app_project_dir: '**/composeApp')
+        versionCode = get_version_code(app_project_dir: '**/composeApp')
+        version = "#{versionName}-#{versionCode}"
+
+        sh "git flow release start #{version}"
+    end
+
 end
