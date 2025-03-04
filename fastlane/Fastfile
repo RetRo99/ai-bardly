@@ -42,19 +42,6 @@ platform :android do
       track: 'internal', # Deploy to internal track
     )
 
-    # Optionally: Tag the current commit with the version
-    current_version = get_version_name(app_project_dir: '**/composeApp')
-    current_code = get_version_code(app_project_dir: '**/composeApp')
-
-    # Create and push a tag for this release
-    add_git_tag(
-      tag: "v#{current_version}-#{current_code}",
-      message: "Release to internal track: v#{current_version} (#{current_code})",
-      sign: false
-    )
-
-    push_git_tags
-
     UI.success("Successfully deployed v#{current_version} (#{current_code}) to Google Play internal track 🚀")
   end
 
@@ -140,16 +127,79 @@ platform :android do
     `git ls-remote --heads origin #{branch}`.strip.length > 0
   end
 
-    lane :checkout_main do
-        sh "git flow release start 1.0.0"
-    end
-
     lane :release do
-        versionName = get_version_name(app_project_dir: '**/composeApp')
-        versionCode = get_version_code(app_project_dir: '**/composeApp')
-        version = "#{versionName}-#{versionCode}"
+      # Plugin: ensure_git_status_clean - Check for uncommitted changes before starting
+      ensure_git_status_clean
 
-        sh "git flow release start #{version}"
+      # Use git_pull with rebase option for cleaner commit history
+      sh("git checkout main")
+      git_pull(rebase: true)  # Pulling with rebase to avoid merge commits
+
+      sh("git checkout develop")
+      git_pull(rebase: true)  # Pulling with rebase to avoid merge commits
+
+      # Plugin: get_version_name and get_version_code - Read the app version info
+      # These are from the plugins "get_version_name" and "get_version_code"
+      versionName = get_version_name(app_project_dir: '**/composeApp')
+      versionCode = get_version_code(app_project_dir: '**/composeApp')
+      version = "#{versionName}-#{versionCode}"
+
+      # Log the version being released using UI instead of puts
+      UI.header("Creating Release #{version}")
+
+      # Plugin: changelog_from_git_commits - Generate changelog from commits
+      changelog = changelog_from_git_commits(
+        between: ["develop", "HEAD"],     # Get all commits between develop and HEAD
+        pretty: "- %s",                   # Format for each commit
+        date_format: "short",             # "2023-01-30" format
+        match_lightweight_tag: false,     # Use annotated tags only
+        merge_commit_filtering: "exclude_merges" # Exclude merge commits
+      )
+
+      # Execute git-flow commands with better error handling
+      begin
+        sh("git flow release start #{version}")
+
+        # Optional: Write generated changelog to CHANGELOG.md
+        if !changelog.nil? && !changelog.empty?
+          UI.message("Updating CHANGELOG.md with release notes")
+
+          update_changelog(
+            version: version,
+            changelog_path: "./CHANGELOG.md",
+            append_date: true,
+            section_identifier: version,
+            content: changelog
+          )
+          Commit changelog if updated
+          git_commit(path: "./CHANGELOG.md", message: "Update CHANGELOG for version #{version}")
+        end
+
+           sh("git flow release finish #{version}")
+      rescue => ex
+        UI.error("Git flow commands failed: #{ex}")
+        # You could add error handling or cleanup here
+        raise
+      end
+
+      # Use fastlane's git actions instead of shell commands
+      sh("git checkout main")
+      push_to_git_remote(remote: "origin", local_branch: "main", remote_branch: "main")
+
+      sh("git checkout develop")
+      push_to_git_remote(remote: "origin", local_branch: "develop", remote_branch: "develop")
+
+      # Plugin: push_git_tags - Push tags with clearer logging
+      UI.message("Pushing tags to remote")
+      push_git_tags(remote: "origin")
+
+      notification(
+        title: "Fastlane Release Complete",
+        message: "Successfully released version #{version}",
+        sound: "default"
+      )
+
+      UI.success("Successfully released version #{version}")
     end
 
 end

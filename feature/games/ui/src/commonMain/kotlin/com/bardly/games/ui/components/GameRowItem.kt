@@ -1,5 +1,6 @@
 package com.bardly.games.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,17 +19,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.resources.DrawableRes
+import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import resources.icons.ic_chat
 import resources.icons.ic_clock
 import resources.icons.ic_players
 import resources.icons.ic_rating
+import resources.translations.games
 
 @Composable
 fun GameRowItem(
@@ -129,6 +135,7 @@ private fun TitleAndChatRow(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GamesLazyColumn(
     itemCount: () -> Int,
@@ -145,6 +152,20 @@ fun GamesLazyColumn(
         contentPadding = contentPadding,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        stickyHeader {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(16.dp),
+                    text = stringResource(StringRes.games),
+                    style = MaterialTheme.typography.headlineLarge,
+                )
+            }
+        }
         items(
             count = itemCount(),
             key = getKey,
