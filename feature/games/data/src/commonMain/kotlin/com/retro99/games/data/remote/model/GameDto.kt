@@ -19,6 +19,8 @@ data class GameDto(
     val thumbnail: String?,
     @SerialName("listNumber")
     override val id: Int,
+    val categories: List<String>?,
+    val types: List<String>?,
 ) : PagingItem
 
 fun List<GameDto>.toDomainModel() = map(GameDto::toDomainModel)
