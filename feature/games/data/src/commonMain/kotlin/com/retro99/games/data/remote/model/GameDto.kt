@@ -37,4 +37,6 @@ fun GameDto.toDomainModel() = GameDomainModel(
     link = link.orEmpty(),
     thumbnail = thumbnail.orEmpty(),
     id = id,
+    categories = categories,
+    types = types,
 )

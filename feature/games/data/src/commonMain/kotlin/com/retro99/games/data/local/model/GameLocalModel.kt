@@ -19,7 +19,9 @@ data class GameLocalModel(
     override val complexity: String,
     override val link: String,
     override val thumbnail: String,
-    override val id: Int
+    override val id: Int,
+    override val categories: List<String>?,
+    override val types: List<String>?,
 ) : PagingItem, GameEntity
 
 fun Flow<PagingData<GameEntity>>.toDomainModel() = map { it.map(GameEntity::toDomainModel) }
@@ -36,6 +38,8 @@ fun GameDomainModel.toLocalModel() = GameLocalModel(
     link = link,
     thumbnail = thumbnail,
     id = id,
+    categories = categories,
+    types = types,
 )
 
 fun GameEntity.toDomainModel() = GameDomainModel(
@@ -50,6 +54,8 @@ fun GameEntity.toDomainModel() = GameDomainModel(
     link = link,
     thumbnail = thumbnail,
     id = id,
+    categories = categories,
+    types = types,
 )
 
 fun List<GameEntity>.toDomainModel() = map(GameEntity::toDomainModel)

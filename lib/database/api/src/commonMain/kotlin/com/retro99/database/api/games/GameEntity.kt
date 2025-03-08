@@ -14,4 +14,6 @@ interface GameEntity : PagingItem {
     val link: String
     val thumbnail: String
     override val id: Int
+    val categories: List<String>?
+    val types: List<String>?
 }
