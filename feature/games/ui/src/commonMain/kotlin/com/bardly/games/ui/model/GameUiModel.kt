@@ -20,7 +20,9 @@ data class GameUiModel(
     val complexity: String,
     val link: String,
     val thumbnail: String,
-    override val id: Int
+    override val id: Int,
+    val categories: List<String>?,
+    val types: List<String>?,
 ) : PagingItem
 
 fun PagingData<GameDomainModel>.toUiModels() = map(GameDomainModel::toUiModel)
@@ -38,4 +40,6 @@ fun GameDomainModel.toUiModel() = GameUiModel(
     link = link,
     thumbnail = thumbnail,
     id = id,
+    categories = categories,
+    types = types,
 )
