@@ -17,7 +17,9 @@ data class RoomGameEntity(
     override val link: String,
     override val thumbnail: String,
     @PrimaryKey()
-    override val id: Int
+    override val id: Int,
+    override val categories: List<String>?,
+    override val types: List<String>?,
 ) : GameEntity
 
 fun GameEntity.toRoomEntity() = RoomGameEntity(
@@ -32,6 +34,8 @@ fun GameEntity.toRoomEntity() = RoomGameEntity(
     link = link,
     thumbnail = thumbnail,
     id = id,
+    categories = categories,
+    types = types,
 )
 
 fun List<GameEntity>.toRoomEntity() = map(GameEntity::toRoomEntity)

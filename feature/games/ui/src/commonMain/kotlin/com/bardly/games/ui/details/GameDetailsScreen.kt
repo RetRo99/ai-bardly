@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -33,6 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -58,8 +60,10 @@ import resources.icons.ic_chat
 import resources.icons.ic_rating
 import resources.translations.amount_of_players
 import resources.translations.game_age_recommendation
+import resources.translations.game_categories
 import resources.translations.game_complexity
 import resources.translations.game_length
+import resources.translations.game_types
 
 @Composable
 fun GameDetailsScreen(
@@ -188,6 +192,39 @@ private fun GameDetailsContent(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun LabelSection(
+    title: StringResource,
+    labels: List<String>
+) {
+    Column {
+        Text(
+            text = stringResource(title),
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LazyRow {
+            items(labels.size) { index ->
+                val type = labels[index]
+                Surface(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier.padding(4.dp)
+                ) {
+                    Text(
+                        text = type,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
 @Composable
 private fun GameHeaderSection(
     rating: String,
@@ -266,17 +303,30 @@ private fun GameDescriptionSection(
     game: GameUiModel,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         Text(
             text = "Description",
             style = MaterialTheme.typography.titleMedium
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         GameInformationCards(game = game)
 
-        Spacer(modifier = Modifier.height(16.dp))
+        game.types?.let {
+            LabelSection(
+                title = StringRes.game_types,
+                labels = it,
+            )
+        }
+
+        game.categories?.let {
+            LabelSection(
+                title = StringRes.game_categories,
+                labels = it,
+            )
+        }
 
         Description(game.description)
     }
@@ -289,8 +339,7 @@ private fun GameInformationCards(
 ) {
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement =
-        Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         GameInfoCard(

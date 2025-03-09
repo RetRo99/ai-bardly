@@ -17,7 +17,7 @@ import com.retro99.database.implementation.dao.messages.MessagesDao
         RoomGameEntity::class,
         RoomGameMetadataEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
 )
 @ConstructedBy(AppDatabaseConstructor::class)

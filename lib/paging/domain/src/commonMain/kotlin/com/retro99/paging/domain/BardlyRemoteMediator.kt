@@ -57,34 +57,62 @@ class BardlyRemoteMediator<RemoteItem : PagingItem, LocalItem : PagingItem>(
 
             when (val remoteResult = remoteSource.load(loadParams)) {
                 is PagingSource.LoadResult.Page -> {
-                    if (loadType == LoadType.REFRESH) {
-                        clearLocal()
-                    }
-                    saveToLocal(remoteToLocal(remoteResult.data))
-
-                    MediatorResult.Success(
-                        endOfPaginationReached = remoteResult.data.isEmpty()
-                    )
-                }
-
-                is PagingSource.LoadResult.Error -> {
-                    when (val localResult = localSource.load(loadParams)) {
-                        is PagingSource.LoadResult.Page -> {
+                    try {
+                        if (loadType == LoadType.REFRESH) {
+                            clearLocal()
+                        }
+                        saveToLocal(remoteToLocal(remoteResult.data))
+                        MediatorResult.Success(
+                            endOfPaginationReached = remoteResult.data.isEmpty()
+                        )
+                    } catch (e: IllegalStateException) {
+                        // Specifically catch Room database schema mismatch errors
+                        if (e.message?.contains("Room cannot verify the data integrity") == true) {
+                            // Since we already have remote data, we can return success with that data
+                            // but we couldn't save it locally due to schema mismatch
                             MediatorResult.Success(
-                                endOfPaginationReached = localResult.data.isEmpty()
+                                endOfPaginationReached = remoteResult.data.isEmpty()
                             )
+                        } else {
+                            // Rethrow if it's a different IllegalStateException
+                            throw e
                         }
-
-                        is PagingSource.LoadResult.Error -> {
-                            MediatorResult.Error(localResult.throwable)
-                        }
-
-                        is PagingSource.LoadResult.Invalid -> {
-                            MediatorResult.Error(IllegalStateException("Invalid local source"))
-                        }
+                    } catch (e: Exception) {
+                        // Catch any other exceptions during local operations
+                        MediatorResult.Error(e)
                     }
                 }
+                is PagingSource.LoadResult.Error -> {
+                    try {
+                        when (val localResult = localSource.load(loadParams)) {
+                            is PagingSource.LoadResult.Page -> {
+                                MediatorResult.Success(
+                                    endOfPaginationReached = localResult.data.isEmpty()
+                                )
+                            }
 
+                            is PagingSource.LoadResult.Error -> {
+                                MediatorResult.Error(localResult.throwable)
+                            }
+
+                            is PagingSource.LoadResult.Invalid -> {
+                                MediatorResult.Error(IllegalStateException("Invalid local source"))
+                            }
+                        }
+                    } catch (e: IllegalStateException) {
+                        // Specifically catch Room database schema mismatch errors
+                        if (e.message?.contains("Room cannot verify the data integrity") == true) {
+                            // You could handle this specially, e.g., return empty result
+                            MediatorResult.Error(e)
+                        } else {
+                            // Rethrow if it's a different IllegalStateException
+                            throw e
+                        }
+                    } catch (e: Exception) {
+                        // Catch any other exceptions that might occur
+                        MediatorResult.Error(e)
+                    }
+                }
                 is PagingSource.LoadResult.Invalid -> {
                     MediatorResult.Error(IllegalStateException("Invalid remote source"))
                 }

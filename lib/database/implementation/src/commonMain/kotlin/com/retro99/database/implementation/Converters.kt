@@ -14,4 +14,16 @@ class Converters {
     fun dateToTimestamp(date: LocalDateTime?): String? {
         return date?.toString()
     }
+
+    private val separator = ","
+
+    @TypeConverter
+    fun fromStringList(value: List<String>?): String? {
+        return value?.joinToString(separator)
+    }
+
+    @TypeConverter
+    fun toStringList(value: String?): List<String>? {
+        return if (value.isNullOrBlank()) null else value.split(separator).map { it.trim() }
+    }
 }
