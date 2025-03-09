@@ -6,6 +6,8 @@
     <string name="game_length">Game Length</string>
     <string name="game_complexity">Complexity</string>
     <string name="game_age_recommendation">Age</string>
+    <string name="game_types">Types</string>
+    <string name="game_categories">Categories</string>
     <string name="amount_of_players">Players</string>
     <string name="chat_lists_recent_chats">Recent chats</string>
     <string name="home_recent_games">Recent games</string>
