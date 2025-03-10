@@ -40,8 +40,7 @@ import kotlin.reflect.KClass
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
 class KtorNetworkClient(
-    @PublishedApi
-    internal val httpClient: HttpClient,
+    private val httpClient: HttpClient,
 ) : NetworkClient {
 
     override suspend fun <T : Any> getWithClass(
