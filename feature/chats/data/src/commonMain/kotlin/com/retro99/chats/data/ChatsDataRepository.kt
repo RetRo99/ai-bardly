@@ -11,7 +11,6 @@ import com.retro99.chats.data.remote.model.toDomainModel
 import com.retro99.chats.data.remote.model.toDto
 import com.retro99.chats.domain.ChatsRepository
 import com.retro99.chats.domain.model.MessageDomainModel
-import kotlinx.coroutines.async
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -28,20 +27,15 @@ class ChatsDataRepository(
     override suspend fun getAnswerFor(
         request: MessageDomainModel
     ): AppResult<MessageDomainModel> = coroutineBinding {
-        val saveUserMessageResult = async {
-            localChatsDataSource.saveMessage(request.toLocalModel()).bind()
-        }
 
-        val answer = remoteChatsDataSource
+        val messageWithAnswer = remoteChatsDataSource
             .getAnswer(request.toDto())
             .bind()
             .toDomainModel()
 
-        saveUserMessageResult.await()
+        localChatsDataSource.saveMessage(messageWithAnswer.toLocalModel()).bind()
 
-        localChatsDataSource.saveMessage(answer.toLocalModel()).bind()
-
-        answer
+        messageWithAnswer
     }
 
     override suspend fun getMessages(gameId: Int): AppResult<List<MessageDomainModel>> {

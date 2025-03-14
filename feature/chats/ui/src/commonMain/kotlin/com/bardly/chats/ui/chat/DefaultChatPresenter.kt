@@ -11,7 +11,6 @@ import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.base.ui.compose.TextWrapper
 import com.retro99.chats.domain.ChatsRepository
-import com.retro99.chats.domain.model.MessageType
 import com.retro99.snackbar.api.SnackbarManager
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -64,7 +63,7 @@ class DefaultChatPresenter(
         ) { messages ->
             updateOrSetSuccess {
                 it.copy(
-                    messages = messages.map { it.toUiModel(false) }
+                    messages = messages.map { it.toUiModel() }
                 )
             }
         }
@@ -90,7 +89,18 @@ class DefaultChatPresenter(
                 }
             }
         ) { answer ->
-            displayMessage(answer.toUiModel(true))
+            updateOrSetSuccess {
+                it.copy(
+                    messages = it.messages.map {
+                        if (it.timestamp == message.timestamp) {
+                            it.copy(answer = answer.answer, animateText = true)
+                        } else {
+                            it
+                        }
+                    },
+                    isResponding = false
+                )
+            }
         }
     }
 
@@ -112,7 +122,12 @@ class DefaultChatPresenter(
         messageText: String,
         id: Int,
     ): MessageUiModel {
-        val message = MessageUiModel(messageText, MessageType.User, id, gameTitle)
+        val message = MessageUiModel(
+            question = messageText,
+            answer = null,
+            gameId = id,
+            gameTitle = gameTitle,
+        )
         displayMessage(message)
         return message
     }
@@ -123,7 +138,7 @@ class DefaultChatPresenter(
         updateOrSetSuccess {
             it.copy(
                 messages = listOf(message) + it.messages,
-                isResponding = message.isUserMessage,
+                isResponding = message.answer == null,
             )
         }
     }

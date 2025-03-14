@@ -9,6 +9,6 @@ data class QuestionRequestDto(
 )
 
 fun MessageDto.toRequest() = QuestionRequestDto(
-    question = text,
+    question = question,
     game = gameTitle,
 )

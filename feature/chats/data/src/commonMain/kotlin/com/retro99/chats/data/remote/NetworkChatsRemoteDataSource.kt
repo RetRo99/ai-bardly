@@ -1,12 +1,10 @@
 package com.retro99.chats.data.remote
 
 import com.github.michaelbull.result.map
-import com.retro99.base.now
 import com.retro99.base.result.AppResult
 import com.retro99.chats.data.remote.model.MessageDto
 import com.retro99.chats.data.remote.model.PromptResponseDto
 import com.retro99.chats.data.remote.model.toRequest
-import com.retro99.chats.domain.model.MessageType
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
 import retro99.games.api.post
@@ -26,12 +24,8 @@ class NetworkChatsRemoteDataSource(
             path = "prompt",
             body = message.toRequest()
         ).map {
-            MessageDto(
-                text = it.data.result.text,
-                type = MessageType.Bardly,
-                gameId = message.gameId,
-                timestamp = now(),
-                gameTitle = message.gameTitle
+            message.copy(
+                answer = it.data.result.text,
             )
         }
     }

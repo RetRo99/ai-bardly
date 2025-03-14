@@ -1,44 +1,32 @@
 package com.retro99.chats.data.local.model
 
 import com.retro99.chats.domain.model.MessageDomainModel
-import com.retro99.chats.domain.model.MessageType
 import com.retro99.database.api.message.MessageEntity
-import com.retro99.database.api.message.MessageLocalType
 import kotlinx.datetime.LocalDateTime
 
 data class MessageLocalModel(
     override val gameId: Int,
-    override val text: String,
-    override val type: MessageLocalType,
+    override val question: String,
     override val gameTitle: String,
     override val timestamp: LocalDateTime,
+    override val answer: String,
 ) : MessageEntity
 
 
 fun MessageEntity.toDomainModel() = MessageDomainModel(
+    question = question,
+    answer = answer,
     gameId = gameId,
-    text = text,
-    type = type.toDomainType(),
     timestamp = timestamp,
     gameTitle = gameTitle,
 )
 
-fun MessageLocalType.toDomainType() = when (this) {
-    MessageLocalType.User -> MessageType.User
-    MessageLocalType.Bardly -> MessageType.Bardly
-}
-
-fun MessageType.toLocalType() = when (this) {
-    MessageType.User -> MessageLocalType.User
-    MessageType.Bardly -> MessageLocalType.Bardly
-}
-
 fun List<MessageEntity>.toDomainModel() = map(MessageEntity::toDomainModel)
 
 fun MessageDomainModel.toLocalModel() = MessageLocalModel(
+    question = question,
+    answer = requireNotNull(answer) { "answer must be provided when saving to database" },
     gameId = gameId,
-    text = text,
-    type = type.toLocalType(),
     timestamp = timestamp,
     gameTitle = gameTitle,
 )
