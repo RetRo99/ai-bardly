@@ -7,10 +7,9 @@ import com.retro99.chats.data.local.ChatsLocalDataSource
 import com.retro99.chats.data.local.model.toDomainModel
 import com.retro99.chats.data.local.model.toLocalModel
 import com.retro99.chats.data.remote.ChatsRemoteDataSource
-import com.retro99.chats.data.remote.model.toDomainModel
-import com.retro99.chats.data.remote.model.toDto
 import com.retro99.chats.domain.ChatsRepository
 import com.retro99.chats.domain.model.MessageDomainModel
+import com.retro99.chats.domain.model.PromptRequestDomainModel
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -28,10 +27,22 @@ class ChatsDataRepository(
         request: MessageDomainModel
     ): AppResult<MessageDomainModel> = coroutineBinding {
 
-        val messageWithAnswer = remoteChatsDataSource
-            .getAnswer(request.toDto())
+        val messagesHistory = localChatsDataSource
+            .getMessages(request.gameId, 5)
             .bind()
-            .toDomainModel()
+
+        val messageWithAnswer = remoteChatsDataSource
+            .getAnswer(
+                PromptRequestDomainModel(
+                    question = request.question,
+                    gameTitle = request.gameTitle,
+                    history = messagesHistory.toDomainModel()
+                )
+            )
+            .map { test ->
+                request.copy(answer = test.answer)
+            }
+            .bind()
 
         localChatsDataSource.saveMessage(messageWithAnswer.toLocalModel()).bind()
 
