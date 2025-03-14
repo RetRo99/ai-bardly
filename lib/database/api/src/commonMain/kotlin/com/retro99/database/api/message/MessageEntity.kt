@@ -4,8 +4,8 @@ import kotlinx.datetime.LocalDateTime
 
 interface MessageEntity {
     val gameId: Int
-    val text: String
-    val type: MessageLocalType
+    val question: String
+    val answer: String
     val gameTitle: String
     val timestamp: LocalDateTime
 }

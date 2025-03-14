@@ -3,23 +3,22 @@ package com.retro99.database.implementation.dao.messages
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.retro99.database.api.message.MessageEntity
-import com.retro99.database.api.message.MessageLocalType
 import kotlinx.datetime.LocalDateTime
 
 @Entity
 data class MessageRoomEntity(
     override val gameId: Int,
-    override val text: String,
-    override val type: MessageLocalType,
+    override val question: String,
     override val gameTitle: String,
     @PrimaryKey
     override val timestamp: LocalDateTime,
+    override val answer: String,
 ) : MessageEntity
 
 fun MessageEntity.toRoomEntity(): MessageRoomEntity = MessageRoomEntity(
+    question = question,
+    answer = answer,
     gameId = gameId,
-    text = text,
-    type = type,
     gameTitle = gameTitle,
     timestamp = timestamp,
 )

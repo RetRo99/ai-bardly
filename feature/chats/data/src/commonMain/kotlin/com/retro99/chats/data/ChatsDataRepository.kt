@@ -7,11 +7,9 @@ import com.retro99.chats.data.local.ChatsLocalDataSource
 import com.retro99.chats.data.local.model.toDomainModel
 import com.retro99.chats.data.local.model.toLocalModel
 import com.retro99.chats.data.remote.ChatsRemoteDataSource
-import com.retro99.chats.data.remote.model.toDomainModel
-import com.retro99.chats.data.remote.model.toDto
 import com.retro99.chats.domain.ChatsRepository
 import com.retro99.chats.domain.model.MessageDomainModel
-import kotlinx.coroutines.async
+import com.retro99.chats.domain.model.PromptRequestDomainModel
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -28,20 +26,27 @@ class ChatsDataRepository(
     override suspend fun getAnswerFor(
         request: MessageDomainModel
     ): AppResult<MessageDomainModel> = coroutineBinding {
-        val saveUserMessageResult = async {
-            localChatsDataSource.saveMessage(request.toLocalModel()).bind()
-        }
 
-        val answer = remoteChatsDataSource
-            .getAnswer(request.toDto())
+        val messagesHistory = localChatsDataSource
+            .getMessages(request.gameId, 5)
             .bind()
-            .toDomainModel()
 
-        saveUserMessageResult.await()
+        val messageWithAnswer = remoteChatsDataSource
+            .getAnswer(
+                PromptRequestDomainModel(
+                    question = request.question,
+                    gameTitle = request.gameTitle,
+                    history = messagesHistory.toDomainModel()
+                )
+            )
+            .map { test ->
+                request.copy(answer = test.answer)
+            }
+            .bind()
 
-        localChatsDataSource.saveMessage(answer.toLocalModel()).bind()
+        localChatsDataSource.saveMessage(messageWithAnswer.toLocalModel()).bind()
 
-        answer
+        messageWithAnswer
     }
 
     override suspend fun getMessages(gameId: Int): AppResult<List<MessageDomainModel>> {

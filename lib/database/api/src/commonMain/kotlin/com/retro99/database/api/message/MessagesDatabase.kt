@@ -9,7 +9,7 @@ interface MessagesDatabase {
 
     suspend fun insert(items: List<MessageEntity>): CompletableResult
 
-    suspend fun getMessage(gameId: Int): AppResult<List<MessageEntity>>
+    suspend fun getMessages(gameId: Int, limit: Int?): AppResult<List<MessageEntity>>
 
     suspend fun getLatestMessagesPerGame(): AppResult<List<MessageEntity>>
 }

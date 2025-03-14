@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -163,12 +164,28 @@ private fun Chat(
                     }
                 }
                 items(messages) { message ->
-                    MessageBubble(
-                        message = message,
-                        onAnimationEnded = {
-                            intentDispatcher(ChatScreenIntent.MessageAnimationDone(it))
-                        },
-                    )
+                    Column {
+                        MessageBubble(
+                            onAnimationEnded = {
+                                intentDispatcher(ChatScreenIntent.MessageAnimationDone(message))
+                            },
+                            text = message.question,
+                            isQuestion = true,
+                            animateText = false,
+                        )
+                        message.answer?.let {
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            MessageBubble(
+                                text = it,
+                                isQuestion = false,
+                                animateText = message.animateText,
+                                onAnimationEnded = {
+                                    intentDispatcher(ChatScreenIntent.MessageAnimationDone(message))
+                                },
+                            )
+                        }
+                    }
                 }
             }
 
@@ -185,22 +202,24 @@ private fun Chat(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.MessageBubble(
-    message: MessageUiModel,
-    onAnimationEnded: (MessageUiModel) -> Unit,
+    text: String,
+    isQuestion: Boolean,
+    animateText: Boolean,
+    onAnimationEnded: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val textAlignment = if (message.isUserMessage) {
+    val textAlignment = if (isQuestion) {
         Alignment.CenterEnd
     } else {
         Alignment.CenterStart
     }
-    val shape = if (message.isUserMessage) {
+    val shape = if (isQuestion) {
         RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp, bottomStart = 8.dp)
     } else {
         RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp, bottomEnd = 8.dp)
     }
 
-    val color = if (message.isUserMessage) {
+    val color = if (isQuestion) {
         Color(0xFFA55E5D)
     } else {
         Color(0xFF56479C)
@@ -214,17 +233,17 @@ private fun LazyItemScope.MessageBubble(
                 .background(color, shape = shape)
                 .animateItem(),
         ) {
-            var animatedText by remember(message) {
-                mutableStateOf(if (message.animateText) "" else message.text)
+            var animatedText by remember(text) {
+                mutableStateOf(if (animateText) "" else text)
             }
 
-            if (message.animateText) {
+            if (animateText) {
                 LaunchedEffect(Unit) {
-                    message.text.indices.forEach { index ->
+                    text.indices.forEach { index ->
                         delay(20)
-                        animatedText = message.text.substring(0..index)
+                        animatedText = text.substring(0..index)
                     }
-                    onAnimationEnded(message)
+                    onAnimationEnded()
                 }
             }
             val clipboardManager: ClipboardManager = LocalClipboardManager.current
@@ -239,7 +258,7 @@ private fun LazyItemScope.MessageBubble(
                         .combinedClickable(
                             onClick = {}, // You can add click handling if needed
                             onLongClick = {
-                                clipboardManager.setText(AnnotatedString(message.text))
+                                clipboardManager.setText(AnnotatedString(text))
                             }
                         ),
                 )
