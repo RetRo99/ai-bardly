@@ -170,7 +170,7 @@ fun GamesLazyColumn(
         items(
             count = itemCount(),
             key = getKey,
-            contentType = { "GameCard" }
+            contentType = { "Game Card" }
         ) { index ->
             val game = getItem(index)
             if (game != null) {
