@@ -157,6 +157,7 @@ fun GamesLazyColumn(
                 modifier = Modifier
                     .fillMaxWidth(),
                 color = MaterialTheme.colorScheme.background,
+                shadowElevation = 4.dp, // Adjust elevation as needed
             ) {
                 Text(
                     modifier = Modifier
