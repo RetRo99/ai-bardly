@@ -130,9 +130,10 @@ android {
             resValue("string", "app_name", "Bardy Debug")
         }
         getByName("release") {
-            manifestPlaceholders += mapOf()
-            manifestPlaceholders["crashlyticsCollectionEnabled"] = true
-            manifestPlaceholders["usesCleartextTraffic"] = false
+            manifestPlaceholders += mapOf(
+                "crashlyticsCollectionEnabled" to true,
+                "usesCleartextTraffic" to false
+            )
             isMinifyEnabled = true
             isMinifyEnabled = false
             resValue("string", "app_name", "Bardy")
