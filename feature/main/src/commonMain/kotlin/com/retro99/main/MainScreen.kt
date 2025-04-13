@@ -27,6 +27,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.retro99.main.chats.RootRecentScreen
 import com.retro99.main.games.RootGamesScreen
 import com.retro99.main.home.RootHomeScreen
+import com.retro99.main.shelfs.RootShelfsScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -62,6 +63,7 @@ fun MainScreen(component: MainPresenter) {
                     is MainPresenter.Child.GameList -> RootGamesScreen(child.component)
                     is MainPresenter.Child.Home -> RootHomeScreen(child.component)
                     is MainPresenter.Child.RecentChats -> RootRecentScreen(child.component)
+                    is MainPresenter.Child.Shelfs -> RootShelfsScreen(child.component)
                 }
             }
         }
@@ -92,6 +94,7 @@ private fun BottomBar(
                 is MainPresenter.Child.Home -> destination == MainPresenter.Config.Home
                 is MainPresenter.Child.GameList -> destination == MainPresenter.Config.GameList
                 is MainPresenter.Child.RecentChats -> destination == MainPresenter.Config.RecentChats
+                is MainPresenter.Child.Shelfs -> destination == MainPresenter.Config.Shelfs
             }
             NavigationBarItem(
                 icon = {

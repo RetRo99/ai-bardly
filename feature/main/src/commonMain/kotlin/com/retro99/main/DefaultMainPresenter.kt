@@ -6,9 +6,14 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.retro99.base.ui.decompose.switchTab
+import com.retro99.main.MainPresenter.Child.GameList
+import com.retro99.main.MainPresenter.Child.Home
+import com.retro99.main.MainPresenter.Child.RecentChats
+import com.retro99.main.MainPresenter.Child.Shelfs
 import com.retro99.main.chats.RootRecentPresenterFactory
 import com.retro99.main.games.RootGamesPresenterFactory
 import com.retro99.main.home.RootHomePresenterFactory
+import com.retro99.main.shelfs.RootShelfsPresenterFactory
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -26,6 +31,7 @@ class DefaultMainPresenter(
     private val rootGamesFactory: RootGamesPresenterFactory,
     private val rootHomeFactory: RootHomePresenterFactory,
     private val rootRecentFactory: RootRecentPresenterFactory,
+    private val rootShelfsPresenterFactory: RootShelfsPresenterFactory,
 ) : MainPresenter, ComponentContext by componentContext {
     private val navigation = StackNavigation<MainPresenter.Config>()
 
@@ -48,23 +54,30 @@ class DefaultMainPresenter(
         screenConfig: MainPresenter.Config,
         componentContext: ComponentContext
     ): MainPresenter.Child = when (screenConfig) {
-        MainPresenter.Config.GameList -> MainPresenter.Child.GameList(
+        MainPresenter.Config.GameList -> GameList(
             rootGamesFactory(
                 componentContext,
                 openLogin,
             )
         )
 
-        MainPresenter.Config.Home -> MainPresenter.Child.Home(
+        MainPresenter.Config.Home -> Home(
             rootHomeFactory(
                 componentContext,
                 openLogin,
             )
         )
 
-        MainPresenter.Config.RecentChats -> MainPresenter.Child.RecentChats(
+        MainPresenter.Config.RecentChats -> RecentChats(
             rootRecentFactory(
                 componentContext,
+            )
+        )
+
+        MainPresenter.Config.Shelfs -> Shelfs(
+            rootShelfsPresenterFactory(
+                componentContext,
+                openLogin
             )
         )
     }

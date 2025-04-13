@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "0b5efbd71bd879d33248d7fe0e083e95",
+    "identityHash": "d434c0a907afa330cf6ee11e207868d3",
     "entities": [
       {
         "tableName": "MessageRoomEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `text` TEXT NOT NULL, `type` TEXT NOT NULL, `gameTitle` TEXT NOT NULL, `timestamp` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `question` TEXT NOT NULL, `gameTitle` TEXT NOT NULL, `timestamp` TEXT NOT NULL, `answer` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
         "fields": [
           {
             "fieldPath": "gameId",
@@ -15,14 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "text",
-            "columnName": "text",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "type",
-            "columnName": "type",
+            "fieldPath": "question",
+            "columnName": "question",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -37,6 +31,12 @@
             "columnName": "timestamp",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "answer",
+            "columnName": "answer",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -48,7 +48,7 @@
       },
       {
         "tableName": "RoomGameEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `rating` TEXT NOT NULL, `yearPublished` TEXT NOT NULL, `numberOfPlayers` TEXT NOT NULL, `playingTime` TEXT NOT NULL, `ageRange` TEXT NOT NULL, `complexity` TEXT NOT NULL, `link` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, `id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `rating` TEXT NOT NULL, `yearPublished` TEXT NOT NULL, `numberOfPlayers` TEXT NOT NULL, `playingTime` TEXT NOT NULL, `ageRange` TEXT NOT NULL, `complexity` TEXT NOT NULL, `link` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, `id` INTEGER NOT NULL, `categories` TEXT, `types` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "title",
@@ -115,6 +115,16 @@
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "categories",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "types",
+            "columnName": "types",
+            "affinity": "TEXT"
           }
         ],
         "primaryKey": {
@@ -165,11 +175,29 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "RoomShelfEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0b5efbd71bd879d33248d7fe0e083e95')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd434c0a907afa330cf6ee11e207868d3')"
     ]
   }
 }

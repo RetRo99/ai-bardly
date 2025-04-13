@@ -25,6 +25,7 @@ kotlin {
             implementation(projects.feature.chats.ui)
             implementation(projects.feature.games.ui)
             implementation(projects.feature.home.ui)
+            implementation(projects.feature.shelfs.ui)
 
             implementation(compose.runtime)
             implementation(compose.foundation)

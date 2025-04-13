@@ -70,6 +70,9 @@ kotlin {
             implementation(projects.feature.games.ui)
             implementation(projects.feature.games.domain)
             implementation(projects.feature.games.data)
+            implementation(projects.feature.shelfs.ui)
+            implementation(projects.feature.shelfs.domain)
+            implementation(projects.feature.shelfs.data)
             implementation(projects.translations)
             implementation(projects.lib.analytics.api)
             implementation(projects.lib.analytics.implementation)
@@ -130,9 +133,10 @@ android {
             resValue("string", "app_name", "Bardy Debug")
         }
         getByName("release") {
-            manifestPlaceholders += mapOf()
-            manifestPlaceholders["crashlyticsCollectionEnabled"] = true
-            manifestPlaceholders["usesCleartextTraffic"] = false
+            manifestPlaceholders += mapOf(
+                "crashlyticsCollectionEnabled" to true,
+                "usesCleartextTraffic" to false
+            )
             isMinifyEnabled = true
             isMinifyEnabled = false
             resValue("string", "app_name", "Bardy")

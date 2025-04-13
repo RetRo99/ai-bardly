@@ -146,38 +146,39 @@ fun GamesLazyColumn(
     state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(16.dp),
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = state,
-        contentPadding = contentPadding,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        stickyHeader {
-            Surface(
+    Column {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            color = MaterialTheme.colorScheme.background,
+        ) {
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                color = MaterialTheme.colorScheme.background,
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    text = stringResource(StringRes.games),
-                    style = MaterialTheme.typography.headlineLarge,
-                )
-            }
+                    .padding(16.dp),
+                text = stringResource(StringRes.games),
+                style = MaterialTheme.typography.headlineLarge,
+            )
         }
-        items(
-            count = itemCount(),
-            key = getKey,
-            contentType = { "GameCard" }
-        ) { index ->
-            val game = getItem(index)
-            if (game != null) {
-                GameRowItem(
-                    game = game,
-                    onClick = onGameClicked,
-                    onChatClick = onOpenChatClicked
-                )
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = state,
+            contentPadding = contentPadding,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            items(
+                count = itemCount(),
+                key = getKey,
+                contentType = { "Game Card" }
+            ) { index ->
+                val game = getItem(index)
+                if (game != null) {
+                    GameRowItem(
+                        game = game,
+                        onClick = onGameClicked,
+                        onChatClick = onOpenChatClicked
+                    )
+                }
             }
         }
     }

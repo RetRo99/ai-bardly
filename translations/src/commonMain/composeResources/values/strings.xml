@@ -3,6 +3,7 @@
     <string name="home">Home</string>
     <string name="games">Games</string>
     <string name="chats">Chats</string>
+    <string name="shelfs">Shelfs</string>
     <string name="game_length">Game Length</string>
     <string name="game_complexity">Complexity</string>
     <string name="game_age_recommendation">Age</string>
