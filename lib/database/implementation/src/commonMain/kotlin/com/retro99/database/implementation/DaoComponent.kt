@@ -16,4 +16,8 @@ interface DaoComponent {
     @Provides
     @SingleIn(AppScope::class)
     fun provideMessagesDao(appDatabase: AppDatabase) = appDatabase.getMessagesDao()
+
+    @Provides
+    @SingleIn(AppScope::class)
+    fun provideShelfsDao(appDatabase: AppDatabase) = appDatabase.getShelfsDao()
 }

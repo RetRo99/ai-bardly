@@ -12,6 +12,7 @@ import com.retro99.base.result.AppResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 interface BasePresenter<ScreenViewState, Intent : BaseScreenIntent> {
@@ -78,6 +79,26 @@ abstract class BasePresenterImpl<ScreenViewState, Intent : BaseScreenIntent>(com
                     onError(error)
                 }
             )
+        }
+    }
+
+    protected fun <T> launchOperation(
+        block: suspend () -> Flow<AppResult<T>>,
+        onError: (AppError) -> Unit = ::setError,
+        onSuccess: (T) -> Unit,
+    ): Job {
+        return scope.launch {
+            val flow = block()
+            flow.collect { result ->
+                result.fold(
+                    success = { data ->
+                        onSuccess(data)
+                    },
+                    failure = { error ->
+                        onError(error)
+                    }
+                )
+            }
         }
     }
 

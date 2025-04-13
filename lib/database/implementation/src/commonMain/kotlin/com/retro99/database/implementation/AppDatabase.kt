@@ -10,14 +10,17 @@ import com.retro99.database.implementation.dao.games.RoomGameEntity
 import com.retro99.database.implementation.dao.games.RoomGameMetadataEntity
 import com.retro99.database.implementation.dao.messages.MessageRoomEntity
 import com.retro99.database.implementation.dao.messages.MessagesDao
+import com.retro99.database.implementation.dao.shelfs.RoomShelfEntity
+import com.retro99.database.implementation.dao.shelfs.ShelfsDao
 
 @Database(
     entities = [
         MessageRoomEntity::class,
         RoomGameEntity::class,
         RoomGameMetadataEntity::class,
+        RoomShelfEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
@@ -25,6 +28,7 @@ import com.retro99.database.implementation.dao.messages.MessagesDao
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getMessagesDao(): MessagesDao
     abstract fun getGamesDao(): GamesDao
+    abstract fun getShelfsDao(): ShelfsDao
 }
 
 @Suppress("NO_ACTUAL_FOR_EXPECT")

@@ -51,6 +51,17 @@ sealed class AnalyticsEvent(
         ),
     )
 
+    data class OpenShelfDetails(
+        val id: Int,
+        override val origin: AnalyticsEventOrigin,
+    ) : AnalyticsEvent(
+        name = "open_shelf_details",
+        origin = origin,
+        params = mapOf(
+            AnalyticsEventParam.ShelfTitle to id.toString(),
+        ),
+    )
+
     data class SignUpWithEmailInputError(
         val error: String,
     ) : AnalyticsEvent(

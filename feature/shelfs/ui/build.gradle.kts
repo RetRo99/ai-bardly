@@ -1,9 +1,9 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.ksp)
 }
 
@@ -19,19 +19,18 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.base)
-            implementation(projects.baseUi)
-            implementation(projects.lib.analytics.api)
-            implementation(projects.feature.chats.ui)
-            implementation(projects.feature.games.ui)
-            implementation(projects.feature.home.ui)
-            implementation(projects.feature.shelfs.ui)
-
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
-
             implementation(libs.bundles.kotlinInject)
+            implementation(projects.baseUi)
+            implementation(projects.base)
+            implementation(projects.feature.user.domain)
+            implementation(projects.lib.paging.domain)
+            implementation(projects.feature.shelfs.domain)
+            implementation(projects.lib.paging.ui)
+            implementation(libs.markdown)
+            implementation(projects.lib.analytics.api)
         }
 
         androidMain.dependencies {
@@ -48,6 +47,6 @@ dependencies {
 }
 
 android {
-    namespace = "com.retro99.main"
+    namespace = "com.retro99.shelfs.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

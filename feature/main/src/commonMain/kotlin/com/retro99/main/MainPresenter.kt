@@ -5,6 +5,7 @@ import com.retro99.base.ui.resources.DrawableRes
 import com.retro99.main.chats.RootRecentPresenter
 import com.retro99.main.games.RootGamesPresenter
 import com.retro99.main.home.RootHomePresenter
+import com.retro99.main.shelfs.RootShelfsPresenter
 import com.retro99.translations.StringRes
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
@@ -13,9 +14,11 @@ import org.jetbrains.compose.resources.StringResource
 import resources.icons.ic_chats
 import resources.icons.ic_games
 import resources.icons.ic_home
+import resources.icons.ic_shelfs
 import resources.translations.chats
 import resources.translations.games
 import resources.translations.home
+import resources.translations.shelfs
 
 interface MainPresenter :
     RootDecomposeComponent<MainPresenter.Child, MainPresenter.Config> {
@@ -25,6 +28,7 @@ interface MainPresenter :
         data class RecentChats(val component: RootRecentPresenter) : Child
         data class Home(val component: RootHomePresenter) : Child
         data class GameList(val component: RootGamesPresenter) : Child
+        data class Shelfs(val component: RootShelfsPresenter) : Child
     }
 
     @Serializable
@@ -51,6 +55,11 @@ interface MainPresenter :
             title = StringRes.chats,
             icon = DrawableRes.ic_chats,
         )
+
+        data object Shelfs : Config(
+            title = StringRes.shelfs,
+            icon = DrawableRes.ic_shelfs,
+        )
     }
 
     companion object {
@@ -58,6 +67,7 @@ interface MainPresenter :
             Config.GameList,
             Config.Home,
             Config.RecentChats,
+            Config.Shelfs,
         )
     }
 }
