@@ -67,7 +67,7 @@ private fun RecentGamesSection(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(StringRes.home_recent_games),
             style = MaterialTheme.typography.headlineLarge,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         GamesLazyGrid(
