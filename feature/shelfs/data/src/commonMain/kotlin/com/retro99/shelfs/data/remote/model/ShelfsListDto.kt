@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ShelfsListDto(
-    val shelfs: List<ShelfDto>,
+    val shelves: List<ShelfDto>,
 )
