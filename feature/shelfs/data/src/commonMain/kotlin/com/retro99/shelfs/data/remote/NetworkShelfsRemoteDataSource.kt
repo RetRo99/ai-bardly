@@ -18,7 +18,7 @@ class NetworkShelfsRemoteDataSource(
 
     override suspend fun getShelfs(): AppResult<List<ShelfDto>> {
         return networkClient.get<List<ShelfDto>>(
-            path = "shelfs",
+            path = "shelves",
         )
     }
 }
