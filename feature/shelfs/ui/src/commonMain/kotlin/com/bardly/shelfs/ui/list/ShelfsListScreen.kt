@@ -18,6 +18,7 @@ import com.retro99.base.ui.IntentDispatcher
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.stringResource
 import resources.translations.home_recent_games
+import resources.translations.shelves_list
 
 @Composable
 fun ShelfsListScreen(
@@ -46,7 +47,7 @@ private fun ShelfsScreenContent(
         Box(Modifier.fillMaxSize()) {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
-                text = "Shelfs list",
+                text = stringResource(StringRes.shelves_list),
                 style = MaterialTheme.typography.headlineLarge,
             )
         }
