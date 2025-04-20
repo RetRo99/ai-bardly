@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ShelfUiModel(
-    override val id: Int,
+    override val id: String,
 ) : PagingItem
 
 fun PagingData<ShelfDomainModel>.toUiModels() = map(ShelfDomainModel::toUiModel)

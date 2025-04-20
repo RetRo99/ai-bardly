@@ -7,7 +7,7 @@ import com.retro99.database.api.shelfs.ShelfEntity
 @Entity
 data class RoomShelfEntity(
     @PrimaryKey()
-    override val id: Int,
+    override val id: String,
 ) : ShelfEntity
 
 fun ShelfEntity.toRoomEntity() = RoomShelfEntity(

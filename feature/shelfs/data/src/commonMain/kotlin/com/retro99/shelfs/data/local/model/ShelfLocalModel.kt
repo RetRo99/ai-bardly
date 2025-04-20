@@ -5,7 +5,7 @@ import com.retro99.shelfs.data.remote.model.ShelfDto
 import com.retro99.shelfs.domain.model.ShelfDomainModel
 
 data class ShelfLocalModel(
-    override val id: Int,
+    override val id: String,
 ) : ShelfEntity
 
 fun ShelfEntity.toDomainModel() = ShelfDomainModel(

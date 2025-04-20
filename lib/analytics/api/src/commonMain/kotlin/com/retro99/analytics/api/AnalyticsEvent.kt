@@ -52,13 +52,13 @@ sealed class AnalyticsEvent(
     )
 
     data class OpenShelfDetails(
-        val id: Int,
+        val id: String,
         override val origin: AnalyticsEventOrigin,
     ) : AnalyticsEvent(
         name = "open_shelf_details",
         origin = origin,
         params = mapOf(
-            AnalyticsEventParam.ShelfTitle to id.toString(),
+            AnalyticsEventParam.ShelfTitle to id,
         ),
     )
 

@@ -24,6 +24,7 @@ kotlin {
             implementation(projects.lib.network.api)
             implementation(projects.base)
             implementation(projects.lib.database.api)
+            implementation(projects.feature.games.data)
         }
     }
 }
