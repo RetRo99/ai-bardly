@@ -10,6 +10,8 @@ data class ShelfLocalModel(
 
 fun ShelfEntity.toDomainModel() = ShelfDomainModel(
     id = id,
+    name = "",
+    games =  emptyList(),
 )
 
 fun List<ShelfEntity>.toDomainModel() = map(ShelfEntity::toDomainModel)

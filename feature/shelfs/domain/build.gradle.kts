@@ -18,6 +18,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.base)
             implementation(projects.lib.paging.domain)
+            implementation(projects.feature.games.domain)
 
             implementation(libs.bundles.kotlinInject)
         }
