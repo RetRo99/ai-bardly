@@ -4,4 +4,6 @@ import com.retro99.paging.domain.PagingItem
 
 interface ShelfEntity : PagingItem {
     override val id: String
+    val name: String
+    val games: List<Int>
 }
