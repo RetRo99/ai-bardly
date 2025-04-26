@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "7f71d7ae37f89b329eb7f52b05cab5fc",
+    "identityHash": "4f5f6cd05adc3ba322fd8bd33e833dde",
     "entities": [
       {
         "tableName": "MessageRoomEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `text` TEXT NOT NULL, `type` TEXT NOT NULL, `gameTitle` TEXT NOT NULL, `timestamp` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER NOT NULL, `question` TEXT NOT NULL, `gameTitle` TEXT NOT NULL, `timestamp` TEXT NOT NULL, `answer` TEXT NOT NULL, PRIMARY KEY(`timestamp`))",
         "fields": [
           {
             "fieldPath": "gameId",
@@ -15,14 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "text",
-            "columnName": "text",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "type",
-            "columnName": "type",
+            "fieldPath": "question",
+            "columnName": "question",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -35,6 +29,12 @@
           {
             "fieldPath": "timestamp",
             "columnName": "timestamp",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "answer",
+            "columnName": "answer",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -175,11 +175,41 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "RoomShelfEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `games` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "games",
+            "columnName": "games",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7f71d7ae37f89b329eb7f52b05cab5fc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4f5f6cd05adc3ba322fd8bd33e833dde')"
     ]
   }
 }
