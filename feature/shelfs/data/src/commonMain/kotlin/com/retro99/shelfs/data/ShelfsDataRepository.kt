@@ -1,10 +1,14 @@
 package com.retro99.shelfs.data
 
+import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onSuccess
 import com.retro99.base.result.AppResult
+import com.retro99.games.data.local.GamesLocalDataSource
+import com.retro99.games.data.local.model.toDomainModel
+import com.retro99.games.data.local.model.toLocalModel
+import com.retro99.games.data.remote.model.toDomainModel
 import com.retro99.shelfs.data.local.ShelfsLocalDataSource
-import com.retro99.shelfs.data.local.model.toDomainModel
 import com.retro99.shelfs.data.local.model.toLocalModel
 import com.retro99.shelfs.data.remote.ShelfsRemoteDataSource
 import com.retro99.shelfs.data.remote.model.toDomainModel
@@ -23,6 +27,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
 class ShelfsDataRepository(
     private val remoteSource: ShelfsRemoteDataSource,
     private val localSource: ShelfsLocalDataSource,
+    private val gamesLocalSource: GamesLocalDataSource,
 ) : ShelfsRepository {
 
     override suspend fun getShelf(id: Int): AppResult<ShelfDomainModel> {
@@ -31,11 +36,28 @@ class ShelfsDataRepository(
 
     override suspend fun getShelfs(): Flow<AppResult<List<ShelfDomainModel>>> {
         return flow {
-            emit(localSource.getShelfs().map { it.toDomainModel() })
+            val cachedShelf = coroutineBinding {
+                val cachedShelfs = localSource.getShelfs().bind()
+                val neededGamesId = cachedShelfs.map { it.games }.flatten()
+                val resolvedGames =
+                    gamesLocalSource.getGamesById(neededGamesId).map { it.toDomainModel() }.bind()
+                cachedShelfs.map { cachedShelf ->
+                    ShelfDomainModel(
+                        cachedShelf.id,
+                        cachedShelf.name,
+                        resolvedGames.filter { game -> game.id in cachedShelf.games }
+
+                    )
+                }
+            }
+            emit(cachedShelf)
             emit(
                 remoteSource.getShelfs()
                     .onSuccess { remoteShelfs ->
                         localSource.save(remoteShelfs.toLocalModel())
+                        gamesLocalSource.saveGames(
+                            remoteShelfs.map { it.games }.flatten().toDomainModel().toLocalModel()
+                        )
                     }.map { it.toDomainModel() }
             )
         }
