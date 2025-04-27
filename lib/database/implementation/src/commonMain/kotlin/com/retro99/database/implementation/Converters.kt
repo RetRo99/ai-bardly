@@ -23,8 +23,8 @@ class Converters {
     }
 
     @TypeConverter
-    fun toStringList(value: String?): List<String>? {
-        return if (value.isNullOrBlank()) null else value.split(separator).map { it.trim() }
+    fun toStringList(value: String?): List<String> {
+        return if (value.isNullOrBlank()) emptyList() else value.split(separator).map { it.trim() }
     }
 
     @TypeConverter
@@ -33,7 +33,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toIntList(value: String?): List<Int>? {
-        return if (value.isNullOrBlank()) null else value.split(separator).map { it.trim().toInt() }
+    fun toIntList(value: String?): List<Int> {
+        return if (value.isNullOrBlank()) emptyList() else value.split(separator).map { it.trim().toInt() }
     }
 }
