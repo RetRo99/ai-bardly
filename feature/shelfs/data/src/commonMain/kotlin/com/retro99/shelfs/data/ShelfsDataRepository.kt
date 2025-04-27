@@ -44,7 +44,7 @@ class ShelfsDataRepository(
 ) : ShelfsRepository {
 
     override suspend fun getShelf(id: Int): AppResult<ShelfDomainModel> {
-        TODO("Not yet implemented")
+        return remoteSource.getShelf(id).map { it.toDomainModel() }
     }
 
     override suspend fun getShelfs(): Flow<AppResult<List<ShelfDomainModel>>> {
@@ -58,8 +58,8 @@ class ShelfsDataRepository(
                 failure = { false }
             )
 
-            fetchRemoteShelfsAndUpdateCache(hasCachedData) { result -> 
-                emit(result) 
+            fetchRemoteShelfsAndUpdateCache(hasCachedData) { result ->
+                emit(result)
             }
         }
     }
