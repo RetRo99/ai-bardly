@@ -7,6 +7,7 @@ import com.retro99.base.result.AppResult
 import com.retro99.games.data.local.GamesLocalDataSource
 import com.retro99.games.data.local.model.toDomainModel
 import com.retro99.games.data.local.model.toLocalModel
+import com.retro99.games.data.remote.model.GameDto
 import com.retro99.games.data.remote.model.toDomainModel
 import com.retro99.shelfs.data.local.ShelfsLocalDataSource
 import com.retro99.shelfs.data.local.model.toLocalModel
@@ -38,28 +39,43 @@ class ShelfsDataRepository(
         return flow {
             val cachedShelf = coroutineBinding {
                 val cachedShelfs = localSource.getShelfs().bind()
-                val neededGamesId = cachedShelfs.map { it.games }.flatten()
-                val resolvedGames =
-                    gamesLocalSource.getGamesById(neededGamesId).map { it.toDomainModel() }.bind()
+
+                val neededGamesId = mutableSetOf<Int>()
+                cachedShelfs.forEach { shelf ->
+                    neededGamesId.addAll(shelf.games)
+                }
+
+                val resolvedGames = gamesLocalSource.getGamesById(neededGamesId.toList()).bind()
+
+                val gameMap = resolvedGames.associate { game ->
+                    game.id to game.toDomainModel()
+                }
+
                 cachedShelfs.map { cachedShelf ->
                     ShelfDomainModel(
                         cachedShelf.id,
                         cachedShelf.name,
-                        resolvedGames.filter { game -> game.id in cachedShelf.games }
-
+                        cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] }
                     )
                 }
             }
             emit(cachedShelf)
-            emit(
-                remoteSource.getShelfs()
-                    .onSuccess { remoteShelfs ->
-                        localSource.save(remoteShelfs.toLocalModel())
-                        gamesLocalSource.saveGames(
-                            remoteShelfs.map { it.games }.flatten().toDomainModel().toLocalModel()
-                        )
-                    }.map { it.toDomainModel() }
-            )
+
+//            emit(
+//                remoteSource.getShelfs()
+//                    .onSuccess { remoteShelfs ->
+//                        localSource.save(remoteShelfs.toLocalModel())
+//
+//                        val allGames = mutableListOf<GameDto>()
+//                        remoteShelfs.forEach { shelf ->
+//                            allGames.addAll(shelf.games)
+//                        }
+//
+//                        gamesLocalSource.saveGames(
+//                            allGames.toDomainModel().toLocalModel()
+//                        )
+//                    }.map { it.toDomainModel() }
+//            )
         }
     }
 }
