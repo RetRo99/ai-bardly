@@ -1,8 +1,14 @@
 package com.retro99.shelfs.data
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.coroutines.coroutineBinding
+import com.github.michaelbull.result.fold
+import com.github.michaelbull.result.get
 import com.github.michaelbull.result.map
+import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import com.github.michaelbull.result.toResultOr
 import com.retro99.base.result.AppResult
 import com.retro99.games.data.local.GamesLocalDataSource
 import com.retro99.games.data.local.model.toDomainModel
@@ -40,10 +46,7 @@ class ShelfsDataRepository(
             val cachedShelf = coroutineBinding {
                 val cachedShelfs = localSource.getShelfs().bind()
 
-                val neededGamesId = mutableSetOf<Int>()
-                cachedShelfs.forEach { shelf ->
-                    neededGamesId.addAll(shelf.games)
-                }
+                val neededGamesId = cachedShelfs.flatMap { it.games }.toMutableSet()
 
                 val resolvedGames = gamesLocalSource.getGamesById(neededGamesId.toList()).bind()
 
@@ -61,21 +64,23 @@ class ShelfsDataRepository(
             }
             emit(cachedShelf)
 
-//            emit(
-//                remoteSource.getShelfs()
-//                    .onSuccess { remoteShelfs ->
-//                        localSource.save(remoteShelfs.toLocalModel())
-//
-//                        val allGames = mutableListOf<GameDto>()
-//                        remoteShelfs.forEach { shelf ->
-//                            allGames.addAll(shelf.games)
-//                        }
-//
-//                        gamesLocalSource.saveGames(
-//                            allGames.toDomainModel().toLocalModel()
-//                        )
-//                    }.map { it.toDomainModel() }
-//            )
+            remoteSource.getShelfs()
+                .onSuccess { remoteShelfs ->
+                    localSource.save(remoteShelfs.toLocalModel())
+
+                    val allGames = remoteShelfs.flatMap { it.games }
+
+                    gamesLocalSource.saveGames(
+                        allGames.toDomainModel().toLocalModel()
+                    )
+                    emit(Ok(remoteShelfs.toDomainModel()))
+                }
+                .onFailure { error ->
+                    // Only emit error if we don't have cached data
+                    if (cachedShelf.get()?.isEmpty() == true) {
+                        emit(Err(error))
+                    }
+                }
         }
     }
 }
