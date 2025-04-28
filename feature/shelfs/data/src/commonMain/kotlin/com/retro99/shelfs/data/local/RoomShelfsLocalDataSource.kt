@@ -22,7 +22,7 @@ class RoomShelfsLocalDataSource(
         return shelfsDatabase.insert(items)
     }
 
-    override suspend fun getShelf(id: Int): AppResult<ShelfEntity> {
+    override suspend fun getShelf(id: String): AppResult<ShelfEntity> {
         return shelfsDatabase.getShelf(id)
     }
 

@@ -29,7 +29,7 @@ class RoomShelfsDatabase(
         }
     }
 
-    override suspend fun getShelf(id: Int): AppResult<ShelfEntity> {
+    override suspend fun getShelf(id: String): AppResult<ShelfEntity> {
         return daoExecutor.executeDatabaseOperation {
             dao.getShelf(id)
         }

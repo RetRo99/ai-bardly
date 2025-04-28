@@ -43,7 +43,7 @@ class ShelfsDataRepository(
     private val gamesLocalSource: GamesLocalDataSource,
 ) : ShelfsRepository {
 
-    override suspend fun getShelf(id: Int): AppResult<ShelfDomainModel> {
+    override suspend fun getShelf(id: String): AppResult<ShelfDomainModel> {
         return remoteSource.getShelf(id).map { it.toDomainModel() }
     }
 

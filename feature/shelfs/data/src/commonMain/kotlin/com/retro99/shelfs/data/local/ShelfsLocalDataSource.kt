@@ -8,7 +8,7 @@ interface ShelfsLocalDataSource {
 
     suspend fun save(items: List<ShelfEntity>): AppResult<Unit>
 
-    suspend fun getShelf(id: Int): AppResult<ShelfEntity>
+    suspend fun getShelf(id: String): AppResult<ShelfEntity>
 
     suspend fun getShelfs(): AppResult<List<ShelfEntity>>
 }

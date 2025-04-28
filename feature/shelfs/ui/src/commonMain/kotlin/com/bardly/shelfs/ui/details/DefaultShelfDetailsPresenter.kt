@@ -3,6 +3,7 @@ package com.bardly.shelfs.ui.details
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.shelfs.ui.model.ShelfUiModel
+import com.bardly.shelfs.ui.model.toUiModel
 import com.retro99.analytics.api.Analytics
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
@@ -30,7 +31,22 @@ class DefaultShelfDetailsPresenter(
 
     override val defaultViewState = ShelfDetailsViewState(shelf)
 
-    override val initialState = BaseViewState.Success(defaultViewState)
+    override val initialState = BaseViewState.Loading
+
+    init {
+        fetchShelf()
+    }
+
+    private fun fetchShelf() {
+        launchDataOperation(
+            block = { shelfsRepository.getShelf(shelf.id) },
+            onSuccess = { shelfDomainModel ->
+                updateOrSetSuccess { _ ->
+                    ShelfDetailsViewState(shelfDomainModel.toUiModel())
+                }
+            }
+        )
+    }
 
     override fun handleScreenIntent(intent: ShelfDetailsIntent) {
         when (intent) {
