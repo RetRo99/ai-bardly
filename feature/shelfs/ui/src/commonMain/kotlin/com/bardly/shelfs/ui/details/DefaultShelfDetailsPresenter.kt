@@ -38,7 +38,7 @@ class DefaultShelfDetailsPresenter(
     }
 
     private fun fetchShelf() {
-        launchDataOperation(
+        launchOperation(
             block = { shelfsRepository.getShelf(shelf.id) },
             onSuccess = { shelfDomainModel ->
                 updateOrSetSuccess { _ ->
