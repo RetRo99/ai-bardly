@@ -29,6 +29,7 @@ kotlin {
             api(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             api(projects.translations)
+            api(compose.materialIconsExtended)
         }
     }
 }
