@@ -1,4 +1,4 @@
-package com.retro99.paging.domain
+package com.retro99.paging.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
+import com.retro99.paging.domain.PagingItem
 
 @Composable
 fun <T : PagingItem> LazyPagingColumn(

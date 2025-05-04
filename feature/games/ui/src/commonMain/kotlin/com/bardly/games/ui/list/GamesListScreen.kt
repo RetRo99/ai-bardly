@@ -43,7 +43,7 @@ import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.keyboardAsState
-import com.retro99.paging.domain.collectAsLazyPagingItems
+import com.retro99.paging.ui.collectAsLazyPagingItems
 import com.retro99.translations.StringRes
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource

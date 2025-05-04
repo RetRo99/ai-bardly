@@ -26,8 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.resources.DrawableRes
-import com.retro99.paging.domain.LazyPagingColumn
-import com.retro99.paging.domain.LazyPagingItems
+import com.retro99.paging.ui.LazyPagingColumn
+import com.retro99.paging.ui.LazyPagingItems
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
