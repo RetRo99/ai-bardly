@@ -15,10 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import com.retro99.paging.domain.PagingItem
 
 @Composable
-fun <T : PagingItem> LazyColumnBase(
+fun <T : PagingItem> LazyPagingColumn(
     lazyItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
