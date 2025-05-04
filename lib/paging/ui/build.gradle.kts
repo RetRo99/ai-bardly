@@ -18,7 +18,9 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.paging.common)
+            implementation(projects.lib.paging.domain)
             implementation(compose.runtime)
+            implementation(compose.foundation)
         }
     }
 }
