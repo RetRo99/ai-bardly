@@ -21,7 +21,7 @@ fun <T : PagingItem> LazyPagingColumn(
     lazyItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState(),
-    key: ((index: Int) -> Any)? = { index -> lazyItems[index]?.id ?: index },
+    key: ((index: Int) -> Any)? = { index -> lazyItems.peek(index)?.id ?: index },
     contentType: (index: Int) -> Any? = { null },
     nextPageLoadContent: @Composable LazyItemScope.() -> Unit = {},
     nextPageLoadErrorContent: @Composable LazyItemScope.() -> Unit = {},
