@@ -104,9 +104,7 @@ private fun GamesList(
                 val gamesState = rememberLazyListState()
                 GamesLazyColumn(
                     state = gamesState,
-                    itemCount = { games.itemCount },
-                    getItem = games::get,
-                    getKey = { games.peek(it)?.id ?: it },
+                    lazyItems = games,
                     onGameClicked = { game ->
                         focusManager.clearFocus()
                         intentDispatcher(GamesListIntent.GameClicked(game))
@@ -191,9 +189,7 @@ fun SearchScreenState(
 
         GamesLazyColumn(
             state = searchState,
-            itemCount = { searchResults.itemCount },
-            getItem = searchResults::get,
-            getKey = { searchResults.peek(it)?.id ?: it },
+            lazyItems = searchResults,
             onGameClicked = { game ->
                 focusManager.clearFocus()
                 intentDispatcher(GamesListIntent.GameClicked(game))

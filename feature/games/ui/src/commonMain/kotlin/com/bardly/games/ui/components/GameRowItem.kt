@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.resources.DrawableRes
+import com.retro99.paging.domain.LazyPagingColumn
+import com.retro99.paging.domain.LazyPagingItems
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -138,9 +139,7 @@ private fun TitleAndChatRow(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GamesLazyColumn(
-    itemCount: () -> Int,
-    getItem: (Int) -> GameUiModel?,
-    getKey: (Int) -> Any,
+    lazyItems: LazyPagingItems<GameUiModel>,
     onGameClicked: (GameUiModel) -> Unit,
     onOpenChatClicked: (String, Int) -> Unit,
     state: LazyListState = rememberLazyListState(),
@@ -160,26 +159,18 @@ fun GamesLazyColumn(
             )
         }
 
-        LazyColumn(
+        LazyPagingColumn(
+            lazyItems = lazyItems,
             modifier = Modifier.fillMaxSize(),
             state = state,
             contentPadding = contentPadding,
             verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            items(
-                count = itemCount(),
-                key = getKey,
-                contentType = { "Game Card" }
-            ) { index ->
-                val game = getItem(index)
-                if (game != null) {
-                    GameRowItem(
-                        game = game,
-                        onClick = onGameClicked,
-                        onChatClick = onOpenChatClicked
-                    )
-                }
-            }
+        ) { game ->
+            GameRowItem(
+                game = game,
+                onClick = onGameClicked,
+                onChatClick = onOpenChatClicked
+            )
         }
     }
 }
