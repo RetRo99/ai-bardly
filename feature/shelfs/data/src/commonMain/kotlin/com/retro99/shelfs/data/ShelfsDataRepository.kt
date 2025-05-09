@@ -34,17 +34,24 @@ class ShelfsDataRepository(
 ) : ShelfsRepository {
 
     override suspend fun getShelf(id: String): Flow<AppResult<ShelfDomainModel>> {
-        return fetchWithCacheFirst(getCached = { getCachedShelf(id) }, fetchRemote = { hasCachedData, emitter ->
-            fetchShelfFromRemoteAndUpdateCache(id, hasCachedData, emitter)
-        })
+        return fetchWithCacheFirst(
+            getCached = { getCachedShelf(id) },
+            fetchRemote = { hasCachedData, emitter ->
+                fetchShelfFromRemoteAndUpdateCache(id, hasCachedData, emitter)
+            }
+        )
     }
 
     private suspend fun getCachedShelf(id: String): AppResult<ShelfDomainModel>? {
-        return localSource.getShelf(id).fold(success = { cachedShelf ->
-            resolveShelfGames(cachedShelf)
-        }, failure = { error ->
-            null
-        })
+        return localSource.getShelf(id)
+            .fold(
+                success = { cachedShelf ->
+                    resolveShelfGames(cachedShelf)
+                },
+                failure = { error ->
+                    null
+                }
+            )
     }
 
     private suspend fun resolveShelfGames(cachedShelf: ShelfEntity): AppResult<ShelfDomainModel> {
@@ -56,12 +63,16 @@ class ShelfsDataRepository(
 
             // Create the domain model with resolved games
             ShelfDomainModel(
-                cachedShelf.id, cachedShelf.name, cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
+                id = cachedShelf.id,
+                name = cachedShelf.name,
+                games = cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
         }
     }
 
     private suspend fun fetchShelfFromRemoteAndUpdateCache(
-        id: String, hasCachedData: Boolean, emit: suspend (AppResult<ShelfDomainModel>) -> Unit
+        id: String,
+        hasCachedData: Boolean,
+        emit: suspend (AppResult<ShelfDomainModel>) -> Unit
     ) {
         remoteSource.getShelf(id).onSuccess { shelfDto ->
             // Save the shelf to local cache
@@ -84,9 +95,11 @@ class ShelfsDataRepository(
     }
 
     override suspend fun getShelfs(): Flow<AppResult<List<ShelfDomainModel>>> {
-        return fetchWithCacheFirst(getCached = { getCachedShelfs() }, fetchRemote = { hasCachedData, emitter ->
-            fetchRemoteShelfsAndUpdateCache(hasCachedData, emitter)
-        })
+        return fetchWithCacheFirst(
+            getCached = { getCachedShelfs() },
+            fetchRemote = { hasCachedData, emitter ->
+                fetchRemoteShelfsAndUpdateCache(hasCachedData, emitter)
+            })
     }
 
     private suspend fun getCachedShelfs(): AppResult<List<ShelfDomainModel>> {
@@ -103,7 +116,9 @@ class ShelfsDataRepository(
             // Map shelf entities to domain models
             cachedShelfs.map { cachedShelf ->
                 ShelfDomainModel(
-                    cachedShelf.id, cachedShelf.name, cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
+                    id = cachedShelf.id,
+                    name = cachedShelf.name,
+                    games = cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
             }
         }
     }
@@ -111,22 +126,24 @@ class ShelfsDataRepository(
     private suspend fun fetchRemoteShelfsAndUpdateCache(
         hasCachedData: Boolean, emit: suspend (AppResult<List<ShelfDomainModel>>) -> Unit
     ) {
-        remoteSource.getShelfs().onSuccess { remoteShelfs ->
-            // Save remote data to local cache
-            localSource.save(remoteShelfs.toLocalModel())
-            val allGames = remoteShelfs.flatMap { it.games }
-            gamesLocalSource.saveGames(
-                allGames.toDomainModel().toLocalModel()
-            )
+        remoteSource
+            .getShelfs()
+            .onSuccess { remoteShelfs ->
+                // Save remote data to local cache
+                localSource.save(remoteShelfs.toLocalModel())
+                val allGames = remoteShelfs.flatMap { it.games }
+                gamesLocalSource.saveGames(
+                    allGames.toDomainModel().toLocalModel()
+                )
 
-            // Emit the updated data
-            emit(Ok(remoteShelfs.toDomainModel()))
-        }.onFailure { error ->
-            // Only emit error if we don't have cached data
-            if (!hasCachedData) {
-                emit(Err(error))
+                // Emit the updated data
+                emit(Ok(remoteShelfs.toDomainModel()))
+            }.onFailure { error ->
+                // Only emit error if we don't have cached data
+                if (!hasCachedData) {
+                    emit(Err(error))
+                }
             }
-        }
     }
 
 }
