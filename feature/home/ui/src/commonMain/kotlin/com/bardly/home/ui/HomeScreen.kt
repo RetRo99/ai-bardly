@@ -16,6 +16,7 @@ import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.stringResource
+import resources.translations.home_no_recent_games
 import resources.translations.home_recent_games
 
 @Composable
@@ -75,7 +76,15 @@ private fun RecentGamesSection(
             getItem = { index -> recentGames[index] },
             getKey = { index -> recentGames[index].id },
             onGameClicked = onGameClicked,
-            onOpenChatClicked = onOpenChatClicked
+            onOpenChatClicked = onOpenChatClicked,
+            emptyStateContent = {
+                Text(
+                    text = stringResource(StringRes.home_no_recent_games),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         )
     }
 }

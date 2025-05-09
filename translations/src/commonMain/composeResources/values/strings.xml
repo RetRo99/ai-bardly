@@ -12,6 +12,7 @@
     <string name="amount_of_players">Players</string>
     <string name="chat_lists_recent_chats">Recent chats</string>
     <string name="home_recent_games">Recent games</string>
+    <string name="home_no_recent_games">No recent games found</string>
     <string name="home_whats_new">What's new</string>
     <string name="home_greeting_title">Good to see ya' back!</string>
     <string name="home_greeting_subtitle">On what quest are we taking on today?</string>
