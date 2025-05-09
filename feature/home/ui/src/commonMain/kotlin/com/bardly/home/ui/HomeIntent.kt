@@ -6,4 +6,5 @@ import com.retro99.base.ui.BaseScreenIntent
 sealed interface HomeIntent : BaseScreenIntent {
     data class OpenChatClicked(val gameTitle: String, val gameId: Int) : HomeIntent
     data class OpenGameDetails(val game: GameUiModel) : HomeIntent
+    data object NavigateToGamesList : HomeIntent
 }

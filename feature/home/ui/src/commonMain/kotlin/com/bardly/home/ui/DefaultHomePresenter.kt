@@ -18,6 +18,7 @@ typealias HomePresenterFactory = (
     ComponentContext,
     navigateToChat: (String, Int) -> Unit,
     navigateToGameDetails: (GameUiModel) -> Unit,
+    navigateToGamesList: () -> Unit,
 ) -> DefaultHomePresenter
 
 @Inject
@@ -26,6 +27,7 @@ class DefaultHomePresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val navigateToChat: (String, Int) -> Unit,
     @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
+    @Assisted private val navigateToGamesList: () -> Unit,
     private val gamesRepository: GamesRepository,
     private val analytics: Analytics,
 ) : BasePresenterImpl<HomeViewState, HomeIntent>(componentContext), HomePresenter {
@@ -42,6 +44,7 @@ class DefaultHomePresenter(
         when (intent) {
             is HomeIntent.OpenChatClicked -> openChat(intent.gameTitle, intent.gameId)
             is HomeIntent.OpenGameDetails -> openGameDetails(intent.game)
+            is HomeIntent.NavigateToGamesList -> navigateToGamesList()
         }
     }
 

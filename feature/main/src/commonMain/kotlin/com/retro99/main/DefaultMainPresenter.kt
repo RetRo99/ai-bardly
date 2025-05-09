@@ -65,6 +65,7 @@ class DefaultMainPresenter(
             rootHomeFactory(
                 componentContext,
                 openLogin,
+                { navigate(MainPresenter.Config.GameList) }
             )
         )
 

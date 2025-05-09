@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -16,6 +18,7 @@ import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.stringResource
+import resources.translations.home_browse_games
 import resources.translations.home_no_recent_games
 import resources.translations.home_recent_games
 
@@ -53,6 +56,7 @@ private fun HomeScreenContent(
                     HomeIntent.OpenGameDetails(it)
                 )
             },
+            intentDispatcher = intentDispatcher,
         )
     }
 }
@@ -62,6 +66,7 @@ private fun RecentGamesSection(
     recentGames: List<GameUiModel>,
     onOpenChatClicked: (String, Int) -> Unit,
     onGameClicked: (GameUiModel) -> Unit,
+    intentDispatcher: IntentDispatcher<HomeIntent> = IntentDispatcher { },
 ) {
     Column {
         Text(
@@ -78,12 +83,24 @@ private fun RecentGamesSection(
             onGameClicked = onGameClicked,
             onOpenChatClicked = onOpenChatClicked,
             emptyStateContent = {
-                Text(
-                    text = stringResource(StringRes.home_no_recent_games),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(16.dp)
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(StringRes.home_no_recent_games),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    Button(
+                        onClick = { intentDispatcher(HomeIntent.NavigateToGamesList) },
+                        modifier = Modifier.padding(top = 8.dp)
+                    ) {
+                        Text(stringResource(StringRes.home_browse_games))
+                    }
+                }
             }
         )
     }
