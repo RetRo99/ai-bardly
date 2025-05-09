@@ -42,6 +42,14 @@ class ShelfsDataRepository(
         )
     }
 
+    override suspend fun getShelfs(): Flow<AppResult<List<ShelfDomainModel>>> {
+        return fetchWithCacheFirst(
+            getCached = { getCachedShelfs() },
+            fetchRemote = { hasCachedData, emitter ->
+                fetchRemoteShelfsAndUpdateCache(hasCachedData, emitter)
+            })
+    }
+
     private suspend fun getCachedShelf(id: String): AppResult<ShelfDomainModel>? {
         return localSource.getShelf(id)
             .fold(
@@ -92,14 +100,6 @@ class ShelfsDataRepository(
                 emit(Err(error))
             }
         }
-    }
-
-    override suspend fun getShelfs(): Flow<AppResult<List<ShelfDomainModel>>> {
-        return fetchWithCacheFirst(
-            getCached = { getCachedShelfs() },
-            fetchRemote = { hasCachedData, emitter ->
-                fetchRemoteShelfsAndUpdateCache(hasCachedData, emitter)
-            })
     }
 
     private suspend fun getCachedShelfs(): AppResult<List<ShelfDomainModel>> {
