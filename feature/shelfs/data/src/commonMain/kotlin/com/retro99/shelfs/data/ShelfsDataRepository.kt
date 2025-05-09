@@ -2,8 +2,8 @@ package com.retro99.shelfs.data
 
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.coroutines.coroutineBinding
-import com.github.michaelbull.result.fold
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.retro99.base.result.AppResult
@@ -52,14 +52,9 @@ class ShelfsDataRepository(
 
     private suspend fun getCachedShelf(id: String): AppResult<ShelfDomainModel>? {
         return localSource.getShelf(id)
-            .fold(
-                success = { cachedShelf ->
-                    resolveShelfGames(cachedShelf)
-                },
-                failure = { error ->
-                    null
-                }
-            )
+            .andThen { cachedShelf ->
+                resolveShelfGames(cachedShelf)
+            }
     }
 
     private suspend fun resolveShelfGames(cachedShelf: ShelfEntity): AppResult<ShelfDomainModel> {
@@ -124,7 +119,8 @@ class ShelfsDataRepository(
     }
 
     private suspend fun fetchRemoteShelfsAndUpdateCache(
-        hasCachedData: Boolean, emit: suspend (AppResult<List<ShelfDomainModel>>) -> Unit
+        hasCachedData: Boolean,
+        emit: suspend (AppResult<List<ShelfDomainModel>>) -> Unit
     ) {
         remoteSource
             .getShelfs()
