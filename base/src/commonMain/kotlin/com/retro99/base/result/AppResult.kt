@@ -3,9 +3,18 @@ package com.retro99.base.result
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.retro99.translations.StringRes
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import org.jetbrains.compose.resources.StringResource
+import resources.translations.error_api_generic
+import resources.translations.error_api_unknown
+import resources.translations.error_database_generic
+import resources.translations.error_database_specific
+import resources.translations.error_network_connectivity
+import resources.translations.error_network_generic
+import resources.translations.error_unknown
 
 typealias AppResult<T> = Result<T, AppError>
 
@@ -24,6 +33,30 @@ sealed class AppError(open val message: String?) {
         AppError(throwable.message)
 
     data class UnknownError(val throwable: Throwable) : AppError(throwable.message)
+
+    fun toStringRes(): StringResource {
+        return when (this) {
+            is NetworkError -> if (isConnectivity) {
+                StringRes.error_network_connectivity
+            } else {
+                StringRes.error_network_generic
+            }
+
+            is ApiError -> if (message != null) {
+                StringRes.error_api_generic
+            } else {
+                StringRes.error_api_unknown
+            }
+
+            is DatabaseError -> if (table != null) {
+                StringRes.error_database_specific
+            } else {
+                StringRes.error_database_generic
+            }
+
+            is UnknownError -> StringRes.error_unknown
+        }
+    }
 }
 
 /**

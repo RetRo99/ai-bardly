@@ -21,6 +21,7 @@ kotlin {
             implementation(libs.coroutines)
             api(libs.kotlin.result)
             api(libs.kotlin.result.coroutines)
+            implementation(projects.translations)
         }
     }
 }

@@ -53,27 +53,7 @@ fun <ScreenViewState, Intent : BaseScreenIntent> BaseScreen(
 @Composable
 fun ErrorScreen(error: BaseViewState.Error) {
     Box(Modifier.fillMaxSize()) {
-        val errorMessage = when (val appError = error.error) {
-            is AppError.NetworkError -> if (appError.isConnectivity) {
-                stringResource(StringRes.error_network_connectivity)
-            } else {
-                stringResource(StringRes.error_network_generic)
-            }
-
-            is AppError.ApiError -> if (appError.message != null) {
-                stringResource(StringRes.error_api_generic, appError.code)
-            } else {
-                stringResource(StringRes.error_api_unknown)
-            }
-
-            is AppError.DatabaseError -> if (appError.table != null) {
-                stringResource(StringRes.error_database_specific, appError.table!!)
-            } else {
-                stringResource(StringRes.error_database_generic)
-            }
-
-            is AppError.UnknownError -> stringResource(StringRes.error_unknown)
-        }
+        val errorMessage = stringResource(error.error.toStringRes())
 
         Column(
             modifier = Modifier
