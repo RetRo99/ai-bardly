@@ -28,7 +28,7 @@ securityCrypto = "1.1.0-alpha07"
 sqlite = "2.5.1"
 decompose = "3.3.0-alpha03"
 essenty = "2.5.0-beta01"
-kotlininject = "0.7.2"
+kotlininject = "0.8.0"
 kotlin-inject-anvil = "0.1.2"
 serialization = "1.8.0"
 
