@@ -30,7 +30,7 @@ decompose = "3.3.0-alpha03"
 essenty = "2.5.0-beta01"
 kotlininject = "0.8.0"
 kotlin-inject-anvil = "0.1.6"
-serialization = "1.8.0"
+serialization = "1.8.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
