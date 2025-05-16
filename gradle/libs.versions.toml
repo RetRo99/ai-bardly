@@ -2,7 +2,7 @@
 compileSdk = "36"
 coroutines = "1.10.2"
 kotlinResult = "2.0.1"
-targetSdk = "35"
+targetSdk = "36"
 minSdk = "29"
 jdk = "17"
 
