@@ -11,6 +11,7 @@ import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.games.domain.GamesRepository
 import com.retro99.games.domain.usecase.ToggleGameFavouriteStateUseCase
+import com.retro99.shelfs.domain.ShelfsRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -38,6 +39,7 @@ class DefaultGameDetailsPresenter(
     private val toggleFavoritesUseCase: ToggleGameFavouriteStateUseCase,
     private val userSessionManager: UserSessionManager,
     private val analytics: Analytics,
+    private val shelfsRepository: ShelfsRepository,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {
 
@@ -64,6 +66,21 @@ class DefaultGameDetailsPresenter(
             is GameDetailsIntent.OnChangeFavoriteClicked -> {
                 onChangeFavoriteClicked(intent.isFavoriteNew)
             }
+            is GameDetailsIntent.AddGameToShelf -> {
+                addGameToShelf(intent.shelfId)
+            }
+        }
+    }
+
+    private fun addGameToShelf(shelfId: String) {
+        if (userSessionManager.isUserLoggedIn) {
+            launchDataOperation(
+                block = { shelfsRepository.addGameToShelf(shelfId, game.id) },
+            ) {
+                // No need to update the view state as this operation doesn't affect the UI
+            }
+        } else {
+            openLogin()
         }
     }
 
