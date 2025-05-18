@@ -2,11 +2,14 @@ package com.retro99.shelfs.data.remote
 
 import com.github.michaelbull.result.map
 import com.retro99.base.result.AppResult
+import com.retro99.base.result.CompletableResult
+import com.retro99.shelfs.data.remote.model.AddGameToShelfDto
 import com.retro99.shelfs.data.remote.model.ShelfDto
 import com.retro99.shelfs.data.remote.model.ShelfsListDto
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
 import retro99.games.api.get
+import retro99.games.api.post
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 import software.amazon.lastmile.kotlin.inject.anvil.SingleIn
@@ -27,6 +30,13 @@ class NetworkShelfsRemoteDataSource(
     override suspend fun getShelf(id: String): AppResult<ShelfDto> {
         return networkClient.get<ShelfDto>(
             path = "shelves/$id",
+        )
+    }
+
+    override suspend fun addGameToShelf(shelfId: String, gameId: Int): CompletableResult {
+        return networkClient.post<Unit>(
+            path = "shelves/$shelfId/add-game",
+            body = AddGameToShelfDto(gameId)
         )
     }
 }

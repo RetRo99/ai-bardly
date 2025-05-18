@@ -7,6 +7,7 @@ import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.retro99.base.result.AppResult
+import com.retro99.base.result.CompletableResult
 import com.retro99.database.api.shelfs.ShelfEntity
 import com.retro99.games.data.local.GamesLocalDataSource
 import com.retro99.games.data.local.model.toDomainModel
@@ -48,6 +49,10 @@ class ShelfsDataRepository(
             fetchRemote = { hasCachedData, emitter ->
                 fetchRemoteShelfsAndUpdateCache(hasCachedData, emitter)
             })
+    }
+
+    override suspend fun addGameToShelf(shelfId: String, gameId: Int): CompletableResult {
+        return remoteSource.addGameToShelf(shelfId, gameId)
     }
 
     private suspend fun getCachedShelf(id: String): AppResult<ShelfDomainModel>? {

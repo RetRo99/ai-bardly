@@ -28,6 +28,7 @@ kotlin {
             implementation(projects.feature.user.domain)
             implementation(projects.lib.paging.domain)
             implementation(projects.feature.games.domain)
+            implementation(projects.feature.shelfs.domain)
             implementation(projects.lib.paging.ui)
             implementation(libs.markdown)
             implementation(projects.lib.analytics.api)
