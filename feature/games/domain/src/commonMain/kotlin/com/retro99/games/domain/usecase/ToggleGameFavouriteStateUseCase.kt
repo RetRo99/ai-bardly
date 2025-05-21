@@ -12,7 +12,7 @@ class ToggleGameFavouriteStateUseCase(
     private val gamesRepository: GamesRepository
 ) {
 
-    suspend operator fun invoke(gameId: Int, newState: Boolean): CompletableResult {
+    suspend operator fun invoke(gameId: String, newState: Boolean): CompletableResult {
         return if (newState) {
             gamesRepository.addToFavourites(gameId)
         } else {

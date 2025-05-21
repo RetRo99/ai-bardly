@@ -41,7 +41,7 @@ import resources.icons.ic_rating
 fun GameCard(
     game: GameUiModel,
     onClick: (GameUiModel) -> Unit,
-    onChatClick: (String, Int) -> Unit,
+    onChatClick: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -149,7 +149,7 @@ fun SharedTransitionText(
 @Composable
 fun GameImage(
     imageUrl: String,
-    gameId: Int,
+    gameId: String,
     size: Dp,
     modifier: Modifier = Modifier,
 ) {

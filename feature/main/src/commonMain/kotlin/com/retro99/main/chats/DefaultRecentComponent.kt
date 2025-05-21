@@ -41,7 +41,7 @@ class DefaultRootRecentPresenter(
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
-    private fun openChat(title: String, id: Int) {
+    private fun openChat(title: String, id: String) {
         navigation.pushNew(RootRecentPresenter.Config.Chat(title, id))
     }
 

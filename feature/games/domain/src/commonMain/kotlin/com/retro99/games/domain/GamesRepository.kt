@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.Flow
 interface GamesRepository {
     suspend fun getGames(query: String?): Flow<PagingData<GameDomainModel>>
     suspend fun getRecentlyOpenGames(amount: Int = 6): AppResult<List<GameDomainModel>>
-    suspend fun updateGameOpenDate(gameId: Int): CompletableResult
-    suspend fun getGamesById(ids: List<Int>): AppResult<List<GameDomainModel>>
-    suspend fun addToFavourites(gameId: Int): CompletableResult
-    suspend fun removeFromFavourites(gameId: Int): CompletableResult
-    fun isMarkedAsFavorite(gameId: Int): Flow<Boolean>
+    suspend fun updateGameOpenDate(gameId: String): CompletableResult
+    suspend fun getGamesById(ids: List<String>): AppResult<List<GameDomainModel>>
+    suspend fun addToFavourites(gameId: String): CompletableResult
+    suspend fun removeFromFavourites(gameId: String): CompletableResult
+    fun isMarkedAsFavorite(gameId: String): Flow<Boolean>
 }

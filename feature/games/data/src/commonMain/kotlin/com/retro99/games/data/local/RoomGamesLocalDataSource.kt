@@ -21,11 +21,11 @@ class RoomGamesLocalDataSource(
         return gamesDatabase.getGames(query)
     }
 
-    override suspend fun getGamesById(ids: List<Int>): AppResult<List<GameEntity>> {
+    override suspend fun getGamesById(ids: List<String>): AppResult<List<GameEntity>> {
         return gamesDatabase.getGamesById(ids)
     }
 
-    override suspend fun getGame(id: Int): AppResult<GameEntity> {
+    override suspend fun getGame(id: String): AppResult<GameEntity> {
         return gamesDatabase.getGame(id)
     }
 
@@ -42,21 +42,21 @@ class RoomGamesLocalDataSource(
     }
 
     override suspend fun updateGameOpenTime(
-        id: Int,
+        id: String,
         openedDateTime: LocalDateTime?
     ): AppResult<Unit> {
         return gamesDatabase.updateGameOpenTime(id, openedDateTime)
     }
 
-    override suspend fun addToFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun addToFavourites(gameId: String): AppResult<Unit> {
         return gamesDatabase.addToFavourites(gameId)
     }
 
-    override suspend fun removeFromFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun removeFromFavourites(gameId: String): AppResult<Unit> {
         return gamesDatabase.removeFromFavourites(gameId)
     }
 
-    override suspend fun isMarkedAsFavorite(gameId: Int): AppResult<Boolean> {
+    override suspend fun isMarkedAsFavorite(gameId: String): AppResult<Boolean> {
         return gamesDatabase.isMarkedAsFavorite(gameId)
     }
 }

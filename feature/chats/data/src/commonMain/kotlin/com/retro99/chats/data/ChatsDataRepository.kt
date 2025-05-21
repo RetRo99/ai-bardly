@@ -49,7 +49,7 @@ class ChatsDataRepository(
         messageWithAnswer
     }
 
-    override suspend fun getMessages(gameId: Int): AppResult<List<MessageDomainModel>> {
+    override suspend fun getMessages(gameId: String): AppResult<List<MessageDomainModel>> {
         return localChatsDataSource.getMessages(gameId).map { it.toDomainModel() }
     }
 

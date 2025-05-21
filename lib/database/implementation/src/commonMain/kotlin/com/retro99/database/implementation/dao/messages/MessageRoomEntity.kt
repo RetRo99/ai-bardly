@@ -7,7 +7,7 @@ import kotlinx.datetime.LocalDateTime
 
 @Entity
 data class MessageRoomEntity(
-    override val gameId: Int,
+    override val gameId: String,
     override val question: String,
     override val gameTitle: String,
     @PrimaryKey

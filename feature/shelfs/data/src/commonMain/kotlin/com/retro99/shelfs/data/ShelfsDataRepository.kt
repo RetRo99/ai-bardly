@@ -51,7 +51,7 @@ class ShelfsDataRepository(
             })
     }
 
-    override suspend fun addGameToShelf(shelfId: String, gameId: Int): CompletableResult {
+    override suspend fun addGameToShelf(shelfId: String, gameId: String): CompletableResult {
         return remoteSource.addGameToShelf(shelfId, gameId)
     }
 

@@ -25,10 +25,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,7 +39,12 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -83,6 +91,9 @@ fun GamesScreenContent(
     intentDispatcher: IntentDispatcher<GameDetailsIntent>,
     modifier: Modifier = Modifier
 ) {
+    var showAddToShelfDialog by remember { mutableStateOf(false) }
+    var shelfId by remember { mutableStateOf("") }
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -98,6 +109,7 @@ fun GamesScreenContent(
                     )
                 )
             },
+            onAddToShelfClick = { showAddToShelfDialog = true },
             isFavorite = viewState.isFavorite,
         )
 
@@ -106,12 +118,65 @@ fun GamesScreenContent(
             intentDispatcher = intentDispatcher,
         )
     }
+
+    if (showAddToShelfDialog) {
+        AlertDialog(
+            onDismissRequest = { showAddToShelfDialog = false },
+            title = { Text("Add to Shelf") },
+            text = {
+                Column {
+                    if (viewState.shelfs.isEmpty()) {
+                        Text("You don't have any shelves yet.")
+                    } else {
+                        Text("Select a shelf:")
+                        Column {
+                            viewState.shelfs.forEach { shelf ->
+                                Button(
+                                    onClick = {
+                                        shelfId = shelf.id
+                                        intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id))
+                                        showAddToShelfDialog = false
+                                    },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 4.dp)
+                                ) {
+                                    Text(shelf.name)
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                if (viewState.shelfs.isEmpty()) {
+                    Button(
+                        onClick = {
+                            showAddToShelfDialog = false
+                        }
+                    ) {
+                        Text("OK")
+                    }
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        showAddToShelfDialog = false
+                    }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 }
 
 @Composable
 private fun TopBar(
     onBackClick: () -> Unit,
     onChangeFavorite: (Boolean) -> Unit,
+    onAddToShelfClick: () -> Unit,
     isFavorite: Boolean?,
 ) {
     Row(
@@ -125,6 +190,15 @@ private fun TopBar(
             )
         }
         Spacer(modifier = Modifier.weight(1f))
+
+        // Add to Shelf button
+        IconButton(onClick = onAddToShelfClick) {
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Add to shelf",
+                tint = LocalContentColor.current
+            )
+        }
 
         if (isFavorite != null) {
             AnimatedContent(
@@ -230,7 +304,7 @@ private fun GameHeaderSection(
     rating: String,
     yearPublished: String,
     title: String,
-    id: Int,
+    id: String,
     onChatClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -264,7 +338,7 @@ private fun TitleAndRating(
     rating: String,
     yearPublished: String,
     title: String,
-    id: Int
+    id: String
 ) {
     Column {
         SharedTransitionText(

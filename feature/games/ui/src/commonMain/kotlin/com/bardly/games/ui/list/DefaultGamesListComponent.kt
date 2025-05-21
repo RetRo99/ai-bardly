@@ -31,7 +31,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias GamesListComponentFactory = (
     ComponentContext,
-    navigateToChat: (String, Int) -> Unit,
+    navigateToChat: (String, String) -> Unit,
     navigateToGameDetails: (GameUiModel) -> Unit,
 ) -> DefaultGamesListComponent
 
@@ -39,7 +39,7 @@ typealias GamesListComponentFactory = (
 @ContributesBinding(ActivityScope::class, boundType = GamesListComponent::class)
 class DefaultGamesListComponent(
     @Assisted componentContext: ComponentContext,
-    @Assisted val navigateToChat: (String, Int) -> Unit,
+    @Assisted val navigateToChat: (String, String) -> Unit,
     @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
     private val gamesRepository: GamesRepository,
     private val analytics: Analytics,
@@ -74,7 +74,7 @@ class DefaultGamesListComponent(
     }
 
 
-    private fun onOpenChatClicked(gameTitle: String, gameId: Int) {
+    private fun onOpenChatClicked(gameTitle: String, gameId: String) {
         analytics.log(
             AnalyticsEvent.OpenChat(
                 gameTitle = gameTitle,

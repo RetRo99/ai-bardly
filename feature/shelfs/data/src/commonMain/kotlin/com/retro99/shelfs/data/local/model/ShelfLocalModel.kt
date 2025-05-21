@@ -11,7 +11,7 @@ import com.retro99.shelfs.domain.model.ShelfDomainModel
 data class ShelfLocalModel(
     override val id: String,
     override val name: String,
-    override val games: List<Int>,
+    override val games: List<String>,
 ) : ShelfEntity
 
 fun ShelfDto.toLocalModel() = ShelfLocalModel(

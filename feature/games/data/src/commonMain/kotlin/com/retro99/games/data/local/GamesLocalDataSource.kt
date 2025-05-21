@@ -9,9 +9,9 @@ import kotlinx.datetime.LocalDateTime
 interface GamesLocalDataSource {
     fun getGames(query: String?): PagingSource<Int, GameEntity>
 
-    suspend fun getGamesById(ids: List<Int>): AppResult<List<GameEntity>>
+    suspend fun getGamesById(ids: List<String>): AppResult<List<GameEntity>>
 
-    suspend fun getGame(id: Int): AppResult<GameEntity>
+    suspend fun getGame(id: String): AppResult<GameEntity>
 
     suspend fun saveGames(games: List<GameEntity>): CompletableResult
 
@@ -19,10 +19,10 @@ interface GamesLocalDataSource {
 
     suspend fun clearAll()
 
-    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime?): CompletableResult
+    suspend fun updateGameOpenTime(id: String, openedDateTime: LocalDateTime?): CompletableResult
 
-    suspend fun addToFavourites(gameId: Int): CompletableResult
-    suspend fun removeFromFavourites(gameId: Int): CompletableResult
+    suspend fun addToFavourites(gameId: String): CompletableResult
+    suspend fun removeFromFavourites(gameId: String): CompletableResult
 
-    suspend fun isMarkedAsFavorite(gameId: Int): AppResult<Boolean>
+    suspend fun isMarkedAsFavorite(gameId: String): AppResult<Boolean>
 }

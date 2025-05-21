@@ -3,6 +3,7 @@ package com.bardly.games.ui.details
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
+import com.github.michaelbull.result.onSuccess
 import com.retro99.analytics.api.Analytics
 import com.retro99.analytics.api.AnalyticsEvent
 import com.retro99.analytics.api.AnalyticsEventOrigin
@@ -22,7 +23,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 typealias GameDetailsPresenterFactory = (
     componentContext: ComponentContext,
     game: GameUiModel,
-    navigateToChat: (String, Int) -> Unit,
+    navigateToChat: (String, String) -> Unit,
     navigateBack: () -> Unit,
     openLogin: () -> Unit,
 ) -> DefaultGameDetailsPresenter
@@ -32,7 +33,7 @@ typealias GameDetailsPresenterFactory = (
 class DefaultGameDetailsPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val game: GameUiModel,
-    @Assisted private val navigateToChat: (String, Int) -> Unit,
+    @Assisted private val navigateToChat: (String, String) -> Unit,
     @Assisted private val navigateBack: () -> Unit,
     @Assisted private val openLogin: () -> Unit,
     private val gamesRepository: GamesRepository,
@@ -50,9 +51,30 @@ class DefaultGameDetailsPresenter(
     init {
         updateGameOpen(game.id)
         fetchIsFavoriteGame(game.id)
+        fetchShelfs()
     }
 
-    private fun fetchIsFavoriteGame(gameId: Int) {
+    private fun fetchShelfs() {
+        if (userSessionManager.isUserLoggedIn) {
+            scope.launch {
+                shelfsRepository.getShelfs()
+                    .onEach { result ->
+                        result
+                            .onSuccess { shelfs ->
+                            val shelfInfoList = shelfs.map { shelf ->
+                                ShelfInfo(
+                                    id = shelf.id,
+                                    name = shelf.name
+                                )
+                            }
+                            updateOrSetSuccess { it.copy(shelfs = shelfInfoList) }
+                        }
+                    }.launchIn(this)
+            }
+        }
+    }
+
+    private fun fetchIsFavoriteGame(gameId: String) {
         gamesRepository.isMarkedAsFavorite(gameId)
             .onEach { isFavorite ->
                 updateOrSetSuccess { it.copy(isFavorite = isFavorite) }
@@ -106,7 +128,7 @@ class DefaultGameDetailsPresenter(
         navigateToChat(game.title, game.id)
     }
 
-    private fun updateGameOpen(gameId: Int) {
+    private fun updateGameOpen(gameId: String) {
         scope.launch {
             gamesRepository.updateGameOpenDate(gameId)
         }

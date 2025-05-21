@@ -9,7 +9,7 @@ data class RoomShelfEntity(
     @PrimaryKey()
     override val id: String,
     override val name: String,
-    override val games: List<Int>,
+    override val games: List<String>,
 ) : ShelfEntity
 
 fun ShelfEntity.toRoomEntity() = RoomShelfEntity(

@@ -4,7 +4,7 @@ import com.retro99.database.api.games.GameMetadataEntity
 import kotlinx.datetime.LocalDateTime
 
 data class GameMetadataLocalModel(
-    override val gameId: Int,
+    override val gameId: String,
     override val lastOpenTime: LocalDateTime,
     override val isFavourite: Boolean
 ) : GameMetadataEntity

@@ -15,7 +15,7 @@ class RoomChatsLocalDataSource(
     private val database: MessagesDatabase,
 ) : ChatsLocalDataSource {
 
-    override suspend fun getMessages(gameId: Int, limit: Int?): AppResult<List<MessageEntity>> {
+    override suspend fun getMessages(gameId: String, limit: Int?): AppResult<List<MessageEntity>> {
         return database.getMessages(gameId, limit)
     }
 

@@ -16,7 +16,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias HomePresenterFactory = (
     ComponentContext,
-    navigateToChat: (String, Int) -> Unit,
+    navigateToChat: (String, String) -> Unit,
     navigateToGameDetails: (GameUiModel) -> Unit,
     navigateToGamesList: () -> Unit,
 ) -> DefaultHomePresenter
@@ -25,7 +25,7 @@ typealias HomePresenterFactory = (
 @ContributesBinding(ActivityScope::class, boundType = HomePresenter::class)
 class DefaultHomePresenter(
     @Assisted componentContext: ComponentContext,
-    @Assisted private val navigateToChat: (String, Int) -> Unit,
+    @Assisted private val navigateToChat: (String, String) -> Unit,
     @Assisted private val navigateToGameDetails: (GameUiModel) -> Unit,
     @Assisted private val navigateToGamesList: () -> Unit,
     private val gamesRepository: GamesRepository,
@@ -48,7 +48,7 @@ class DefaultHomePresenter(
         }
     }
 
-    private fun openChat(gameTitle: String, gameId: Int) {
+    private fun openChat(gameTitle: String, gameId: String) {
         analytics.log(
             AnalyticsEvent.OpenChat(
                 gameTitle = gameTitle,

@@ -15,14 +15,14 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias RecentChatsComponentFactory = (
     componentContext: ComponentContext,
-    navigateToChat: (String, Int) -> Unit,
+    navigateToChat: (String, String) -> Unit,
 ) -> DefaultRecentChatsComponent
 
 @Inject
 @ContributesBinding(ActivityScope::class, boundType = RecentChatsComponent::class)
 class DefaultRecentChatsComponent(
     @Assisted componentContext: ComponentContext,
-    @Assisted private val navigateToChat: (String, Int) -> Unit,
+    @Assisted private val navigateToChat: (String, String) -> Unit,
     private val getRecentChatsUseCase: GetRecentChatsUseCase,
     private val analytics: Analytics,
 ) : BasePresenterImpl<RecentChatsViewState, RecentChatsIntent>(componentContext),

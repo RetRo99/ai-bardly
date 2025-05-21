@@ -21,7 +21,7 @@ fun GamesLazyGrid(
     getItem: (Int) -> GameUiModel?,
     getKey: (Int) -> Any,
     onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String, Int) -> Unit,
+    onOpenChatClicked: (String, String) -> Unit,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     gridState: LazyGridState = rememberLazyGridState(),
     emptyStateContent: @Composable () -> Unit = {},

@@ -13,7 +13,7 @@ data class GameDomainModel(
     val complexity: String,
     val link: String,
     val thumbnail: String,
-    override val id: Int,
+    override val id: String,
     val categories: List<String>?,
     val types: List<String>?,
 ) : PagingItem

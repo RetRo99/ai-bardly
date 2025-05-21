@@ -113,7 +113,7 @@ private fun ChatScreenContent(
 @Composable
 private fun Chat(
     title: String,
-    id: Int,
+    id: String,
     messages: List<MessageUiModel>,
     isResponding: Boolean,
     intentDispatcher: IntentDispatcher<ChatScreenIntent>,
