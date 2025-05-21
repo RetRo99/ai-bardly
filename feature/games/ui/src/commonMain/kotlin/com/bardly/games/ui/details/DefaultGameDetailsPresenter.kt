@@ -3,6 +3,7 @@ package com.bardly.games.ui.details
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
 import com.bardly.games.ui.model.GameUiModel
+import com.github.michaelbull.result.onSuccess
 import com.retro99.analytics.api.Analytics
 import com.retro99.analytics.api.AnalyticsEvent
 import com.retro99.analytics.api.AnalyticsEventOrigin
@@ -50,6 +51,27 @@ class DefaultGameDetailsPresenter(
     init {
         updateGameOpen(game.id)
         fetchIsFavoriteGame(game.id)
+        fetchShelfs()
+    }
+
+    private fun fetchShelfs() {
+        if (userSessionManager.isUserLoggedIn) {
+            scope.launch {
+                shelfsRepository.getShelfs()
+                    .onEach { result ->
+                        result
+                            .onSuccess { shelfs ->
+                            val shelfInfoList = shelfs.map { shelf ->
+                                ShelfInfo(
+                                    id = shelf.id,
+                                    name = shelf.name
+                                )
+                            }
+                            updateOrSetSuccess { it.copy(shelfs = shelfInfoList) }
+                        }
+                    }.launchIn(this)
+            }
+        }
     }
 
     private fun fetchIsFavoriteGame(gameId: String) {
