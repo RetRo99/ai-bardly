@@ -45,7 +45,7 @@ class HttpClientProvider(
             }
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { cause, request ->
-                    analytics.logException(cause, request.url.toString())
+                    analytics.logException(cause, cause.message)
                 }
             }
         }

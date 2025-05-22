@@ -7,6 +7,8 @@ import com.arkivanov.decompose.value.update
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.github.michaelbull.result.fold
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import com.retro99.base.result.AppError
 import com.retro99.base.result.AppResult
 import kotlinx.coroutines.Dispatchers
@@ -71,14 +73,13 @@ abstract class BasePresenterImpl<ScreenViewState, Intent : BaseScreenIntent>(com
         onSuccess: (T) -> Unit,
     ): Job {
         return scope.launch {
-            block().fold(
-                success = { data ->
+            block()
+                .onSuccess { data ->
                     onSuccess(data)
-                },
-                failure = { error ->
+                }
+                .onFailure { error ->
                     onError(error)
                 }
-            )
         }
     }
 
@@ -90,14 +91,13 @@ abstract class BasePresenterImpl<ScreenViewState, Intent : BaseScreenIntent>(com
         return scope.launch {
             val flow = block()
             flow.collect { result ->
-                result.fold(
-                    success = { data ->
+                result
+                    .onSuccess { data ->
                         onSuccess(data)
-                    },
-                    failure = { error ->
+                    }
+                    .onFailure { error ->
                         onError(error)
                     }
-                )
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.retro99.shelfs.data.remote
 
+import com.github.michaelbull.result.map
 import com.retro99.base.result.AppResult
 import com.retro99.shelfs.data.remote.model.ShelfDto
+import com.retro99.shelfs.data.remote.model.ShelfsListDto
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
 import retro99.games.api.get
@@ -17,8 +19,14 @@ class NetworkShelfsRemoteDataSource(
 ) : ShelfsRemoteDataSource {
 
     override suspend fun getShelfs(): AppResult<List<ShelfDto>> {
-        return networkClient.get<List<ShelfDto>>(
-            path = "shelfs",
+        return networkClient.get<ShelfsListDto>(
+            path = "shelves",
+        ).map { it.shelves }
+    }
+
+    override suspend fun getShelf(id: String): AppResult<ShelfDto> {
+        return networkClient.get<ShelfDto>(
+            path = "shelves/$id",
         )
     }
 }

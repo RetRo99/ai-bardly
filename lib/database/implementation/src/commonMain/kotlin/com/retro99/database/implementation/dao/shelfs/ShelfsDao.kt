@@ -15,7 +15,7 @@ interface ShelfsDao {
     suspend fun insert(items: List<RoomShelfEntity>)
 
     @Query("SELECT * FROM RoomShelfEntity WHERE id = :id")
-    suspend fun getShelf(id: Int): RoomShelfEntity
+    suspend fun getShelf(id: String): RoomShelfEntity
 
     @Query("SELECT * FROM RoomShelfEntity")
     suspend fun getShelfs(): List<RoomShelfEntity>

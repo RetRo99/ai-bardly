@@ -18,6 +18,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.bundles.kotlinInject)
             implementation(libs.datetime)
+            implementation(libs.coroutines)
             api(libs.kotlin.result)
             api(libs.kotlin.result.coroutines)
         }
