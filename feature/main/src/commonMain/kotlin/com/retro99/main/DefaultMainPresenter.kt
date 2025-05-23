@@ -5,6 +5,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.retro99.auth.domain.manager.UserSessionManager
 import com.retro99.base.ui.decompose.switchTab
 import com.retro99.main.MainPresenter.Child.GameList
 import com.retro99.main.MainPresenter.Child.Home
@@ -32,6 +33,7 @@ class DefaultMainPresenter(
     private val rootHomeFactory: RootHomePresenterFactory,
     private val rootRecentFactory: RootRecentPresenterFactory,
     private val rootShelfsPresenterFactory: RootShelfsPresenterFactory,
+    private val userSessionManager: UserSessionManager,
 ) : MainPresenter, ComponentContext by componentContext {
     private val navigation = StackNavigation<MainPresenter.Config>()
 
@@ -47,7 +49,11 @@ class DefaultMainPresenter(
     }
 
     override fun navigate(config: MainPresenter.Config) {
-        navigation.switchTab(config)
+        if (config is MainPresenter.Config.Shelfs && !userSessionManager.isUserLoggedIn) {
+            openLogin()
+        } else {
+            navigation.switchTab(config)
+        }
     }
 
     private fun childFactory(

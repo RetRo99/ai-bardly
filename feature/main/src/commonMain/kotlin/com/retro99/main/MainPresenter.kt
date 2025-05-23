@@ -56,6 +56,7 @@ interface MainPresenter :
             icon = DrawableRes.ic_chats,
         )
 
+        @Serializable
         data object Shelfs : Config(
             title = StringRes.shelfs,
             icon = DrawableRes.ic_shelfs,
