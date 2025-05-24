@@ -91,18 +91,14 @@ class DefaultGameDetailsPresenter(
             GameDetailsIntent.NavigateBack -> navigateBack()
             GameDetailsIntent.OpenChatClicked -> openChat()
             is GameDetailsIntent.OnChangeFavoriteClicked -> onChangeFavoriteClicked(intent.isFavoriteNew)
-            is GameDetailsIntent.AddGameToShelf -> addGameToSelectedShelf(intent.shelfId)
+            is GameDetailsIntent.AddGameToShelf -> addGameToSelectedShelf(intent.shelfId, intent.shelfName)
             GameDetailsIntent.ShowShelfSelectionDialog -> showShelfSelectionDialog()
             GameDetailsIntent.HideShelfSelectionDialog -> hideShelfSelectionDialog()
         }
     }
 
-    private fun addGameToShelf(shelfId: String) {
+    private fun addGameToShelf(shelfId: String, shelfName: String) {
         if (userSessionManager.isUserLoggedIn) {
-            // Get the current state to find the shelf name
-            val currentState = viewState.value as? BaseViewState.Success<GameDetailsViewState>
-            val shelfName = currentState?.data?.shelfs?.find { it.id == shelfId }?.name ?: "Unknown shelf"
-
             launchDataOperation(
                 block = { shelfsRepository.addGameToShelf(shelfId, game.id) },
             ) {
@@ -128,8 +124,8 @@ class DefaultGameDetailsPresenter(
         }
     }
 
-    private fun addGameToSelectedShelf(shelfId: String) {
-        addGameToShelf(shelfId)
+    private fun addGameToSelectedShelf(shelfId: String, shelfName: String) {
+        addGameToShelf(shelfId, shelfName)
         updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = false) }
     }
 

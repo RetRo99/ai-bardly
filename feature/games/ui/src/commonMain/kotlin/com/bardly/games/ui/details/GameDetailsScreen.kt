@@ -145,7 +145,7 @@ private fun ShelfSelectionDialog(
                         shelfs.forEach { shelf ->
                             Button(
                                 onClick = {
-                                    intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id))
+                                    intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id, shelf.name))
                                     // Optionally, dismiss dialog after adding
                                     // intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) 
                                 },
