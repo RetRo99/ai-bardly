@@ -99,12 +99,16 @@ class DefaultGameDetailsPresenter(
 
     private fun addGameToShelf(shelfId: String) {
         if (userSessionManager.isUserLoggedIn) {
+            // Get the current state to find the shelf name
+            val currentState = viewState.value as? BaseViewState.Success<GameDetailsViewState>
+            val shelfName = currentState?.data?.shelfs?.find { it.id == shelfId }?.name ?: "Unknown shelf"
+
             launchDataOperation(
                 block = { shelfsRepository.addGameToShelf(shelfId, game.id) },
             ) {
-                // Show snackbar notification when game is added to shelf
+                // Show snackbar notification when game is added to shelf with the shelf name
                 snackbarManager.showSnackbar(
-                    TextWrapper.Resource(StringRes.game_added_to_shelf)
+                    TextWrapper.Resource(StringRes.game_added_to_shelf, shelfName)
                 )
             }
         } else {

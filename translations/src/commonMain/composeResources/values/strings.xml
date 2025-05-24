@@ -89,5 +89,5 @@
     <string name="shelves_cancel">Cancel</string>
     <string name="shelves_no_games">No games in this shelf</string>
     <string name="shelves_no_image">No Image</string>
-    <string name="game_added_to_shelf">Game added to shelf</string>
+    <string name="game_added_to_shelf">Game added to shelf: %1$s</string>
 </resources>
