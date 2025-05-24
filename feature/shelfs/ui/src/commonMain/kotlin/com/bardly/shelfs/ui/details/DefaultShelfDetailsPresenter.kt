@@ -36,7 +36,6 @@ class DefaultShelfDetailsPresenter(
     init {
         fetchShelf()
     }
-
     private fun fetchShelf() {
         launchOperation(
             block = { shelfsRepository.getShelf(shelf.id) },

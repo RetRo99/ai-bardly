@@ -10,6 +10,9 @@ import com.retro99.analytics.api.AnalyticsEventOrigin
 import com.retro99.auth.domain.manager.UserSessionManager
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
+import com.retro99.base.ui.compose.TextWrapper
+import com.retro99.snackbar.api.SnackbarManager
+import com.retro99.translations.StringRes
 import com.retro99.games.domain.GamesRepository
 import com.retro99.games.domain.usecase.ToggleGameFavouriteStateUseCase
 import com.retro99.shelfs.domain.ShelfsRepository
@@ -18,6 +21,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
+import resources.translations.game_added_to_shelf
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 
 typealias GameDetailsPresenterFactory = (
@@ -41,6 +45,7 @@ class DefaultGameDetailsPresenter(
     private val userSessionManager: UserSessionManager,
     private val analytics: Analytics,
     private val shelfsRepository: ShelfsRepository,
+    private val snackbarManager: SnackbarManager,
 ) : BasePresenterImpl<GameDetailsViewState, GameDetailsIntent>(componentContext),
     GameDetailsPresenter {
 
@@ -97,7 +102,10 @@ class DefaultGameDetailsPresenter(
             launchDataOperation(
                 block = { shelfsRepository.addGameToShelf(shelfId, game.id) },
             ) {
-                // No need to update the view state as this operation doesn't affect the UI
+                // Show snackbar notification when game is added to shelf
+                snackbarManager.showSnackbar(
+                    TextWrapper.Resource(StringRes.game_added_to_shelf)
+                )
             }
         } else {
             openLogin()
