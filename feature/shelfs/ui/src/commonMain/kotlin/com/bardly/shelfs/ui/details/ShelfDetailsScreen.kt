@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -67,7 +68,10 @@ private fun ShelfsScreenContent(
 
         // List of games
         viewState.shelf.games.forEach { game ->
-            GameItem(game)
+            GameItem(
+                game = game,
+                onClick = { intentDispatcher(ShelfDetailsIntent.GameClicked(game)) }
+            )
         }
 
         // If no games, show a message
@@ -82,7 +86,7 @@ private fun ShelfsScreenContent(
 }
 
 @Composable
-private fun GameItem(game: GameUiModel, modifier: Modifier = Modifier) {
+private fun GameItem(game: GameUiModel, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
@@ -92,6 +96,7 @@ private fun GameItem(game: GameUiModel, modifier: Modifier = Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable(onClick = onClick)
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {

@@ -32,6 +32,7 @@ kotlin {
             implementation(projects.lib.paging.ui)
             implementation(libs.markdown)
             implementation(projects.lib.analytics.api)
+            implementation(projects.lib.snackbar.api)
         }
 
         androidMain.dependencies {
