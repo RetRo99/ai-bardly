@@ -134,6 +134,7 @@ private fun ShelfsScreenContent(
         if (viewState.showCreateShelfDialog) {
             CreateShelfDialog(
                 isCreating = viewState.isCreatingShelf,
+                error = viewState.createShelfError,
                 onDismiss = { intentDispatcher(ShelfsListIntent.HideCreateShelfDialog) },
                 onCreateShelf = { name, description ->
                     intentDispatcher(ShelfsListIntent.CreateShelf(name, description))
@@ -146,6 +147,7 @@ private fun ShelfsScreenContent(
 @Composable
 private fun CreateShelfDialog(
     isCreating: Boolean,
+    error: String? = null,
     onDismiss: () -> Unit,
     onCreateShelf: (String, String?) -> Unit
 ) {
@@ -177,6 +179,16 @@ private fun CreateShelfDialog(
                     Spacer(modifier = Modifier.height(16.dp))
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                }
+
+                if (error != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = error,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }

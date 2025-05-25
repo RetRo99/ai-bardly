@@ -90,7 +90,8 @@ class DefaultShelfsListComponent(
             onError = { error ->
                 updateOrSetSuccess { currentState ->
                     currentState.copy(
-                        isCreatingShelf = true,
+                        isCreatingShelf = false,
+                        showCreateShelfDialog = true,
                         createShelfError = error.message
                     )
                 }
