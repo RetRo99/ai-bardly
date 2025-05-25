@@ -50,6 +50,7 @@ import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.CoilImage
 import com.retro99.translations.StringRes
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import resources.translations.home_recent_games
 import resources.translations.shelves_list
@@ -147,7 +148,7 @@ private fun ShelfsScreenContent(
 @Composable
 private fun CreateShelfDialog(
     isCreating: Boolean,
-    error: String? = null,
+    error: StringResource? = null,
     onDismiss: () -> Unit,
     onCreateShelf: (String, String?) -> Unit
 ) {
@@ -185,7 +186,7 @@ private fun CreateShelfDialog(
                 if (error != null) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = error,
+                        text = stringResource(error),
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.fillMaxWidth()

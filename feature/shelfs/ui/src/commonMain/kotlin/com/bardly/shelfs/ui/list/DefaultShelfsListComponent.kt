@@ -92,7 +92,7 @@ class DefaultShelfsListComponent(
                     currentState.copy(
                         isCreatingShelf = false,
                         showCreateShelfDialog = true,
-                        createShelfError = error.message
+                        createShelfError = error.toStringRes()
                     )
                 }
             }
