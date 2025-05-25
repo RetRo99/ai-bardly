@@ -6,5 +6,6 @@ import com.retro99.paging.domain.PagingItem
 data class ShelfDomainModel(
     override val id: String,
     val name: String,
+    val description: String? = null,
     val games: List<GameDomainModel>,
 ) : PagingItem
