@@ -1,4 +1,4 @@
-    package com.retro99.shelfs.data.remote
+package com.retro99.shelfs.data.remote
 
 import com.github.michaelbull.result.map
 import com.retro99.base.result.AppResult
@@ -7,6 +7,8 @@ import com.retro99.shelfs.data.remote.model.AddGameToShelfDto
 import com.retro99.shelfs.data.remote.model.CreateShelfDto
 import com.retro99.shelfs.data.remote.model.ShelfDto
 import com.retro99.shelfs.data.remote.model.ShelfsListDto
+import com.retro99.shelfs.data.remote.model.toDto
+import com.retro99.shelfs.domain.model.CreateShelfDomainModel
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
 import retro99.games.api.get
@@ -41,10 +43,10 @@ class NetworkShelfsRemoteDataSource(
         )
     }
 
-    override suspend fun createShelf(name: String, description: String?): AppResult<ShelfDto> {
+    override suspend fun createShelf(item: CreateShelfDto): AppResult<ShelfDto> {
         return networkClient.post<ShelfDto>(
             path = "shelves",
-            body = CreateShelfDto(name, description)
+            body = item
         )
     }
 }

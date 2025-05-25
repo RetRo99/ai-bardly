@@ -18,7 +18,9 @@ import com.retro99.shelfs.data.local.ShelfsLocalDataSource
 import com.retro99.shelfs.data.local.model.toLocalModel
 import com.retro99.shelfs.data.remote.ShelfsRemoteDataSource
 import com.retro99.shelfs.data.remote.model.toDomainModel
+import com.retro99.shelfs.data.remote.model.toDto
 import com.retro99.shelfs.domain.ShelfsRepository
+import com.retro99.shelfs.domain.model.CreateShelfDomainModel
 import com.retro99.shelfs.domain.model.ShelfDomainModel
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject
@@ -56,8 +58,8 @@ class ShelfsDataRepository(
         return remoteSource.addGameToShelf(shelfId, gameId)
     }
 
-    override suspend fun createShelf(name: String, description: String?): AppResult<ShelfDomainModel> {
-        return remoteSource.createShelf(name, description).map { shelfDto ->
+    override suspend fun createShelf(item: CreateShelfDomainModel): AppResult<ShelfDomainModel> {
+        return remoteSource.createShelf(item.toDto()).map { shelfDto ->
             shelfDto.toDomainModel()
         }
     }
