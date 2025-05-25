@@ -20,7 +20,7 @@ import com.retro99.database.implementation.dao.shelfs.ShelfsDao
         RoomGameMetadataEntity::class,
         RoomShelfEntity::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = true,
 )
 @ConstructedBy(AppDatabaseConstructor::class)
