@@ -9,6 +9,7 @@ import com.retro99.analytics.api.AnalyticsEvent
 import com.retro99.analytics.api.AnalyticsEventOrigin
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.shelfs.domain.ShelfsRepository
+import com.retro99.shelfs.domain.model.CreateShelfDomainModel
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -37,6 +38,25 @@ class DefaultShelfsListComponent(
     override fun handleScreenIntent(intent: ShelfsListIntent) {
         when (intent) {
             is ShelfsListIntent.ShelfClicked -> openShelfDetails(intent.shelf)
+            is ShelfsListIntent.CreateShelf -> createShelf(intent.name, intent.description)
+            is ShelfsListIntent.ShowCreateShelfDialog -> showCreateShelfDialog()
+            is ShelfsListIntent.HideCreateShelfDialog -> hideCreateShelfDialog()
+        }
+    }
+
+    private fun showCreateShelfDialog() {
+        updateOrSetSuccess { currentState ->
+            currentState.copy(
+                showCreateShelfDialog = true
+            )
+        }
+    }
+
+    private fun hideCreateShelfDialog() {
+        updateOrSetSuccess { currentState ->
+            currentState.copy(
+                showCreateShelfDialog = false
+            )
         }
     }
 
@@ -50,8 +70,43 @@ class DefaultShelfsListComponent(
         navigateToShelfDetails(shelf)
     }
 
-    private fun fetchShelfs(
-    ) {
+    private fun createShelf(name: String, description: String?) {
+        updateOrSetSuccess { currentState ->
+            currentState.copy(
+                isCreatingShelf = true,
+                createShelfError = null
+            )
+        }
+
+        launchDataOperation(
+            block = {
+                shelfsRepository.createShelf(
+                    CreateShelfDomainModel(
+                        name = name,
+                        description = description
+                    )
+                )
+            },
+            onError = { error ->
+                updateOrSetSuccess { currentState ->
+                    currentState.copy(
+                        isCreatingShelf = true,
+                        createShelfError = error.message
+                    )
+                }
+            }
+        ) { result ->
+            updateOrSetSuccess { currentState ->
+                currentState.copy(
+                    isCreatingShelf = false,
+                    showCreateShelfDialog = false
+                )
+            }
+            fetchShelfs()
+        }
+    }
+
+    private fun fetchShelfs() {
         launchOperation(
             block = {
                 shelfsRepository
@@ -63,7 +118,6 @@ class DefaultShelfsListComponent(
                     shelfs = result.toUiModel()
                 )
             }
-
         }
     }
 }
