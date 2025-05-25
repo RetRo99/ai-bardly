@@ -7,4 +7,6 @@ sealed interface GameDetailsIntent : BaseScreenIntent {
     data object OpenChatClicked : GameDetailsIntent
     data class OnChangeFavoriteClicked(val isFavoriteNew: Boolean) : GameDetailsIntent
     data class AddGameToShelf(val shelfId: String) : GameDetailsIntent
+    data object ShowShelfSelectionDialog : GameDetailsIntent
+    data object HideShelfSelectionDialog : GameDetailsIntent
 }

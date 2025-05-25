@@ -13,6 +13,8 @@ data class ShelfDto(
     override val id: String,
     @SerialName("name")
     val name: String,
+    @SerialName("description")
+    val description: String? = null,
     @SerialName("games")
     val games: List<GameDto>,
 ) : PagingItem
@@ -22,5 +24,6 @@ fun List<ShelfDto>.toDomainModel() = map(ShelfDto::toDomainModel)
 fun ShelfDto.toDomainModel() = ShelfDomainModel(
     id = id,
     name = name,
+    description = description,
     games = games.map { it.toDomainModel() },
 )

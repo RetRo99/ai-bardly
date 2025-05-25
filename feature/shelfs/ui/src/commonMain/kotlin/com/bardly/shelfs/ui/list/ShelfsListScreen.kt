@@ -19,10 +19,24 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,9 +50,19 @@ import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.CoilImage
 import com.retro99.translations.StringRes
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import resources.translations.home_recent_games
+import resources.translations.shelves_cancel
+import resources.translations.shelves_create
+import resources.translations.shelves_create_new_shelf
+import resources.translations.shelves_create_shelf
+import resources.translations.shelves_description_optional
 import resources.translations.shelves_list
+import resources.translations.shelves_no_games
+import resources.translations.shelves_no_image
+import resources.translations.shelves_no_shelves_available
+import resources.translations.shelves_shelf_name
 
 @Composable
 fun ShelfsListScreen(
@@ -58,50 +82,149 @@ private fun ShelfsScreenContent(
     intentDispatcher: IntentDispatcher<ShelfsListIntent>,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = stringResource(StringRes.shelves_list),
-                style = MaterialTheme.typography.headlineLarge,
-            )
-        }
-
-        if (viewState.shelfs.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { intentDispatcher(ShelfsListIntent.ShowCreateShelfDialog) }
             ) {
-                Text(
-                    text = "No shelves available",
-                    style = MaterialTheme.typography.bodyLarge
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(StringRes.shelves_create_shelf)
                 )
             }
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
-                items(
-                    items = viewState.shelfs,
-                    key = { it.id }
-                ) { shelf ->
-                    ShelfItem(
-                        shelf = shelf,
-                        onShelfClick = { intentDispatcher(ShelfsListIntent.ShelfClicked(shelf)) },
-                        onGameClick = { /* Handle game click if needed */ }
+                Text(
+                    text = stringResource(StringRes.shelves_list),
+                    style = MaterialTheme.typography.headlineLarge,
+                )
+            }
+
+            if (viewState.shelfs.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(StringRes.shelves_no_shelves_available),
+                        style = MaterialTheme.typography.bodyLarge
                     )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(
+                        items = viewState.shelfs,
+                        key = { it.id }
+                    ) { shelf ->
+                        ShelfItem(
+                            shelf = shelf,
+                            onShelfClick = { intentDispatcher(ShelfsListIntent.ShelfClicked(shelf)) },
+                            onGameClick = { /* Handle game click if needed */ }
+                        )
+                    }
                 }
             }
         }
+
+        if (viewState.showCreateShelfDialog) {
+            CreateShelfDialog(
+                isCreating = viewState.isCreatingShelf,
+                error = viewState.createShelfError,
+                onDismiss = { intentDispatcher(ShelfsListIntent.HideCreateShelfDialog) },
+                onCreateShelf = { name, description ->
+                    intentDispatcher(ShelfsListIntent.CreateShelf(name, description))
+                }
+            )
+        }
     }
+}
+
+@Composable
+private fun CreateShelfDialog(
+    isCreating: Boolean,
+    error: StringResource? = null,
+    onDismiss: () -> Unit,
+    onCreateShelf: (String, String?) -> Unit
+) {
+    var shelfName by remember { mutableStateOf("") }
+    var shelfDescription by remember { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(StringRes.shelves_create_new_shelf)) },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = shelfName,
+                    onValueChange = { shelfName = it },
+                    label = { Text(stringResource(StringRes.shelves_shelf_name)) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = shelfDescription,
+                    onValueChange = { shelfDescription = it },
+                    label = { Text(stringResource(StringRes.shelves_description_optional)) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                if (isCreating) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                }
+
+                if (error != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(error),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = { 
+                    onCreateShelf(
+                        shelfName,
+                        shelfDescription.ifBlank { null }
+                    ) 
+                },
+                enabled = shelfName.isNotBlank() && !isCreating
+            ) {
+                Text(stringResource(StringRes.shelves_create))
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss,
+                enabled = !isCreating
+            ) {
+                Text(stringResource(StringRes.shelves_cancel))
+            }
+        }
+    )
 }
 
 @Composable
@@ -143,7 +266,7 @@ private fun ShelfItem(
                 }
             } else {
                 Text(
-                    text = "No games in this shelf",
+                    text = stringResource(StringRes.shelves_no_games),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -176,7 +299,7 @@ private fun GamePreviewItem(
                 CoilImage(game.thumbnail, game.thumbnail)
             } else {
                 Text(
-                    text = "No Image",
+                    text = stringResource(StringRes.shelves_no_image),
                     style = MaterialTheme.typography.bodySmall
                 )
             }

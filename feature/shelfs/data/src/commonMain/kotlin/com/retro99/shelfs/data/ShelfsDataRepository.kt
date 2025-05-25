@@ -4,6 +4,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.coroutines.coroutineBinding
+import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.retro99.base.result.AppResult
@@ -17,7 +18,9 @@ import com.retro99.shelfs.data.local.ShelfsLocalDataSource
 import com.retro99.shelfs.data.local.model.toLocalModel
 import com.retro99.shelfs.data.remote.ShelfsRemoteDataSource
 import com.retro99.shelfs.data.remote.model.toDomainModel
+import com.retro99.shelfs.data.remote.model.toDto
 import com.retro99.shelfs.domain.ShelfsRepository
+import com.retro99.shelfs.domain.model.CreateShelfDomainModel
 import com.retro99.shelfs.domain.model.ShelfDomainModel
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject
@@ -55,6 +58,12 @@ class ShelfsDataRepository(
         return remoteSource.addGameToShelf(shelfId, gameId)
     }
 
+    override suspend fun createShelf(item: CreateShelfDomainModel): AppResult<ShelfDomainModel> {
+        return remoteSource.createShelf(item.toDto()).map { shelfDto ->
+            shelfDto.toDomainModel()
+        }
+    }
+
     private suspend fun getCachedShelf(id: String): AppResult<ShelfDomainModel>? {
         return localSource.getShelf(id)
             .andThen { cachedShelf ->
@@ -73,6 +82,7 @@ class ShelfsDataRepository(
             ShelfDomainModel(
                 id = cachedShelf.id,
                 name = cachedShelf.name,
+                description = cachedShelf.description,
                 games = cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
         }
     }
@@ -118,6 +128,7 @@ class ShelfsDataRepository(
                 ShelfDomainModel(
                     id = cachedShelf.id,
                     name = cachedShelf.name,
+                    description = cachedShelf.description,
                     games = cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
             }
         }

@@ -6,4 +6,5 @@ data class GameDetailsViewState(
     val game: GameUiModel,
     val isFavorite: Boolean? = null,
     val shelfs: List<ShelfInfo> = emptyList(),
+    val isShelfSelectionDialogVisible: Boolean = false,
 )

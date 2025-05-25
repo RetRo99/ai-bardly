@@ -5,4 +5,7 @@ import com.retro99.base.ui.BaseScreenIntent
 
 sealed interface ShelfsListIntent : BaseScreenIntent {
     data class ShelfClicked(val shelf: ShelfUiModel) : ShelfsListIntent
+    data class CreateShelf(val name: String, val description: String? = null) : ShelfsListIntent
+    data object ShowCreateShelfDialog : ShelfsListIntent
+    data object HideCreateShelfDialog : ShelfsListIntent
 }
