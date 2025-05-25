@@ -4,6 +4,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.coroutines.coroutineBinding
+import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.retro99.base.result.AppResult
@@ -55,6 +56,12 @@ class ShelfsDataRepository(
         return remoteSource.addGameToShelf(shelfId, gameId)
     }
 
+    override suspend fun createShelf(name: String, description: String?): AppResult<ShelfDomainModel> {
+        return remoteSource.createShelf(name, description).map { shelfDto ->
+            shelfDto.toDomainModel()
+        }
+    }
+
     private suspend fun getCachedShelf(id: String): AppResult<ShelfDomainModel>? {
         return localSource.getShelf(id)
             .andThen { cachedShelf ->
@@ -73,6 +80,7 @@ class ShelfsDataRepository(
             ShelfDomainModel(
                 id = cachedShelf.id,
                 name = cachedShelf.name,
+                description = cachedShelf.description,
                 games = cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
         }
     }
@@ -118,6 +126,7 @@ class ShelfsDataRepository(
                 ShelfDomainModel(
                     id = cachedShelf.id,
                     name = cachedShelf.name,
+                    description = cachedShelf.description,
                     games = cachedShelf.games.mapNotNull { gameId -> gameMap[gameId] })
             }
         }
