@@ -53,7 +53,16 @@ import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import resources.translations.home_recent_games
+import resources.translations.shelves_cancel
+import resources.translations.shelves_create
+import resources.translations.shelves_create_new_shelf
+import resources.translations.shelves_create_shelf
+import resources.translations.shelves_description_optional
 import resources.translations.shelves_list
+import resources.translations.shelves_no_games
+import resources.translations.shelves_no_image
+import resources.translations.shelves_no_shelves_available
+import resources.translations.shelves_shelf_name
 
 @Composable
 fun ShelfsListScreen(
@@ -81,7 +90,7 @@ private fun ShelfsScreenContent(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Create Shelf"
+                    contentDescription = stringResource(StringRes.shelves_create_shelf)
                 )
             }
         }
@@ -108,7 +117,7 @@ private fun ShelfsScreenContent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No shelves available",
+                        text = stringResource(StringRes.shelves_no_shelves_available),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
@@ -157,13 +166,13 @@ private fun CreateShelfDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Create New Shelf") },
+        title = { Text(stringResource(StringRes.shelves_create_new_shelf)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = shelfName,
                     onValueChange = { shelfName = it },
-                    label = { Text("Shelf Name") },
+                    label = { Text(stringResource(StringRes.shelves_shelf_name)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -172,7 +181,7 @@ private fun CreateShelfDialog(
                 OutlinedTextField(
                     value = shelfDescription,
                     onValueChange = { shelfDescription = it },
-                    label = { Text("Description (Optional)") },
+                    label = { Text(stringResource(StringRes.shelves_description_optional)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -198,13 +207,13 @@ private fun CreateShelfDialog(
             Button(
                 onClick = { 
                     onCreateShelf(
-                        shelfName, 
-                        if (shelfDescription.isBlank()) null else shelfDescription
+                        shelfName,
+                        shelfDescription.ifBlank { null }
                     ) 
                 },
                 enabled = shelfName.isNotBlank() && !isCreating
             ) {
-                Text("Create")
+                Text(stringResource(StringRes.shelves_create))
             }
         },
         dismissButton = {
@@ -212,7 +221,7 @@ private fun CreateShelfDialog(
                 onClick = onDismiss,
                 enabled = !isCreating
             ) {
-                Text("Cancel")
+                Text(stringResource(StringRes.shelves_cancel))
             }
         }
     )
@@ -257,7 +266,7 @@ private fun ShelfItem(
                 }
             } else {
                 Text(
-                    text = "No games in this shelf",
+                    text = stringResource(StringRes.shelves_no_games),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -290,7 +299,7 @@ private fun GamePreviewItem(
                 CoilImage(game.thumbnail, game.thumbnail)
             } else {
                 Text(
-                    text = "No Image",
+                    text = stringResource(StringRes.shelves_no_image),
                     style = MaterialTheme.typography.bodySmall
                 )
             }

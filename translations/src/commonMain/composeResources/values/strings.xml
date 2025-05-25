@@ -80,4 +80,13 @@
     <string name="error_unknown">An unexpected error occurred. Please try again.</string>
     <string name="error_retry">Retry</string>
     <string name="shelves_list">Shelves list</string>
+    <string name="shelves_create_shelf">Create Shelf</string>
+    <string name="shelves_no_shelves_available">No shelves available</string>
+    <string name="shelves_create_new_shelf">Create New Shelf</string>
+    <string name="shelves_shelf_name">Shelf Name</string>
+    <string name="shelves_description_optional">Description (Optional)</string>
+    <string name="shelves_create">Create</string>
+    <string name="shelves_cancel">Cancel</string>
+    <string name="shelves_no_games">No games in this shelf</string>
+    <string name="shelves_no_image">No Image</string>
 </resources>
