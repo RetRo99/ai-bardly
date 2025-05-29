@@ -43,7 +43,7 @@ import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.keyboardAsState
-import com.retro99.paging.domain.collectAsLazyPagingItems
+import com.retro99.paging.ui.collectAsLazyPagingItems
 import com.retro99.translations.StringRes
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.compose.resources.stringResource
@@ -104,9 +104,7 @@ private fun GamesList(
                 val gamesState = rememberLazyListState()
                 GamesLazyColumn(
                     state = gamesState,
-                    itemCount = { games.itemCount },
-                    getItem = games::get,
-                    getKey = { games.peek(it)?.id ?: it },
+                    lazyItems = games,
                     onGameClicked = { game ->
                         focusManager.clearFocus()
                         intentDispatcher(GamesListIntent.GameClicked(game))
@@ -191,9 +189,7 @@ fun SearchScreenState(
 
         GamesLazyColumn(
             state = searchState,
-            itemCount = { searchResults.itemCount },
-            getItem = searchResults::get,
-            getKey = { searchResults.peek(it)?.id ?: it },
+            lazyItems = searchResults,
             onGameClicked = { game ->
                 focusManager.clearFocus()
                 intentDispatcher(GamesListIntent.GameClicked(game))

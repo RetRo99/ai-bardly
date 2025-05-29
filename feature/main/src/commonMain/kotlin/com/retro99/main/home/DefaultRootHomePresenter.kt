@@ -19,6 +19,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 internal typealias RootHomePresenterFactory = (
     ComponentContext,
     openLogin: () -> Unit,
+    navigateToRootGames: () -> Unit,
 ) -> DefaultRootHomePresenter
 
 @Inject
@@ -26,6 +27,7 @@ internal typealias RootHomePresenterFactory = (
 class DefaultRootHomePresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val openLogin: () -> Unit,
+    @Assisted private val navigateToRootGames: () -> Unit,
     private val homePresenterFactory: HomePresenterFactory,
     private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
     private val chatPresenterFactory: ChatPresenterFactory,
@@ -70,6 +72,7 @@ class DefaultRootHomePresenter(
                 componentContext,
                 ::openChat,
                 ::openGameDetails,
+                navigateToRootGames
             )
         )
 

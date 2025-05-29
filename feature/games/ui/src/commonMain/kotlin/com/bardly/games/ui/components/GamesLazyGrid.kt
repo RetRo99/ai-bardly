@@ -24,32 +24,39 @@ fun GamesLazyGrid(
     onOpenChatClicked: (String, Int) -> Unit,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     gridState: LazyGridState = rememberLazyGridState(),
+    emptyStateContent: @Composable () -> Unit = {},
 ) {
     val density = LocalDensity.current
-    LazyVerticalGrid(
-        state = gridState,
-        columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = contentPadding,
-    ) {
-        items(
-            count = itemCount(),
-            key = getKey,
-            contentType = { "GameCard" }
-        ) { index ->
-            val game = getItem(index)
-            if (game != null) {
-                val row = gridState.layoutInfo.visibleItemsInfo.find { it.index == index }?.row
-                val itemsInRow = gridState.layoutInfo.visibleItemsInfo.filter { it.row == row }
-                val maxHeightInRow = itemsInRow.maxOfOrNull { it.size.height }
-                val maxHeightInRowDp =
-                    with(density) { maxHeightInRow?.toDp() } ?: Dp.Unspecified
-                GameCard(
-                    game = game,
-                    onClick = onGameClicked,
-                    modifier = Modifier.height(maxHeightInRowDp).animateItem().animateContentSize(),
-                    onChatClick = onOpenChatClicked
-                )
+    val count = itemCount()
+
+    if (count == 0) {
+        emptyStateContent()
+    } else {
+        LazyVerticalGrid(
+            state = gridState,
+            columns = GridCells.Fixed(2),
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = contentPadding,
+        ) {
+            items(
+                count = count,
+                key = getKey,
+                contentType = { "GameCard" }
+            ) { index ->
+                val game = getItem(index)
+                if (game != null) {
+                    val row = gridState.layoutInfo.visibleItemsInfo.find { it.index == index }?.row
+                    val itemsInRow = gridState.layoutInfo.visibleItemsInfo.filter { it.row == row }
+                    val maxHeightInRow = itemsInRow.maxOfOrNull { it.size.height }
+                    val maxHeightInRowDp =
+                        with(density) { maxHeightInRow?.toDp() } ?: Dp.Unspecified
+                    GameCard(
+                        game = game,
+                        onClick = onGameClicked,
+                        modifier = Modifier.height(maxHeightInRowDp).animateItem().animateContentSize(),
+                        onChatClick = onOpenChatClicked
+                    )
+                }
             }
         }
     }
