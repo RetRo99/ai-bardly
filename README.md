@@ -6,7 +6,7 @@ user experience. This project serves as an example of a modern, scalable Android
 
 ## Features
 
-- **Multiplatform Development:** Built using Kotlin Multiplatform Mobile (KMM), allowing code
+- **Multiplatform Development:** Built using Kotlin Multiplatform Mobile (KMP), allowing code
   sharing across Android and iOS platforms.
 - **Jetpack Compose:** Modern UI development using declarative UI patterns.
 - **Dependency Injection:** Utilizes `kotlin-inject` for a clean and testable architecture.
