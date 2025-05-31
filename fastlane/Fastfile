@@ -174,8 +174,7 @@ platform :android do
           git_commit(path: "./CHANGELOG.md", message: "Update CHANGELOG for version #{version}")
         end
 
-       sh("git flow release finish -m 'Release #{version}' #{version}")
-      rescue => ex
+sh("git flow release finish -m \"Release #{version}\" #{version}")      rescue => ex
         UI.error("Git flow commands failed: #{ex}")
         # You could add error handling or cleanup here
         raise
