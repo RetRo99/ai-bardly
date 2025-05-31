@@ -23,6 +23,29 @@ Before installing Fastlane, you need to set up Ruby on your Windows machine:
    gem install bundler
    ```
 
+## Git Flow Setup
+
+This project requires Git Flow to be initialized in your repository:
+
+1. **Install Git Flow**:
+   - Git Flow is included with Git for Windows
+   - Alternatively, you can install it using Chocolatey: `choco install gitflow-winget`
+
+2. **Initialize Git Flow in the Repository**:
+   ```powershell
+   cd path\to\project
+   git flow init -d
+   ```
+   The `-d` flag accepts all default branch naming conventions.
+
+3. **Verify Git Flow Initialization**:
+   ```powershell
+   git flow
+   ```
+   This should display the Git Flow command help.
+
+Git Flow must be properly initialized for the Fastlane release process to work correctly.
+
 ## Installing Fastlane
 
 Now that Ruby is set up, you can install Fastlane and the required plugins:
