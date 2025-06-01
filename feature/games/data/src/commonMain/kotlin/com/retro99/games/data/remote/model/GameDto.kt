@@ -17,7 +17,7 @@ data class GameDto(
     val complexity: String?,
     val link: String?,
     val thumbnail: String?,
-    @SerialName("listNumber")
+    @SerialName("_id")
     override val id: Int,
     val categories: List<String>?,
     val types: List<String>?,
