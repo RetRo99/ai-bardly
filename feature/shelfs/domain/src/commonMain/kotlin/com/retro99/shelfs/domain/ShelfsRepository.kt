@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.Flow
 interface ShelfsRepository: BaseRepository {
     suspend fun getShelf(id: String): Flow<AppResult<ShelfDomainModel>>
     suspend fun getShelfs(): Flow<AppResult<List<ShelfDomainModel>>>
-    suspend fun addGameToShelf(shelfId: String, gameId: Int): CompletableResult
+    suspend fun addGameToShelf(shelfId: String, gameId: String): CompletableResult
 }

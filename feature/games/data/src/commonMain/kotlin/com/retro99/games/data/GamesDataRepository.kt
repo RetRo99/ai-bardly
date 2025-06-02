@@ -57,29 +57,29 @@ class GamesDataRepository(
         return localSource.getRecentlyOpenGames(amount).map { it.toDomainModel() }
     }
 
-    override suspend fun getGamesById(ids: List<Int>): AppResult<List<GameDomainModel>> {
+    override suspend fun getGamesById(ids: List<String>): AppResult<List<GameDomainModel>> {
         return localSource.getGamesById(ids).map { it.toDomainModel() }
     }
 
-    override suspend fun addToFavourites(gameId: Int): CompletableResult {
+    override suspend fun addToFavourites(gameId: String): CompletableResult {
         return remoteSource.addToFavourites(gameId)
             .onSuccess {
                 localSource.addToFavourites(gameId)
             }
     }
 
-    override suspend fun removeFromFavourites(gameId: Int): CompletableResult {
+    override suspend fun removeFromFavourites(gameId: String): CompletableResult {
         return remoteSource.removeFromFavourites(gameId)
             .onSuccess {
                 localSource.removeFromFavourites(gameId)
             }
     }
 
-    override suspend fun updateGameOpenDate(gameId: Int): CompletableResult {
+    override suspend fun updateGameOpenDate(gameId: String): CompletableResult {
         return localSource.updateGameOpenTime(gameId, now())
     }
 
-    override fun isMarkedAsFavorite(gameId: Int): Flow<Boolean> {
+    override fun isMarkedAsFavorite(gameId: String): Flow<Boolean> {
         return flow {
             localSource.isMarkedAsFavorite(gameId)
                 .onSuccess { localFavoriteStatus ->
