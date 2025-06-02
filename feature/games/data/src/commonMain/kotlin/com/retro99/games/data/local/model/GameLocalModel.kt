@@ -19,7 +19,7 @@ data class GameLocalModel(
     override val complexity: String,
     override val link: String,
     override val thumbnail: String,
-    override val id: Int,
+    override val id: String,
     override val categories: List<String>?,
     override val types: List<String>?,
 ) : PagingItem, GameEntity

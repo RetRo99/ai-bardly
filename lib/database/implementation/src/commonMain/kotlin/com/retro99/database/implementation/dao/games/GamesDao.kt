@@ -18,10 +18,10 @@ interface GamesDao {
     suspend fun insert(items: List<RoomGameEntity>)
 
     @Query("SELECT * FROM RoomGameEntity WHERE id = :id")
-    suspend fun getGame(id: Int): RoomGameEntity
+    suspend fun getGame(id: String): RoomGameEntity
 
     @Query("SELECT * FROM RoomGameEntity WHERE id IN (:ids)")
-    suspend fun getGamesById(ids: List<Int>): List<RoomGameEntity>
+    suspend fun getGamesById(ids: List<String>): List<RoomGameEntity>
 
     @Query(
         """
@@ -54,7 +54,7 @@ interface GamesDao {
     suspend fun updateGameMetaData(game: RoomGameMetadataEntity)
 
     @Transaction
-    suspend fun updateIsFavorite(gameId: Int, isFavorite: Boolean) {
+    suspend fun updateIsFavorite(gameId: String, isFavorite: Boolean) {
         val existing = getMetadataByGameId(gameId)
         val metadata =
             existing?.copy(isFavourite = isFavorite) ?: RoomGameMetadataEntity(
@@ -66,7 +66,7 @@ interface GamesDao {
     }
 
     @Transaction
-    suspend fun updateGameOpenTime(gameId: Int, dateTime: LocalDateTime?) {
+    suspend fun updateGameOpenTime(gameId: String, dateTime: LocalDateTime?) {
         val existing = getMetadataByGameId(gameId)
         val metadata = existing?.copy(lastOpenTime = dateTime) ?: RoomGameMetadataEntity(
             gameId,
@@ -77,7 +77,7 @@ interface GamesDao {
     }
 
     @Query("SELECT * FROM RoomGameMetadataEntity WHERE gameId = :gameId")
-    suspend fun getMetadataByGameId(gameId: Int): RoomGameMetadataEntity?
+    suspend fun getMetadataByGameId(gameId: String): RoomGameMetadataEntity?
 
     @Query(
         """
@@ -85,5 +85,5 @@ interface GamesDao {
     WHERE gameId = :gameId
     """
     )
-    suspend fun isMarkedAsFavorite(gameId: Int): Boolean?
+    suspend fun isMarkedAsFavorite(gameId: String): Boolean?
 }

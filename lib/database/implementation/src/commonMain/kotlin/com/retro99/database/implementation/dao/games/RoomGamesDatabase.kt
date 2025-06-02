@@ -30,13 +30,13 @@ class RoomGamesDatabase(
         }
     }
 
-    override suspend fun getGame(id: Int): AppResult<GameEntity> {
+    override suspend fun getGame(id: String): AppResult<GameEntity> {
         return daoExecutor.executeDatabaseOperation {
             dao.getGame(id)
         }
     }
 
-    override suspend fun getGamesById(ids: List<Int>): AppResult<List<GameEntity>> {
+    override suspend fun getGamesById(ids: List<String>): AppResult<List<GameEntity>> {
         return daoExecutor.executeDatabaseOperation {
             dao.getGamesById(ids)
         }
@@ -49,7 +49,7 @@ class RoomGamesDatabase(
     }
 
     override suspend fun updateGameOpenTime(
-        id: Int,
+        id: String,
         openedDateTime: LocalDateTime?
     ): AppResult<Unit> {
         return daoExecutor.executeDatabaseOperation {
@@ -68,19 +68,19 @@ class RoomGamesDatabase(
         return dao.getGames(query) as PagingSource<Int, GameEntity>
     }
 
-    override suspend fun addToFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun addToFavourites(gameId: String): AppResult<Unit> {
         return daoExecutor.executeDatabaseOperation {
             dao.updateIsFavorite(gameId, true)
         }
     }
 
-    override suspend fun removeFromFavourites(gameId: Int): AppResult<Unit> {
+    override suspend fun removeFromFavourites(gameId: String): AppResult<Unit> {
         return daoExecutor.executeDatabaseOperation {
             dao.updateIsFavorite(gameId, false)
         }
     }
 
-    override suspend fun isMarkedAsFavorite(gameId: Int): AppResult<Boolean> {
+    override suspend fun isMarkedAsFavorite(gameId: String): AppResult<Boolean> {
         return daoExecutor.executeDatabaseOperation {
             dao.isMarkedAsFavorite(gameId) == true
         }
