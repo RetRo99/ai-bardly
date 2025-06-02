@@ -41,7 +41,7 @@ import resources.translations.games
 fun GameRowItem(
     game: GameUiModel,
     onClick: (GameUiModel) -> Unit,
-    onChatClick: (String, Int) -> Unit,
+    onChatClick: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -83,7 +83,7 @@ fun GameRowItem(
 
 @Composable
 private fun GameAttributesRow(
-    gameId: Int,
+    gameId: String,
     numberOfPlayers: String,
     playingTime: String,
     rating: String,
@@ -114,9 +114,9 @@ private fun GameAttributesRow(
 
 @Composable
 private fun TitleAndChatRow(
-    gameId: Int,
+    gameId: String,
     gameTitle: String,
-    onChatClick: (String, Int) -> Unit,
+    onChatClick: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
@@ -141,7 +141,7 @@ private fun TitleAndChatRow(
 fun GamesLazyColumn(
     lazyItems: LazyPagingItems<GameUiModel>,
     onGameClicked: (GameUiModel) -> Unit,
-    onOpenChatClicked: (String, Int) -> Unit,
+    onOpenChatClicked: (String, String) -> Unit,
     state: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(16.dp),
 ) {
