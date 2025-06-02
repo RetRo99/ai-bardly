@@ -10,21 +10,21 @@ interface GamesDatabase {
 
     suspend fun insert(items: List<GameEntity>): AppResult<Unit>
 
-    suspend fun getGame(id: Int): AppResult<GameEntity>
+    suspend fun getGame(id: String): AppResult<GameEntity>
 
-    suspend fun getGamesById(ids: List<Int>): AppResult<List<GameEntity>>
+    suspend fun getGamesById(ids: List<String>): AppResult<List<GameEntity>>
 
     suspend fun getRecentlyOpenGames(amount: Int): AppResult<List<GameEntity>>
 
-    suspend fun updateGameOpenTime(id: Int, openedDateTime: LocalDateTime?): AppResult<Unit>
+    suspend fun updateGameOpenTime(id: String, openedDateTime: LocalDateTime?): AppResult<Unit>
 
     suspend fun clearAll(): AppResult<Unit>
 
     fun getGames(query: String?): PagingSource<Int, GameEntity>
 
-    suspend fun addToFavourites(gameId: Int): AppResult<Unit>
+    suspend fun addToFavourites(gameId: String): AppResult<Unit>
 
-    suspend fun removeFromFavourites(gameId: Int): AppResult<Unit>
+    suspend fun removeFromFavourites(gameId: String): AppResult<Unit>
 
-    suspend fun isMarkedAsFavorite(gameId: Int): AppResult<Boolean>
+    suspend fun isMarkedAsFavorite(gameId: String): AppResult<Boolean>
 }

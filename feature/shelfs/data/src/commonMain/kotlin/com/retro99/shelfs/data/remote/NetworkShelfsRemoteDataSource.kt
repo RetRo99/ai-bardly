@@ -33,7 +33,7 @@ class NetworkShelfsRemoteDataSource(
         )
     }
 
-    override suspend fun addGameToShelf(shelfId: String, gameId: Int): CompletableResult {
+    override suspend fun addGameToShelf(shelfId: String, gameId: String): CompletableResult {
         return networkClient.post<Unit>(
             path = "shelves/$shelfId/add-game",
             body = AddGameToShelfDto(gameId)
