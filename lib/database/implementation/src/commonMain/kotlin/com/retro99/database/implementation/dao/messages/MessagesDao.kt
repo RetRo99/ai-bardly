@@ -14,10 +14,10 @@ interface MessagesDao {
     suspend fun insert(items: List<MessageRoomEntity>)
 
     @Query("SELECT * FROM MessageRoomEntity WHERE gameId = :gameId ORDER BY timestamp DESC")
-    suspend fun getAllMessages(gameId: Int): List<MessageRoomEntity>
+    suspend fun getAllMessages(gameId: String): List<MessageRoomEntity>
 
     @Query("SELECT * FROM MessageRoomEntity WHERE gameId = :gameId ORDER BY timestamp DESC LIMIT :limit")
-    suspend fun getMessagesWithLimit(gameId: Int, limit: Int): List<MessageRoomEntity>
+    suspend fun getMessagesWithLimit(gameId: String, limit: Int): List<MessageRoomEntity>
 
     @Query(
         """

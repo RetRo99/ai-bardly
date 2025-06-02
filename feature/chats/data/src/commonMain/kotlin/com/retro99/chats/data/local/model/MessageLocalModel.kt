@@ -5,7 +5,7 @@ import com.retro99.database.api.message.MessageEntity
 import kotlinx.datetime.LocalDateTime
 
 data class MessageLocalModel(
-    override val gameId: Int,
+    override val gameId: String,
     override val question: String,
     override val gameTitle: String,
     override val timestamp: LocalDateTime,

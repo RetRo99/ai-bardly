@@ -28,7 +28,7 @@ class RoomMessagesDatabase(
         }
     }
 
-    override suspend fun getMessages(gameId: Int, limit: Int?): AppResult<List<MessageEntity>> {
+    override suspend fun getMessages(gameId: String, limit: Int?): AppResult<List<MessageEntity>> {
         return daoExecutor.executeDatabaseOperation {
             if (limit == null) {
                 dao.getAllMessages(gameId)

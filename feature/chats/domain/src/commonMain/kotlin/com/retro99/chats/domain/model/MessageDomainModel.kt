@@ -6,7 +6,7 @@ import kotlinx.datetime.LocalDateTime
 data class MessageDomainModel(
     val question: String,
     val answer: String?,
-    val gameId: Int,
+    val gameId: String,
     val gameTitle: String,
     val timestamp: LocalDateTime = now(),
 )

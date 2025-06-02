@@ -4,7 +4,7 @@ import com.retro99.chats.domain.model.RecentMessageDomainModel
 import kotlinx.datetime.LocalDateTime
 
 data class RecentMessageUiModel(
-    val gameId: Int,
+    val gameId: String,
     val gameTitle: String,
     val timestamp: LocalDateTime,
     val thumbnail: String,

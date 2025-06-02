@@ -7,7 +7,7 @@ import kotlinx.datetime.LocalDateTime
 data class MessageUiModel(
     val question: String,
     val answer: String?,
-    val gameId: Int,
+    val gameId: String,
     val gameTitle: String,
     val animateText: Boolean = false,
     val timestamp: LocalDateTime = now(),
