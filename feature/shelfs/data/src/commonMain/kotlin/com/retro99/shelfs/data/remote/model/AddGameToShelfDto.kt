@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AddGameToShelfDto(
     @SerialName("gameId")
-    val gameId: Int
+    val gameId: String
 )
