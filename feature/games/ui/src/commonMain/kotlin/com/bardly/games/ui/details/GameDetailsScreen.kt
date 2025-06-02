@@ -230,7 +230,7 @@ private fun GameHeaderSection(
     rating: String,
     yearPublished: String,
     title: String,
-    id: Int,
+    id: String,
     onChatClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -264,7 +264,7 @@ private fun TitleAndRating(
     rating: String,
     yearPublished: String,
     title: String,
-    id: Int
+    id: String
 ) {
     Column {
         SharedTransitionText(

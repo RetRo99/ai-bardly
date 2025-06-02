@@ -64,7 +64,7 @@ private fun HomeScreenContent(
 @Composable
 private fun RecentGamesSection(
     recentGames: List<GameUiModel>,
-    onOpenChatClicked: (String, Int) -> Unit,
+    onOpenChatClicked: (String, String) -> Unit,
     onGameClicked: (GameUiModel) -> Unit,
     intentDispatcher: IntentDispatcher<HomeIntent> = IntentDispatcher { },
 ) {
