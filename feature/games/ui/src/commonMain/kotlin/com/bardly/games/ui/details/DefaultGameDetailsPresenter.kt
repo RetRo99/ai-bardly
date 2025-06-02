@@ -22,7 +22,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 typealias GameDetailsPresenterFactory = (
     componentContext: ComponentContext,
     game: GameUiModel,
-    navigateToChat: (String, Int) -> Unit,
+    navigateToChat: (String, String) -> Unit,
     navigateBack: () -> Unit,
     openLogin: () -> Unit,
 ) -> DefaultGameDetailsPresenter
@@ -32,7 +32,7 @@ typealias GameDetailsPresenterFactory = (
 class DefaultGameDetailsPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val game: GameUiModel,
-    @Assisted private val navigateToChat: (String, Int) -> Unit,
+    @Assisted private val navigateToChat: (String, String) -> Unit,
     @Assisted private val navigateBack: () -> Unit,
     @Assisted private val openLogin: () -> Unit,
     private val gamesRepository: GamesRepository,
@@ -52,7 +52,7 @@ class DefaultGameDetailsPresenter(
         fetchIsFavoriteGame(game.id)
     }
 
-    private fun fetchIsFavoriteGame(gameId: Int) {
+    private fun fetchIsFavoriteGame(gameId: String) {
         gamesRepository.isMarkedAsFavorite(gameId)
             .onEach { isFavorite ->
                 updateOrSetSuccess { it.copy(isFavorite = isFavorite) }
@@ -106,7 +106,7 @@ class DefaultGameDetailsPresenter(
         navigateToChat(game.title, game.id)
     }
 
-    private fun updateGameOpen(gameId: Int) {
+    private fun updateGameOpen(gameId: String) {
         scope.launch {
             gamesRepository.updateGameOpenDate(gameId)
         }

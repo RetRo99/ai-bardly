@@ -49,7 +49,7 @@ class DefaultRootGamesPresenter(
         navigation.pop()
     }
 
-    private fun openChat(title: String, id: Int) {
+    private fun openChat(title: String, id: String) {
         navigation.pushNew(RootGamesPresenter.Config.Chat(title, id))
     }
 

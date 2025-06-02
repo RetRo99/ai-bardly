@@ -26,6 +26,6 @@ interface RootGamesPresenter : BasePresenter<RootGamesViewState, RootGamesIntent
         data class GameDetails(val game: GameUiModel) : Config
 
         @Serializable
-        data class Chat(val title: String, val id: Int) : Config
+        data class Chat(val title: String, val id: String) : Config
     }
 }

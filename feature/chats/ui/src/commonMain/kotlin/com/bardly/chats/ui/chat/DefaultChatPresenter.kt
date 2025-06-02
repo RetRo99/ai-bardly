@@ -19,7 +19,7 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 typealias ChatPresenterFactory = (
     ComponentContext,
     gameTitle: String,
-    gameId: Int,
+    gameId: String,
     navigateBack: () -> Unit,
 ) -> DefaultChatPresenter
 
@@ -28,7 +28,7 @@ typealias ChatPresenterFactory = (
 class DefaultChatPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val gameTitle: String,
-    @Assisted private val gameId: Int,
+    @Assisted private val gameId: String,
     @Assisted private val navigateBack: () -> Unit,
     private val chatsRepository: ChatsRepository,
     private val analytics: Analytics,
@@ -120,7 +120,7 @@ class DefaultChatPresenter(
 
     private fun displayAndGetMessage(
         messageText: String,
-        id: Int,
+        id: String,
     ): MessageUiModel {
         val message = MessageUiModel(
             question = messageText,

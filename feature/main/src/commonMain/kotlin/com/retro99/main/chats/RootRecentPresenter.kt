@@ -20,6 +20,6 @@ interface RootRecentPresenter : BasePresenter<RootRecentViewState, RootRecentInt
         data object RecentChats : Config
 
         @Serializable
-        data class Chat(val title: String, val id: Int) : Config
+        data class Chat(val title: String, val id: String) : Config
     }
 }

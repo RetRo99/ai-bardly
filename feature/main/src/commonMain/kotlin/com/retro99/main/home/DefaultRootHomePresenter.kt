@@ -55,7 +55,7 @@ class DefaultRootHomePresenter(
         // TODO
     }
 
-    private fun openChat(title: String, id: Int) {
+    private fun openChat(title: String, id: String) {
         navigation.pushNew(RootHomePresenter.Config.Chat(title, id))
     }
 
