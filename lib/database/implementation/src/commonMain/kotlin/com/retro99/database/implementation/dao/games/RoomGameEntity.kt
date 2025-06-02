@@ -17,7 +17,7 @@ data class RoomGameEntity(
     override val link: String,
     override val thumbnail: String,
     @PrimaryKey()
-    override val id: Int,
+    override val id: String,
     override val categories: List<String>?,
     override val types: List<String>?,
 ) : GameEntity
