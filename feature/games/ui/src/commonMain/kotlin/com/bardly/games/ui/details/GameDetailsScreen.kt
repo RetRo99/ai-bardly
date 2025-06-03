@@ -118,30 +118,37 @@ fun GamesScreenContent(
 
     if (viewState.isShelfSelectionDialogVisible) {
         ShelfSelectionDialog(
-            viewState = viewState,
-            intentDispatcher = intentDispatcher
+            shelfs = viewState.shelfs,
+            intentDispatcher = intentDispatcher,
+            // For the AlertDialog's onDismissRequest (e.g., clicking outside)
         )
     }
 }
 
 @Composable
 private fun ShelfSelectionDialog(
-    viewState: GameDetailsViewState,
-    intentDispatcher: IntentDispatcher<GameDetailsIntent>
+    shelfs: List<ShelfInfo>,
+    intentDispatcher: IntentDispatcher<GameDetailsIntent>,
 ) {
     AlertDialog(
-        onDismissRequest = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) },
+        onDismissRequest = {
+            intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
+        },
         title = { Text("Add to Shelf") },
         text = {
             Column {
-                if (viewState.shelfs.isEmpty()) {
+                if (shelfs.isEmpty()) {
                     Text("You don't have any shelves yet.")
                 } else {
                     Text("Select a shelf:")
                     Column {
-                        viewState.shelfs.forEach { shelf ->
+                        shelfs.forEach { shelf ->
                             Button(
-                                onClick = { intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id)) },
+                                onClick = {
+                                    intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id))
+                                    // Optionally, dismiss dialog after adding
+                                    // intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) 
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 4.dp)
@@ -154,11 +161,9 @@ private fun ShelfSelectionDialog(
             }
         },
         confirmButton = {
-            if (viewState.shelfs.isEmpty()) {
+            if (shelfs.isEmpty()) {
                 Button(
-                    onClick = {
-                        intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
-                    }
+                    onClick = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) }
                 ) {
                     Text("OK")
                 }
@@ -166,9 +171,7 @@ private fun ShelfSelectionDialog(
         },
         dismissButton = {
             Button(
-                onClick = {
-                    intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
-                }
+                onClick = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) }
             ) {
                 Text("Cancel")
             }
