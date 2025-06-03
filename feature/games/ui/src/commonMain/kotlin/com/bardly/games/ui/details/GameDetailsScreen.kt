@@ -117,52 +117,63 @@ fun GamesScreenContent(
     }
 
     if (viewState.isShelfSelectionDialogVisible) {
-        AlertDialog(
-            onDismissRequest = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) },
-            title = { Text("Add to Shelf") },
-            text = {
-                Column {
-                    if (viewState.shelfs.isEmpty()) {
-                        Text("You don't have any shelves yet.")
-                    } else {
-                        Text("Select a shelf:")
-                        Column {
-                            viewState.shelfs.forEach { shelf ->
-                                Button(
-                                    onClick = { intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id)) },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 4.dp)
-                                ) {
-                                    Text(shelf.name)
-                                }
+        ShelfSelectionDialog(
+            viewState = viewState,
+            intentDispatcher = intentDispatcher
+        )
+    }
+}
+
+@Composable
+private fun ShelfSelectionDialog(
+    viewState: GameDetailsViewState,
+    intentDispatcher: IntentDispatcher<GameDetailsIntent>
+) {
+    AlertDialog(
+        onDismissRequest = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) },
+        title = { Text("Add to Shelf") },
+        text = {
+            Column {
+                if (viewState.shelfs.isEmpty()) {
+                    Text("You don't have any shelves yet.")
+                } else {
+                    Text("Select a shelf:")
+                    Column {
+                        viewState.shelfs.forEach { shelf ->
+                            Button(
+                                onClick = { intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id)) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp)
+                            ) {
+                                Text(shelf.name)
                             }
                         }
                     }
                 }
-            },
-            confirmButton = {
-                if (viewState.shelfs.isEmpty()) {
-                    Button(
-                        onClick = {
-                            intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
-                        }
-                    ) {
-                        Text("OK")
-                    }
-                }
-            },
-            dismissButton = {
+            }
+        },
+        confirmButton = {
+            if (viewState.shelfs.isEmpty()) {
                 Button(
                     onClick = {
                         intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
                     }
                 ) {
-                    Text("Cancel")
+                    Text("OK")
                 }
             }
-        )
-    }
+        },
+        dismissButton = {
+            Button(
+                onClick = {
+                    intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
+                }
+            ) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Composable
