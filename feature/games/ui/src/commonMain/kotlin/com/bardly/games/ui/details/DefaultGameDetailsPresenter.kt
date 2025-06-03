@@ -90,6 +90,13 @@ class DefaultGameDetailsPresenter(
             }
             is GameDetailsIntent.AddGameToShelf -> {
                 addGameToShelf(intent.shelfId)
+                updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = false) }
+            }
+            GameDetailsIntent.ShowShelfSelectionDialog -> {
+                updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = true) }
+            }
+            GameDetailsIntent.HideShelfSelectionDialog -> {
+                updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = false) }
             }
         }
     }

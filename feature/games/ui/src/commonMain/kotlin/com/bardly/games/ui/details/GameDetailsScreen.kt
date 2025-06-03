@@ -91,8 +91,6 @@ fun GamesScreenContent(
     intentDispatcher: IntentDispatcher<GameDetailsIntent>,
     modifier: Modifier = Modifier
 ) {
-    var showAddToShelfDialog by remember { mutableStateOf(false) }
-
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -108,7 +106,7 @@ fun GamesScreenContent(
                     )
                 )
             },
-            onAddToShelfClick = { showAddToShelfDialog = true },
+            onAddToShelfClick = { intentDispatcher(GameDetailsIntent.ShowShelfSelectionDialog) },
             isFavorite = viewState.isFavorite,
         )
 
@@ -118,9 +116,9 @@ fun GamesScreenContent(
         )
     }
 
-    if (showAddToShelfDialog) {
+    if (viewState.isShelfSelectionDialogVisible) {
         AlertDialog(
-            onDismissRequest = { showAddToShelfDialog = false },
+            onDismissRequest = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) },
             title = { Text("Add to Shelf") },
             text = {
                 Column {
@@ -131,9 +129,7 @@ fun GamesScreenContent(
                         Column {
                             viewState.shelfs.forEach { shelf ->
                                 Button(
-                                    onClick = { intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id))
-                                        showAddToShelfDialog = false
-                                    },
+                                    onClick = { intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id)) },
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(vertical = 4.dp)
@@ -149,7 +145,7 @@ fun GamesScreenContent(
                 if (viewState.shelfs.isEmpty()) {
                     Button(
                         onClick = {
-                            showAddToShelfDialog = false
+                            intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
                         }
                     ) {
                         Text("OK")
@@ -159,7 +155,7 @@ fun GamesScreenContent(
             dismissButton = {
                 Button(
                     onClick = {
-                        showAddToShelfDialog = false
+                        intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
                     }
                 ) {
                     Text("Cancel")
