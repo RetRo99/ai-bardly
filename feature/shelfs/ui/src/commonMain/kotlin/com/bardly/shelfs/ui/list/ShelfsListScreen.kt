@@ -129,7 +129,7 @@ private fun ShelfsScreenContent(
                         ShelfItem(
                             shelf = shelf,
                             onShelfClick = { intentDispatcher(ShelfsListIntent.ShelfClicked(shelf)) },
-                            onGameClick = { /* Handle game click if needed */ }
+                            onGameClick = { game -> intentDispatcher(ShelfsListIntent.GameClicked(game)) }
                         )
                     }
                 }

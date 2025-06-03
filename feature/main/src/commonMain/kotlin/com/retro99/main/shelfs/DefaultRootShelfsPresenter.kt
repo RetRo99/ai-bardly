@@ -78,6 +78,7 @@ class DefaultRootShelfsPresenter(
             shelfsListComponentFactory(
                 componentContext,
                 ::openShelfDetails,
+                ::openGameDetails,
             )
         )
 
