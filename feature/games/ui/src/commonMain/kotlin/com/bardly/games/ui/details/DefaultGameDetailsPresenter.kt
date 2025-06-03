@@ -85,19 +85,10 @@ class DefaultGameDetailsPresenter(
         when (intent) {
             GameDetailsIntent.NavigateBack -> navigateBack()
             GameDetailsIntent.OpenChatClicked -> openChat()
-            is GameDetailsIntent.OnChangeFavoriteClicked -> {
-                onChangeFavoriteClicked(intent.isFavoriteNew)
-            }
-            is GameDetailsIntent.AddGameToShelf -> {
-                addGameToShelf(intent.shelfId)
-                updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = false) }
-            }
-            GameDetailsIntent.ShowShelfSelectionDialog -> {
-                updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = true) }
-            }
-            GameDetailsIntent.HideShelfSelectionDialog -> {
-                updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = false) }
-            }
+            is GameDetailsIntent.OnChangeFavoriteClicked -> onChangeFavoriteClicked(intent.isFavoriteNew)
+            is GameDetailsIntent.AddGameToShelf -> addGameToSelectedShelf(intent.shelfId)
+            GameDetailsIntent.ShowShelfSelectionDialog -> showShelfSelectionDialog()
+            GameDetailsIntent.HideShelfSelectionDialog -> hideShelfSelectionDialog()
         }
     }
 
@@ -123,6 +114,19 @@ class DefaultGameDetailsPresenter(
         } else {
             openLogin()
         }
+    }
+
+    private fun addGameToSelectedShelf(shelfId: String) {
+        addGameToShelf(shelfId)
+        updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = false) }
+    }
+
+    private fun showShelfSelectionDialog() {
+        updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = true) }
+    }
+
+    private fun hideShelfSelectionDialog() {
+        updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = false) }
     }
 
     private fun openChat() {
