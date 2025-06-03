@@ -92,7 +92,6 @@ fun GamesScreenContent(
     modifier: Modifier = Modifier
 ) {
     var showAddToShelfDialog by remember { mutableStateOf(false) }
-    var shelfId by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -132,9 +131,7 @@ fun GamesScreenContent(
                         Column {
                             viewState.shelfs.forEach { shelf ->
                                 Button(
-                                    onClick = {
-                                        shelfId = shelf.id
-                                        intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id))
+                                    onClick = { intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id))
                                         showAddToShelfDialog = false
                                     },
                                     modifier = Modifier
