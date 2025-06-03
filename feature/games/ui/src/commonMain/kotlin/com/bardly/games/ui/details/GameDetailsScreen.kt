@@ -70,6 +70,15 @@ import resources.translations.amount_of_players
 import resources.translations.game_age_recommendation
 import resources.translations.game_categories
 import resources.translations.game_complexity
+import resources.translations.game_details_add_to_favorites
+import resources.translations.game_details_add_to_shelf
+import resources.translations.game_details_add_to_shelf_description
+import resources.translations.game_details_cancel
+import resources.translations.game_details_description
+import resources.translations.game_details_no_shelves
+import resources.translations.game_details_ok
+import resources.translations.game_details_remove_from_favorites
+import resources.translations.game_details_select_shelf
 import resources.translations.game_length
 import resources.translations.game_types
 
@@ -134,13 +143,13 @@ private fun ShelfSelectionDialog(
         onDismissRequest = {
             intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog)
         },
-        title = { Text("Add to Shelf") },
+        title = { Text(stringResource(StringRes.game_details_add_to_shelf)) },
         text = {
             Column {
                 if (shelfs.isEmpty()) {
-                    Text("You don't have any shelves yet.")
+                    Text(stringResource(StringRes.game_details_no_shelves))
                 } else {
-                    Text("Select a shelf:")
+                    Text(stringResource(StringRes.game_details_select_shelf))
                     Column {
                         shelfs.forEach { shelf ->
                             Button(
@@ -163,7 +172,7 @@ private fun ShelfSelectionDialog(
                 Button(
                     onClick = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) }
                 ) {
-                    Text("OK")
+                    Text(stringResource(StringRes.game_details_ok))
                 }
             }
         },
@@ -171,7 +180,7 @@ private fun ShelfSelectionDialog(
             Button(
                 onClick = { intentDispatcher(GameDetailsIntent.HideShelfSelectionDialog) }
             ) {
-                Text("Cancel")
+                Text(stringResource(StringRes.game_details_cancel))
             }
         }
     )
@@ -200,7 +209,7 @@ private fun TopBar(
         IconButton(onClick = onAddToShelfClick) {
             Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = "Add to shelf",
+                contentDescription = stringResource(StringRes.game_details_add_to_shelf_description),
                 tint = LocalContentColor.current
             )
         }
@@ -223,13 +232,13 @@ private fun TopBar(
                     if (isFavorite) {
                         Icon(
                             imageVector = Icons.Default.Favorite,
-                            contentDescription = "Remove from favorites",
+                            contentDescription = stringResource(StringRes.game_details_remove_from_favorites),
                             tint = Color.Red
                         )
                     } else {
                         Icon(
                             imageVector = Icons.Default.FavoriteBorder,
-                            contentDescription = "Add to favorites",
+                            contentDescription = stringResource(StringRes.game_details_add_to_favorites),
                             tint = LocalContentColor.current
                         )
                     }
@@ -387,7 +396,7 @@ private fun GameDescriptionSection(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Description",
+            text = stringResource(StringRes.game_details_description),
             style = MaterialTheme.typography.titleMedium
         )
 
