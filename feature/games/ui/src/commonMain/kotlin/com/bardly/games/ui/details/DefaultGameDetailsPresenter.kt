@@ -122,7 +122,11 @@ class DefaultGameDetailsPresenter(
     }
 
     private fun showShelfSelectionDialog() {
-        updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = true) }
+        if (userSessionManager.isUserLoggedIn) {
+            updateOrSetSuccess { it.copy(isShelfSelectionDialogVisible = true) }
+        } else {
+            openLogin()
+        }
     }
 
     private fun hideShelfSelectionDialog() {
