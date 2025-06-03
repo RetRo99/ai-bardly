@@ -31,7 +31,7 @@ class DefaultShelfsListPresenter(
 
     override val defaultViewState = ShelfsListViewState()
 
-    init {
+    override fun onResume() {
         fetchShelfs()
     }
 
