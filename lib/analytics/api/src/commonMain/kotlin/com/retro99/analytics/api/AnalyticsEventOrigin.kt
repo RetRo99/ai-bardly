@@ -10,4 +10,5 @@ sealed class AnalyticsEventOrigin(val analyticKey: String) {
     data object SignIn : AnalyticsEventOrigin("sign_in")
     data object SignUp : AnalyticsEventOrigin("sign_in")
     data object ShelfList : AnalyticsEventOrigin("shelf_list")
+    data object ShelfDetails : AnalyticsEventOrigin("shelf_details")
 }
