@@ -1,7 +1,7 @@
 package com.retro99.main.shelfs
 
 import com.bardly.shelfs.ui.details.ShelfDetailsPresenter
-import com.bardly.shelfs.ui.list.ShelfsListComponent
+import com.bardly.shelfs.ui.list.ShelfsListPresenter
 import com.bardly.shelfs.ui.model.ShelfUiModel
 import com.retro99.base.ui.BasePresenter
 import com.retro99.base.ui.decompose.RootDecomposeComponent
@@ -11,7 +11,7 @@ interface RootShelfsPresenter : BasePresenter<RootShelfsViewState, RootShelfsInt
     RootDecomposeComponent<RootShelfsPresenter.Child, RootShelfsPresenter.Config> {
 
     sealed interface Child {
-        data class ShelfsList(val component: ShelfsListComponent) : Child
+        data class ShelfsList(val component: ShelfsListPresenter) : Child
         data class ShelfDetails(val component: ShelfDetailsPresenter) : Child
     }
 

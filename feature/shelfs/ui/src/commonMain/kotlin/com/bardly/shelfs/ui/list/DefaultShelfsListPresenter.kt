@@ -17,17 +17,17 @@ import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
 typealias ShelfsListComponentFactory = (
     ComponentContext,
     navigateToShelfDetails: (ShelfUiModel) -> Unit,
-) -> DefaultShelfsListComponent
+) -> DefaultShelfsListPresenter
 
 @Inject
-@ContributesBinding(ActivityScope::class, boundType = ShelfsListComponent::class)
-class DefaultShelfsListComponent(
+@ContributesBinding(ActivityScope::class, boundType = ShelfsListPresenter::class)
+class DefaultShelfsListPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val navigateToShelfDetails: (ShelfUiModel) -> Unit,
     private val shelfsRepository: ShelfsRepository,
     private val analytics: Analytics,
 ) : BasePresenterImpl<ShelfsListViewState, ShelfsListIntent>(componentContext),
-    ShelfsListComponent {
+    ShelfsListPresenter {
 
     override val defaultViewState = ShelfsListViewState()
 
