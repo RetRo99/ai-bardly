@@ -7,9 +7,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.bardly.chats.ui.chat.ChatPresenterFactory
+import com.bardly.games.ui.details.GameDetailsPresenterFactory
 import com.bardly.shelfs.ui.details.ShelfDetailsPresenterFactory
 import com.bardly.shelfs.ui.list.ShelfsListComponentFactory
 import com.bardly.shelfs.ui.model.ShelfUiModel
+import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import me.tatarka.inject.annotations.Assisted
@@ -27,6 +29,7 @@ class DefaultRootShelfsPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val openLogin: () -> Unit,
     private val shelfDetailsPresenterFactory: ShelfDetailsPresenterFactory,
+    private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
     private val chatPresenterFactory: ChatPresenterFactory,
     private val shelfsListComponentFactory: ShelfsListComponentFactory,
 ) : BasePresenterImpl<RootShelfsViewState, RootShelfsIntent>(componentContext),
@@ -55,6 +58,14 @@ class DefaultRootShelfsPresenter(
         navigation.pushNew(RootShelfsPresenter.Config.ShelfDetails(shelf))
     }
 
+    private fun openGameDetails(game: GameUiModel) {
+        navigation.pushNew(RootShelfsPresenter.Config.GameDetails(game))
+    }
+
+    private fun openChat(title: String, id: String) {
+        navigation.pushNew(RootShelfsPresenter.Config.Chat(title, id))
+    }
+
     override fun handleScreenIntent(intent: RootShelfsIntent) {
         // TODO
     }
@@ -74,6 +85,26 @@ class DefaultRootShelfsPresenter(
             shelfDetailsPresenterFactory(
                 componentContext,
                 screenConfig.shelf,
+                ::onBackClicked,
+                ::openGameDetails,
+            )
+        )
+
+        is RootShelfsPresenter.Config.GameDetails -> RootShelfsPresenter.Child.GameDetails(
+            gameDetailsPresenterFactory(
+                componentContext,
+                screenConfig.game,
+                ::openChat,
+                ::onBackClicked,
+                openLogin,
+            )
+        )
+
+        is RootShelfsPresenter.Config.Chat -> RootShelfsPresenter.Child.Chat(
+            chatPresenterFactory(
+                componentContext,
+                screenConfig.title,
+                screenConfig.id,
                 ::onBackClicked,
             )
         )
