@@ -58,6 +58,10 @@ class ShelfsDataRepository(
         return remoteSource.addGameToShelf(shelfId, gameId)
     }
 
+    override suspend fun deleteGameFromShelf(shelfId: String, gameId: String): CompletableResult {
+        return remoteSource.deleteGameFromShelf(shelfId, gameId)
+    }
+
     override suspend fun createShelf(item: CreateShelfDomainModel): AppResult<ShelfDomainModel> {
         return remoteSource.createShelf(item.toDto()).map { shelfDto ->
             shelfDto.toDomainModel()

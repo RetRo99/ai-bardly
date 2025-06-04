@@ -56,4 +56,10 @@ class NetworkShelfsRemoteDataSource(
             path = "shelves/$id"
         )
     }
+
+    override suspend fun deleteGameFromShelf(shelfId: String, gameId: String): CompletableResult {
+        return networkClient.delete<Unit>(
+            path = "shelves/$shelfId/games/$gameId"
+        )
+    }
 }

@@ -11,6 +11,7 @@ interface ShelfsRepository: BaseRepository {
     suspend fun getShelf(id: String): Flow<AppResult<ShelfDomainModel>>
     suspend fun getShelfs(): Flow<AppResult<List<ShelfDomainModel>>>
     suspend fun addGameToShelf(shelfId: String, gameId: String): CompletableResult
+    suspend fun deleteGameFromShelf(shelfId: String, gameId: String): CompletableResult
     suspend fun createShelf(item: CreateShelfDomainModel): AppResult<ShelfDomainModel>
     suspend fun deleteShelf(id: String): CompletableResult
 }

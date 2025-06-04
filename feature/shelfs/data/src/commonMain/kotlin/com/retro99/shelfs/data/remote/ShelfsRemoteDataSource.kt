@@ -10,6 +10,7 @@ interface ShelfsRemoteDataSource {
     suspend fun getShelfs(): AppResult<List<ShelfDto>>
     suspend fun getShelf(id: String): AppResult<ShelfDto>
     suspend fun addGameToShelf(shelfId: String, gameId: String): CompletableResult
+    suspend fun deleteGameFromShelf(shelfId: String, gameId: String): CompletableResult
     suspend fun createShelf(item: CreateShelfDto): AppResult<ShelfDto>
     suspend fun deleteShelf(id: String): CompletableResult
 }
