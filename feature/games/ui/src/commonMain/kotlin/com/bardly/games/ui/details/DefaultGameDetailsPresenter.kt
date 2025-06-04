@@ -56,6 +56,9 @@ class DefaultGameDetailsPresenter(
     init {
         updateGameOpen(game.id)
         fetchIsFavoriteGame(game.id)
+    }
+
+    override fun onResume() {
         fetchShelfs()
     }
 

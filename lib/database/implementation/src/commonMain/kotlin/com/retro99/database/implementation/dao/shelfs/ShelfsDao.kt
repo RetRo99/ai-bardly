@@ -19,4 +19,7 @@ interface ShelfsDao {
 
     @Query("SELECT * FROM RoomShelfEntity")
     suspend fun getShelfs(): List<RoomShelfEntity>
+
+    @Query("DELETE FROM RoomShelfEntity WHERE id = :id")
+    suspend fun deleteShelf(id: String)
 }

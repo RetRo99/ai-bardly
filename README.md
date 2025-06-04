@@ -1,4 +1,4 @@
-# Bardy: Your AI-Powered Companion App
+# Bardly: Your AI-Powered Companion App
 
 **ai-bardly** is a cutting-edge, multiplatform Android application built with Kotlin and Jetpack
 Compose. It leverages AI technologies and modern Android development practices to provide a unique
@@ -32,7 +32,7 @@ The project is organized into several modules, each serving a specific purpose:
 - **Location:** `composeApp/`
 - **Purpose:** The main application module. It contains the UI, app logic, and orchestrates
   interactions between feature modules.
-- **Technology:** `Kotlin Multiplatform`, `Jetpack Compose`, `Decompose`, `Kermit`, `Sqlite`,
+- **Technology:** `Kotlin Multiplatform`, `Jetpack Compose`, `Decompose`, `Kermit`,
   `kotlin-inject`, `Multiplatform-Markdown-Renderer`, `kmpauth`, `Coil`, `Ktor`.
 
 ### Feature Modules
@@ -65,6 +65,22 @@ These modules contain specific application features:
 - `feature:onboarding`:
     - `feature:onboarding:ui`
         - **Purpose:** UI for the onboarding feature.
+- `feature:shelfs`:
+    - `feature:shelfs:data`
+        - **Purpose:** Data layer for shelfs.
+    - `feature:shelfs:domain`
+        - **Purpose:** Business logic and use cases for shelfs.
+    - `feature:shelfs:ui`
+        - **Purpose:** UI for the shelfs feature.
+- `feature:user`:
+    - `feature:user:data`
+        - **Purpose:** Data layer for user.
+    - `feature:user:domain`
+        - **Purpose:** Business logic and use cases for user.
+    - `feature:user:ui`
+        - **Purpose:** UI for the user feature.
+- `feature:main`
+    - **Purpose:** Main feature module that coordinates other features.
 
 ### Library Modules
 
@@ -96,17 +112,22 @@ These modules provide reusable components:
     - `lib:database:implementation`
         - **Purpose:** Implements the database operations.
         - **Technology:** `Room`.
-- `base-ui`
+- `lib:base-ui`
     - **Purpose:** Contains the base components for the UI.
     - **Technology:** `Jetpack Compose`.
-- `base`
+- `lib:base`
     - **Purpose:** Contains base common logic.
 - `lib:analytics`
     - `lib:analytics:api`
         - **Purpose:** Defines the API for the analytics.
     - `lib:analytics:implementation`
         - **Purpose:** Implements the analytics using firebase.
-- `translations`
+- `lib:snackbar`:
+    - `lib:snackbar:api`
+        - **Purpose:** Defines the API for snackbar functionality.
+    - `lib:snackbar:implementation`
+        - **Purpose:** Implements the snackbar functionality.
+- `lib:translations`
     - **Purpose:** Contains the logic for translations.
     - **Technology:** `Compose Resources`.
 
@@ -121,7 +142,6 @@ These modules provide reusable components:
 - **kotlin-inject:** For dependency injection.
 - **Compose Multiplatform:** For compose on multiple platforms.
 - **Decompose:** For navigation.
-- **Sqlite:** For data storage.
 - **Android Paging:** For paging.
 - **Kermit:** For logging.
 - **Firebase:** For authentication, analytics, crash reporting.

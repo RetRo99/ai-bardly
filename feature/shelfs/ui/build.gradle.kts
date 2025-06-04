@@ -32,6 +32,7 @@ kotlin {
             implementation(libs.markdown)
             implementation(projects.lib.analytics.api)
             implementation(projects.feature.games.ui)
+            implementation(projects.lib.snackbar.api)
         }
 
         androidMain.dependencies {

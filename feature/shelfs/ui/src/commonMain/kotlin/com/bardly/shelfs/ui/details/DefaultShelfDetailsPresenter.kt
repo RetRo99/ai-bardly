@@ -10,7 +10,12 @@ import com.retro99.analytics.api.AnalyticsEvent
 import com.retro99.analytics.api.AnalyticsEventOrigin
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
+import com.retro99.base.ui.compose.TextWrapper
 import com.retro99.shelfs.domain.ShelfsRepository
+import com.retro99.shelfs.domain.model.RemoveGameFromShelfDomainModel
+import com.retro99.snackbar.api.SnackbarManager
+import com.retro99.translations.StringRes
+import resources.translations.shelf_details_failed_to_delete
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -31,6 +36,7 @@ class DefaultShelfDetailsPresenter(
     @Assisted private val openGameDetails: (GameUiModel) -> Unit,
     private val shelfsRepository: ShelfsRepository,
     private val analytics: Analytics,
+    private val snackbarManager: SnackbarManager,
 ) : BasePresenterImpl<ShelfDetailsViewState, ShelfDetailsIntent>(componentContext),
     ShelfDetailsPresenter {
 
@@ -57,7 +63,43 @@ class DefaultShelfDetailsPresenter(
         when (intent) {
             ShelfDetailsIntent.NavigateBack -> navigateBack()
             is ShelfDetailsIntent.GameClicked -> handleGameClicked(intent)
+            ShelfDetailsIntent.ShowDeleteConfirmationDialog -> showDeleteConfirmationDialog()
+            ShelfDetailsIntent.HideDeleteConfirmationDialog -> hideDeleteConfirmationDialog()
+            ShelfDetailsIntent.ConfirmDeleteShelf -> handleDeleteShelf()
+            is ShelfDetailsIntent.ShowRemoveGameConfirmationDialog -> showRemoveGameConfirmationDialog(intent.game)
+            ShelfDetailsIntent.HideRemoveGameConfirmationDialog -> hideRemoveGameConfirmationDialog()
+            ShelfDetailsIntent.ConfirmRemoveGameFromShelf -> confirmRemoveGameFromShelf()
+            is ShelfDetailsIntent.RemoveGameFromShelf -> handleRemoveGameFromShelf(intent)
         }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        updateOrSetSuccess { it.copy(isDeleteConfirmationDialogVisible = true) }
+    }
+
+    private fun hideDeleteConfirmationDialog() {
+        updateOrSetSuccess { it.copy(isDeleteConfirmationDialogVisible = false) }
+    }
+
+    private fun handleDeleteShelf() {
+        launchDataOperation(
+            block = { shelfsRepository.deleteShelf(shelf.id) },
+            onError = { error ->
+                snackbarManager.showSnackbar(
+                    TextWrapper.Resource(StringRes.shelf_details_failed_to_delete, error.message ?: "")
+                )
+            },
+            onSuccess = {
+                // Log analytics event
+                analytics.log(
+                    AnalyticsEvent.DeleteShelf(
+                        shelfName = shelf.name,
+                        origin = AnalyticsEventOrigin.ShelfDetails
+                    )
+                )
+                navigateBack()
+            }
+        )
     }
 
     private fun handleGameClicked(intent: ShelfDetailsIntent.GameClicked) {
@@ -68,5 +110,63 @@ class DefaultShelfDetailsPresenter(
             )
         )
         openGameDetails(intent.game)
+    }
+
+    private fun showRemoveGameConfirmationDialog(game: GameUiModel) {
+        updateOrSetSuccess { it.copy(
+            isRemoveGameConfirmationDialogVisible = true,
+            gameToRemove = game
+        ) }
+    }
+
+    private fun hideRemoveGameConfirmationDialog() {
+        updateOrSetSuccess { it.copy(
+            isRemoveGameConfirmationDialogVisible = false,
+            gameToRemove = null
+        ) }
+    }
+
+    private fun confirmRemoveGameFromShelf() {
+        val gameToRemove = currentViewState()?.gameToRemove ?: return
+
+        val model = RemoveGameFromShelfDomainModel(
+            shelfId = shelf.id,
+            gameId = gameToRemove.id
+        )
+
+        launchDataOperation(
+            block = { shelfsRepository.removeGameFromShelf(model) },
+            onError = { error ->
+                snackbarManager.showSnackbar(
+                    TextWrapper.Resource(StringRes.shelf_details_failed_to_delete, error.message ?: "")
+                )
+            },
+            onSuccess = {
+                // Hide the dialog
+                hideRemoveGameConfirmationDialog()
+                // Refresh the shelf to show updated games list
+                fetchShelf()
+            }
+        )
+    }
+
+    private fun handleRemoveGameFromShelf(intent: ShelfDetailsIntent.RemoveGameFromShelf) {
+        val model = RemoveGameFromShelfDomainModel(
+            shelfId = shelf.id,
+            gameId = intent.game.id
+        )
+
+        launchDataOperation(
+            block = { shelfsRepository.removeGameFromShelf(model) },
+            onError = { error ->
+                snackbarManager.showSnackbar(
+                    TextWrapper.Resource(StringRes.shelf_details_failed_to_delete, error.message ?: "")
+                )
+            },
+            onSuccess = {
+                // Refresh the shelf to show updated games list
+                fetchShelf()
+            }
+        )
     }
 }

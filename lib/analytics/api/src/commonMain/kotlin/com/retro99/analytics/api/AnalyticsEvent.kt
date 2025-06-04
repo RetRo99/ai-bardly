@@ -81,4 +81,15 @@ sealed class AnalyticsEvent(
             AnalyticsEventParam.SingUpError to error,
         ),
     )
+
+    data class DeleteShelf(
+        val shelfName: String,
+        override val origin: AnalyticsEventOrigin,
+    ) : AnalyticsEvent(
+        name = "delete_shelf",
+        origin = origin,
+        params = mapOf(
+            AnalyticsEventParam.ShelfTitle to shelfName,
+        ),
+    )
 }
