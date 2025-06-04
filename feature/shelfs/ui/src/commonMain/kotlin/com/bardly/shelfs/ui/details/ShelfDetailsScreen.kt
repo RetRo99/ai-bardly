@@ -29,6 +29,7 @@ import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.CoilImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 
 @Composable
 fun ShelfDetailsScreen(
@@ -56,7 +57,8 @@ private fun ShelfsScreenContent(
     ) {
         TopBar(
             shelfName = viewState.shelf.name,
-            onBackClick = { intentDispatcher(ShelfDetailsIntent.NavigateBack) }
+            onBackClick = { intentDispatcher(ShelfDetailsIntent.NavigateBack) },
+            onDeleteClick = { intentDispatcher(ShelfDetailsIntent.DeleteShelf) }
         )
 
         // Games section
@@ -155,6 +157,7 @@ private fun GameItem(game: GameUiModel, onClick: () -> Unit, modifier: Modifier 
 private fun TopBar(
     shelfName: String,
     onBackClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -164,14 +167,21 @@ private fun TopBar(
         IconButton(onClick = onBackClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = null
+                contentDescription = "Back"
             )
         }
 
         Text(
             text = shelfName,
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(end = 16.dp)
+            modifier = Modifier.weight(1f)
         )
+
+        IconButton(onClick = onDeleteClick) {
+            Icon(
+                imageVector = Icons.Filled.Delete,
+                contentDescription = "Delete Shelf"
+            )
+        }
     }
 }

@@ -6,4 +6,5 @@ import com.retro99.base.ui.BaseScreenIntent
 sealed interface ShelfDetailsIntent : BaseScreenIntent {
     data object NavigateBack : ShelfDetailsIntent
     data class GameClicked(val game: GameUiModel) : ShelfDetailsIntent
+    data object DeleteShelf : ShelfDetailsIntent
 }

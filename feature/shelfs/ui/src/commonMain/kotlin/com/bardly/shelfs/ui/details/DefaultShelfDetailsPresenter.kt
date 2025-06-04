@@ -57,7 +57,29 @@ class DefaultShelfDetailsPresenter(
         when (intent) {
             ShelfDetailsIntent.NavigateBack -> navigateBack()
             is ShelfDetailsIntent.GameClicked -> handleGameClicked(intent)
+            ShelfDetailsIntent.DeleteShelf -> handleDeleteShelf()
         }
+    }
+
+    private fun handleDeleteShelf() {
+        // Show loading state
+        setLoading()
+
+        // Launch the delete operation
+        launchDataOperation(
+            block = { shelfsRepository.deleteShelf(shelf.id) },
+            onSuccess = {
+                // Log analytics event
+                analytics.log(
+                    AnalyticsEvent.DeleteShelf(
+                        shelfName = shelf.name,
+                        origin = AnalyticsEventOrigin.ShelfDetails
+                    )
+                )
+                // Navigate back after successful deletion
+                navigateBack()
+            }
+        )
     }
 
     private fun handleGameClicked(intent: ShelfDetailsIntent.GameClicked) {
