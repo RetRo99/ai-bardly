@@ -32,6 +32,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.graphics.Color
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.stringResource
 import resources.translations.shelf_details_back
@@ -187,7 +189,12 @@ private fun DeleteConfirmationDialog(
         title = { Text(stringResource(StringRes.shelf_details_confirm_delete)) },
         text = { Text(stringResource(StringRes.shelf_details_confirm_delete_message, shelfName)) },
         confirmButton = {
-            Button(onClick = onConfirm) {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red
+                )
+            ) {
                 Text(stringResource(StringRes.shelf_details_delete))
             }
         },
