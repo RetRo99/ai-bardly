@@ -30,6 +30,15 @@ import com.retro99.base.ui.compose.CoilImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import com.retro99.translations.StringRes
+import org.jetbrains.compose.resources.stringResource
+import resources.translations.shelf_details_back
+import resources.translations.shelf_details_delete
+import resources.translations.shelf_details_games_count
+import resources.translations.shelf_details_players
+import resources.translations.shelf_details_rating
+import resources.translations.shelf_details_time
+import resources.translations.shelves_no_games
 
 @Composable
 fun ShelfDetailsScreen(
@@ -63,7 +72,7 @@ private fun ShelfsScreenContent(
 
         // Games section
         Text(
-            text = "Games (${viewState.shelf.games.size})",
+            text = stringResource(StringRes.shelf_details_games_count, viewState.shelf.games.size),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(vertical = 8.dp)
         )
@@ -79,7 +88,7 @@ private fun ShelfsScreenContent(
         // If no games, show a message
         if (viewState.shelf.games.isEmpty()) {
             Text(
-                text = "No games in this shelf",
+                text = stringResource(StringRes.shelves_no_games),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 8.dp)
             )
@@ -132,19 +141,19 @@ private fun GameItem(game: GameUiModel, onClick: () -> Unit, modifier: Modifier 
                     modifier = Modifier.padding(top = 4.dp)
                 ) {
                     Text(
-                        text = "Players: ${game.numberOfPlayers}",
+                        text = stringResource(StringRes.shelf_details_players, game.numberOfPlayers),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(end = 8.dp)
                     )
 
                     Text(
-                        text = "Time: ${game.playingTime}",
+                        text = stringResource(StringRes.shelf_details_time, game.playingTime),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(end = 8.dp)
                     )
 
                     Text(
-                        text = "Rating: ${game.rating}",
+                        text = stringResource(StringRes.shelf_details_rating, game.rating),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -167,7 +176,7 @@ private fun TopBar(
         IconButton(onClick = onBackClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back"
+                contentDescription = stringResource(StringRes.shelf_details_back)
             )
         }
 
@@ -180,7 +189,7 @@ private fun TopBar(
         IconButton(onClick = onDeleteClick) {
             Icon(
                 imageVector = Icons.Filled.Delete,
-                contentDescription = "Delete Shelf"
+                contentDescription = stringResource(StringRes.shelf_details_delete)
             )
         }
     }

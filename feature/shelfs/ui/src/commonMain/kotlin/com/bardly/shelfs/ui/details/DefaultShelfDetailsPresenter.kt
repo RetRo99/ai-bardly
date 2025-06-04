@@ -10,7 +10,11 @@ import com.retro99.analytics.api.AnalyticsEvent
 import com.retro99.analytics.api.AnalyticsEventOrigin
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
+import com.retro99.base.ui.compose.TextWrapper
 import com.retro99.shelfs.domain.ShelfsRepository
+import com.retro99.snackbar.api.SnackbarManager
+import com.retro99.translations.StringRes
+import resources.translations.shelf_details_failed_to_delete
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding
@@ -31,6 +35,7 @@ class DefaultShelfDetailsPresenter(
     @Assisted private val openGameDetails: (GameUiModel) -> Unit,
     private val shelfsRepository: ShelfsRepository,
     private val analytics: Analytics,
+    private val snackbarManager: SnackbarManager,
 ) : BasePresenterImpl<ShelfDetailsViewState, ShelfDetailsIntent>(componentContext),
     ShelfDetailsPresenter {
 
@@ -62,12 +67,13 @@ class DefaultShelfDetailsPresenter(
     }
 
     private fun handleDeleteShelf() {
-        // Show loading state
-        setLoading()
-
-        // Launch the delete operation
         launchDataOperation(
             block = { shelfsRepository.deleteShelf(shelf.id) },
+            onError = { error ->
+                snackbarManager.showSnackbar(
+                    TextWrapper.Resource(StringRes.shelf_details_failed_to_delete, error.message ?: "")
+                )
+            },
             onSuccess = {
                 // Log analytics event
                 analytics.log(
@@ -76,7 +82,6 @@ class DefaultShelfDetailsPresenter(
                         origin = AnalyticsEventOrigin.ShelfDetails
                     )
                 )
-                // Navigate back after successful deletion
                 navigateBack()
             }
         )
