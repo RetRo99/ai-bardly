@@ -9,4 +9,5 @@ sealed interface ShelfDetailsIntent : BaseScreenIntent {
     data object ShowDeleteConfirmationDialog : ShelfDetailsIntent
     data object HideDeleteConfirmationDialog : ShelfDetailsIntent
     data object ConfirmDeleteShelf : ShelfDetailsIntent
+    data class RemoveGameFromShelf(val game: GameUiModel) : ShelfDetailsIntent
 }

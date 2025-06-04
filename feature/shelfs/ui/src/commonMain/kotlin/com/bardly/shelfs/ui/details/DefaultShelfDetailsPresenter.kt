@@ -12,6 +12,7 @@ import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
 import com.retro99.base.ui.compose.TextWrapper
 import com.retro99.shelfs.domain.ShelfsRepository
+import com.retro99.shelfs.domain.model.RemoveGameFromShelfDomainModel
 import com.retro99.snackbar.api.SnackbarManager
 import com.retro99.translations.StringRes
 import resources.translations.shelf_details_failed_to_delete
@@ -65,6 +66,7 @@ class DefaultShelfDetailsPresenter(
             ShelfDetailsIntent.ShowDeleteConfirmationDialog -> showDeleteConfirmationDialog()
             ShelfDetailsIntent.HideDeleteConfirmationDialog -> hideDeleteConfirmationDialog()
             ShelfDetailsIntent.ConfirmDeleteShelf -> handleDeleteShelf()
+            is ShelfDetailsIntent.RemoveGameFromShelf -> handleRemoveGameFromShelf(intent)
         }
     }
 
@@ -105,5 +107,25 @@ class DefaultShelfDetailsPresenter(
             )
         )
         openGameDetails(intent.game)
+    }
+
+    private fun handleRemoveGameFromShelf(intent: ShelfDetailsIntent.RemoveGameFromShelf) {
+        val model = RemoveGameFromShelfDomainModel(
+            shelfId = shelf.id,
+            gameId = intent.game.id
+        )
+
+        launchDataOperation(
+            block = { shelfsRepository.removeGameFromShelf(model) },
+            onError = { error ->
+                snackbarManager.showSnackbar(
+                    TextWrapper.Resource(StringRes.shelf_details_failed_to_delete, error.message ?: "")
+                )
+            },
+            onSuccess = {
+                // Refresh the shelf to show updated games list
+                fetchShelf()
+            }
+        )
     }
 }

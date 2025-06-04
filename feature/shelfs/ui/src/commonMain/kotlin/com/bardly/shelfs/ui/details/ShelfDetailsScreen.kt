@@ -30,6 +30,7 @@ import com.retro99.base.ui.compose.CoilImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -97,7 +98,8 @@ private fun ShelfsScreenContent(
         viewState.shelf.games.forEach { game ->
             GameItem(
                 game = game,
-                onClick = { intentDispatcher(ShelfDetailsIntent.GameClicked(game)) }
+                onClick = { intentDispatcher(ShelfDetailsIntent.GameClicked(game)) },
+                onRemoveClick = { intentDispatcher(ShelfDetailsIntent.RemoveGameFromShelf(it)) }
             )
         }
 
@@ -113,7 +115,12 @@ private fun ShelfsScreenContent(
 }
 
 @Composable
-private fun GameItem(game: GameUiModel, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun GameItem(
+    game: GameUiModel, 
+    onClick: () -> Unit, 
+    modifier: Modifier = Modifier,
+    onRemoveClick: (GameUiModel) -> Unit = {}
+) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
@@ -173,6 +180,16 @@ private fun GameItem(game: GameUiModel, onClick: () -> Unit, modifier: Modifier 
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
+            }
+
+            // Remove button
+            IconButton(
+                onClick = { onRemoveClick(game) }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Remove,
+                    contentDescription = "Remove game from shelf"
+                )
             }
         }
     }
