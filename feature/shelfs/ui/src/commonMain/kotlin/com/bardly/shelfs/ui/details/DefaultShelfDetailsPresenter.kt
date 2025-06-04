@@ -66,6 +66,9 @@ class DefaultShelfDetailsPresenter(
             ShelfDetailsIntent.ShowDeleteConfirmationDialog -> showDeleteConfirmationDialog()
             ShelfDetailsIntent.HideDeleteConfirmationDialog -> hideDeleteConfirmationDialog()
             ShelfDetailsIntent.ConfirmDeleteShelf -> handleDeleteShelf()
+            is ShelfDetailsIntent.ShowRemoveGameConfirmationDialog -> showRemoveGameConfirmationDialog(intent.game)
+            ShelfDetailsIntent.HideRemoveGameConfirmationDialog -> hideRemoveGameConfirmationDialog()
+            ShelfDetailsIntent.ConfirmRemoveGameFromShelf -> confirmRemoveGameFromShelf()
             is ShelfDetailsIntent.RemoveGameFromShelf -> handleRemoveGameFromShelf(intent)
         }
     }
@@ -107,6 +110,44 @@ class DefaultShelfDetailsPresenter(
             )
         )
         openGameDetails(intent.game)
+    }
+
+    private fun showRemoveGameConfirmationDialog(game: GameUiModel) {
+        updateOrSetSuccess { it.copy(
+            isRemoveGameConfirmationDialogVisible = true,
+            gameToRemove = game
+        ) }
+    }
+
+    private fun hideRemoveGameConfirmationDialog() {
+        updateOrSetSuccess { it.copy(
+            isRemoveGameConfirmationDialogVisible = false,
+            gameToRemove = null
+        ) }
+    }
+
+    private fun confirmRemoveGameFromShelf() {
+        val gameToRemove = currentViewState()?.gameToRemove ?: return
+
+        val model = RemoveGameFromShelfDomainModel(
+            shelfId = shelf.id,
+            gameId = gameToRemove.id
+        )
+
+        launchDataOperation(
+            block = { shelfsRepository.removeGameFromShelf(model) },
+            onError = { error ->
+                snackbarManager.showSnackbar(
+                    TextWrapper.Resource(StringRes.shelf_details_failed_to_delete, error.message ?: "")
+                )
+            },
+            onSuccess = {
+                // Hide the dialog
+                hideRemoveGameConfirmationDialog()
+                // Refresh the shelf to show updated games list
+                fetchShelf()
+            }
+        )
     }
 
     private fun handleRemoveGameFromShelf(intent: ShelfDetailsIntent.RemoveGameFromShelf) {

@@ -49,6 +49,10 @@ import resources.translations.shelves_no_games
 import resources.translations.shelf_details_confirm_delete
 import resources.translations.shelf_details_confirm_delete_message
 import resources.translations.shelf_details_cancel
+import resources.translations.shelf_details_confirm_remove_game
+import resources.translations.shelf_details_confirm_remove_game_message
+import resources.translations.shelf_details_remove
+import resources.translations.shelf_details_remove_game_description
 
 @Composable
 fun ShelfDetailsScreen(
@@ -80,12 +84,20 @@ private fun ShelfsScreenContent(
             onDeleteClick = { intentDispatcher(ShelfDetailsIntent.ShowDeleteConfirmationDialog) }
         )
 
-        // Show confirmation dialog if needed
+        // Show confirmation dialogs if needed
         if (viewState.isDeleteConfirmationDialogVisible) {
             DeleteConfirmationDialog(
                 shelfName = viewState.shelf.name,
                 onConfirm = { intentDispatcher(ShelfDetailsIntent.ConfirmDeleteShelf) },
                 onDismiss = { intentDispatcher(ShelfDetailsIntent.HideDeleteConfirmationDialog) }
+            )
+        }
+
+        if (viewState.isRemoveGameConfirmationDialogVisible && viewState.gameToRemove != null) {
+            RemoveGameConfirmationDialog(
+                gameTitle = viewState.gameToRemove.title,
+                onConfirm = { intentDispatcher(ShelfDetailsIntent.ConfirmRemoveGameFromShelf) },
+                onDismiss = { intentDispatcher(ShelfDetailsIntent.HideRemoveGameConfirmationDialog) }
             )
         }
 
@@ -101,7 +113,7 @@ private fun ShelfsScreenContent(
             GameItem(
                 game = game,
                 onClick = { intentDispatcher(ShelfDetailsIntent.GameClicked(game)) },
-                onRemoveClick = { intentDispatcher(ShelfDetailsIntent.RemoveGameFromShelf(it)) }
+                onRemoveClick = { intentDispatcher(ShelfDetailsIntent.ShowRemoveGameConfirmationDialog(it)) }
             )
         }
 
@@ -196,7 +208,7 @@ private fun GameItem(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Close,
-                    contentDescription = "Remove game from shelf"
+                    contentDescription = stringResource(StringRes.shelf_details_remove_game_description)
                 )
             }
         }
@@ -221,6 +233,34 @@ private fun DeleteConfirmationDialog(
                 )
             ) {
                 Text(stringResource(StringRes.shelf_details_delete))
+            }
+        },
+        dismissButton = {
+            Button(onClick = onDismiss) {
+                Text(stringResource(StringRes.shelf_details_cancel))
+            }
+        }
+    )
+}
+
+@Composable
+private fun RemoveGameConfirmationDialog(
+    gameTitle: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(StringRes.shelf_details_confirm_remove_game)) },
+        text = { Text(stringResource(StringRes.shelf_details_confirm_remove_game_message, gameTitle)) },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red
+                )
+            ) {
+                Text(stringResource(StringRes.shelf_details_remove))
             }
         },
         dismissButton = {
