@@ -21,6 +21,7 @@ import com.retro99.shelfs.data.remote.model.toDomainModel
 import com.retro99.shelfs.data.remote.model.toDto
 import com.retro99.shelfs.domain.ShelfsRepository
 import com.retro99.shelfs.domain.model.CreateShelfDomainModel
+import com.retro99.shelfs.domain.model.RemoveGameFromShelfDomainModel
 import com.retro99.shelfs.domain.model.ShelfDomainModel
 import kotlinx.coroutines.flow.Flow
 import me.tatarka.inject.annotations.Inject
@@ -58,8 +59,8 @@ class ShelfsDataRepository(
         return remoteSource.addGameToShelf(shelfId, gameId)
     }
 
-    override suspend fun deleteGameFromShelf(shelfId: String, gameId: String): CompletableResult {
-        return remoteSource.deleteGameFromShelf(shelfId, gameId)
+    override suspend fun removeGameFromShelf(model: RemoveGameFromShelfDomainModel): CompletableResult {
+        return remoteSource.removeGameFromShelf(model.toDto())
     }
 
     override suspend fun createShelf(item: CreateShelfDomainModel): AppResult<ShelfDomainModel> {
