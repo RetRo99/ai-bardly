@@ -11,4 +11,5 @@ interface ShelfsRemoteDataSource {
     suspend fun getShelf(id: String): AppResult<ShelfDto>
     suspend fun addGameToShelf(shelfId: String, gameId: String): CompletableResult
     suspend fun createShelf(item: CreateShelfDto): AppResult<ShelfDto>
+    suspend fun deleteShelf(id: String): CompletableResult
 }

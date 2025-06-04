@@ -64,6 +64,10 @@ class ShelfsDataRepository(
         }
     }
 
+    override suspend fun deleteShelf(id: String): CompletableResult {
+        return remoteSource.deleteShelf(id)
+    }
+
     private suspend fun getCachedShelf(id: String): AppResult<ShelfDomainModel>? {
         return localSource.getShelf(id)
             .andThen { cachedShelf ->

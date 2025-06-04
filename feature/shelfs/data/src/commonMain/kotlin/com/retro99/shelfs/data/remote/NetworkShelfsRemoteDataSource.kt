@@ -11,6 +11,7 @@ import com.retro99.shelfs.data.remote.model.toDto
 import com.retro99.shelfs.domain.model.CreateShelfDomainModel
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.NetworkClient
+import retro99.games.api.delete
 import retro99.games.api.get
 import retro99.games.api.post
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope
@@ -47,6 +48,12 @@ class NetworkShelfsRemoteDataSource(
         return networkClient.post<ShelfDto>(
             path = "shelves",
             body = item
+        )
+    }
+
+    override suspend fun deleteShelf(id: String): CompletableResult {
+        return networkClient.delete<Unit>(
+            path = "shelves/$id"
         )
     }
 }
