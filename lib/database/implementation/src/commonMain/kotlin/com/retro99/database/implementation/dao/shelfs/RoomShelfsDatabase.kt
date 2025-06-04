@@ -40,4 +40,10 @@ class RoomShelfsDatabase(
             dao.getShelfs()
         }
     }
+
+    override suspend fun deleteShelf(id: String): AppResult<Unit> {
+        return daoExecutor.executeDatabaseOperation {
+            dao.deleteShelf(id)
+        }
+    }
 }
