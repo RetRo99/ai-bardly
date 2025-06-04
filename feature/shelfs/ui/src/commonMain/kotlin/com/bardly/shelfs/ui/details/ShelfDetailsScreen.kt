@@ -1,5 +1,6 @@
 package com.bardly.shelfs.ui.details
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,7 @@ import com.retro99.base.ui.IntentDispatcher
 import com.retro99.base.ui.compose.CoilImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.AlertDialog
@@ -127,67 +129,73 @@ private fun GameItem(
             .fillMaxWidth()
             .padding(vertical = 4.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick)
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            // Game thumbnail
-            Card(
-                shape = RoundedCornerShape(4.dp),
+            // Content
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = onClick)
+                    .padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                CoilImage(
-                    data = game.thumbnail,
-                    cacheKey = game.thumbnail,
-                    modifier = Modifier.height(60.dp).width(60.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            // Game details
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                // Game title
-                Text(
-                    text = game.title,
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                // Game attributes
-                Row(
-                    modifier = Modifier.padding(top = 4.dp)
+                // Game thumbnail
+                Card(
+                    shape = RoundedCornerShape(4.dp),
                 ) {
+                    CoilImage(
+                        data = game.thumbnail,
+                        cacheKey = game.thumbnail,
+                        modifier = Modifier.height(60.dp).width(60.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                // Game details
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    // Game title
                     Text(
-                        text = stringResource(StringRes.shelf_details_players, game.numberOfPlayers),
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(end = 8.dp)
+                        text = game.title,
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
-                    Text(
-                        text = stringResource(StringRes.shelf_details_time, game.playingTime),
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
+                    // Game attributes
+                    Row(
+                        modifier = Modifier.padding(top = 4.dp)
+                    ) {
+                        Text(
+                            text = stringResource(StringRes.shelf_details_players, game.numberOfPlayers),
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
 
-                    Text(
-                        text = stringResource(StringRes.shelf_details_rating, game.rating),
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                        Text(
+                            text = stringResource(StringRes.shelf_details_time, game.playingTime),
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+
+                        Text(
+                            text = stringResource(StringRes.shelf_details_rating, game.rating),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
                 }
             }
 
-            // Remove button
+            // Close button at top right
             IconButton(
-                onClick = { onRemoveClick(game) }
+                onClick = { onRemoveClick(game) },
+                modifier = Modifier.align(Alignment.TopEnd)
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Remove,
+                    imageVector = Icons.Filled.Close,
                     contentDescription = "Remove game from shelf"
                 )
             }
