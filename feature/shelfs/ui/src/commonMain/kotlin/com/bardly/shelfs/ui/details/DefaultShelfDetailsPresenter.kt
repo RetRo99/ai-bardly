@@ -62,8 +62,18 @@ class DefaultShelfDetailsPresenter(
         when (intent) {
             ShelfDetailsIntent.NavigateBack -> navigateBack()
             is ShelfDetailsIntent.GameClicked -> handleGameClicked(intent)
-            ShelfDetailsIntent.DeleteShelf -> handleDeleteShelf()
+            ShelfDetailsIntent.ShowDeleteConfirmationDialog -> showDeleteConfirmationDialog()
+            ShelfDetailsIntent.HideDeleteConfirmationDialog -> hideDeleteConfirmationDialog()
+            ShelfDetailsIntent.ConfirmDeleteShelf -> handleDeleteShelf()
         }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        updateOrSetSuccess { it.copy(isDeleteConfirmationDialogVisible = true) }
+    }
+
+    private fun hideDeleteConfirmationDialog() {
+        updateOrSetSuccess { it.copy(isDeleteConfirmationDialogVisible = false) }
     }
 
     private fun handleDeleteShelf() {

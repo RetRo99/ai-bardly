@@ -30,6 +30,8 @@ import com.retro99.base.ui.compose.CoilImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.stringResource
 import resources.translations.shelf_details_back
@@ -39,6 +41,9 @@ import resources.translations.shelf_details_players
 import resources.translations.shelf_details_rating
 import resources.translations.shelf_details_time
 import resources.translations.shelves_no_games
+import resources.translations.shelf_details_confirm_delete
+import resources.translations.shelf_details_confirm_delete_message
+import resources.translations.shelf_details_cancel
 
 @Composable
 fun ShelfDetailsScreen(
@@ -67,8 +72,17 @@ private fun ShelfsScreenContent(
         TopBar(
             shelfName = viewState.shelf.name,
             onBackClick = { intentDispatcher(ShelfDetailsIntent.NavigateBack) },
-            onDeleteClick = { intentDispatcher(ShelfDetailsIntent.DeleteShelf) }
+            onDeleteClick = { intentDispatcher(ShelfDetailsIntent.ShowDeleteConfirmationDialog) }
         )
+
+        // Show confirmation dialog if needed
+        if (viewState.isDeleteConfirmationDialogVisible) {
+            DeleteConfirmationDialog(
+                shelfName = viewState.shelf.name,
+                onConfirm = { intentDispatcher(ShelfDetailsIntent.ConfirmDeleteShelf) },
+                onDismiss = { intentDispatcher(ShelfDetailsIntent.HideDeleteConfirmationDialog) }
+            )
+        }
 
         // Games section
         Text(
@@ -160,6 +174,29 @@ private fun GameItem(game: GameUiModel, onClick: () -> Unit, modifier: Modifier 
             }
         }
     }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    shelfName: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(StringRes.shelf_details_confirm_delete)) },
+        text = { Text(stringResource(StringRes.shelf_details_confirm_delete_message, shelfName)) },
+        confirmButton = {
+            Button(onClick = onConfirm) {
+                Text(stringResource(StringRes.shelf_details_delete))
+            }
+        },
+        dismissButton = {
+            Button(onClick = onDismiss) {
+                Text(stringResource(StringRes.shelf_details_cancel))
+            }
+        }
+    )
 }
 
 @Composable

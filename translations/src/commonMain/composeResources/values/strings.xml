@@ -106,4 +106,7 @@
     <string name="shelf_details_rating">Rating: %1$s</string>
     <string name="shelf_details_back">Back</string>
     <string name="shelf_details_delete">Delete Shelf</string>
+    <string name="shelf_details_confirm_delete">Delete Shelf</string>
+    <string name="shelf_details_confirm_delete_message">Are you sure you want to delete the shelf \"%1$s\"? This action cannot be undone.</string>
+    <string name="shelf_details_cancel">Cancel</string>
 </resources>
