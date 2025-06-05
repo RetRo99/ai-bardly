@@ -21,9 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bardly.chats.ui.model.RecentMessageUiModel
-import com.bardly.games.ui.components.GameImage
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
+import com.retro99.base.ui.compose.GameImage
 import com.retro99.base.ui.compose.timeAgo
 import com.retro99.translations.StringRes
 import org.jetbrains.compose.resources.stringResource

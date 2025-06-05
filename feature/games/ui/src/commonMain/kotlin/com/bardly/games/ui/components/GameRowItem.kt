@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bardly.games.ui.model.GameUiModel
+import com.retro99.base.ui.compose.GameImage
 import com.retro99.base.ui.resources.DrawableRes
 import com.retro99.paging.ui.LazyPagingColumn
 import com.retro99.paging.ui.LazyPagingItems
