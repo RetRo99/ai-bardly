@@ -23,7 +23,6 @@ kotlin {
             implementation(projects.base)
             implementation(projects.lib.analytics.api)
             implementation(projects.lib.snackbar.api)
-            implementation(projects.feature.games.ui)
 
             implementation(compose.runtime)
             implementation(compose.foundation)

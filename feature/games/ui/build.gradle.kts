@@ -33,6 +33,7 @@ kotlin {
             implementation(libs.markdown)
             implementation(projects.lib.analytics.api)
             implementation(projects.lib.snackbar.api)
+            implementation(projects.feature.chats.ui)
         }
 
         androidMain.dependencies {
