@@ -52,12 +52,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bardly.games.ui.components.GameImage
 import com.bardly.games.ui.components.SharedTransitionText
 import com.bardly.games.ui.model.GameUiModel
 import com.mikepenz.markdown.m3.Markdown
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
+import com.retro99.base.ui.compose.GameImage
 import com.retro99.base.ui.compose.sharedScreenBounds
 import com.retro99.base.ui.resources.DrawableRes
 import com.retro99.translations.StringRes
@@ -154,7 +154,12 @@ private fun ShelfSelectionDialog(
                         shelfs.forEach { shelf ->
                             Button(
                                 onClick = {
-                                    intentDispatcher(GameDetailsIntent.AddGameToShelf(shelf.id, shelf.name))
+                                    intentDispatcher(
+                                        GameDetailsIntent.AddGameToShelf(
+                                            shelf.id,
+                                            shelf.name
+                                        )
+                                    )
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()

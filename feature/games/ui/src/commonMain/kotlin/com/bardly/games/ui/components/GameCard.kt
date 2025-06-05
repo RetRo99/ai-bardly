@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.compose.CoilImage
+import com.retro99.base.ui.compose.GameImage
 import com.retro99.base.ui.compose.sharedScreenBounds
 import com.retro99.base.ui.resources.DrawableRes
 import org.jetbrains.compose.resources.DrawableResource
@@ -141,31 +142,6 @@ fun SharedTransitionText(
             text = text,
             style = style,
             textAlign = textAlign
-        )
-    }
-}
-
-@OptIn(ExperimentalSharedTransitionApi::class)
-@Composable
-fun GameImage(
-    imageUrl: String,
-    gameId: String,
-    size: Dp,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier
-            .sharedScreenBounds(
-                key = "$gameId thumbnail",
-                renderInOverlayDuringTransition = false,
-            ),
-        shape = RoundedCornerShape(8.dp),
-    ) {
-        CoilImage(
-            data = imageUrl,
-            cacheKey = imageUrl,
-            modifier = Modifier.size(size),
-            contentScale = ContentScale.FillBounds
         )
     }
 }
