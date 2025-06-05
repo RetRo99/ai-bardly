@@ -8,6 +8,7 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.bardly.chats.ui.chat.ChatPresenterFactory
 import com.bardly.games.ui.details.GameDetailsPresenterFactory
+import com.bardly.games.ui.details.GameDetailsRootPresenterFactory
 import com.bardly.games.ui.list.GamesListComponentFactory
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenterImpl
@@ -26,8 +27,7 @@ typealias RootGamesPresenterFactory = (
 class DefaultRootGamesPresenter(
     @Assisted componentContext: ComponentContext,
     @Assisted private val openLogin: () -> Unit,
-    private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
-    private val chatPresenterFactory: ChatPresenterFactory,
+    private val gameDetailsRootPresenterFactory: GameDetailsRootPresenterFactory,
     private val gamesListComponentFactory: GamesListComponentFactory,
 ) : BasePresenterImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesPresenter {
 
@@ -49,12 +49,8 @@ class DefaultRootGamesPresenter(
         navigation.pop()
     }
 
-    private fun openChat(title: String, id: String) {
-        navigation.pushNew(RootGamesPresenter.Config.Chat(title, id))
-    }
-
     private fun openGameDetails(game: GameUiModel) {
-        navigation.pushNew(RootGamesPresenter.Config.GameDetails(game))
+        navigation.pushNew(RootGamesPresenter.Config.RootGameDetails(game))
     }
 
     override fun handleScreenIntent(intent: RootGamesIntent) {
@@ -68,27 +64,16 @@ class DefaultRootGamesPresenter(
         RootGamesPresenter.Config.GamesList -> RootGamesPresenter.Child.GamesList(
             gamesListComponentFactory(
                 componentContext,
-                ::openChat,
+                { _, _ ->},
                 ::openGameDetails,
             )
         )
 
-        is RootGamesPresenter.Config.GameDetails -> RootGamesPresenter.Child.GameDetails(
-            gameDetailsPresenterFactory(
+        is RootGamesPresenter.Config.RootGameDetails -> RootGamesPresenter.Child.RootGameDetails(
+            gameDetailsRootPresenterFactory(
                 componentContext,
                 screenConfig.game,
-                ::openChat,
-                ::onBackClicked,
-                openLogin,
-            )
-        )
-
-        is RootGamesPresenter.Config.Chat -> RootGamesPresenter.Child.Chat(
-            chatPresenterFactory(
-                componentContext,
-                screenConfig.title,
-                screenConfig.id,
-                ::onBackClicked,
+                ::onBackClicked
             )
         )
     }
