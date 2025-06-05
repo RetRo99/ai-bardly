@@ -5,6 +5,8 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.pushNew
+import com.bardly.chats.ui.chat.ChatPresenterFactory
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenterImpl
 import com.retro99.base.ui.BaseViewState
@@ -25,6 +27,7 @@ class DefaultGameDetailsRootPresenter(
     @Assisted private val game: GameUiModel,
     @Assisted private val onBackClicked: () -> Unit,
     private val gameDetailsPresenterFactory: GameDetailsPresenterFactory,
+    private val chatPresenterFactory: ChatPresenterFactory,
 ) : BasePresenterImpl<GameDetailsRootViewState, GameDetailsRootIntent>(componentContext), GameDetailsRootPresenter {
 
     private val navigation = StackNavigation<GameDetailsRootPresenter.Config>()
@@ -62,12 +65,19 @@ class DefaultGameDetailsRootPresenter(
                 ::openLogin,
             )
         )
+        is GameDetailsRootPresenter.Config.Chat -> GameDetailsRootPresenter.Child.Chat(
+            chatPresenterFactory(
+                componentContext,
+                screenConfig.title,
+                screenConfig.id,
+                ::onBackClicked,
+            )
+        )
     }
 
-    // Placeholder methods for navigation
+    // Navigation methods
     private fun openChat(title: String, id: String) {
-        // In a real implementation, this would navigate to a chat screen
-        // For now, it's a placeholder
+        navigation.pushNew(GameDetailsRootPresenter.Config.Chat(title, id))
     }
 
     private fun openLogin() {
