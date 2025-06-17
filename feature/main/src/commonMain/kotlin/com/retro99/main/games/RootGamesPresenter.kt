@@ -1,7 +1,6 @@
 package com.retro99.main.games
 
-import com.bardly.chats.ui.chat.ChatPresenter
-import com.bardly.games.ui.details.GameDetailsPresenter
+import com.bardly.games.ui.details.GameDetailsRootPresenter
 import com.bardly.games.ui.list.GamesListComponent
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenter
@@ -13,8 +12,7 @@ interface RootGamesPresenter : BasePresenter<RootGamesViewState, RootGamesIntent
 
     sealed interface Child {
         data class GamesList(val component: GamesListComponent) : Child
-        data class GameDetails(val component: GameDetailsPresenter) : Child
-        data class Chat(val component: ChatPresenter) : Child
+        data class RootGameDetails(val component: GameDetailsRootPresenter) : Child
     }
 
     @Serializable
@@ -23,9 +21,6 @@ interface RootGamesPresenter : BasePresenter<RootGamesViewState, RootGamesIntent
         data object GamesList : Config
 
         @Serializable
-        data class GameDetails(val game: GameUiModel) : Config
-
-        @Serializable
-        data class Chat(val title: String, val id: String) : Config
+        data class RootGameDetails(val game: GameUiModel) : Config
     }
 }

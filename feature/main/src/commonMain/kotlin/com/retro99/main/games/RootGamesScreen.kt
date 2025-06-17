@@ -2,8 +2,7 @@ package com.retro99.main.games
 
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ExperimentalDecomposeApi
-import com.bardly.chats.ui.chat.ChatScreen
-import com.bardly.games.ui.details.GameDetailsScreen
+import com.bardly.games.ui.details.GameDetailsRootScreen
 import com.bardly.games.ui.list.GamesListScreen
 import com.retro99.base.ui.decompose.RootChildStack
 
@@ -17,8 +16,7 @@ fun RootGamesScreen(
     ) { child ->
         when (val screen = child.instance) {
             is RootGamesPresenter.Child.GamesList -> GamesListScreen(screen.component)
-            is RootGamesPresenter.Child.GameDetails -> GameDetailsScreen(screen.component)
-            is RootGamesPresenter.Child.Chat -> ChatScreen(screen.component)
+            is RootGamesPresenter.Child.RootGameDetails -> GameDetailsRootScreen(screen.component)
         }
     }
 }
