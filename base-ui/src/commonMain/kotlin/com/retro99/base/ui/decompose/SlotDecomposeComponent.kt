@@ -6,5 +6,5 @@ import com.arkivanov.essenty.backhandler.BackHandlerOwner
 
 interface SlotDecomposeComponent<Child : Any, Config : Any> : BackHandlerOwner {
     val childSlot: Value<ChildSlot<Config, Child>>
-    funonBackClicked()
+    fun onBackClicked()
 }
