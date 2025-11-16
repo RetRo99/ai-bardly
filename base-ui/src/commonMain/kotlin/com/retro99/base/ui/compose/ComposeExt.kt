@@ -43,12 +43,12 @@ fun keyboardAsState(): State<Boolean> {
 }
 
 val LocalScreenAnimationScope = compositionLocalOf<AnimatedVisibilityScope?> {
-    null
+    throw IllegalStateException("LocalScreenAnimationScope not provided")
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 val LocalScreenTransitionScope = compositionLocalOf<SharedTransitionScope?> {
-    null
+    throw IllegalStateException("LocalScreenTransitionScope not provided")
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)

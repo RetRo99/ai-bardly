@@ -4,11 +4,13 @@ import com.bardly.games.ui.details.GameDetailsRootPresenter
 import com.bardly.games.ui.list.GamesListComponent
 import com.bardly.games.ui.model.GameUiModel
 import com.retro99.base.ui.BasePresenter
-import com.retro99.base.ui.decompose.RootDecomposeComponent
+import com.retro99.base.ui.decompose.SlotDecomposeComponent
 import kotlinx.serialization.Serializable
 
 interface RootGamesPresenter : BasePresenter<RootGamesViewState, RootGamesIntent>,
-    RootDecomposeComponent<RootGamesPresenter.Child, RootGamesPresenter.Config> {
+    SlotDecomposeComponent<RootGamesPresenter.Child, RootGamesPresenter.Config> {
+
+    val gamesListComponent: GamesListComponent
 
     sealed interface Child {
         data class GamesList(val component: GamesListComponent) : Child

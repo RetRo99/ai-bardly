@@ -52,4 +52,7 @@ dependencies {
 android {
     namespace = "com.retro99.main"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+    }
 }

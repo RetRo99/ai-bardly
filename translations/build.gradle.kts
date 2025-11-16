@@ -31,4 +31,7 @@ compose.resources {
 android {
     namespace = "com.retro99.translations"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+    }
 }

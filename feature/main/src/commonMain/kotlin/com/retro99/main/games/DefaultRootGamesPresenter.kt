@@ -2,12 +2,10 @@ package com.retro99.main.games
 
 import com.ai.bardly.annotations.ActivityScope
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.pop
-import com.arkivanov.decompose.router.stack.pushNew
-import com.bardly.chats.ui.chat.ChatPresenterFactory
-import com.bardly.games.ui.details.GameDetailsPresenterFactory
+import com.arkivanov.decompose.router.slot.SlotNavigation
+import com.arkivanov.decompose.router.slot.activate
+import com.arkivanov.decompose.router.slot.childSlot
+import com.arkivanov.decompose.router.slot.dismiss
 import com.bardly.games.ui.details.GameDetailsRootPresenterFactory
 import com.bardly.games.ui.list.GamesListComponentFactory
 import com.bardly.games.ui.model.GameUiModel
@@ -31,26 +29,36 @@ class DefaultRootGamesPresenter(
     private val gamesListComponentFactory: GamesListComponentFactory,
 ) : BasePresenterImpl<RootGamesViewState, RootGamesIntent>(componentContext), RootGamesPresenter {
 
-    private val navigation = StackNavigation<RootGamesPresenter.Config>()
+    override val gamesListComponent = gamesListComponentFactory(
+        componentContext,
+        { _, _ -> },
+        ::openGameDetails,
+    )
 
-    override val childStack = childStack(
+    private val navigation = SlotNavigation<RootGamesPresenter.Config>()
+
+    override val childSlot = childSlot(
         source = navigation,
         serializer = RootGamesPresenter.Config.serializer(),
-        initialStack = { listOf(RootGamesPresenter.Config.GamesList) },
         handleBackButton = true,
         childFactory = ::childFactory,
     )
+
+    init {
+        // Initialize with GamesList
+        navigation.activate(RootGamesPresenter.Config.GamesList)
+    }
 
     override val defaultViewState = RootGamesViewState
 
     override val initialState = BaseViewState.Success(defaultViewState)
 
     override fun onBackClicked() {
-        navigation.pop()
+        navigation.dismiss()
     }
 
     private fun openGameDetails(game: GameUiModel) {
-        navigation.pushNew(RootGamesPresenter.Config.RootGameDetails(game))
+        navigation.activate(RootGamesPresenter.Config.RootGameDetails(game))
     }
 
     override fun handleScreenIntent(intent: RootGamesIntent) {
@@ -62,11 +70,7 @@ class DefaultRootGamesPresenter(
         componentContext: ComponentContext
     ): RootGamesPresenter.Child = when (screenConfig) {
         RootGamesPresenter.Config.GamesList -> RootGamesPresenter.Child.GamesList(
-            gamesListComponentFactory(
-                componentContext,
-                { _, _ ->},
-                ::openGameDetails,
-            )
+            gamesListComponent
         )
 
         is RootGamesPresenter.Config.RootGameDetails -> RootGamesPresenter.Child.RootGameDetails(

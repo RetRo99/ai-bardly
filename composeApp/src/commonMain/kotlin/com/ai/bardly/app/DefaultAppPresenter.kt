@@ -28,8 +28,17 @@ class DefaultAppPresenter(
     private val snackbarManager: SnackbarManager,
 ) : BasePresenterImpl<AppViewState, AppScreenIntent>(componentContext), AppPresenter {
 
+    private val navigation = StackNavigation<AppPresenter.Config>()
     override val defaultViewState = AppViewState()
     override val initialState = BaseViewState.Success(defaultViewState)
+
+    override val childStack = childStack(
+        source = navigation,
+        serializer = AppPresenter.Config.serializer(),
+        initialConfiguration = AppPresenter.Config.Main,
+        handleBackButton = true,
+        childFactory = ::childFactory,
+    )
 
     override fun onCreate() {
         subscribeToSnackbars()
@@ -40,32 +49,6 @@ class DefaultAppPresenter(
             is AppScreenIntent.SnackbarMessageShown -> snackbarMessageShown()
         }
     }
-
-    private fun snackbarMessageShown() {
-        updateOrSetSuccess { currentViewState ->
-            currentViewState.copy(snackbarData = null)
-        }
-    }
-
-    private fun subscribeToSnackbars() {
-        scope.launch {
-            snackbarManager.messages.collect { message ->
-                updateOrSetSuccess { currentViewState ->
-                    currentViewState.copy(snackbarData = message)
-                }
-            }
-        }
-    }
-
-    private val navigation = StackNavigation<AppPresenter.Config>()
-
-    override val childStack = childStack(
-        source = navigation,
-        serializer = AppPresenter.Config.serializer(),
-        initialConfiguration = AppPresenter.Config.Main,
-        handleBackButton = true,
-        childFactory = ::childFactory,
-    )
 
     override fun onBackClicked() {
         navigation.pop()
@@ -103,5 +86,21 @@ class DefaultAppPresenter(
                 ::onLoginSuccess,
             )
         )
+    }
+
+    private fun snackbarMessageShown() {
+        updateOrSetSuccess { currentViewState ->
+            currentViewState.copy(snackbarData = null)
+        }
+    }
+
+    private fun subscribeToSnackbars() {
+        scope.launch {
+            snackbarManager.messages.collect { message ->
+                updateOrSetSuccess { currentViewState ->
+                    currentViewState.copy(snackbarData = message)
+                }
+            }
+        }
     }
 }

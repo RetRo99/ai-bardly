@@ -29,5 +29,22 @@ subprojects {
                     }
                 }
         }
+
+        // Set minSdk for all Android modules
+        plugins.withId("com.android.library") {
+            extensions.findByType<com.android.build.gradle.LibraryExtension>()?.apply {
+                defaultConfig {
+                    minSdk = libs.versions.minSdk.get().toInt()
+                }
+            }
+        }
+
+        plugins.withId("com.android.application") {
+            extensions.findByType<com.android.build.gradle.AppExtension>()?.apply {
+                defaultConfig {
+                    minSdk = libs.versions.minSdk.get().toInt()
+                }
+            }
+        }
     }
 }

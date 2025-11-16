@@ -24,7 +24,6 @@ typealias App = @Composable () -> Unit
 fun App(
     appPresenter: AppPresenter,
 ) {
-
     BaseScreen(appPresenter) { viewState, intentDispatcher ->
         AppScreenContent(
             viewState = viewState,

@@ -23,4 +23,7 @@ kotlin {
 android {
     namespace = "com.retro99.auth.domain"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+    }
 }
