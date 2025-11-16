@@ -1,6 +1,6 @@
 package com.retro99.user.data.remote.model
 
-import com.retro99.auth.domain.model.UserDomainModel
+import com.retro99.user.domain.model.UserDomainModel
 
 data class UserDto(
     val id: String,

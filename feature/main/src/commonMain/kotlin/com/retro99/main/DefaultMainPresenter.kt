@@ -5,7 +5,6 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
-import com.retro99.auth.domain.manager.UserSessionManager
 import com.retro99.base.ui.decompose.switchTab
 import com.retro99.main.MainPresenter.Child.GameList
 import com.retro99.main.MainPresenter.Child.Home
@@ -15,6 +14,7 @@ import com.retro99.main.chats.RootRecentPresenterFactory
 import com.retro99.main.games.RootGamesPresenterFactory
 import com.retro99.main.home.RootHomePresenterFactory
 import com.retro99.main.shelfs.RootShelfsPresenterFactory
+import com.retro99.user.domain.manager.UserSessionManager
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
 import software.amazon.lastmile.kotlin.inject.anvil.ContributesBinding

@@ -38,6 +38,6 @@ dependencies {
 }
 
 android {
-    namespace = "com.retro99.auth.data"
+    namespace = "com.retro99.user.data"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

@@ -1,4 +1,4 @@
-import com.retro99.auth.domain.model.UserDomainModel
+import com.retro99.user.domain.model.UserDomainModel
 import dev.gitlive.firebase.auth.FirebaseUser
 
 data class UserUiModel(

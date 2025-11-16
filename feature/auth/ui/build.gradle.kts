@@ -52,6 +52,6 @@ dependencies {
 }
 
 android {
-    namespace = "com.retro99.auth.ui"
+    namespace = "com.retro99.user.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 }

@@ -10,11 +10,11 @@ import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.s
 import com.arkivanov.decompose.extensions.compose.experimental.stack.animation.stackAnimation
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import com.retro99.auth.ui.AuthScreen
 import com.retro99.base.ui.BaseScreen
 import com.retro99.base.ui.IntentDispatcher
 import com.retro99.main.MainScreen
 import com.retro99.snackbar.api.SnackbarHost
+import com.retro99.user.ui.AuthScreen
 import me.tatarka.inject.annotations.Inject
 
 typealias App = @Composable () -> Unit
