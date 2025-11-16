@@ -1,4 +1,4 @@
-package com.retro99.data.remote.model
+package com.retro99.user.data.remote.model
 
 import com.retro99.auth.domain.model.UserDomainModel
 

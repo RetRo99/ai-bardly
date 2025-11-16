@@ -1,7 +1,7 @@
-package com.retro99.data.remote
+package com.retro99.user.data.remote
 
 import com.retro99.base.result.AppResult
-import com.retro99.data.remote.model.UserDto
+import com.retro99.user.data.remote.model.UserDto
 import kotlinx.coroutines.flow.Flow
 
 interface UsersRemoteDataSource {

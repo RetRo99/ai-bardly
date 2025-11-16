@@ -2,9 +2,9 @@ package com.retro99.auth.data.tokens
 
 import com.github.michaelbull.result.get
 import com.retro99.auth.data.remote.AuthRemoteDataSource
-import com.retro99.data.remote.UsersRemoteDataSource
 import com.retro99.preferences.api.Preferences
 import com.retro99.preferences.api.PreferencesKey
+import com.retro99.user.data.remote.UsersRemoteDataSource
 import me.tatarka.inject.annotations.Inject
 import retro99.games.api.tokens.BearerTokenRefresher
 import software.amazon.lastmile.kotlin.inject.anvil.AppScope

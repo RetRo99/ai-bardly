@@ -1,11 +1,11 @@
-package com.retro99.data
+package com.retro99.user.data
 
 import com.github.michaelbull.result.map
 import com.retro99.auth.domain.UserRepository
 import com.retro99.auth.domain.model.UserDomainModel
 import com.retro99.base.result.AppResult
-import com.retro99.data.remote.UsersRemoteDataSource
-import com.retro99.data.remote.model.toDomainModel
+import com.retro99.user.data.remote.UsersRemoteDataSource
+import com.retro99.user.data.remote.model.toDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.tatarka.inject.annotations.Inject
